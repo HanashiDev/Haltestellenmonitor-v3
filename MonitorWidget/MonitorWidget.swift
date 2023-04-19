@@ -31,21 +31,38 @@ struct Provider: IntentTimelineProvider {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            var entries: [MonitorEntry] = []
+            var departureMonitor: DepartureMonitor? = nil
             guard error == nil else {
                 print ("error: \(error!)")
+                let currentDate = Date()
+                for i in 0 ..< 2 {
+                    let entryDate = Calendar.current.date(byAdding: .second, value: 30 * i, to: currentDate)!
+                    let entry = MonitorEntry(date: entryDate, configuration: configuration, departureMonitor: departureMonitor)
+                    entries.append(entry)
+                }
+                
+                let timeline = Timeline(entries: entries, policy: .atEnd)
+                completion(timeline)
                 return
             }
 
             guard let content = data else {
                 print("No data")
+                let currentDate = Date()
+                for i in 0 ..< 2 {
+                    let entryDate = Calendar.current.date(byAdding: .second, value: 30 * i, to: currentDate)!
+                    let entry = MonitorEntry(date: entryDate, configuration: configuration, departureMonitor: departureMonitor)
+                    entries.append(entry)
+                }
+                
+                let timeline = Timeline(entries: entries, policy: .atEnd)
+                completion(timeline)
                 return
             }
 
 
             DispatchQueue.main.async {
-                var entries: [MonitorEntry] = []
-                var departureMonitor: DepartureMonitor? = nil
-
                 print("\(Date())")
                 
                 do {

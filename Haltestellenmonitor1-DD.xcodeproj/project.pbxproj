@@ -34,8 +34,6 @@
 		D0BD668A29EFE0AA004E574C /* MonitorWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668929EFE0AA004E574C /* MonitorWidgetLiveActivity.swift */; };
 		D0BD668C29EFE0AA004E574C /* MonitorWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668B29EFE0AA004E574C /* MonitorWidget.swift */; };
 		D0BD668F29EFE0AB004E574C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BD668E29EFE0AB004E574C /* Assets.xcassets */; };
-		D0BD669129EFE0AB004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668D29EFE0AA004E574C /* MonitorWidget.intentdefinition */; };
-		D0BD669229EFE0AB004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668D29EFE0AA004E574C /* MonitorWidget.intentdefinition */; };
 		D0BD669529EFE0AB004E574C /* MonitorWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D0BD668329EFE0AA004E574C /* MonitorWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D0BD669B29EFE18C004E574C /* MonitorWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD669A29EFE18C004E574C /* MonitorWidgetEntryView.swift */; };
 		D0BD669C29EFE9F9004E574C /* stops.json in Resources */ = {isa = PBXBuildFile; fileRef = D03A269129EEB93E005B0600 /* stops.json */; };
@@ -59,7 +57,6 @@
 		D0BD66BD29EFEEDD004E574C /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1A29EECAF2002DFEBF /* Departure.swift */; };
 		D0BD66BE29EFEEDF004E574C /* DeparturePlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1C29EECB20002DFEBF /* DeparturePlatform.swift */; };
 		D0BD66BF29EFEEE1004E574C /* DepartureRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1E29EECDFB002DFEBF /* DepartureRequest.swift */; };
-		D0BD66C029EFEEFA004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668D29EFE0AA004E574C /* MonitorWidget.intentdefinition */; };
 		D0BD66C129EFEF0D004E574C /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2129EED774002DFEBF /* DateParser.swift */; };
 		D0BD66C229EFEF0F004E574C /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2129EED774002DFEBF /* DateParser.swift */; };
 		D0BD66CA29EFF64D004E574C /* MonitorEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66C929EFF64D004E574C /* MonitorEntry.swift */; };
@@ -94,6 +91,9 @@
 		D0BD66F429F03C15004E574C /* Mot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66E129F03949004E574C /* Mot.swift */; };
 		D0BD66F729F03ED2004E574C /* TripSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66F629F03ED2004E574C /* TripSection.swift */; };
 		D0BD66FA29F04593004E574C /* PartialRouteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66F929F04593004E574C /* PartialRouteRow.swift */; };
+		D0BD66FB29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66FF29F04D28004E574C /* MonitorWidget.intentdefinition */; };
+		D0BD66FC29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66FF29F04D28004E574C /* MonitorWidget.intentdefinition */; };
+		D0BD66FD29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66FF29F04D28004E574C /* MonitorWidget.intentdefinition */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,7 +159,6 @@
 		D0BD668729EFE0AA004E574C /* MonitorWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorWidgetBundle.swift; sourceTree = "<group>"; };
 		D0BD668929EFE0AA004E574C /* MonitorWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorWidgetLiveActivity.swift; sourceTree = "<group>"; };
 		D0BD668B29EFE0AA004E574C /* MonitorWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorWidget.swift; sourceTree = "<group>"; };
-		D0BD668D29EFE0AA004E574C /* MonitorWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = MonitorWidget.intentdefinition; sourceTree = "<group>"; };
 		D0BD668E29EFE0AB004E574C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0BD669029EFE0AB004E574C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0BD669A29EFE18C004E574C /* MonitorWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorWidgetEntryView.swift; sourceTree = "<group>"; };
@@ -181,6 +180,7 @@
 		D0BD66E329F03BE5004E574C /* trip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trip.json; sourceTree = "<group>"; };
 		D0BD66F629F03ED2004E574C /* TripSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSection.swift; sourceTree = "<group>"; };
 		D0BD66F929F04593004E574C /* PartialRouteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialRouteRow.swift; sourceTree = "<group>"; };
+		D0BD66FE29F04D28004E574C /* de */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = de; path = de.lproj/MonitorWidget.intentdefinition; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,7 +348,7 @@
 				D0BD668729EFE0AA004E574C /* MonitorWidgetBundle.swift */,
 				D0BD668929EFE0AA004E574C /* MonitorWidgetLiveActivity.swift */,
 				D0BD668B29EFE0AA004E574C /* MonitorWidget.swift */,
-				D0BD668D29EFE0AA004E574C /* MonitorWidget.intentdefinition */,
+				D0BD66FF29F04D28004E574C /* MonitorWidget.intentdefinition */,
 				D0BD668E29EFE0AB004E574C /* Assets.xcassets */,
 				D0BD669029EFE0AB004E574C /* Info.plist */,
 			);
@@ -542,7 +542,7 @@
 				D0BD66DA29F03056004E574C /* Trip.swift in Sources */,
 				D040EC2729EEEB85002DFEBF /* LocationManager.swift in Sources */,
 				D040EC2B29EEFA3E002DFEBF /* FavoriteStop.swift in Sources */,
-				D0BD669229EFE0AB004E574C /* MonitorWidget.intentdefinition in Sources */,
+				D0BD66FB29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */,
 				D0BD66DE29F03446004E574C /* PartialRoute.swift in Sources */,
 				D03A268529EEB6C9005B0600 /* ContentView.swift in Sources */,
 				D0BD66E029F034AC004E574C /* RegularStop.swift in Sources */,
@@ -594,7 +594,7 @@
 				D0BD66F129F03C11004E574C /* RegularStop.swift in Sources */,
 				D0BD669B29EFE18C004E574C /* MonitorWidgetEntryView.swift in Sources */,
 				D0BD66A329EFEA12004E574C /* DeparturePlatform.swift in Sources */,
-				D0BD669129EFE0AB004E574C /* MonitorWidget.intentdefinition in Sources */,
+				D0BD66FC29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,7 +610,7 @@
 				D0BD66AE29EFECF1004E574C /* IntentHandler.swift in Sources */,
 				D0BD66BB29EFEED8004E574C /* DepartureMonitor.swift in Sources */,
 				D0BD66B929EFEEC0004E574C /* StopData.swift in Sources */,
-				D0BD66C029EFEEFA004E574C /* MonitorWidget.intentdefinition in Sources */,
+				D0BD66FD29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */,
 				D0BD66EA29F03C04004E574C /* TripRequest.swift in Sources */,
 				D0BD66F029F03C0D004E574C /* PartialRoute.swift in Sources */,
 				D0BD66BA29EFEEC2004E574C /* Stop.swift in Sources */,
@@ -637,6 +637,17 @@
 			targetProxy = D0BD66B029EFECF1004E574C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D0BD66FF29F04D28004E574C /* MonitorWidget.intentdefinition */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0BD66FE29F04D28004E574C /* de */,
+			);
+			name = MonitorWidget.intentdefinition;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		D03A268B29EEB6C9005B0600 /* Debug */ = {
@@ -761,7 +772,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Haltestellenmonitor1-DD/Haltestellenmonitor1-DD.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Haltestellenmonitor1-DD/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
@@ -796,7 +807,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Haltestellenmonitor1-DD/Haltestellenmonitor1-DD.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Haltestellenmonitor1-DD/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
@@ -829,7 +840,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorWidget/Info.plist;
@@ -857,7 +868,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorWidget/Info.plist;
@@ -883,7 +894,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorIntents/Info.plist;
@@ -909,7 +920,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorIntents/Info.plist;
