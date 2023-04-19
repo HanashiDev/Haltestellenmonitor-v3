@@ -1,0 +1,114 @@
+//
+//  Departure.swift
+//  Haltestellenmonitor1-DD
+//
+//  Created by Peter Lohse on 18.04.23.
+//
+
+import Foundation
+import RegexBuilder
+
+struct Departure: Hashable, Codable {
+    var Id: String
+    var DlId: String?
+    var LineName: String
+    var Direction: String
+    var Platform: DeparturePlatform?
+    var Mot: String
+    var RealTime: String?
+    var ScheduledTime: String
+    var State: String?
+    var RouteChanges: [String]?
+    
+    func getScheduledTime() -> String {
+        let date = DateParser.extractTimestamp(time: self.ScheduledTime)
+        if (date == nil) {
+            return "00:00"
+        }
+        
+        let dFormatter = DateFormatter()
+        dFormatter.dateFormat = "HH:mm"
+        return dFormatter.string(for: date) ?? "00:00"
+    }
+    
+    func getRealTime() -> String {
+        if (self.RealTime == nil) {
+            return self.getScheduledTime()
+        }
+
+        let date = DateParser.extractTimestamp(time: self.RealTime!)
+        if (date == nil) {
+            return "00:00"
+        }
+        
+        let dFormatter = DateFormatter()
+        dFormatter.dateFormat = "HH:mm"
+        return dFormatter.string(for: date) ?? "00:00"
+    }
+    
+    func getTimeDifference() -> Int {
+        if (self.RealTime == nil) {
+            return 0
+        }
+        let realtimeDate = DateParser.extractTimestamp(time: self.RealTime!)
+        let scheduledTimeDate = DateParser.extractTimestamp(time: self.ScheduledTime)
+        if (realtimeDate == nil || scheduledTimeDate == nil) {
+            return 0
+        }
+
+        let calendar = Calendar.current
+        
+        let realtimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: realtimeDate!)
+        let scheduledTimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: scheduledTimeDate!)
+        
+        return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
+    }
+    
+    func getIn() -> Int {
+        var time = self.ScheduledTime
+        if (self.RealTime != nil) {
+            time = self.RealTime!
+        }
+        let timeDate = DateParser.extractTimestamp(time: time)
+        
+        let calendar = Calendar.current
+        
+        let timeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: timeDate!)
+        let currentComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
+        
+        var inTime = calendar.dateComponents([.minute], from: currentComponents, to: timeComponents).minute!
+        
+        if (inTime < 0) {
+            inTime = 0
+        }
+
+        return inTime
+    }
+    
+    func getName() -> String {
+        return "\(self.LineName) \(self.Direction)"
+    }
+    
+    func getIcon() -> String {
+        switch (self.Mot) {
+        case "Tram":
+            return "cablecar"
+        case "CityBus":
+            return "bus"
+        case "IntercityBus":
+            return "bus"
+        case "SuburbanRailway":
+            return "tram"
+        case "Train":
+            return "tram"
+        case "Cableway":
+            return "cablecar"
+        case "Ferry":
+            return "ferry"
+        case "HailedSharedTaxi":
+            return "car"
+        default:
+            return "cablecar"
+        }
+    }
+}

@@ -11,7 +11,94 @@
 		D03A268529EEB6C9005B0600 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A268429EEB6C9005B0600 /* ContentView.swift */; };
 		D03A268729EEB6C9005B0600 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D03A268629EEB6C9005B0600 /* Assets.xcassets */; };
 		D03A268A29EEB6C9005B0600 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D03A268929EEB6C9005B0600 /* Preview Assets.xcassets */; };
+		D03A269229EEB93E005B0600 /* stops.json in Resources */ = {isa = PBXBuildFile; fileRef = D03A269129EEB93E005B0600 /* stops.json */; };
+		D03A269629EEB9A7005B0600 /* StopRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269529EEB9A7005B0600 /* StopRow.swift */; };
+		D03A269929EEBA9B005B0600 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269829EEBA9B005B0600 /* Stop.swift */; };
+		D03A269C29EEBB3C005B0600 /* StopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269B29EEBB3C005B0600 /* StopData.swift */; };
+		D03A269E29EEBC3F005B0600 /* StopsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269D29EEBC3F005B0600 /* StopsView.swift */; };
+		D03A26A029EEC248005B0600 /* DepartureRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269F29EEC248005B0600 /* DepartureRow.swift */; };
+		D03A26A229EEC2A2005B0600 /* departure.json in Resources */ = {isa = PBXBuildFile; fileRef = D03A26A129EEC2A2005B0600 /* departure.json */; };
+		D040EC1729EECA20002DFEBF /* DepartureMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1629EECA20002DFEBF /* DepartureMonitor.swift */; };
+		D040EC1929EECA9A002DFEBF /* DepartureStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1829EECA9A002DFEBF /* DepartureStatus.swift */; };
+		D040EC1B29EECAF2002DFEBF /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1A29EECAF2002DFEBF /* Departure.swift */; };
+		D040EC1D29EECB20002DFEBF /* DeparturePlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1C29EECB20002DFEBF /* DeparturePlatform.swift */; };
+		D040EC1F29EECDFB002DFEBF /* DepartureRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1E29EECDFB002DFEBF /* DepartureRequest.swift */; };
+		D040EC2229EED774002DFEBF /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2129EED774002DFEBF /* DateParser.swift */; };
+		D040EC2429EEDE3C002DFEBF /* DepartureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2329EEDE3C002DFEBF /* DepartureView.swift */; };
+		D040EC2729EEEB85002DFEBF /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2629EEEB85002DFEBF /* LocationManager.swift */; };
+		D040EC2B29EEFA3E002DFEBF /* FavoriteStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */; };
+		D040EC2E29EF0371002DFEBF /* StopManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2D29EF0371002DFEBF /* StopManager.swift */; };
+		D0BD668429EFE0AA004E574C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BD664929EFDD50004E574C /* WidgetKit.framework */; };
+		D0BD668529EFE0AA004E574C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BD664B29EFDD50004E574C /* SwiftUI.framework */; };
+		D0BD668829EFE0AA004E574C /* MonitorWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668729EFE0AA004E574C /* MonitorWidgetBundle.swift */; };
+		D0BD668A29EFE0AA004E574C /* MonitorWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668929EFE0AA004E574C /* MonitorWidgetLiveActivity.swift */; };
+		D0BD668C29EFE0AA004E574C /* MonitorWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668B29EFE0AA004E574C /* MonitorWidget.swift */; };
+		D0BD668F29EFE0AB004E574C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0BD668E29EFE0AB004E574C /* Assets.xcassets */; };
+		D0BD669129EFE0AB004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668D29EFE0AA004E574C /* MonitorWidget.intentdefinition */; };
+		D0BD669229EFE0AB004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668D29EFE0AA004E574C /* MonitorWidget.intentdefinition */; };
+		D0BD669529EFE0AB004E574C /* MonitorWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D0BD668329EFE0AA004E574C /* MonitorWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D0BD669B29EFE18C004E574C /* MonitorWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD669A29EFE18C004E574C /* MonitorWidgetEntryView.swift */; };
+		D0BD669C29EFE9F9004E574C /* stops.json in Resources */ = {isa = PBXBuildFile; fileRef = D03A269129EEB93E005B0600 /* stops.json */; };
+		D0BD669D29EFEA00004E574C /* StopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269B29EEBB3C005B0600 /* StopData.swift */; };
+		D0BD669E29EFEA03004E574C /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269829EEBA9B005B0600 /* Stop.swift */; };
+		D0BD669F29EFEA06004E574C /* departure.json in Resources */ = {isa = PBXBuildFile; fileRef = D03A26A129EEC2A2005B0600 /* departure.json */; };
+		D0BD66A029EFEA0A004E574C /* DepartureMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1629EECA20002DFEBF /* DepartureMonitor.swift */; };
+		D0BD66A129EFEA0D004E574C /* DepartureStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1829EECA9A002DFEBF /* DepartureStatus.swift */; };
+		D0BD66A229EFEA0F004E574C /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1A29EECAF2002DFEBF /* Departure.swift */; };
+		D0BD66A329EFEA12004E574C /* DeparturePlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1C29EECB20002DFEBF /* DeparturePlatform.swift */; };
+		D0BD66A429EFEA14004E574C /* DepartureRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1E29EECDFB002DFEBF /* DepartureRequest.swift */; };
+		D0BD66AB29EFECF1004E574C /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BD66AA29EFECF1004E574C /* Intents.framework */; };
+		D0BD66AE29EFECF1004E574C /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66AD29EFECF1004E574C /* IntentHandler.swift */; };
+		D0BD66B229EFECF1004E574C /* MonitorIntents.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D0BD66A929EFECF1004E574C /* MonitorIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D0BD66B629EFECF8004E574C /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66AD29EFECF1004E574C /* IntentHandler.swift */; };
+		D0BD66B829EFEEB9004E574C /* stops.json in Resources */ = {isa = PBXBuildFile; fileRef = D03A269129EEB93E005B0600 /* stops.json */; };
+		D0BD66B929EFEEC0004E574C /* StopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269B29EEBB3C005B0600 /* StopData.swift */; };
+		D0BD66BA29EFEEC2004E574C /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269829EEBA9B005B0600 /* Stop.swift */; };
+		D0BD66BB29EFEED8004E574C /* DepartureMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1629EECA20002DFEBF /* DepartureMonitor.swift */; };
+		D0BD66BC29EFEEDB004E574C /* DepartureStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1829EECA9A002DFEBF /* DepartureStatus.swift */; };
+		D0BD66BD29EFEEDD004E574C /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1A29EECAF2002DFEBF /* Departure.swift */; };
+		D0BD66BE29EFEEDF004E574C /* DeparturePlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1C29EECB20002DFEBF /* DeparturePlatform.swift */; };
+		D0BD66BF29EFEEE1004E574C /* DepartureRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1E29EECDFB002DFEBF /* DepartureRequest.swift */; };
+		D0BD66C029EFEEFA004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668D29EFE0AA004E574C /* MonitorWidget.intentdefinition */; };
+		D0BD66C129EFEF0D004E574C /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2129EED774002DFEBF /* DateParser.swift */; };
+		D0BD66C229EFEF0F004E574C /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2129EED774002DFEBF /* DateParser.swift */; };
+		D0BD66CA29EFF64D004E574C /* MonitorEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66C929EFF64D004E574C /* MonitorEntry.swift */; };
+		D0BD66CE29EFFAFF004E574C /* MonitorWidgetRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66CD29EFFAFF004E574C /* MonitorWidgetRow.swift */; };
+		D0BD66CF29EFFFC4004E574C /* FavoriteStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */; };
+		D0BD66D029EFFFC5004E574C /* FavoriteStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D0BD669329EFE0AB004E574C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D03A267729EEB6C9005B0600 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0BD668229EFE0AA004E574C;
+			remoteInfo = MonitorWidgetExtension;
+		};
+		D0BD66B029EFECF1004E574C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D03A267729EEB6C9005B0600 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0BD66A829EFECF1004E574C;
+			remoteInfo = MonitorIntents;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D0BD665D29EFDD51004E574C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D0BD669529EFE0AB004E574C /* MonitorWidgetExtension.appex in Embed Foundation Extensions */,
+				D0BD66B229EFECF1004E574C /* MonitorIntents.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D03A267F29EEB6C9005B0600 /* Haltestellenmonitor1-DD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Haltestellenmonitor1-DD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -19,6 +106,41 @@
 		D03A268429EEB6C9005B0600 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D03A268629EEB6C9005B0600 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D03A268929EEB6C9005B0600 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D03A269129EEB93E005B0600 /* stops.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stops.json; sourceTree = "<group>"; };
+		D03A269529EEB9A7005B0600 /* StopRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopRow.swift; sourceTree = "<group>"; };
+		D03A269829EEBA9B005B0600 /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
+		D03A269B29EEBB3C005B0600 /* StopData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopData.swift; sourceTree = "<group>"; };
+		D03A269D29EEBC3F005B0600 /* StopsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopsView.swift; sourceTree = "<group>"; };
+		D03A269F29EEC248005B0600 /* DepartureRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRow.swift; sourceTree = "<group>"; };
+		D03A26A129EEC2A2005B0600 /* departure.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = departure.json; sourceTree = "<group>"; };
+		D040EC1629EECA20002DFEBF /* DepartureMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureMonitor.swift; sourceTree = "<group>"; };
+		D040EC1829EECA9A002DFEBF /* DepartureStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureStatus.swift; sourceTree = "<group>"; };
+		D040EC1A29EECAF2002DFEBF /* Departure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Departure.swift; sourceTree = "<group>"; };
+		D040EC1C29EECB20002DFEBF /* DeparturePlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeparturePlatform.swift; sourceTree = "<group>"; };
+		D040EC1E29EECDFB002DFEBF /* DepartureRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRequest.swift; sourceTree = "<group>"; };
+		D040EC2129EED774002DFEBF /* DateParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateParser.swift; sourceTree = "<group>"; };
+		D040EC2329EEDE3C002DFEBF /* DepartureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureView.swift; sourceTree = "<group>"; };
+		D040EC2629EEEB85002DFEBF /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D040EC2829EEEC2B002DFEBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D040EC2929EEF92C002DFEBF /* Haltestellenmonitor1-DD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Haltestellenmonitor1-DD.entitlements"; sourceTree = "<group>"; };
+		D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteStop.swift; sourceTree = "<group>"; };
+		D040EC2D29EF0371002DFEBF /* StopManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopManager.swift; sourceTree = "<group>"; };
+		D0BD664929EFDD50004E574C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		D0BD664B29EFDD50004E574C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		D0BD668329EFE0AA004E574C /* MonitorWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MonitorWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0BD668729EFE0AA004E574C /* MonitorWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorWidgetBundle.swift; sourceTree = "<group>"; };
+		D0BD668929EFE0AA004E574C /* MonitorWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		D0BD668B29EFE0AA004E574C /* MonitorWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorWidget.swift; sourceTree = "<group>"; };
+		D0BD668D29EFE0AA004E574C /* MonitorWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = MonitorWidget.intentdefinition; sourceTree = "<group>"; };
+		D0BD668E29EFE0AB004E574C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D0BD669029EFE0AB004E574C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0BD669A29EFE18C004E574C /* MonitorWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorWidgetEntryView.swift; sourceTree = "<group>"; };
+		D0BD66A929EFECF1004E574C /* MonitorIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MonitorIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0BD66AA29EFECF1004E574C /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		D0BD66AD29EFECF1004E574C /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		D0BD66AF29EFECF1004E574C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0BD66C929EFF64D004E574C /* MonitorEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorEntry.swift; sourceTree = "<group>"; };
+		D0BD66CD29EFFAFF004E574C /* MonitorWidgetRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorWidgetRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,13 +151,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D0BD668029EFE0AA004E574C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0BD668529EFE0AA004E574C /* SwiftUI.framework in Frameworks */,
+				D0BD668429EFE0AA004E574C /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0BD66A629EFECF1004E574C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0BD66AB29EFECF1004E574C /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		D03A267629EEB6C9005B0600 = {
 			isa = PBXGroup;
 			children = (
+				D03A269029EEB921005B0600 /* Data */,
 				D03A268129EEB6C9005B0600 /* Haltestellenmonitor1-DD */,
+				D0BD668629EFE0AA004E574C /* MonitorWidget */,
+				D0BD66AC29EFECF1004E574C /* MonitorIntents */,
+				D0BD664829EFDD50004E574C /* Frameworks */,
 				D03A268029EEB6C9005B0600 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,6 +187,8 @@
 			isa = PBXGroup;
 			children = (
 				D03A267F29EEB6C9005B0600 /* Haltestellenmonitor1-DD.app */,
+				D0BD668329EFE0AA004E574C /* MonitorWidgetExtension.appex */,
+				D0BD66A929EFECF1004E574C /* MonitorIntents.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -51,6 +196,12 @@
 		D03A268129EEB6C9005B0600 /* Haltestellenmonitor1-DD */ = {
 			isa = PBXGroup;
 			children = (
+				D040EC2929EEF92C002DFEBF /* Haltestellenmonitor1-DD.entitlements */,
+				D040EC2829EEEC2B002DFEBF /* Info.plist */,
+				D040EC2529EEEB7B002DFEBF /* Managers */,
+				D040EC2029EED766002DFEBF /* Helper */,
+				D03A269729EEBA87005B0600 /* Models */,
+				D03A269329EEB976005B0600 /* Views */,
 				D03A268229EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift */,
 				D03A268429EEB6C9005B0600 /* ContentView.swift */,
 				D03A268629EEB6C9005B0600 /* Assets.xcassets */,
@@ -67,6 +218,125 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		D03A269029EEB921005B0600 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D03A26A129EEC2A2005B0600 /* departure.json */,
+				D03A269129EEB93E005B0600 /* stops.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D03A269329EEB976005B0600 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D03A269429EEB98E005B0600 /* Rows */,
+				D03A269D29EEBC3F005B0600 /* StopsView.swift */,
+				D040EC2329EEDE3C002DFEBF /* DepartureView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D03A269429EEB98E005B0600 /* Rows */ = {
+			isa = PBXGroup;
+			children = (
+				D03A269529EEB9A7005B0600 /* StopRow.swift */,
+				D03A269F29EEC248005B0600 /* DepartureRow.swift */,
+			);
+			path = Rows;
+			sourceTree = "<group>";
+		};
+		D03A269729EEBA87005B0600 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D03A269B29EEBB3C005B0600 /* StopData.swift */,
+				D03A269829EEBA9B005B0600 /* Stop.swift */,
+				D040EC1629EECA20002DFEBF /* DepartureMonitor.swift */,
+				D040EC1829EECA9A002DFEBF /* DepartureStatus.swift */,
+				D040EC1A29EECAF2002DFEBF /* Departure.swift */,
+				D040EC1C29EECB20002DFEBF /* DeparturePlatform.swift */,
+				D040EC1E29EECDFB002DFEBF /* DepartureRequest.swift */,
+				D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D040EC2029EED766002DFEBF /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				D040EC2129EED774002DFEBF /* DateParser.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		D040EC2529EEEB7B002DFEBF /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				D040EC2629EEEB85002DFEBF /* LocationManager.swift */,
+				D040EC2D29EF0371002DFEBF /* StopManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		D0BD664829EFDD50004E574C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D0BD664929EFDD50004E574C /* WidgetKit.framework */,
+				D0BD664B29EFDD50004E574C /* SwiftUI.framework */,
+				D0BD66AA29EFECF1004E574C /* Intents.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D0BD668629EFE0AA004E574C /* MonitorWidget */ = {
+			isa = PBXGroup;
+			children = (
+				D0BD66C629EFF621004E574C /* Models */,
+				D0BD669929EFE169004E574C /* Views */,
+				D0BD668729EFE0AA004E574C /* MonitorWidgetBundle.swift */,
+				D0BD668929EFE0AA004E574C /* MonitorWidgetLiveActivity.swift */,
+				D0BD668B29EFE0AA004E574C /* MonitorWidget.swift */,
+				D0BD668D29EFE0AA004E574C /* MonitorWidget.intentdefinition */,
+				D0BD668E29EFE0AB004E574C /* Assets.xcassets */,
+				D0BD669029EFE0AB004E574C /* Info.plist */,
+			);
+			path = MonitorWidget;
+			sourceTree = "<group>";
+		};
+		D0BD669929EFE169004E574C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D0BD66CC29EFFAEB004E574C /* Rows */,
+				D0BD669A29EFE18C004E574C /* MonitorWidgetEntryView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D0BD66AC29EFECF1004E574C /* MonitorIntents */ = {
+			isa = PBXGroup;
+			children = (
+				D0BD66AD29EFECF1004E574C /* IntentHandler.swift */,
+				D0BD66AF29EFECF1004E574C /* Info.plist */,
+			);
+			path = MonitorIntents;
+			sourceTree = "<group>";
+		};
+		D0BD66C629EFF621004E574C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D0BD66C929EFF64D004E574C /* MonitorEntry.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D0BD66CC29EFFAEB004E574C /* Rows */ = {
+			isa = PBXGroup;
+			children = (
+				D0BD66CD29EFFAFF004E574C /* MonitorWidgetRow.swift */,
+			);
+			path = Rows;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,15 +347,52 @@
 				D03A267B29EEB6C9005B0600 /* Sources */,
 				D03A267C29EEB6C9005B0600 /* Frameworks */,
 				D03A267D29EEB6C9005B0600 /* Resources */,
+				D0BD665D29EFDD51004E574C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D0BD669429EFE0AB004E574C /* PBXTargetDependency */,
+				D0BD66B129EFECF1004E574C /* PBXTargetDependency */,
 			);
 			name = "Haltestellenmonitor1-DD";
 			productName = "Haltestellenmonitor1-DD";
 			productReference = D03A267F29EEB6C9005B0600 /* Haltestellenmonitor1-DD.app */;
 			productType = "com.apple.product-type.application";
+		};
+		D0BD668229EFE0AA004E574C /* MonitorWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0BD669629EFE0AB004E574C /* Build configuration list for PBXNativeTarget "MonitorWidgetExtension" */;
+			buildPhases = (
+				D0BD667F29EFE0AA004E574C /* Sources */,
+				D0BD668029EFE0AA004E574C /* Frameworks */,
+				D0BD668129EFE0AA004E574C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MonitorWidgetExtension;
+			productName = MonitorWidgetExtension;
+			productReference = D0BD668329EFE0AA004E574C /* MonitorWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		D0BD66A829EFECF1004E574C /* MonitorIntents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0BD66B329EFECF2004E574C /* Build configuration list for PBXNativeTarget "MonitorIntents" */;
+			buildPhases = (
+				D0BD66A529EFECF1004E574C /* Sources */,
+				D0BD66A629EFECF1004E574C /* Frameworks */,
+				D0BD66A729EFECF1004E574C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MonitorIntents;
+			productName = MonitorIntents;
+			productReference = D0BD66A929EFECF1004E574C /* MonitorIntents.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -100,15 +407,21 @@
 					D03A267E29EEB6C9005B0600 = {
 						CreatedOnToolsVersion = 14.3;
 					};
+					D0BD668229EFE0AA004E574C = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					D0BD66A829EFECF1004E574C = {
+						CreatedOnToolsVersion = 14.3;
+					};
 				};
 			};
 			buildConfigurationList = D03A267A29EEB6C9005B0600 /* Build configuration list for PBXProject "Haltestellenmonitor1-DD" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = de;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				de,
 			);
 			mainGroup = D03A267629EEB6C9005B0600;
 			productRefGroup = D03A268029EEB6C9005B0600 /* Products */;
@@ -116,6 +429,8 @@
 			projectRoot = "";
 			targets = (
 				D03A267E29EEB6C9005B0600 /* Haltestellenmonitor1-DD */,
+				D0BD668229EFE0AA004E574C /* MonitorWidgetExtension */,
+				D0BD66A829EFECF1004E574C /* MonitorIntents */,
 			);
 		};
 /* End PBXProject section */
@@ -127,6 +442,26 @@
 			files = (
 				D03A268A29EEB6C9005B0600 /* Preview Assets.xcassets in Resources */,
 				D03A268729EEB6C9005B0600 /* Assets.xcassets in Resources */,
+				D03A26A229EEC2A2005B0600 /* departure.json in Resources */,
+				D03A269229EEB93E005B0600 /* stops.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0BD668129EFE0AA004E574C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0BD668F29EFE0AB004E574C /* Assets.xcassets in Resources */,
+				D0BD669C29EFE9F9004E574C /* stops.json in Resources */,
+				D0BD669F29EFEA06004E574C /* departure.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0BD66A729EFECF1004E574C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0BD66B829EFEEB9004E574C /* stops.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,12 +472,83 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D040EC1929EECA9A002DFEBF /* DepartureStatus.swift in Sources */,
+				D03A269C29EEBB3C005B0600 /* StopData.swift in Sources */,
+				D040EC2E29EF0371002DFEBF /* StopManager.swift in Sources */,
+				D040EC2729EEEB85002DFEBF /* LocationManager.swift in Sources */,
+				D040EC2B29EEFA3E002DFEBF /* FavoriteStop.swift in Sources */,
+				D0BD669229EFE0AB004E574C /* MonitorWidget.intentdefinition in Sources */,
 				D03A268529EEB6C9005B0600 /* ContentView.swift in Sources */,
+				D03A269E29EEBC3F005B0600 /* StopsView.swift in Sources */,
+				D040EC1B29EECAF2002DFEBF /* Departure.swift in Sources */,
+				D03A269629EEB9A7005B0600 /* StopRow.swift in Sources */,
+				D040EC1F29EECDFB002DFEBF /* DepartureRequest.swift in Sources */,
+				D040EC2229EED774002DFEBF /* DateParser.swift in Sources */,
+				D040EC1729EECA20002DFEBF /* DepartureMonitor.swift in Sources */,
+				D03A26A029EEC248005B0600 /* DepartureRow.swift in Sources */,
 				D03A268329EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift in Sources */,
+				D040EC1D29EECB20002DFEBF /* DeparturePlatform.swift in Sources */,
+				D03A269929EEBA9B005B0600 /* Stop.swift in Sources */,
+				D040EC2429EEDE3C002DFEBF /* DepartureView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0BD667F29EFE0AA004E574C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0BD66A129EFEA0D004E574C /* DepartureStatus.swift in Sources */,
+				D0BD669E29EFEA03004E574C /* Stop.swift in Sources */,
+				D0BD66C229EFEF0F004E574C /* DateParser.swift in Sources */,
+				D0BD668829EFE0AA004E574C /* MonitorWidgetBundle.swift in Sources */,
+				D0BD669D29EFEA00004E574C /* StopData.swift in Sources */,
+				D0BD66CE29EFFAFF004E574C /* MonitorWidgetRow.swift in Sources */,
+				D0BD66A229EFEA0F004E574C /* Departure.swift in Sources */,
+				D0BD668A29EFE0AA004E574C /* MonitorWidgetLiveActivity.swift in Sources */,
+				D0BD66CF29EFFFC4004E574C /* FavoriteStop.swift in Sources */,
+				D0BD66B629EFECF8004E574C /* IntentHandler.swift in Sources */,
+				D0BD66A429EFEA14004E574C /* DepartureRequest.swift in Sources */,
+				D0BD66CA29EFF64D004E574C /* MonitorEntry.swift in Sources */,
+				D0BD668C29EFE0AA004E574C /* MonitorWidget.swift in Sources */,
+				D0BD66A029EFEA0A004E574C /* DepartureMonitor.swift in Sources */,
+				D0BD669B29EFE18C004E574C /* MonitorWidgetEntryView.swift in Sources */,
+				D0BD66A329EFEA12004E574C /* DeparturePlatform.swift in Sources */,
+				D0BD669129EFE0AB004E574C /* MonitorWidget.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0BD66A529EFECF1004E574C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0BD66D029EFFFC5004E574C /* FavoriteStop.swift in Sources */,
+				D0BD66BE29EFEEDF004E574C /* DeparturePlatform.swift in Sources */,
+				D0BD66BD29EFEEDD004E574C /* Departure.swift in Sources */,
+				D0BD66AE29EFECF1004E574C /* IntentHandler.swift in Sources */,
+				D0BD66BB29EFEED8004E574C /* DepartureMonitor.swift in Sources */,
+				D0BD66B929EFEEC0004E574C /* StopData.swift in Sources */,
+				D0BD66C029EFEEFA004E574C /* MonitorWidget.intentdefinition in Sources */,
+				D0BD66BA29EFEEC2004E574C /* Stop.swift in Sources */,
+				D0BD66BF29EFEEE1004E574C /* DepartureRequest.swift in Sources */,
+				D0BD66C129EFEF0D004E574C /* DateParser.swift in Sources */,
+				D0BD66BC29EFEEDB004E574C /* DepartureStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D0BD669429EFE0AB004E574C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0BD668229EFE0AA004E574C /* MonitorWidgetExtension */;
+			targetProxy = D0BD669329EFE0AB004E574C /* PBXContainerItemProxy */;
+		};
+		D0BD66B129EFECF1004E574C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0BD66A829EFECF1004E574C /* MonitorIntents */;
+			targetProxy = D0BD66B029EFECF1004E574C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D03A268B29EEB6C9005B0600 /* Debug */ = {
@@ -262,14 +668,20 @@
 		D03A268E29EEB6C9005B0600 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Haltestellenmonitor1-DD/Haltestellenmonitor1-DD.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Haltestellenmonitor1-DD/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Haltestellenmonitor1-DD/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Haltestellenmonitor Dresden";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Der Standort wird verwendet um den Abstand zur nächsten Haltestelle zu berechnen.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -279,7 +691,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -291,14 +703,20 @@
 		D03A268F29EEB6C9005B0600 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Haltestellenmonitor1-DD/Haltestellenmonitor1-DD.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Haltestellenmonitor1-DD/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Haltestellenmonitor1-DD/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Haltestellenmonitor Dresden";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Der Standort wird verwendet um den Abstand zur nächsten Haltestelle zu berechnen.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -308,9 +726,113 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D0BD669729EFE0AB004E574C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WGL37RNHJ6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MonitorWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MonitorWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D0BD669829EFE0AB004E574C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WGL37RNHJ6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MonitorWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MonitorWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D0BD66B429EFECF2004E574C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WGL37RNHJ6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MonitorIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MonitorIntents;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorIntents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D0BD66B529EFECF2004E574C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WGL37RNHJ6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MonitorIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MonitorIntents;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorIntents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -334,6 +856,24 @@
 			buildConfigurations = (
 				D03A268E29EEB6C9005B0600 /* Debug */,
 				D03A268F29EEB6C9005B0600 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0BD669629EFE0AB004E574C /* Build configuration list for PBXNativeTarget "MonitorWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0BD669729EFE0AB004E574C /* Debug */,
+				D0BD669829EFE0AB004E574C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0BD66B329EFECF2004E574C /* Build configuration list for PBXNativeTarget "MonitorIntents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0BD66B429EFECF2004E574C /* Debug */,
+				D0BD66B529EFECF2004E574C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

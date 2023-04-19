@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var locationManager = LocationManager()
+    @StateObject var favoriteStops = FavoriteStop()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView(selection: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Selection@*/.constant(1)/*@END_MENU_TOKEN@*/) {
+            StopsView().tabItem {
+                Label("Haltestellen", systemImage: "h.circle") }.tag(1)
+            Text("Tab Content 2").tabItem { Label("Verbindungen", systemImage: "app.connected.to.app.below.fill") }.tag(2)
+            Text("Tab Content 3").tabItem { Label("Karte", systemImage: "map") }.tag(3)
         }
-        .padding()
+        .environmentObject(locationManager)
+        .environmentObject(favoriteStops)
     }
 }
 
