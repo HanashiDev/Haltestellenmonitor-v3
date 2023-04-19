@@ -1,0 +1,480 @@
+{
+    "SessionId": "2385177703:efa1",
+    "Status": {
+        "Code": "Ok"
+    },
+    "Routes": [
+        {
+            "Price": "3,00",
+            "ShortDistance": true,
+            "Net": "voe",
+            "Duration": 1,
+            "Interchanges": 0,
+            "MotChain": [
+                {
+                    "DlId": "de:vvo:11-8",
+                    "StatelessId": "voe:11008: :R:j23",
+                    "Type": "Tram",
+                    "Name": "8",
+                    "Direction": "Hellerau",
+                    "Changes": [],
+                    "Diva": {
+                        "Number": "11008",
+                        "Network": "voe"
+                    },
+                    "TransportationCompany": "DVB",
+                    "OperatorCode": "16",
+                    "ProductName": "Straßenbahn",
+                    "TrainNumber": "805"
+                }
+            ],
+            "FareZoneOrigin": 10,
+            "FareZoneDestination": 10,
+            "RouteId": 0,
+            "PartialRoutes": [
+                {
+                    "PartialRouteId": 0,
+                    "Duration": 1,
+                    "Mot": {
+                        "DlId": "de:vvo:11-8",
+                        "StatelessId": "voe:11008: :R:j23",
+                        "Type": "Tram",
+                        "Name": "8",
+                        "Direction": "Hellerau",
+                        "Changes": [],
+                        "Diva": {
+                            "Number": "11008",
+                            "Network": "voe"
+                        },
+                        "TransportationCompany": "DVB",
+                        "OperatorCode": "16",
+                        "ProductName": "Straßenbahn",
+                        "TrainNumber": "805"
+                    },
+                    "MapDataIndex": 0,
+                    "Shift": "None",
+                    "RegularStops": [
+                        {
+                            "ArrivalTime": "/Date(1681916580000-0000)/",
+                            "DepartureTime": "/Date(1681916580000-0000)/",
+                            "ArrivalRealTime": "/Date(1681916580000-0000)/",
+                            "DepartureRealTime": "/Date(1681916580000-0000)/",
+                            "Place": "Dresden",
+                            "Name": "Südvorstadt",
+                            "Type": "Stop",
+                            "DataId": "33000133",
+                            "DhId": "de:14612:133",
+                            "Platform": {
+                                "Name": "1",
+                                "Type": "Platform"
+                            },
+                            "Latitude": 5656830,
+                            "Longitude": 4620907,
+                            "DepartureState": "InTime",
+                            "ArrivalState": "InTime",
+                            "CancelReasons": [],
+                            "ParkAndRail": []
+                        },
+                        {
+                            "ArrivalTime": "/Date(1681916640000-0000)/",
+                            "DepartureTime": "/Date(1681916640000-0000)/",
+                            "ArrivalRealTime": "/Date(1681916640000-0000)/",
+                            "DepartureRealTime": "/Date(1681916640000-0000)/",
+                            "Place": "Dresden",
+                            "Name": "Nürnberger Platz",
+                            "Type": "Stop",
+                            "DataId": "33000132",
+                            "DhId": "de:14612:132",
+                            "Platform": {
+                                "Name": "3",
+                                "Type": "Platform"
+                            },
+                            "Latitude": 5656647,
+                            "Longitude": 4621197,
+                            "DepartureState": "InTime",
+                            "ArrivalState": "InTime",
+                            "CancelReasons": [],
+                            "ParkAndRail": []
+                        }
+                    ],
+                    "NextDepartureTimes": [
+                        "/Date(1681917180000-0000)/",
+                        "/Date(1681917780000-0000)/"
+                    ],
+                    "PreviousDepartureTimes": [
+                        "/Date(1681915980000-0000)/",
+                        "/Date(1681915380000-0000)/"
+                    ]
+                }
+            ],
+            "MapData": [
+                "Tram|5656831|4620906|5656835|4620907|5656839|4620909|5656843|4620913|5656845|4620915|5656848|4620920|5656851|4620925|5656852|4620932|5656850|4620940|5656848|4620947|5656842|4620958|5656837|4620968|5656833|4620974|5656828|4620982|5656823|4620989|5656816|4620996|5656809|4621003|5656802|4621009|5656793|4621016|5656784|4621022|5656771|4621029|5656765|4621032|5656758|4621038|5656751|4621045|5656739|4621062|5656700|4621120|5656687|4621139|5656669|4621166|5656648|4621197|"
+            ]
+        },
+        {
+            "Price": "3,00",
+            "ShortDistance": true,
+            "Net": "voe",
+            "Duration": 4,
+            "Interchanges": 0,
+            "MotChain": [
+                {
+                    "DlId": "",
+                    "StatelessId": ":: : :",
+                    "Type": "Footpath",
+                    "Name": "Fussweg",
+                    "Changes": [],
+                    "Diva": {
+                        "Number": "",
+                        "Network": ""
+                    },
+                    "TransportationCompany": "",
+                    "OperatorCode": "",
+                    "ProductName": "Fussweg",
+                    "TrainNumber": ""
+                },
+                {
+                    "DlId": "de:vvo:23-333",
+                    "StatelessId": "voe:23333: :R:j23",
+                    "Type": "PlusBus",
+                    "Name": "333",
+                    "Direction": "Dresden Ammonstraße / Budapester Straße",
+                    "Changes": [],
+                    "Diva": {
+                        "Number": "23333",
+                        "Network": "voe"
+                    },
+                    "TransportationCompany": "RVSOE",
+                    "OperatorCode": "3",
+                    "ProductName": "PlusBus",
+                    "TrainNumber": ""
+                }
+            ],
+            "FareZoneOrigin": 10,
+            "FareZoneDestination": 10,
+            "RouteId": 1,
+            "PartialRoutes": [
+                {
+                    "Duration": 3,
+                    "Mot": {
+                        "DlId": "",
+                        "StatelessId": ":: : :",
+                        "Type": "Footpath",
+                        "Name": "Fussweg",
+                        "Changes": [],
+                        "Diva": {
+                            "Number": "",
+                            "Network": ""
+                        },
+                        "TransportationCompany": "",
+                        "OperatorCode": "",
+                        "ProductName": "Fussweg",
+                        "TrainNumber": ""
+                    },
+                    "MapDataIndex": 0,
+                    "Shift": "None",
+                    "RegularStops": [
+                        {
+                            "ArrivalTime": "/Date(1681916820000-0000)/",
+                            "DepartureTime": "/Date(1681916820000-0000)/",
+                            "Place": "Dresden",
+                            "Name": "Südvorstadt",
+                            "Type": "Stop",
+                            "DataId": "33000133",
+                            "DhId": "de:14612:133",
+                            "Latitude": 5656846,
+                            "Longitude": 4620915,
+                            "CancelReasons": [],
+                            "ParkAndRail": []
+                        },
+                        {
+                            "ArrivalTime": "/Date(1681917000000-0000)/",
+                            "DepartureTime": "/Date(1681917000000-0000)/",
+                            "Place": "Dresden",
+                            "Name": "Bernhardstraße",
+                            "Type": "Stop",
+                            "DataId": "33000724",
+                            "DhId": "de:14612:724",
+                            "Platform": {
+                                "Name": "1",
+                                "Type": "Platform"
+                            },
+                            "Latitude": 5656907,
+                            "Longitude": 4620805,
+                            "CancelReasons": [],
+                            "ParkAndRail": []
+                        }
+                    ],
+                    "NextDepartureTimes": [],
+                    "PreviousDepartureTimes": []
+                },
+                {
+                    "PartialRouteId": 1,
+                    "Duration": 1,
+                    "Mot": {
+                        "DlId": "de:vvo:23-333",
+                        "StatelessId": "voe:23333: :R:j23",
+                        "Type": "PlusBus",
+                        "Name": "333",
+                        "Direction": "Dresden Ammonstraße / Budapester Straße",
+                        "Changes": [],
+                        "Diva": {
+                            "Number": "23333",
+                            "Network": "voe"
+                        },
+                        "TransportationCompany": "RVSOE",
+                        "OperatorCode": "3",
+                        "ProductName": "PlusBus",
+                        "TrainNumber": ""
+                    },
+                    "MapDataIndex": 1,
+                    "Shift": "None",
+                    "Infos": [
+                        "PlusBus: Regionalbus, der täglich im Takt mit einheitlicher Linienführung und guten Zuganschlüssen verkehrt. <a href=\"https://www.vvo-online.de/de/vvo/projekte-tagungen/plusbus-6627\" target=\"_blank\">mehr &gt;</a>"
+                    ],
+                    "RegularStops": [
+                        {
+                            "ArrivalTime": "/Date(1681917000000-0000)/",
+                            "DepartureTime": "/Date(1681917000000-0000)/",
+                            "ArrivalRealTime": "/Date(1681917000000-0000)/",
+                            "DepartureRealTime": "/Date(1681917000000-0000)/",
+                            "Place": "Dresden",
+                            "Name": "Bernhardstraße",
+                            "Type": "Stop",
+                            "DataId": "33000724",
+                            "DhId": "de:14612:724",
+                            "Platform": {
+                                "Name": "1",
+                                "Type": "Platform"
+                            },
+                            "Latitude": 5656907,
+                            "Longitude": 4620805,
+                            "DepartureState": "InTime",
+                            "ArrivalState": "InTime",
+                            "CancelReasons": [],
+                            "ParkAndRail": []
+                        },
+                        {
+                            "ArrivalTime": "/Date(1681917060000-0000)/",
+                            "DepartureTime": "/Date(1681917060000-0000)/",
+                            "ArrivalRealTime": "/Date(1681917060000-0000)/",
+                            "DepartureRealTime": "/Date(1681917060000-0000)/",
+                            "Place": "Dresden",
+                            "Name": "Nürnberger Platz",
+                            "Type": "Stop",
+                            "DataId": "33000132",
+                            "DhId": "de:14612:132",
+                            "Platform": {
+                                "Name": "4",
+                                "Type": "Platform"
+                            },
+                            "Latitude": 5656665,
+                            "Longitude": 4621160,
+                            "DepartureState": "InTime",
+                            "ArrivalState": "InTime",
+                            "CancelReasons": [],
+                            "ParkAndRail": []
+                        }
+                    ],
+                    "NextDepartureTimes": [
+                        "/Date(1681918800000-0000)/",
+                        "/Date(1681920420000-0000)/"
+                    ],
+                    "PreviousDepartureTimes": [
+                        "/Date(1681915200000-0000)/",
+                        "/Date(1681913400000-0000)/"
+                    ]
+                }
+            ],
+            "MapData": [
+                "Footpath|5656846|4620915|5656847|4620913|5656855|4620902|5656850|4620896|5656852|4620893|5656859|4620881|5656864|4620882|5656867|4620882|5656869|4620877|5656873|4620861|5656880|4620851|5656901|4620821|5656909|4620808|",
+                "PlusBus|5656919|4620794|5656910|4620806|5656880|4620851|5656873|4620861|5656862|4620870|5656852|4620877|5656836|4620887|5656826|4620894|5656815|4620902|5656808|4620908|5656798|4620918|5656790|4620928|5656782|4620940|5656774|4620953|5656768|4620963|5656763|4620976|5656758|4620991|5656755|4621006|5656753|4621019|5656751|4621031|5656749|4621037|5656746|4621043|5656743|4621053|5656737|4621061|5656699|4621119|5656692|4621129|5656676|4621152|5656669|4621163|"
+            ]
+        },
+        {
+            "Price": "3,00",
+            "ShortDistance": true,
+            "Net": "voe",
+            "Duration": 1,
+            "Interchanges": 0,
+            "MotChain": [
+                {
+                    "DlId": "de:vvo:11-8",
+                    "StatelessId": "voe:11008: :R:j23",
+                    "Type": "Tram",
+                    "Name": "8",
+                    "Direction": "Hellerau",
+                    "Changes": [],
+                    "Diva": {
+                        "Number": "11008",
+                        "Network": "voe"
+                    },
+                    "TransportationCompany": "DVB",
+                    "OperatorCode": "16",
+                    "ProductName": "Straßenbahn",
+                    "TrainNumber": "805"
+                }
+            ],
+            "FareZoneOrigin": 10,
+            "FareZoneDestination": 10,
+            "RouteId": 2,
+            "PartialRoutes": [
+                {
+                    "PartialRouteId": 0,
+                    "Duration": 1,
+                    "Mot": {
+                        "DlId": "de:vvo:11-8",
+                        "StatelessId": "voe:11008: :R:j23",
+                        "Type": "Tram",
+                        "Name": "8",
+                        "Direction": "Hellerau",
+                        "Changes": [],
+                        "Diva": {
+                            "Number": "11008",
+                            "Network": "voe"
+                        },
+                        "TransportationCompany": "DVB",
+                        "OperatorCode": "16",
+                        "ProductName": "Straßenbahn",
+                        "TrainNumber": "805"
+                    },
+                    "MapDataIndex": 0,
+                    "Shift": "None",
+                    "RegularStops": [
+                        {
+                            "ArrivalTime": "/Date(1681917180000-0000)/",
+                            "DepartureTime": "/Date(1681917180000-0000)/",
+                            "ArrivalRealTime": "/Date(1681917180000-0000)/",
+                            "DepartureRealTime": "/Date(1681917180000-0000)/",
+                            "Place": "Dresden",
+                            "Name": "Südvorstadt",
+                            "Type": "Stop",
+                            "DataId": "33000133",
+                            "DhId": "de:14612:133",
+                            "Platform": {
+                                "Name": "1",
+                                "Type": "Platform"
+                            },
+                            "Latitude": 5656830,
+                            "Longitude": 4620907,
+                            "DepartureState": "InTime",
+                            "ArrivalState": "InTime",
+                            "CancelReasons": [],
+                            "ParkAndRail": []
+                        },
+                        {
+                            "ArrivalTime": "/Date(1681917240000-0000)/",
+                            "DepartureTime": "/Date(1681917240000-0000)/",
+                            "ArrivalRealTime": "/Date(1681917240000-0000)/",
+                            "DepartureRealTime": "/Date(1681917240000-0000)/",
+                            "Place": "Dresden",
+                            "Name": "Nürnberger Platz",
+                            "Type": "Stop",
+                            "DataId": "33000132",
+                            "DhId": "de:14612:132",
+                            "Platform": {
+                                "Name": "3",
+                                "Type": "Platform"
+                            },
+                            "Latitude": 5656647,
+                            "Longitude": 4621197,
+                            "DepartureState": "InTime",
+                            "ArrivalState": "InTime",
+                            "CancelReasons": [],
+                            "ParkAndRail": []
+                        }
+                    ],
+                    "NextDepartureTimes": [
+                        "/Date(1681917780000-0000)/",
+                        "/Date(1681918380000-0000)/"
+                    ],
+                    "PreviousDepartureTimes": [
+                        "/Date(1681916580000-0000)/",
+                        "/Date(1681915980000-0000)/"
+                    ]
+                }
+            ],
+            "MapData": [
+                "Tram|5656831|4620906|5656835|4620907|5656839|4620909|5656843|4620913|5656845|4620915|5656848|4620920|5656851|4620925|5656852|4620932|5656850|4620940|5656848|4620947|5656842|4620958|5656837|4620968|5656833|4620974|5656828|4620982|5656823|4620989|5656816|4620996|5656809|4621003|5656802|4621009|5656793|4621016|5656784|4621022|5656771|4621029|5656765|4621032|5656758|4621038|5656751|4621045|5656739|4621062|5656700|4621120|5656687|4621139|5656669|4621166|5656648|4621197|"
+            ]
+        },
+        {
+            "Net": "",
+            "Duration": 4,
+            "Interchanges": 0,
+            "MotChain": [
+                {
+                    "DlId": "",
+                    "StatelessId": ":: : :",
+                    "Type": "Footpath",
+                    "Name": "Fussweg",
+                    "Changes": [],
+                    "Diva": {
+                        "Number": "",
+                        "Network": ""
+                    },
+                    "TransportationCompany": "",
+                    "OperatorCode": "",
+                    "ProductName": "Fussweg",
+                    "TrainNumber": ""
+                }
+            ],
+            "RouteId": 3,
+            "PartialRoutes": [
+                {
+                    "Duration": 4,
+                    "Mot": {
+                        "DlId": "",
+                        "StatelessId": ":: : :",
+                        "Type": "Footpath",
+                        "Name": "Fussweg",
+                        "Changes": [],
+                        "Diva": {
+                            "Number": "",
+                            "Network": ""
+                        },
+                        "TransportationCompany": "",
+                        "OperatorCode": "",
+                        "ProductName": "Fussweg",
+                        "TrainNumber": ""
+                    },
+                    "MapDataIndex": 0,
+                    "Shift": "None",
+                    "RegularStops": [
+                        {
+                            "ArrivalTime": "/Date(1681916460000-0000)/",
+                            "DepartureTime": "/Date(1681916460000-0000)/",
+                            "Place": "Dresden",
+                            "Name": "Südvorstadt",
+                            "Type": "Stop",
+                            "DataId": "33000133",
+                            "DhId": "de:14612:133",
+                            "Latitude": 5656830,
+                            "Longitude": 4620907,
+                            "CancelReasons": [],
+                            "ParkAndRail": []
+                        },
+                        {
+                            "ArrivalTime": "/Date(1681916700000-0000)/",
+                            "DepartureTime": "/Date(1681916700000-0000)/",
+                            "Place": "Dresden",
+                            "Name": "Nürnberger Platz",
+                            "Type": "Stop",
+                            "DataId": "33000132",
+                            "DhId": "de:14612:132",
+                            "Latitude": 5656684,
+                            "Longitude": 4621145,
+                            "CancelReasons": [],
+                            "ParkAndRail": []
+                        }
+                    ],
+                    "NextDepartureTimes": [],
+                    "PreviousDepartureTimes": []
+                }
+            ],
+            "MapData": [
+                "Footpath|5656830|4620907|5656832|4620903|5656828|4620902|5656823|4620902|5656815|4620902|5656808|4620908|5656798|4620918|5656790|4620928|5656781|4620939|5656774|4620953|5656768|4620963|5656763|4620976|5656758|4620991|5656755|4621006|5656753|4621019|5656751|4621031|5656749|4621037|5656746|4621043|5656744|4621052|5656737|4621061|5656699|4621118|5656692|4621129|5656682|4621143|5656684|4621145|"
+            ]
+        }
+    ]
+}

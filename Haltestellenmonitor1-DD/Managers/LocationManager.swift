@@ -26,7 +26,6 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
 
     func requestLocation() {
 //        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        print("test")
         locationManager.requestWhenInUseAuthorization()
     }
     

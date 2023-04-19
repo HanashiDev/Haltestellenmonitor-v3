@@ -16,9 +16,15 @@ struct StopsView: View {
     var body: some View {
         NavigationSplitView {
             List(searchResults, selection: $selectedStop) { stop in
-                NavigationLink {
-                    DepartureView(stop: stop)
-                } label: {
+                ZStack {
+                    NavigationLink {
+                        DepartureView(stop: stop)
+                    } label: {
+                        EmptyView()
+                    }
+                    .opacity(0.0)
+                    .buttonStyle(.plain)
+                    
                     StopRow(stop: stop)
                 }
                 .swipeActions(edge: .trailing) {
@@ -47,7 +53,7 @@ struct StopsView: View {
                     Label("", systemImage: "location")
                 }
             }
-            .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         } detail: {
             DepartureView(stop: selectedStop ?? stops[0])
         }
@@ -99,6 +105,6 @@ struct StopsView: View {
 
 struct StopsView_Previews: PreviewProvider {
     static var previews: some View {
-        StopsView().environmentObject(FavoriteStop())
+        StopsView().environmentObject(FavoriteStop()).environmentObject(LocationManager())
     }
 }

@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var selection = 1
     @StateObject var locationManager = LocationManager()
     @StateObject var favoriteStops = FavoriteStop()
 
     var body: some View {
-        TabView(selection: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Selection@*/.constant(1)/*@END_MENU_TOKEN@*/) {
+        TabView(selection: $selection) {
             StopsView().tabItem {
-                Label("Haltestellen", systemImage: "h.circle") }.tag(1)
-            Text("Tab Content 2").tabItem { Label("Verbindungen", systemImage: "app.connected.to.app.below.fill") }.tag(2)
+                Label("Abfahrten", systemImage: "h.circle") }.tag(1)
+            ConnectionView().tabItem { Label("Verbindungen", systemImage: "app.connected.to.app.below.fill") }.tag(2)
             Text("Tab Content 3").tabItem { Label("Karte", systemImage: "map") }.tag(3)
         }
         .environmentObject(locationManager)
