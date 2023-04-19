@@ -9,11 +9,6 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>HaltestellenmonitorExtension.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
 		<key>MonitorIntents.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -24,10 +19,23 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>WidgetExtension.xcscheme_^#shared#^_</key>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>D03A267E29EEB6C9005B0600</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D0BD668229EFE0AA004E574C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D0BD66A829EFECF1004E574C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

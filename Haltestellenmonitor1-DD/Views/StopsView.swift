@@ -51,6 +51,9 @@ struct StopsView: View {
         } detail: {
             DepartureView(stop: selectedStop ?? stops[0])
         }
+        .onAppear {
+            locationManager.requestLocation()
+        }
         .onOpenURL { url in
             goToStop(url: url)
         }
@@ -96,6 +99,6 @@ struct StopsView: View {
 
 struct StopsView_Previews: PreviewProvider {
     static var previews: some View {
-        StopsView()
+        StopsView().environmentObject(FavoriteStop())
     }
 }

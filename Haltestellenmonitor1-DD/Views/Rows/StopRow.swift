@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct StopRow: View {
-    @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var favoriteStops: FavoriteStop
     var stop: Stop
 
@@ -36,6 +35,6 @@ struct StopRow: View {
 
 struct StopRowView_Previews: PreviewProvider {
     static var previews: some View {
-        StopRow(stop: stops[0])
+        StopRow(stop: stops[0]).environmentObject(FavoriteStop())
     }
 }

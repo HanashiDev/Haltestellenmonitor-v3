@@ -88,6 +88,6 @@ struct DepartureView: View {
 
 struct DepartureView_Previews: PreviewProvider {
     static var previews: some View {
-        DepartureView(stop: stops[1])
+        DepartureView(stop: stops[1]).environmentObject(FavoriteStop())
     }
 }

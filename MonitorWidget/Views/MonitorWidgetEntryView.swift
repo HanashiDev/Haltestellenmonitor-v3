@@ -15,7 +15,7 @@ struct MonitorWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        let prefix = (widgetFamily == .systemLarge || widgetFamily == .systemExtraLarge) ? 17 : 5
+        let prefix = (widgetFamily == .systemLarge || widgetFamily == .systemExtraLarge) ? 16 : 5
         
         HStack(alignment: .top) {
             VStack(alignment: .leading) {

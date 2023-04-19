@@ -17,7 +17,7 @@ struct Provider: IntentTimelineProvider {
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (MonitorEntry) -> ()) {
-        let entry = MonitorEntry(date: Date(), configuration: configuration, departureMonitor: nil)
+        let entry = MonitorEntry(date: Date(), configuration: configuration, departureMonitor: departureM)
         completion(entry)
     }
 
