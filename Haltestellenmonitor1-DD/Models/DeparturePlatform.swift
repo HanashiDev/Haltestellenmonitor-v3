@@ -8,7 +8,7 @@
 import Foundation
 
 struct DeparturePlatform: Hashable, Codable {
-    var Name: String
+    var Name: String?
     var type: String
     
     private enum CodingKeys : String, CodingKey {

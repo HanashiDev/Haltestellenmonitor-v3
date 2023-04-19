@@ -25,7 +25,7 @@ struct MonitorWidgetRow: View {
                     .multilineTextAlignment(.trailing)
                     .lineLimit(1)
             } else {
-                Text(widgetFamily == .systemSmall ? "\(departure.getIn())" : "in \(departure.getIn()) min")
+                Text(widgetFamily == .systemSmall ? "\(departure.getIn(date: entry.date))" : "in \(departure.getIn(date: entry.date)) min")
                     .font(.subheadline)
                     .multilineTextAlignment(.trailing)
                     .lineLimit(1)

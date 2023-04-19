@@ -64,7 +64,7 @@ struct Departure: Hashable, Codable {
         return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
     }
     
-    func getIn() -> Int {
+    func getIn(date: Date = Date(), realInTime: Bool = false) -> Int {
         var time = self.ScheduledTime
         if (self.RealTime != nil) {
             time = self.RealTime!
@@ -74,11 +74,11 @@ struct Departure: Hashable, Codable {
         let calendar = Calendar.current
         
         let timeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: timeDate!)
-        let currentComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
+        let currentComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         
         var inTime = calendar.dateComponents([.minute], from: currentComponents, to: timeComponents).minute!
         
-        if (inTime < 0) {
+        if (!realInTime && inTime < 0) {
             inTime = 0
         }
 

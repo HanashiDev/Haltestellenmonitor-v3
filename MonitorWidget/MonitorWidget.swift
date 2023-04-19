@@ -36,7 +36,7 @@ struct Provider: IntentTimelineProvider {
             guard error == nil else {
                 print ("error: \(error!)")
                 let currentDate = Date()
-                for i in 0 ..< 2 {
+                for i in 0 ..< 72 {
                     let entryDate = Calendar.current.date(byAdding: .second, value: 30 * i, to: currentDate)!
                     let entry = MonitorEntry(date: entryDate, configuration: configuration, departureMonitor: departureMonitor)
                     entries.append(entry)
@@ -50,7 +50,7 @@ struct Provider: IntentTimelineProvider {
             guard let content = data else {
                 print("No data")
                 let currentDate = Date()
-                for i in 0 ..< 2 {
+                for i in 0 ..< 72 {
                     let entryDate = Calendar.current.date(byAdding: .second, value: 30 * i, to: currentDate)!
                     let entry = MonitorEntry(date: entryDate, configuration: configuration, departureMonitor: departureMonitor)
                     entries.append(entry)
@@ -73,11 +73,12 @@ struct Provider: IntentTimelineProvider {
                 }
                 
                 let currentDate = Date()
-                for i in 0 ..< 2 {
+                for i in 0 ..< 72 {
                     let entryDate = Calendar.current.date(byAdding: .second, value: 30 * i, to: currentDate)!
                     let entry = MonitorEntry(date: entryDate, configuration: configuration, departureMonitor: departureMonitor)
                     entries.append(entry)
                 }
+                print(entries)
                 
                 let timeline = Timeline(entries: entries, policy: .atEnd)
                 completion(timeline)

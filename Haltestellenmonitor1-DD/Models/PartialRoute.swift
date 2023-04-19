@@ -15,6 +15,12 @@ struct PartialRoute: Hashable, Codable {
         if (self.Mot.type == "Footpath") {
             return "Fußweg"
         }
+        if (self.Mot.type == "MobilityStairsUp") {
+            return "aufwärts führende Treppe"
+        }
+        if (self.Mot.type == "MobilityStairsDown") {
+            return "abwärts führende Treppe"
+        }
         if (self.Mot.Name != nil && self.Mot.Direction == nil) {
             return self.Mot.Name!
         }
@@ -52,6 +58,10 @@ struct PartialRoute: Hashable, Codable {
             return "car"
         case "Footpath":
             return "figure.walk"
+        case "MobilityStairsUp":
+            return "figure.stairs"
+        case "MobilityStairsDown":
+            return "figure.stairs"
         default:
             return "cablecar"
         }
@@ -74,15 +84,15 @@ struct PartialRoute: Hashable, Codable {
         return DateParser.extractTimestamp(time: time!)
     }
     
-    func getStartTimeString() -> String {
+    func getStartTimeString() -> String? {
         let date = self.getStartTime()
         if (date == nil) {
-            return "00:00"
+            return nil
         }
 
         let dFormatter = DateFormatter()
         dFormatter.dateFormat = "HH:mm"
-        return dFormatter.string(for: date) ?? "00:00"
+        return dFormatter.string(for: date) ?? nil
     }
     
     func getEndTime() -> Date? {
@@ -102,14 +112,14 @@ struct PartialRoute: Hashable, Codable {
         return DateParser.extractTimestamp(time: time!)
     }
     
-    func getEndTimeString() -> String {
+    func getEndTimeString() -> String? {
         let date = self.getEndTime()
         if (date == nil) {
-            return "00:00"
+            return nil
         }
 
         let dFormatter = DateFormatter()
         dFormatter.dateFormat = "HH:mm"
-        return dFormatter.string(for: date) ?? "00:00"
+        return dFormatter.string(for: date) ?? nil
     }
 }

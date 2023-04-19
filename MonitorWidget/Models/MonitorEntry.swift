@@ -41,14 +41,18 @@ struct MonitorEntry: TimelineEntry {
     
     func filterDepartures(departures: [Departure]) -> [Departure] {
         let lineFilters = self.getLineFilters()
-        if (lineFilters == nil || lineFilters?.isEmpty == true) {
-            return departures
-        }
-        
         var newDepartures: [Departure] = []
         
         departures.forEach { departure in
-            if (lineFilters?.contains(departure.LineName) == true) {
+            var embed = true
+            if (lineFilters != nil || lineFilters?.isEmpty == false) {
+                embed = lineFilters?.contains(departure.LineName) == true
+            }
+            if (!embed) {
+                return
+            }
+            
+            if (departure.getIn(date: self.date, realInTime: true) >= 0) {
                 newDepartures.append(departure)
             }
         }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BackgroundTasks
 
 struct ContentView: View {
     @State var selection = 1

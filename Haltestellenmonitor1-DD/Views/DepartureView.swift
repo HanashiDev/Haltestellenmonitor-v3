@@ -12,11 +12,18 @@ struct DepartureView: View {
     @EnvironmentObject var favoriteStops: FavoriteStop
     @State var departureM: DepartureMonitor? = nil
     @State private var searchText = ""
+    @State private var isLoaded = false
     
     var body: some View {
         NavigationStack {
-            List(searchResults, id: \.self) { departure in
-                DepartureRow(departure: departure)
+            Group {
+                if (isLoaded) {
+                    List(searchResults, id: \.self) { departure in
+                        DepartureRow(departure: departure)
+                    }
+                } else {
+                    ProgressView()
+                }
             }
             .refreshable {
                 getDeparture()
@@ -76,6 +83,7 @@ struct DepartureView: View {
                 do {
                     let decoder = JSONDecoder()
                     self.departureM = try decoder.decode(DepartureMonitor.self, from: content)
+                    isLoaded = true
                 } catch {
                     print(error)
                 }

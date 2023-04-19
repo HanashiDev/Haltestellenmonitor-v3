@@ -16,13 +16,18 @@ struct PartialRouteRow: View {
             VStack(alignment: .leading) {
                 Text(partialRoute.getName())
                     .font(.headline)
-                HStack {
-                    Text("\(partialRoute.getStartTimeString()) Uhr")
-                        .font(.subheadline)
-                    Spacer()
-                    Text("\(partialRoute.getEndTimeString()) Uhr")
-                        .font(.subheadline)
-                }
+                if (partialRoute.getStartTimeString() != nil || partialRoute.getEndTimeString() != nil) {
+                    HStack {
+                        if (partialRoute.getStartTimeString() != nil) {
+                            Text("\(partialRoute.getStartTimeString()!) Uhr")
+                                .font(.subheadline)
+                        }
+                        Spacer()
+                        if (partialRoute.getEndTimeString() != nil) {
+                            Text("\(partialRoute.getEndTimeString()!) Uhr")
+                                .font(.subheadline)
+                        }
+                    }}
             }
         }
     }
