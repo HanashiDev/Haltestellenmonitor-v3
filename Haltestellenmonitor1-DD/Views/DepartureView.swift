@@ -18,64 +18,62 @@ struct DepartureView: View {
     @StateObject var departureFilter = DepartureFilter()
     
     var body: some View {
-        NavigationStack {
-            Group {
-                if (isLoaded) {
-                    VStack {
-                        Form {
-                            Section {
-                                DisclosureGroup("Verkehrsmittel") {
-                                    DepartureDisclosureSection()
-                                }
-                                DatePicker("Zeit", selection: $dateTime)
+        Group {
+            if (isLoaded) {
+                VStack {
+                    Form {
+                        Section {
+                            DisclosureGroup("Verkehrsmittel") {
+                                DepartureDisclosureSection()
                             }
-                            Section {
-                                List(searchResults, id: \.self) { departure in
-                                    ZStack {
-                                        NavigationLink {
-                                            SingleTripView(stop: stop, departure: departure)
-                                        } label: {
-                                            EmptyView()
-                                        }
-                                        .opacity(0.0)
-                                        .buttonStyle(.plain)
-                                        
-                                        DepartureRow(departure: departure)
+                            DatePicker("Zeit", selection: $dateTime)
+                        }
+                        Section {
+                            List(searchResults, id: \.self) { departure in
+                                ZStack {
+                                    NavigationLink {
+                                        SingleTripView(stop: stop, departure: departure)
+                                    } label: {
+                                        EmptyView()
                                     }
+                                    .opacity(0.0)
+                                    .buttonStyle(.plain)
+                                    
+                                    DepartureRow(departure: departure)
                                 }
                             }
                         }
                     }
+                }
+            } else {
+                ProgressView()
+            }
+        }
+        .refreshable {
+            getDeparture()
+        }
+        .navigationTitle(stop.name)
+        .toolbar {
+            Button {
+                if (favoriteStops.isFavorite(stopID: stop.stopId)) {
+                    favoriteStops.remove(stopID: stop.stopId)
                 } else {
-                    ProgressView()
+                    favoriteStops.add(stopID: stop.stopId)
+                }
+            } label: {
+                if (favoriteStops.isFavorite(stopID: stop.stopId)) {
+                    Label("", systemImage: "star.fill")
+                } else {
+                    Label("", systemImage: "star")
                 }
             }
-            .refreshable {
-                getDeparture()
-            }
-            .navigationTitle(stop.name)
-            .toolbar {
-                Button {
-                    if (favoriteStops.isFavorite(stopID: stop.stopId)) {
-                        favoriteStops.remove(stopID: stop.stopId)
-                    } else {
-                        favoriteStops.add(stopID: stop.stopId)
-                    }
-                } label: {
-                    if (favoriteStops.isFavorite(stopID: stop.stopId)) {
-                        Label("", systemImage: "star.fill")
-                    } else {
-                        Label("", systemImage: "star")
-                    }
-                }
-            }
-            .task(id: stop.stopId, priority: .userInitiated) {
-                getDeparture()
-            }
-            .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
-            .onChange(of: dateTime) { newValue in
-                getDeparture(time: newValue.ISO8601Format())
-            }
+        }
+        .task(id: stop.stopId, priority: .userInitiated) {
+            getDeparture()
+        }
+        .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
+        .onChange(of: dateTime) { newValue in
+            getDeparture(time: newValue.ISO8601Format())
         }
         .environmentObject(departureFilter)
     }
@@ -138,6 +136,8 @@ struct DepartureView: View {
 
 struct DepartureView_Previews: PreviewProvider {
     static var previews: some View {
-        DepartureView(stop: stops[1]).environmentObject(FavoriteStop())
+        NavigationStack {
+            DepartureView(stop: stops[1])
+        }.environmentObject(FavoriteStop())
     }
 }

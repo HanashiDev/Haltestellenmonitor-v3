@@ -9,4 +9,5 @@ import Foundation
 
 class StopManager: ObservableObject {
     @Published var selectedStop: Stop?
+    @Published var presentedStops = [Stop]()
 }

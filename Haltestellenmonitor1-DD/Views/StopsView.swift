@@ -10,12 +10,12 @@ import SwiftUI
 struct StopsView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var favoriteStops: FavoriteStop
-    @State private var selectedStop: Stop?
+    @EnvironmentObject var stopManager: StopManager
     @State private var searchText = ""
 
     var body: some View {
         NavigationSplitView {
-            List(searchResults, selection: $selectedStop) { stop in
+            List(searchResults, id: \.self, selection: $stopManager.selectedStop) { stop in
                 ZStack {
                     NavigationLink {
                         DepartureView(stop: stop)
@@ -55,7 +55,9 @@ struct StopsView: View {
             }
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         } detail: {
-            DepartureView(stop: selectedStop ?? stops[0])
+            NavigationStack {
+                DepartureView(stop: stopManager.selectedStop ?? stops[0])
+            }
         }
         .onAppear {
             locationManager.requestLocation()
@@ -74,7 +76,7 @@ struct StopsView: View {
             return
         }
         let stop = stops.first(where: {$0.stopId == stopID})
-        self.selectedStop = stop
+        stopManager.selectedStop = stop
     }
     
     var searchResults: [Stop] {
@@ -105,6 +107,6 @@ struct StopsView: View {
 
 struct StopsView_Previews: PreviewProvider {
     static var previews: some View {
-        StopsView().environmentObject(FavoriteStop()).environmentObject(LocationManager())
+        StopsView().environmentObject(FavoriteStop()).environmentObject(LocationManager()).environmentObject(StopManager())
     }
 }

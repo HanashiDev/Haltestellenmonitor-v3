@@ -11,6 +11,7 @@ struct TripSection: View {
     var route: Route
     
     var body: some View {
+        // TODO: Steig bzw. Gleis überall einfügen
         Section {
             HStack {
                 Text("ab \(route.getStartTimeString()) Uhr")
@@ -35,9 +36,7 @@ struct TripSection: View {
                     DisclosureGroup {
                         ForEach (partialRoute.RegularStops ?? [], id: \.self) { regularStop in
                             ZStack {
-                                NavigationLink {
-                                    DepartureView(stop: regularStop.getStop() ?? stops[0])
-                                } label: {
+                                NavigationLink(value: regularStop.getStop() ?? stops[0]) {
                                     EmptyView()
                                 }
                                 .opacity(0.0)

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ConnectionView: View {
+    @EnvironmentObject var stopManager: StopManager
     @State var day = ""
     @State var showingSheet = false
     @State var showingAlert = false
@@ -18,7 +19,7 @@ struct ConnectionView: View {
     @StateObject var departureFilter = DepartureFilter()
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $stopManager.presentedStops) {
             VStack {
                 Form {
                     Section {
@@ -99,6 +100,9 @@ struct ConnectionView: View {
                     Text("OK")
                 }
             }
+            .navigationDestination(for: Stop.self) { stop in
+                DepartureView(stop: stop)
+            }
         }
         .environmentObject(filter)
         .environmentObject(departureFilter)
@@ -178,5 +182,6 @@ struct ConnectionView: View {
 struct ConnectionView_Previews: PreviewProvider {
     static var previews: some View {
         ConnectionView(trip: tripTmp)
+            .environmentObject(StopManager())
     }
 }

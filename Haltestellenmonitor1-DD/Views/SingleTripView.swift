@@ -17,44 +17,42 @@ struct SingleTripView: View {
     var departure: Departure
     
     var body: some View {
-        NavigationStack {
-            Group {
-                if (isLoaded) {
-                    List(searchResults, id: \.self) { tripStop in
-                        if (tripStop.Position == "Current" || tripStop.Position == "Next") {
-                            ZStack {
-                                NavigationLink {
-                                    DepartureView(stop: tripStop.getStop() ?? stop)
-                                } label: {
-                                    EmptyView()
-                                }
-                                .opacity(0.0)
-                                .buttonStyle(.plain)
-
-                                SingleTripRow(tripStop: tripStop)
+        Group {
+            if (isLoaded) {
+                List(searchResults, id: \.self) { tripStop in
+                    if (tripStop.Position == "Current" || tripStop.Position == "Next") {
+                        ZStack {
+                            NavigationLink {
+                                DepartureView(stop: tripStop.getStop() ?? stop)
+                            } label: {
+                                EmptyView()
                             }
+                            .opacity(0.0)
+                            .buttonStyle(.plain)
+
+                            SingleTripRow(tripStop: tripStop)
                         }
                     }
-                } else {
-                    ProgressView()
                 }
+            } else {
+                ProgressView()
             }
-            .refreshable {
-                getSingleTrip()
-            }
-            .navigationTitle(departure.getName())
-            .task(id: departure.Id, priority: .userInitiated) {
-                getSingleTrip()
-            }
-            .toolbar {
-                Button {
-                    startActivity()
-                } label: {
-                    Label("", systemImage: "pin")
-                }
-            }
-            .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
         }
+        .refreshable {
+            getSingleTrip()
+        }
+        .navigationTitle(departure.getName())
+        .task(id: departure.Id, priority: .userInitiated) {
+            getSingleTrip()
+        }
+        .toolbar {
+            Button {
+                startActivity()
+            } label: {
+                Label("", systemImage: "pin")
+            }
+        }
+        .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
     }
     
     var searchResults: [TripStop] {
@@ -150,6 +148,8 @@ struct SingleTripView: View {
 
 struct SingleTripView_Previews: PreviewProvider {
     static var previews: some View {
-        SingleTripView(stop: stops[0], departure: departureM.Departures[0]).environmentObject(PushTokenHistory())
+        NavigationStack {
+            SingleTripView(stop: stops[0], departure: departureM.Departures[0])
+        }.environmentObject(PushTokenHistory())
     }
 }

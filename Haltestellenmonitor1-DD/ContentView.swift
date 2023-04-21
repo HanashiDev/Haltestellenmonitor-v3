@@ -10,12 +10,23 @@ import BackgroundTasks
 
 struct ContentView: View {
     @State var selection = 1
+    @State var oldSelection = 1
     @StateObject var locationManager = LocationManager()
     @StateObject var favoriteStops = FavoriteStop()
     @StateObject var pushTokenHistory = PushTokenHistory()
+    @StateObject var stopManager = StopManager()
 
     var body: some View {
-        TabView(selection: $selection) {
+        TabView(selection: $selection.onUpdate {
+            if selection == oldSelection {
+                if selection == 1 {
+                    stopManager.selectedStop = nil
+                } else if (selection == 2) {
+                    stopManager.presentedStops.removeAll()
+                }
+            }
+            oldSelection = selection
+        }) {
             StopsView().tabItem {
                 Label("Abfahrten", systemImage: "h.circle") }.tag(1)
             ConnectionView().tabItem { Label("Verbindungen", systemImage: "app.connected.to.app.below.fill") }.tag(2)
@@ -24,6 +35,18 @@ struct ContentView: View {
         .environmentObject(locationManager)
         .environmentObject(favoriteStops)
         .environmentObject(pushTokenHistory)
+        .environmentObject(stopManager)
+    }
+}
+
+extension Binding {
+    func onUpdate(_ closure: @escaping () -> Void) -> Binding<Value> {
+        Binding(get: {
+            wrappedValue
+        }, set: { newValue in
+            wrappedValue = newValue
+            closure()
+        })
     }
 }
 
