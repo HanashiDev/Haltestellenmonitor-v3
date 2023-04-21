@@ -20,6 +20,11 @@ struct Departure: Hashable, Codable {
     var State: String?
     var RouteChanges: [String]?
     
+    func getDateTime() -> Date {
+        let date = DateParser.extractTimestamp(time: self.ScheduledTime)
+        return date ?? Date.now
+    }
+    
     func getScheduledTime() -> String {
         let date = DateParser.extractTimestamp(time: self.ScheduledTime)
         if (date == nil) {

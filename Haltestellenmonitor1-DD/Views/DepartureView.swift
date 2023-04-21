@@ -19,7 +19,17 @@ struct DepartureView: View {
             Group {
                 if (isLoaded) {
                     List(searchResults, id: \.self) { departure in
-                        DepartureRow(departure: departure)
+                        ZStack {
+                            NavigationLink {
+                                SingleTripView(stop: stop, departure: departure)
+                            } label: {
+                                EmptyView()
+                            }
+                            .opacity(0.0)
+                            .buttonStyle(.plain)
+                            
+                            DepartureRow(departure: departure)
+                        }
                     }
                 } else {
                     ProgressView()

@@ -10,6 +10,7 @@ import Foundation
 var stops: [Stop] = load("stops.json")
 var departureM: DepartureMonitor = load("departure.json")
 var tripTmp: Trip = load("trip.json")
+var singleTripTmp: SingleTrip = load("singleTrip.json")
 
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data

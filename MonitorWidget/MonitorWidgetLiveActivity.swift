@@ -9,46 +9,94 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-struct MonitorWidgetAttributes: ActivityAttributes {
-    public struct ContentState: Codable, Hashable {
-        // Dynamic stateful properties about your activity go here!
-        var value: Int
-    }
-
-    // Fixed non-changing properties about your activity go here!
-    var name: String
-}
-
 struct MonitorWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: MonitorWidgetAttributes.self) { context in
+        ActivityConfiguration(for: TripAttributes.self) { context in
             // Lock screen/banner UI goes here
-            VStack {
-                Text("Hello")
+            VStack(alignment: .leading) {
+                Text(context.attributes.name)
+                    .font(.headline)
+                    .lineLimit(1)
+                HStack {
+                    Image(systemName: context.attributes.getIcon())
+                    VStack {
+                        HStack {
+                            Text(context.attributes.line)
+                                .lineLimit(1)
+                            Spacer()
+                            Text("in \(context.state.getIn()) min")
+                        }
+                        HStack {
+                            Text("\(context.state.getScheduledTime()) Uhr")
+                            if (context.state.getTimeDifference() > 0) {
+                                Text("+\(context.state.getTimeDifference())")
+                                    .font(.subheadline)
+                                    .foregroundColor(Color.red)
+                            } else if (context.state.getTimeDifference() < 0) {
+                                Text("\(context.state.getTimeDifference())")
+                                    .font(.subheadline)
+                                    .foregroundColor(Color.green)
+                            }
+                            Spacer()
+                            Text("\(context.state.getRealTime()) Uhr")
+                        }
+                    }
+                }
+                .font(.subheadline)
             }
-            .activityBackgroundTint(Color.cyan)
-            .activitySystemActionForegroundColor(Color.black)
+            .padding()
+            .activityBackgroundTint(Color("NotificationBackground"))
+            .activitySystemActionForegroundColor(Color("NotificationForeground"))
 
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("Leading")
+                    VStack(alignment: .leading) {
+                        Text("\(context.state.getScheduledTime()) Uhr")
+                        if (context.state.getTimeDifference() > 0) {
+                            Text("+\(context.state.getTimeDifference())")
+                                .font(.subheadline)
+                                .foregroundColor(Color.red)
+                        } else if (context.state.getTimeDifference() < 0) {
+                            Text("\(context.state.getTimeDifference())")
+                                .font(.subheadline)
+                                .foregroundColor(Color.green)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .font(.subheadline)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text("Trailing")
+                    VStack(alignment: .trailing) {
+                        Text("\(context.state.getRealTime()) Uhr")
+                        Text("in \(context.state.getIn()) min")
+                    }
+                    .padding(.horizontal)
+                    .font(.subheadline)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("Bottom")
-                    // more content
+                    VStack {
+                        Text(context.attributes.name)
+                            .font(.headline)
+                            .padding(.bottom)
+                        HStack {
+                            Image(systemName: context.attributes.getIcon())
+                            Text(context.attributes.line)
+                                .lineLimit(1)
+                        }
+                        .font(.subheadline)
+                    }
                 }
             } compactLeading: {
-                Text("L")
+                Text(context.attributes.line)
+                    .font(.subheadline)
+                    .lineLimit(1)
             } compactTrailing: {
-                Text("T")
+                Text("in \(context.state.getIn()) min")
             } minimal: {
-                Text("Min")
+                Text("\(context.state.getIn())")
             }
             .widgetURL(URL(string: "http://www.apple.com"))
             .keylineTint(Color.red)
@@ -57,8 +105,8 @@ struct MonitorWidgetLiveActivity: Widget {
 }
 
 struct MonitorWidgetLiveActivity_Previews: PreviewProvider {
-    static let attributes = MonitorWidgetAttributes(name: "Me")
-    static let contentState = MonitorWidgetAttributes.ContentState(value: 3)
+    static let attributes = TripAttributes(name: "Pirnaischer Platz", line: "4 Laubegast", type: "Tram")
+    static let contentState = TripAttributes.ContentState(time: "/Date(1681824120000-0000)/", realTime: "/Date(1681825120000-0000)/")
 
     static var previews: some View {
         attributes

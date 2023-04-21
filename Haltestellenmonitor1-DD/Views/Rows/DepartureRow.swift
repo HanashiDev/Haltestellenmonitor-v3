@@ -33,9 +33,9 @@ struct DepartureRow: View {
             }
             Spacer()
             VStack(alignment: .trailing) {
-                Text("\(departure.getRealTime()) Uhr")
-                    .font(.subheadline)
                 Text("in \(departure.getIn()) min")
+                    .font(.subheadline)
+                Text("\(departure.getRealTime()) Uhr")
                     .font(.subheadline)
             }
         }
