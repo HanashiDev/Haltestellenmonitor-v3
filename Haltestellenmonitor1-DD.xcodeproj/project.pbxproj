@@ -111,6 +111,12 @@
 		D0C1ECC829F28C2F001D214D /* TripAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECC729F28C2F001D214D /* TripAttributes.swift */; };
 		D0C1ECC929F28C2F001D214D /* TripAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECC729F28C2F001D214D /* TripAttributes.swift */; };
 		D0C1ECCA29F28C2F001D214D /* TripAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECC729F28C2F001D214D /* TripAttributes.swift */; };
+		D0C1ECCC29F2B165001D214D /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECCB29F2B165001D214D /* ActivityRequest.swift */; };
+		D0C1ECCD29F2B165001D214D /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECCB29F2B165001D214D /* ActivityRequest.swift */; };
+		D0C1ECCE29F2B165001D214D /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECCB29F2B165001D214D /* ActivityRequest.swift */; };
+		D0C1ECD029F2B6C0001D214D /* PushTokenHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECCF29F2B6C0001D214D /* PushTokenHistory.swift */; };
+		D0C1ECD129F2B6C0001D214D /* PushTokenHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECCF29F2B6C0001D214D /* PushTokenHistory.swift */; };
+		D0C1ECD229F2B6C0001D214D /* PushTokenHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECCF29F2B6C0001D214D /* PushTokenHistory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,6 +211,8 @@
 		D0C1ECBF29F283DE001D214D /* SingleTripRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTripRow.swift; sourceTree = "<group>"; };
 		D0C1ECC329F288D3001D214D /* SingleTripRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTripRequest.swift; sourceTree = "<group>"; };
 		D0C1ECC729F28C2F001D214D /* TripAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripAttributes.swift; sourceTree = "<group>"; };
+		D0C1ECCB29F2B165001D214D /* ActivityRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRequest.swift; sourceTree = "<group>"; };
+		D0C1ECCF29F2B6C0001D214D /* PushTokenHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTokenHistory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,6 +347,8 @@
 				D0C1ECB329F28032001D214D /* TripStop.swift */,
 				D0C1ECB729F28135001D214D /* SingleTrip.swift */,
 				D0C1ECC329F288D3001D214D /* SingleTripRequest.swift */,
+				D0C1ECCB29F2B165001D214D /* ActivityRequest.swift */,
+				D0C1ECCF29F2B6C0001D214D /* PushTokenHistory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -575,6 +585,7 @@
 				D040EC2E29EF0371002DFEBF /* StopManager.swift in Sources */,
 				D0BD66DA29F03056004E574C /* Trip.swift in Sources */,
 				D040EC2729EEEB85002DFEBF /* LocationManager.swift in Sources */,
+				D0C1ECCC29F2B165001D214D /* ActivityRequest.swift in Sources */,
 				D040EC2B29EEFA3E002DFEBF /* FavoriteStop.swift in Sources */,
 				D0BD66FB29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */,
 				D0C1ECC829F28C2F001D214D /* TripAttributes.swift in Sources */,
@@ -593,6 +604,7 @@
 				D0C1ECB429F28032001D214D /* TripStop.swift in Sources */,
 				D0BD66E229F03949004E574C /* Mot.swift in Sources */,
 				D040EC1729EECA20002DFEBF /* DepartureMonitor.swift in Sources */,
+				D0C1ECD029F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
 				D03A26A029EEC248005B0600 /* DepartureRow.swift in Sources */,
 				D0BD66FA29F04593004E574C /* PartialRouteRow.swift in Sources */,
 				D03A268329EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift in Sources */,
@@ -624,6 +636,7 @@
 				D0C1ECB929F28135001D214D /* SingleTrip.swift in Sources */,
 				D0C1ECB529F28032001D214D /* TripStop.swift in Sources */,
 				D0BD66A229EFEA0F004E574C /* Departure.swift in Sources */,
+				D0C1ECCD29F2B165001D214D /* ActivityRequest.swift in Sources */,
 				D0BD668A29EFE0AA004E574C /* MonitorWidgetLiveActivity.swift in Sources */,
 				D0BD66CF29EFFFC4004E574C /* FavoriteStop.swift in Sources */,
 				D0BD66B629EFECF8004E574C /* IntentHandler.swift in Sources */,
@@ -634,6 +647,7 @@
 				D0BD66E729F03C01004E574C /* ConnectionFilter.swift in Sources */,
 				D0BD66CA29EFF64D004E574C /* MonitorEntry.swift in Sources */,
 				D0BD668C29EFE0AA004E574C /* MonitorWidget.swift in Sources */,
+				D0C1ECD129F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
 				D0BD66A029EFEA0A004E574C /* DepartureMonitor.swift in Sources */,
 				D0BD66F129F03C11004E574C /* RegularStop.swift in Sources */,
 				D0BD669B29EFE18C004E574C /* MonitorWidgetEntryView.swift in Sources */,
@@ -646,6 +660,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0C1ECCE29F2B165001D214D /* ActivityRequest.swift in Sources */,
 				D0BD66F429F03C15004E574C /* Mot.swift in Sources */,
 				D0BD66D029EFFFC5004E574C /* FavoriteStop.swift in Sources */,
 				D0BD66BE29EFEEDF004E574C /* DeparturePlatform.swift in Sources */,
@@ -657,6 +672,7 @@
 				D0BD66BB29EFEED8004E574C /* DepartureMonitor.swift in Sources */,
 				D0BD66B929EFEEC0004E574C /* StopData.swift in Sources */,
 				D0C1ECB629F28032001D214D /* TripStop.swift in Sources */,
+				D0C1ECD229F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
 				D0BD66FD29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */,
 				D0BD66EA29F03C04004E574C /* TripRequest.swift in Sources */,
 				D0BD66F029F03C0D004E574C /* PartialRoute.swift in Sources */,
@@ -829,6 +845,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Haltestellenmonitor Dresden";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Der Standort wird verwendet um den Abstand zur nächsten Haltestelle zu berechnen.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivitiesFrequentUpdates = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -864,6 +882,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Haltestellenmonitor Dresden";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Der Standort wird verwendet um den Abstand zur nächsten Haltestelle zu berechnen.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivitiesFrequentUpdates = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

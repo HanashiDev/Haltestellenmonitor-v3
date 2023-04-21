@@ -12,6 +12,7 @@ struct ContentView: View {
     @State var selection = 1
     @StateObject var locationManager = LocationManager()
     @StateObject var favoriteStops = FavoriteStop()
+    @StateObject var pushTokenHistory = PushTokenHistory()
 
     var body: some View {
         TabView(selection: $selection) {
@@ -22,6 +23,7 @@ struct ContentView: View {
         }
         .environmentObject(locationManager)
         .environmentObject(favoriteStops)
+        .environmentObject(pushTokenHistory)
     }
 }
 

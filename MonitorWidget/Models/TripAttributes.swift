@@ -13,6 +13,7 @@ struct TripAttributes: ActivityAttributes {
         // Dynamic stateful properties about your activity go here!
         var time: String
         var realTime: String? = nil
+        var done: Bool = false
         
         func getScheduledTime() -> String {
             let date = DateParser.extractTimestamp(time: self.time)

@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import ActivityKit
 
 struct SingleTripView: View {
+    @EnvironmentObject var pushTokenHistory: PushTokenHistory
     @State var singleTrip: SingleTrip? = nil
     @State private var isLoaded = false
     @State private var searchText = ""
@@ -36,7 +38,7 @@ struct SingleTripView: View {
             }
             .toolbar {
                 Button {
-                    
+                    startActivity()
                 } label: {
                     Label("", systemImage: "pin")
                 }
@@ -71,7 +73,6 @@ struct SingleTripView: View {
                 return
             }
 
-
             DispatchQueue.main.async {
                 do {
                     let decoder = JSONDecoder()
@@ -81,7 +82,57 @@ struct SingleTripView: View {
                     print(error)
                 }
             }
+        }
+        task.resume()
+    }
+    
+    func startActivity() {
+        if ActivityAuthorizationInfo().areActivitiesEnabled {
+            let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
+            let attributes = TripAttributes(name: stop.name, line: departure.getName(), type: departure.Mot)
+            
+            let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
+            
+            do {
+                let activity = try Activity.request(attributes: attributes, content: activityContent, pushType: .token)
+                print("Requested an activity \(String(activity.id)).")
+                
+                Task {
+                    for await data in activity.pushTokenUpdates {
+                        let token = data.map {String(format: "%02x", $0)}.joined()
+                        saveAcitivityOnServer(token: token)
+                    }
+                }
+            } catch {
+                print("Error \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func saveAcitivityOnServer(token: String) {
+        if (pushTokenHistory.isInHistory(token: token)) {
+            return
+        }
+        pushTokenHistory.add(token: token)
+        
+        let url = URL(string: "https://dvb.hsrv.me/api/activity")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            guard error == nil else {
+                print ("error: \(error!)")
+                return
+            }
+
+            guard let content = data else {
+                print("No data")
+                return
+            }
+            
+            print(content)
         }
         task.resume()
     }
@@ -89,6 +140,6 @@ struct SingleTripView: View {
 
 struct SingleTripView_Previews: PreviewProvider {
     static var previews: some View {
-        SingleTripView(stop: stops[0], departure: departureM.Departures[0])
+        SingleTripView(stop: stops[0], departure: departureM.Departures[0]).environmentObject(PushTokenHistory())
     }
 }

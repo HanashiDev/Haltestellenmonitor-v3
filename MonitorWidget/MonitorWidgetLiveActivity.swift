@@ -24,7 +24,12 @@ struct MonitorWidgetLiveActivity: Widget {
                             Text(context.attributes.line)
                                 .lineLimit(1)
                             Spacer()
-                            Text("in \(context.state.getIn()) min")
+                            if (context.state.done) {
+                                Image(systemName: "checkmark.circle")
+                                    .foregroundColor(Color.green)
+                            } else {
+                                Text("in \(context.state.getIn()) min")
+                            }
                         }
                         HStack {
                             Text("\(context.state.getScheduledTime()) Uhr")
@@ -44,9 +49,10 @@ struct MonitorWidgetLiveActivity: Widget {
                 }
                 .font(.subheadline)
             }
+            .foregroundColor(Color.black)
             .padding()
             .activityBackgroundTint(Color("NotificationBackground"))
-            .activitySystemActionForegroundColor(Color("NotificationForeground"))
+            .activitySystemActionForegroundColor(Color.black)
 
         } dynamicIsland: { context in
             DynamicIsland {
@@ -71,33 +77,52 @@ struct MonitorWidgetLiveActivity: Widget {
                 DynamicIslandExpandedRegion(.trailing) {
                     VStack(alignment: .trailing) {
                         Text("\(context.state.getRealTime()) Uhr")
-                        Text("in \(context.state.getIn()) min")
+                        if context.state.done {
+                            Image(systemName: "checkmark.circle")
+                                .foregroundColor(Color.green)
+                        } else {
+                            Text("in \(context.state.getIn()) min")
+                        }
                     }
                     .padding(.horizontal)
                     .font(.subheadline)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    VStack {
-                        Text(context.attributes.name)
-                            .font(.headline)
-                            .padding(.bottom)
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Image(systemName: "location")
+                            Text(context.attributes.name)
+                        }
+                        .padding(.bottom, 1.0)
                         HStack {
                             Image(systemName: context.attributes.getIcon())
                             Text(context.attributes.line)
                                 .lineLimit(1)
                         }
-                        .font(.subheadline)
                     }
+                    .font(.subheadline)
                 }
             } compactLeading: {
                 Text(context.attributes.line)
                     .font(.subheadline)
                     .lineLimit(1)
             } compactTrailing: {
-                Text("in \(context.state.getIn()) min")
+                if context.state.done {
+                    Image(systemName: "checkmark.circle")
+                        .foregroundColor(Color.green)
+                } else {
+                    Text("in \(context.state.getIn()) min")
+                        .font(.subheadline)
+                }
             } minimal: {
-                Text("\(context.state.getIn())")
+                if (context.state.done) {
+                    Image(systemName: "checkmark.circle")
+                        .foregroundColor(Color.green)
+                } else {
+                    Text("\(context.state.getIn())")
+                }
             }
+            // TODO: Deep Link
             .widgetURL(URL(string: "http://www.apple.com"))
             .keylineTint(Color.red)
         }
@@ -106,7 +131,7 @@ struct MonitorWidgetLiveActivity: Widget {
 
 struct MonitorWidgetLiveActivity_Previews: PreviewProvider {
     static let attributes = TripAttributes(name: "Pirnaischer Platz", line: "4 Laubegast", type: "Tram")
-    static let contentState = TripAttributes.ContentState(time: "/Date(1681824120000-0000)/", realTime: "/Date(1681825120000-0000)/")
+    static let contentState = TripAttributes.ContentState(time: "/Date(1681824120000-0000)/", realTime: "/Date(1681825120000-0000)/", done: true)
 
     static var previews: some View {
         attributes
@@ -120,6 +145,7 @@ struct MonitorWidgetLiveActivity_Previews: PreviewProvider {
             .previewDisplayName("Minimal")
         attributes
             .previewContext(contentState, viewKind: .content)
+            .preferredColorScheme(.dark)
             .previewDisplayName("Notification")
     }
 }
