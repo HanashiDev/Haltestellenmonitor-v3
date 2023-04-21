@@ -34,7 +34,6 @@ struct PartialRoute: Hashable, Codable {
     }
     
     func getIcon() -> String {
-        print(self.Mot.type)
         switch (self.Mot.type) {
         case "Tram":
             return "cablecar"
@@ -121,5 +120,13 @@ struct PartialRoute: Hashable, Codable {
         let dFormatter = DateFormatter()
         dFormatter.dateFormat = "HH:mm"
         return dFormatter.string(for: date) ?? nil
+    }
+    
+    func getFirstStation() -> String? {
+        return self.RegularStops?.first?.Name
+    }
+    
+    func getLastStation() -> String? {
+        return self.RegularStops?.last?.Name
     }
 }

@@ -19,8 +19,103 @@ struct RegularStop: Hashable, Codable {
     var Longitude: Int
     var DepartureState: String?
     var ArrivalState: String?
+    var DataId: String
     
     private enum CodingKeys : String, CodingKey {
-        case ArrivalTime, DepartureTime, ArrivalRealTime, DepartureRealTime, Place, Name, type = "Type", Latitude, Longitude, DepartureState, ArrivalState
+        case ArrivalTime, DepartureTime, ArrivalRealTime, DepartureRealTime, Place, Name, type = "Type", Latitude, Longitude, DepartureState, ArrivalState, DataId
+    }
+    
+    func getArrivalTime() -> String {
+        let date = DateParser.extractTimestamp(time: self.ArrivalTime)
+        if (date == nil) {
+            return "00:00"
+        }
+        
+        let dFormatter = DateFormatter()
+        dFormatter.dateFormat = "HH:mm"
+        return dFormatter.string(for: date) ?? "00:00"
+    }
+    
+    func getDepartureTime() -> String {
+        let date = DateParser.extractTimestamp(time: self.DepartureTime)
+        if (date == nil) {
+            return "00:00"
+        }
+        
+        let dFormatter = DateFormatter()
+        dFormatter.dateFormat = "HH:mm"
+        return dFormatter.string(for: date) ?? "00:00"
+    }
+    
+    func getRealArrivalTime() -> String {
+        if (self.ArrivalRealTime == nil) {
+            return self.getArrivalTime()
+        }
+
+        let date = DateParser.extractTimestamp(time: self.ArrivalRealTime!)
+        if (date == nil) {
+            return "00:00"
+        }
+        
+        let dFormatter = DateFormatter()
+        dFormatter.dateFormat = "HH:mm"
+        return dFormatter.string(for: date) ?? "00:00"
+    }
+    
+    func getRealDepartureTime() -> String {
+        if (self.DepartureRealTime == nil) {
+            return self.getDepartureTime()
+        }
+
+        let date = DateParser.extractTimestamp(time: self.DepartureRealTime!)
+        if (date == nil) {
+            return "00:00"
+        }
+        
+        let dFormatter = DateFormatter()
+        dFormatter.dateFormat = "HH:mm"
+        return dFormatter.string(for: date) ?? "00:00"
+    }
+    
+    func getTimeDifference() -> Int {
+        if (self.ArrivalRealTime == nil) {
+            return 0
+        }
+        let realtimeDate = DateParser.extractTimestamp(time: self.ArrivalRealTime!)
+        let scheduledTimeDate = DateParser.extractTimestamp(time: self.ArrivalTime)
+        if (realtimeDate == nil || scheduledTimeDate == nil) {
+            return 0
+        }
+
+        let calendar = Calendar.current
+        
+        let realtimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: realtimeDate!)
+        let scheduledTimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: scheduledTimeDate!)
+        
+        return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
+    }
+    
+    func getTimeDifferenceDeparture() -> Int {
+        if (self.DepartureRealTime == nil) {
+            return 0
+        }
+        let realtimeDate = DateParser.extractTimestamp(time: self.DepartureRealTime!)
+        let scheduledTimeDate = DateParser.extractTimestamp(time: self.DepartureTime)
+        if (realtimeDate == nil || scheduledTimeDate == nil) {
+            return 0
+        }
+
+        let calendar = Calendar.current
+        
+        let realtimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: realtimeDate!)
+        let scheduledTimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: scheduledTimeDate!)
+        
+        return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
+    }
+    
+    func getStop() -> Stop? {
+        return stops.first { stop in
+            return String(stop.stopId) == self.DataId
+        }
     }
 }

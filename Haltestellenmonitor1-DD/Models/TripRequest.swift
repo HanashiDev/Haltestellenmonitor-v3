@@ -13,9 +13,6 @@ struct TripRequest: Hashable, Codable {
     var shorttermchanges: Bool? = true
     var origin: String
     var destination: String
+    var standardSettings: TripStandardSettings?
     var format: String = "json"
-    
-    static func getDefault(startID: Int, endID: Int, time: String?) -> TripRequest {
-        return TripRequest(time: time, origin: String(startID), destination: String(endID))
-    }
 }

@@ -18,16 +18,24 @@ struct PartialRouteRow: View {
                     .font(.headline)
                 if (partialRoute.getStartTimeString() != nil || partialRoute.getEndTimeString() != nil) {
                     HStack {
-                        if (partialRoute.getStartTimeString() != nil) {
-                            Text("\(partialRoute.getStartTimeString()!) Uhr")
-                                .font(.subheadline)
-                        }
+                        Text("\(partialRoute.getStartTimeString()!) Uhr")
                         Spacer()
-                        if (partialRoute.getEndTimeString() != nil) {
-                            Text("\(partialRoute.getEndTimeString()!) Uhr")
-                                .font(.subheadline)
-                        }
-                    }}
+                        Text("\(partialRoute.getEndTimeString()!) Uhr")
+                    }
+                    .font(.subheadline)
+                }
+                if (partialRoute.getFirstStation() != nil && partialRoute.getLastStation() != nil) {
+                    HStack {
+                        Text(partialRoute.getFirstStation() ?? "")
+                            .lineLimit(1)
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                        Spacer()
+                        Text(partialRoute.getLastStation() ?? "")
+                            .lineLimit(1)
+                    }
+                    .font(.subheadline)
+                }
             }
         }
     }

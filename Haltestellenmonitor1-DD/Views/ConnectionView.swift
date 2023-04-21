@@ -15,6 +15,7 @@ struct ConnectionView: View {
     @State var trip: Trip? = nil
     @State var isLoading = false
     @StateObject var filter: ConnectionFilter = ConnectionFilter()
+    @StateObject var departureFilter = DepartureFilter()
 
     var body: some View {
         NavigationStack {
@@ -47,6 +48,10 @@ struct ConnectionView: View {
                         .onTapGesture {
                             filter.start = false
                             showingSheet = true
+                        }
+                        
+                        DisclosureGroup("Verkehrsmittel") {
+                            DepartureDisclosureSection()
                         }
                         
                         DatePicker("Zeit", selection: $dateTime)
@@ -96,6 +101,7 @@ struct ConnectionView: View {
             }
         }
         .environmentObject(filter)
+        .environmentObject(departureFilter)
     }
     
     func getTripData() {
@@ -108,7 +114,33 @@ struct ConnectionView: View {
             return
         }
         
-        let requestData = TripRequest.getDefault(startID: filter.startStop?.stopId ?? 0, endID: filter.endStop?.stopId ?? 0, time: dateTime.ISO8601Format())
+        var mot: [String] = []
+        if (departureFilter.tram) {
+            mot.append("Tram")
+        }
+        if (departureFilter.bus) {
+            mot.append("CityBus")
+            mot.append("IntercityBus")
+        }
+        if (departureFilter.suburbanRailway) {
+            mot.append("SuburbanRailway")
+        }
+        if (departureFilter.train) {
+            mot.append("Train")
+        }
+        if (departureFilter.cableway) {
+            mot.append("Cableway")
+        }
+        if (departureFilter.ferry) {
+            mot.append("Ferry")
+        }
+        if (departureFilter.taxi) {
+            mot.append("HailedSharedTaxi")
+        }
+        
+        let standardSettings = TripStandardSettings(mot: mot)
+        
+        let requestData = TripRequest(time: dateTime.ISO8601Format(), origin: String(filter.startStop?.stopId ?? 0), destination: String(filter.endStop?.stopId ?? 0), standardSettings: standardSettings)
         
         let url = URL(string: "https://webapi.vvo-online.de/tr/trips")!
         var request = URLRequest(url: url)

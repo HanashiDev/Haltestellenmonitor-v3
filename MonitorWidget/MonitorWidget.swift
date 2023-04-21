@@ -78,7 +78,6 @@ struct Provider: IntentTimelineProvider {
                     let entry = MonitorEntry(date: entryDate, configuration: configuration, departureMonitor: departureMonitor)
                     entries.append(entry)
                 }
-                print(entries)
                 
                 let timeline = Timeline(entries: entries, policy: .atEnd)
                 completion(timeline)

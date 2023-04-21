@@ -12,12 +12,12 @@ struct DepartureRequest: Hashable, Codable {
     var time: String?
     var isarrival: Bool = false
     var mot: [String] = ["Tram","CityBus","IntercityBus","SuburbanRailway","Train","Cableway","Ferry","HailedSharedTaxi"]
-    var limit: Int
+    var limit: Int = 100
     var shorttermchanges: Bool = true
     var mentzonly: Bool = false
     var format: String = "json"
     
-    static func getDefault(stopID: Int) -> DepartureRequest {
-        return DepartureRequest(stopid: String(stopID), limit: 100)
+    static func getDefault(stopID: Int, time: String? = nil) -> DepartureRequest {
+        return DepartureRequest(stopid: String(stopID), time: time)
     }
 }

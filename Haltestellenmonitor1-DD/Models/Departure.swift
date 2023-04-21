@@ -107,7 +107,7 @@ struct Departure: Hashable, Codable {
         case "Train":
             return "tram"
         case "Cableway":
-            return "cablecar"
+            return "cablecar.fill"
         case "Ferry":
             return "ferry"
         case "HailedSharedTaxi":

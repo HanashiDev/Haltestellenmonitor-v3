@@ -29,7 +29,27 @@ struct TripSection: View {
                     .multilineTextAlignment(.trailing)
             }
             ForEach(route.PartialRoutes, id: \.self) { partialRoute in
-                PartialRouteRow(partialRoute: partialRoute)
+                if (partialRoute.RegularStops == nil) {
+                    PartialRouteRow(partialRoute: partialRoute)
+                } else {
+                    DisclosureGroup {
+                        ForEach (partialRoute.RegularStops ?? [], id: \.self) { regularStop in
+                            ZStack {
+                                NavigationLink {
+                                    DepartureView(stop: regularStop.getStop() ?? stops[0])
+                                } label: {
+                                    EmptyView()
+                                }
+                                .opacity(0.0)
+                                .buttonStyle(.plain)
+                                
+                                RegularStopRow(regularStop: regularStop, isFirst: partialRoute.RegularStops?.first?.DataId == regularStop.DataId)
+                            }
+                        }
+                    } label: {
+                        PartialRouteRow(partialRoute: partialRoute)
+                    }
+                }
             }
         }
     }

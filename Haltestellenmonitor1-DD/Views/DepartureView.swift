@@ -13,22 +13,37 @@ struct DepartureView: View {
     @State var departureM: DepartureMonitor? = nil
     @State private var searchText = ""
     @State private var isLoaded = false
+    @State private var dateTime = Date.now
+    @State private var topExpanded: Bool = true
+    @StateObject var departureFilter = DepartureFilter()
     
     var body: some View {
         NavigationStack {
             Group {
                 if (isLoaded) {
-                    List(searchResults, id: \.self) { departure in
-                        ZStack {
-                            NavigationLink {
-                                SingleTripView(stop: stop, departure: departure)
-                            } label: {
-                                EmptyView()
+                    VStack {
+                        Form {
+                            Section {
+                                DisclosureGroup("Verkehrsmittel") {
+                                    DepartureDisclosureSection()
+                                }
+                                DatePicker("Zeit", selection: $dateTime)
                             }
-                            .opacity(0.0)
-                            .buttonStyle(.plain)
-                            
-                            DepartureRow(departure: departure)
+                            Section {
+                                List(searchResults, id: \.self) { departure in
+                                    ZStack {
+                                        NavigationLink {
+                                            SingleTripView(stop: stop, departure: departure)
+                                        } label: {
+                                            EmptyView()
+                                        }
+                                        .opacity(0.0)
+                                        .buttonStyle(.plain)
+                                        
+                                        DepartureRow(departure: departure)
+                                    }
+                                }
+                            }
                         }
                     }
                 } else {
@@ -58,23 +73,40 @@ struct DepartureView: View {
                 getDeparture()
             }
             .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
+            .onChange(of: dateTime) { newValue in
+                getDeparture(time: newValue.ISO8601Format())
+            }
         }
+        .environmentObject(departureFilter)
     }
     
     var searchResults: [Departure] {
+        var departures = departureM?.Departures ?? []
+        departures = departures.filter {
+            departureFilter.tram && $0.Mot == "Tram" ||
+            departureFilter.bus && ($0.Mot == "CityBus" || $0.Mot == "IntercityBus") ||
+            departureFilter.suburbanRailway && $0.Mot == "SuburbanRailway" ||
+            departureFilter.train && $0.Mot == "Train" ||
+            departureFilter.cableway && $0.Mot == "Cableway" ||
+            departureFilter.ferry && $0.Mot == "Ferry" ||
+            departureFilter.taxi && $0.Mot == "HailedSharedTaxi"
+        }
+        
         if searchText.isEmpty {
-            return departureM?.Departures ?? []
+            return departures
         } else {
-            return (departureM?.Departures ?? []).filter { $0.getName().contains(searchText) }
+            return departures.filter {
+                $0.getName().contains(searchText)
+            }
         }
     }
     
     // TODO: View aller 30 Sekunden aktualisieren
-    func getDeparture() {
+    func getDeparture(time: String? = nil) {
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(DepartureRequest.getDefault(stopID: stop.stopId))
+        request.httpBody = try? JSONEncoder().encode(DepartureRequest.getDefault(stopID: stop.stopId, time: time))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
