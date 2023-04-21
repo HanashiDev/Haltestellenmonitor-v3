@@ -22,7 +22,17 @@ struct SingleTripView: View {
                 if (isLoaded) {
                     List(searchResults, id: \.self) { tripStop in
                         if (tripStop.Position == "Current" || tripStop.Position == "Next") {
-                            SingleTripRow(tripStop: tripStop)
+                            ZStack {
+                                NavigationLink {
+                                    DepartureView(stop: tripStop.getStop() ?? stop)
+                                } label: {
+                                    EmptyView()
+                                }
+                                .opacity(0.0)
+                                .buttonStyle(.plain)
+
+                                SingleTripRow(tripStop: tripStop)
+                            }
                         }
                     }
                 } else {

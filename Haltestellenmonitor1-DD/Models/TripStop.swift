@@ -62,4 +62,10 @@ struct TripStop: Hashable, Codable {
         
         return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
     }
+    
+    func getStop() -> Stop? {
+        return stops.first { stop in
+            return String(stop.stopId) == self.Id
+        }
+    }
 }
