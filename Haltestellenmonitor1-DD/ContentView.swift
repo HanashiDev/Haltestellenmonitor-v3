@@ -30,7 +30,7 @@ struct ContentView: View {
             StopsView().tabItem {
                 Label("Abfahrten", systemImage: "h.circle") }.tag(1)
             ConnectionView().tabItem { Label("Verbindungen", systemImage: "app.connected.to.app.below.fill") }.tag(2)
-            Text("Tab Content 3").tabItem { Label("Karte", systemImage: "map") }.tag(3)
+            MapView().tabItem { Label("Karte", systemImage: "map") }.tag(3)
         }
         .environmentObject(locationManager)
         .environmentObject(favoriteStops)

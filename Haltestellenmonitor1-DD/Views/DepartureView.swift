@@ -69,6 +69,8 @@ struct DepartureView: View {
             }
         }
         .task(id: stop.stopId, priority: .userInitiated) {
+            departureM = nil
+            isLoaded = false
             getDeparture()
         }
         .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
@@ -104,7 +106,7 @@ struct DepartureView: View {
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(DepartureRequest.getDefault(stopID: stop.stopId, time: time))
+        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: String(stop.stopId), time: time))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in

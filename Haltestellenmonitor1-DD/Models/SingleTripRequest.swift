@@ -14,8 +14,4 @@ struct SingleTripRequest: Hashable, Codable {
     var isarrival: Bool = false
     var mapdata: Bool = false
     var format: String = "json"
-    
-    static func getDefault(stopID: String, tripID: String, time: String) -> SingleTripRequest {
-        return SingleTripRequest(stopID: stopID, tripID: tripID, time: time)
-    }
 }

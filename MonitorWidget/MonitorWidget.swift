@@ -27,7 +27,7 @@ struct Provider: IntentTimelineProvider {
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(DepartureRequest.getDefault(stopID: Int(stopID)!))
+        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: stopID))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in

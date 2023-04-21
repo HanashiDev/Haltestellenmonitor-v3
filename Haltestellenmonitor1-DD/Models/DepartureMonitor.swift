@@ -8,9 +8,9 @@
 import Foundation
 
 struct DepartureMonitor: Hashable, Codable {
-    var Name: String
+    var Name: String?
     var Status: DepartureStatus
-    var Place: String
-    var ExpirationTime: String
+    var Place: String?
+    var ExpirationTime: String?
     var Departures: [Departure]
 }

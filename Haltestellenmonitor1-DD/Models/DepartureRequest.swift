@@ -16,8 +16,4 @@ struct DepartureRequest: Hashable, Codable {
     var shorttermchanges: Bool = true
     var mentzonly: Bool = false
     var format: String = "json"
-    
-    static func getDefault(stopID: Int, time: String? = nil) -> DepartureRequest {
-        return DepartureRequest(stopid: String(stopID), time: time)
-    }
 }

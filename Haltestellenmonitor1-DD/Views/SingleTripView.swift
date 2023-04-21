@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+#if os(iOS)
 import ActivityKit
+#endif
 
 struct SingleTripView: View {
     @EnvironmentObject var pushTokenHistory: PushTokenHistory
@@ -45,6 +47,7 @@ struct SingleTripView: View {
         .task(id: departure.Id, priority: .userInitiated) {
             getSingleTrip()
         }
+        #if os(iOS)
         .toolbar {
             Button {
                 startActivity()
@@ -52,6 +55,7 @@ struct SingleTripView: View {
                 Label("", systemImage: "pin")
             }
         }
+        #endif
         .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
     }
     
@@ -67,7 +71,7 @@ struct SingleTripView: View {
         let url = URL(string: "https://webapi.vvo-online.de/dm/trip")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(SingleTripRequest.getDefault(stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format()))
+        request.httpBody = try? JSONEncoder().encode(SingleTripRequest(stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
@@ -95,6 +99,7 @@ struct SingleTripView: View {
     }
     
     func startActivity() {
+        // TODO: Erfolgsmeldung anzeigen fürn Benutzer
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
             let attributes = TripAttributes(name: stop.name, line: departure.getName(), type: departure.Mot)
