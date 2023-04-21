@@ -69,7 +69,7 @@ struct SingleTripView: View {
     
     func getSingleTrip() {
         let url = URL(string: "https://webapi.vvo-online.de/dm/trip")!
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(SingleTripRequest(stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -77,11 +77,13 @@ struct SingleTripView: View {
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             guard error == nil else {
                 print ("error: \(error!)")
+                getSingleTrip()
                 return
             }
 
             guard let content = data else {
                 print("No data")
+                getSingleTrip()
                 return
             }
 
@@ -92,6 +94,7 @@ struct SingleTripView: View {
                     isLoaded = true
                 } catch {
                     print(error)
+                    getSingleTrip()
                 }
             }
         }

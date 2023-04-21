@@ -147,7 +147,7 @@ struct ConnectionView: View {
         let requestData = TripRequest(time: dateTime.ISO8601Format(), origin: String(filter.startStop?.stopId ?? 0), destination: String(filter.endStop?.stopId ?? 0), standardSettings: standardSettings)
         
         let url = URL(string: "https://webapi.vvo-online.de/tr/trips")!
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(requestData)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -155,11 +155,13 @@ struct ConnectionView: View {
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             guard error == nil else {
                 print ("error: \(error!)")
+                getTripData()
                 return
             }
 
             guard let content = data else {
                 print("No data")
+                getTripData()
                 return
             }
 
@@ -170,6 +172,7 @@ struct ConnectionView: View {
                     self.trip = try decoder.decode(Trip.self, from: content)
                 } catch {
                     print(error)
+                    getTripData()
                 }
                 isLoading = false
             }

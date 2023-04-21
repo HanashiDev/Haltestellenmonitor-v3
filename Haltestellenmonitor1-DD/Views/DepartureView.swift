@@ -68,7 +68,7 @@ struct DepartureView: View {
                 }
             }
         }
-        .task(id: stop.stopId, priority: .userInitiated) {
+        .task(id: stop.stopId) {
             departureM = nil
             isLoaded = false
             getDeparture()
@@ -104,7 +104,7 @@ struct DepartureView: View {
     // TODO: View aller 30 Sekunden aktualisieren
     func getDeparture(time: String? = nil) {
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: String(stop.stopId), time: time))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -112,11 +112,13 @@ struct DepartureView: View {
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             guard error == nil else {
                 print ("error: \(error!)")
+                getDeparture(time: time)
                 return
             }
 
             guard let content = data else {
                 print("No data")
+                getDeparture(time: time)
                 return
             }
 
@@ -128,6 +130,7 @@ struct DepartureView: View {
                     isLoaded = true
                 } catch {
                     print(error)
+                    getDeparture(time: time)
                 }
             }
 

@@ -25,7 +25,7 @@ struct Provider: IntentTimelineProvider {
         let stopID = configuration.stopType?.identifier ?? "33000028"
         
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: stopID))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -35,29 +35,13 @@ struct Provider: IntentTimelineProvider {
             var departureMonitor: DepartureMonitor? = nil
             guard error == nil else {
                 print ("error: \(error!)")
-                let currentDate = Date()
-                for i in 0 ..< 72 {
-                    let entryDate = Calendar.current.date(byAdding: .second, value: 30 * i, to: currentDate)!
-                    let entry = MonitorEntry(date: entryDate, configuration: configuration, departureMonitor: departureMonitor)
-                    entries.append(entry)
-                }
-                
-                let timeline = Timeline(entries: entries, policy: .atEnd)
-                completion(timeline)
+                getTimeline(for: configuration, in: context, completion: completion)
                 return
             }
 
             guard let content = data else {
                 print("No data")
-                let currentDate = Date()
-                for i in 0 ..< 72 {
-                    let entryDate = Calendar.current.date(byAdding: .second, value: 30 * i, to: currentDate)!
-                    let entry = MonitorEntry(date: entryDate, configuration: configuration, departureMonitor: departureMonitor)
-                    entries.append(entry)
-                }
-                
-                let timeline = Timeline(entries: entries, policy: .atEnd)
-                completion(timeline)
+                getTimeline(for: configuration, in: context, completion: completion)
                 return
             }
 
@@ -70,6 +54,8 @@ struct Provider: IntentTimelineProvider {
                     departureMonitor = try decoder.decode(DepartureMonitor.self, from: content)
                 } catch {
                     print(error)
+                    getTimeline(for: configuration, in: context, completion: completion)
+                    return
                 }
                 
                 let currentDate = Date()
