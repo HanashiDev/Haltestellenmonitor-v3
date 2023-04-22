@@ -128,6 +128,12 @@ struct DepartureView: View {
                     let decoder = JSONDecoder()
                     self.departureM = try decoder.decode(DepartureMonitor.self, from: content)
                     isLoaded = true
+                    
+                    if  (time == nil) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
+                            getDeparture()
+                        }
+                    }
                 } catch {
                     print(error)
                     getDeparture(time: time)
