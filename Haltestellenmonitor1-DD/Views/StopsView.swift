@@ -17,11 +17,6 @@ struct StopsView: View {
         NavigationSplitView {
             List(searchResults, id: \.self, selection: $stopManager.selectedStop) { stop in
                 ZStack {
-//                    NavigationLink {
-//                        DepartureView(stop: stop)
-//                    } label: {
-//                        EmptyView()
-//                    }
                     NavigationLink(value: stop) {
                         EmptyView()
                     }
@@ -75,7 +70,7 @@ struct StopsView: View {
     }
     
     func goToStop(url: URL) {
-        if (url.host() != "stop") {
+        if (url.host() != "stop" && url.host() != "trip") {
             return
         }
         let stopID = Int(url.pathComponents[1])

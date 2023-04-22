@@ -121,7 +121,7 @@ struct SingleTripView: View {
         // TODO: Erfolgsmeldung anzeigen fürn Benutzer
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
-            let attributes = TripAttributes(name: stop.name, line: departure.getName(), type: departure.Mot)
+            let attributes = TripAttributes(name: stop.name, type: departure.Mot, stopID: String(stop.stopId), departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
             
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
             

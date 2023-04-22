@@ -21,7 +21,7 @@ struct MonitorWidgetLiveActivity: Widget {
                     Image(systemName: context.attributes.getIcon())
                     VStack {
                         HStack {
-                            Text(context.attributes.line)
+                            Text("\(context.attributes.lineName) \(context.attributes.direction)")
                                 .lineLimit(1)
                             Spacer()
                             if (context.state.done) {
@@ -49,6 +49,7 @@ struct MonitorWidgetLiveActivity: Widget {
                 }
                 .font(.subheadline)
             }
+            .widgetURL(getWidgetUrl(context: context))
             .foregroundColor(Color.black)
             .padding()
             .activityBackgroundTint(Color("NotificationBackground"))
@@ -96,14 +97,14 @@ struct MonitorWidgetLiveActivity: Widget {
                         .padding(.bottom, 1.0)
                         HStack {
                             Image(systemName: context.attributes.getIcon())
-                            Text(context.attributes.line)
+                            Text("\(context.attributes.lineName) \(context.attributes.direction)")
                                 .lineLimit(1)
                         }
                     }
                     .font(.subheadline)
                 }
             } compactLeading: {
-                Text(context.attributes.line)
+                Text("\(context.attributes.lineName) \(context.attributes.direction)")
                     .font(.subheadline)
                     .lineLimit(1)
             } compactTrailing: {
@@ -122,15 +123,20 @@ struct MonitorWidgetLiveActivity: Widget {
                     Text("\(context.state.getIn())")
                 }
             }
-            // TODO: Deep Link
-            .widgetURL(URL(string: "http://www.apple.com"))
+            .widgetURL(getWidgetUrl(context: context))
             .keylineTint(Color.red)
         }
+    }
+    
+    func getWidgetUrl(context: ActivityViewContext<TripAttributes>) -> URL? {
+        let str = "widget://trip/\(context.attributes.stopID.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.departureID.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.lineName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.direction.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.state.time.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"
+        
+        return URL(string: str)
     }
 }
 
 struct MonitorWidgetLiveActivity_Previews: PreviewProvider {
-    static let attributes = TripAttributes(name: "Pirnaischer Platz", line: "4 Laubegast", type: "Tram")
+    static let attributes = TripAttributes(name: "Pirnaischer Platz", type: "Tram", stopID: "300001", departureID: "10000", lineName: "4", direction: "Laubegast")
     static let contentState = TripAttributes.ContentState(time: "/Date(1681824120000-0000)/", realTime: "/Date(1681825120000-0000)/", done: true)
 
     static var previews: some View {

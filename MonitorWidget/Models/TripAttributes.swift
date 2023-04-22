@@ -83,8 +83,11 @@ struct TripAttributes: ActivityAttributes {
 
     // Fixed non-changing properties about your activity go here!
     var name: String
-    var line: String
     var type: String
+    var stopID: String
+    var departureID: String
+    var lineName: String
+    var direction: String
     
     func getIcon() -> String {
         switch (self.type) {
