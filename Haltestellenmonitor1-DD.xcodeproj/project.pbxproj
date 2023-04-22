@@ -127,6 +127,44 @@
 		D0C1ECDE29F3008B001D214D /* RegularStopRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECDD29F3008B001D214D /* RegularStopRow.swift */; };
 		D0C1ECE029F325CC001D214D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECDF29F325CC001D214D /* MapView.swift */; };
 		D0C1ECE429F333F9001D214D /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C1ECE329F333F9001D214D /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D0C21F4529F426A8001770F1 /* SingleTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C21F4429F426A8001770F1 /* SingleTripView.swift */; };
+		D0C21F4729F429EB001770F1 /* SingleTripRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C21F4629F429EB001770F1 /* SingleTripRow.swift */; };
+		D0D1995529F40AAA00946D87 /* WatchMonitorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1995429F40AAA00946D87 /* WatchMonitorApp.swift */; };
+		D0D1995729F40AAA00946D87 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1995629F40AAA00946D87 /* ContentView.swift */; };
+		D0D1995929F40AAA00946D87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0D1995829F40AAA00946D87 /* Assets.xcassets */; };
+		D0D1995C29F40AAA00946D87 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0D1995B29F40AAA00946D87 /* Preview Assets.xcassets */; };
+		D0D1995F29F40AAA00946D87 /* Haltestellenmonitor Dresden.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D0D1995229F40AA900946D87 /* Haltestellenmonitor Dresden.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D0D1996429F40B4B00946D87 /* singleTrip.json in Resources */ = {isa = PBXBuildFile; fileRef = D0C1ECAF29F28014001D214D /* singleTrip.json */; };
+		D0D1996529F40B4E00946D87 /* trip.json in Resources */ = {isa = PBXBuildFile; fileRef = D0BD66E329F03BE5004E574C /* trip.json */; };
+		D0D1996629F40B5100946D87 /* departure.json in Resources */ = {isa = PBXBuildFile; fileRef = D03A26A129EEC2A2005B0600 /* departure.json */; };
+		D0D1996729F40B5700946D87 /* stops.json in Resources */ = {isa = PBXBuildFile; fileRef = D03A269129EEB93E005B0600 /* stops.json */; };
+		D0D1996829F40B8A00946D87 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2629EEEB85002DFEBF /* LocationManager.swift */; };
+		D0D1996929F40B9700946D87 /* DateParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2129EED774002DFEBF /* DateParser.swift */; };
+		D0D1996A29F40B9C00946D87 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66D929F03056004E574C /* Trip.swift */; };
+		D0D1996B29F40B9C00946D87 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66DB29F030BD004E574C /* Route.swift */; };
+		D0D1996C29F40B9C00946D87 /* FavoriteStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */; };
+		D0D1996D29F40B9C00946D87 /* SingleTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECB729F28135001D214D /* SingleTrip.swift */; };
+		D0D1996E29F40B9C00946D87 /* TripStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECB329F28032001D214D /* TripStop.swift */; };
+		D0D1996F29F40B9C00946D87 /* Mot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66E129F03949004E574C /* Mot.swift */; };
+		D0D1997029F40B9C00946D87 /* StopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269B29EEBB3C005B0600 /* StopData.swift */; };
+		D0D1997129F40B9C00946D87 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A269829EEBA9B005B0600 /* Stop.swift */; };
+		D0D1997229F40B9C00946D87 /* PushTokenHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECCF29F2B6C0001D214D /* PushTokenHistory.swift */; };
+		D0D1997329F40B9C00946D87 /* SingleTripRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECC329F288D3001D214D /* SingleTripRequest.swift */; };
+		D0D1997429F40B9C00946D87 /* DepartureRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1E29EECDFB002DFEBF /* DepartureRequest.swift */; };
+		D0D1997529F40B9C00946D87 /* DepartureFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECD329F2EF9B001D214D /* DepartureFilter.swift */; };
+		D0D1997629F40B9C00946D87 /* ConnectionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66D329F02576004E574C /* ConnectionFilter.swift */; };
+		D0D1997729F40B9C00946D87 /* PartialRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66DD29F03446004E574C /* PartialRoute.swift */; };
+		D0D1997829F40B9C00946D87 /* ActivityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECCB29F2B165001D214D /* ActivityRequest.swift */; };
+		D0D1997929F40B9C00946D87 /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1A29EECAF2002DFEBF /* Departure.swift */; };
+		D0D1997A29F40B9C00946D87 /* RegularStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66DF29F034AC004E574C /* RegularStop.swift */; };
+		D0D1997B29F40B9C00946D87 /* TripStandardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECD929F2FA50001D214D /* TripStandardSettings.swift */; };
+		D0D1997C29F40B9C00946D87 /* DeparturePlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1C29EECB20002DFEBF /* DeparturePlatform.swift */; };
+		D0D1997D29F40B9C00946D87 /* DepartureMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1629EECA20002DFEBF /* DepartureMonitor.swift */; };
+		D0D1997E29F40B9C00946D87 /* DepartureStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC1829EECA9A002DFEBF /* DepartureStatus.swift */; };
+		D0D1997F29F40B9C00946D87 /* TripRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66D729F02C39004E574C /* TripRequest.swift */; };
+		D0D1998229F40C4B00946D87 /* StopRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998129F40C4B00946D87 /* StopRow.swift */; };
+		D0D1998929F412DF00946D87 /* DepartureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998829F412DF00946D87 /* DepartureView.swift */; };
+		D0D1998B29F414BD00946D87 /* DepartureRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998A29F414BD00946D87 /* DepartureRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +182,13 @@
 			remoteGlobalIDString = D0BD66A829EFECF1004E574C;
 			remoteInfo = MonitorIntents;
 		};
+		D0D1995D29F40AAA00946D87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D03A267729EEB6C9005B0600 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0D1995129F40AA900946D87;
+			remoteInfo = "WatchMonitor Watch App";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -157,6 +202,17 @@
 				D0BD66B229EFECF1004E574C /* MonitorIntents.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0D1996329F40AAA00946D87 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				D0D1995F29F40AAA00946D87 /* Haltestellenmonitor Dresden.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -229,6 +285,16 @@
 		D0C1ECDD29F3008B001D214D /* RegularStopRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularStopRow.swift; sourceTree = "<group>"; };
 		D0C1ECDF29F325CC001D214D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D0C1ECE329F333F9001D214D /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
+		D0C21F4429F426A8001770F1 /* SingleTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTripView.swift; sourceTree = "<group>"; };
+		D0C21F4629F429EB001770F1 /* SingleTripRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTripRow.swift; sourceTree = "<group>"; };
+		D0D1995229F40AA900946D87 /* Haltestellenmonitor Dresden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Haltestellenmonitor Dresden.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0D1995429F40AAA00946D87 /* WatchMonitorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchMonitorApp.swift; sourceTree = "<group>"; };
+		D0D1995629F40AAA00946D87 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D0D1995829F40AAA00946D87 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D0D1995B29F40AAA00946D87 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D0D1998129F40C4B00946D87 /* StopRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopRow.swift; sourceTree = "<group>"; };
+		D0D1998829F412DF00946D87 /* DepartureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureView.swift; sourceTree = "<group>"; };
+		D0D1998A29F414BD00946D87 /* DepartureRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +323,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D0D1994F29F40AA900946D87 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -267,6 +340,7 @@
 				D03A268129EEB6C9005B0600 /* Haltestellenmonitor1-DD */,
 				D0BD668629EFE0AA004E574C /* MonitorWidget */,
 				D0BD66AC29EFECF1004E574C /* MonitorIntents */,
+				D0D1995329F40AAA00946D87 /* WatchMonitor Watch App */,
 				D0BD664829EFDD50004E574C /* Frameworks */,
 				D03A268029EEB6C9005B0600 /* Products */,
 			);
@@ -278,6 +352,7 @@
 				D03A267F29EEB6C9005B0600 /* Haltestellenmonitor1-DD.app */,
 				D0BD668329EFE0AA004E574C /* MonitorWidgetExtension.appex */,
 				D0BD66A929EFECF1004E574C /* MonitorIntents.appex */,
+				D0D1995229F40AA900946D87 /* Haltestellenmonitor Dresden.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -461,6 +536,38 @@
 			path = Sections;
 			sourceTree = "<group>";
 		};
+		D0D1995329F40AAA00946D87 /* WatchMonitor Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				D0D1998029F40C3D00946D87 /* Rows */,
+				D0D1995429F40AAA00946D87 /* WatchMonitorApp.swift */,
+				D0D1995629F40AAA00946D87 /* ContentView.swift */,
+				D0D1995829F40AAA00946D87 /* Assets.xcassets */,
+				D0D1995A29F40AAA00946D87 /* Preview Content */,
+				D0D1998829F412DF00946D87 /* DepartureView.swift */,
+				D0C21F4429F426A8001770F1 /* SingleTripView.swift */,
+			);
+			path = "WatchMonitor Watch App";
+			sourceTree = "<group>";
+		};
+		D0D1995A29F40AAA00946D87 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D0D1995B29F40AAA00946D87 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D0D1998029F40C3D00946D87 /* Rows */ = {
+			isa = PBXGroup;
+			children = (
+				D0D1998129F40C4B00946D87 /* StopRow.swift */,
+				D0D1998A29F414BD00946D87 /* DepartureRow.swift */,
+				D0C21F4629F429EB001770F1 /* SingleTripRow.swift */,
+			);
+			path = Rows;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -472,12 +579,14 @@
 				D03A267C29EEB6C9005B0600 /* Frameworks */,
 				D03A267D29EEB6C9005B0600 /* Resources */,
 				D0BD665D29EFDD51004E574C /* Embed Foundation Extensions */,
+				D0D1996329F40AAA00946D87 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				D0BD669429EFE0AB004E574C /* PBXTargetDependency */,
 				D0BD66B129EFECF1004E574C /* PBXTargetDependency */,
+				D0D1995E29F40AAA00946D87 /* PBXTargetDependency */,
 			);
 			name = "Haltestellenmonitor1-DD";
 			productName = "Haltestellenmonitor1-DD";
@@ -518,6 +627,23 @@
 			productReference = D0BD66A929EFECF1004E574C /* MonitorIntents.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		D0D1995129F40AA900946D87 /* WatchMonitor Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0D1996029F40AAA00946D87 /* Build configuration list for PBXNativeTarget "WatchMonitor Watch App" */;
+			buildPhases = (
+				D0D1994E29F40AA900946D87 /* Sources */,
+				D0D1994F29F40AA900946D87 /* Frameworks */,
+				D0D1995029F40AA900946D87 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WatchMonitor Watch App";
+			productName = "WatchMonitor Watch App";
+			productReference = D0D1995229F40AA900946D87 /* Haltestellenmonitor Dresden.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -535,6 +661,9 @@
 						CreatedOnToolsVersion = 14.3;
 					};
 					D0BD66A829EFECF1004E574C = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					D0D1995129F40AA900946D87 = {
 						CreatedOnToolsVersion = 14.3;
 					};
 				};
@@ -555,6 +684,7 @@
 				D03A267E29EEB6C9005B0600 /* Haltestellenmonitor1-DD */,
 				D0BD668229EFE0AA004E574C /* MonitorWidgetExtension */,
 				D0BD66A829EFECF1004E574C /* MonitorIntents */,
+				D0D1995129F40AA900946D87 /* WatchMonitor Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -592,6 +722,19 @@
 				D0BD66E629F03BEA004E574C /* trip.json in Resources */,
 				D0C1ECB229F28014001D214D /* singleTrip.json in Resources */,
 				D0BD66B829EFEEB9004E574C /* stops.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0D1995029F40AA900946D87 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0D1996529F40B4E00946D87 /* trip.json in Resources */,
+				D0D1996629F40B5100946D87 /* departure.json in Resources */,
+				D0D1995C29F40AAA00946D87 /* Preview Assets.xcassets in Resources */,
+				D0D1996429F40B4B00946D87 /* singleTrip.json in Resources */,
+				D0D1995929F40AAA00946D87 /* Assets.xcassets in Resources */,
+				D0D1996729F40B5700946D87 /* stops.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,6 +862,44 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D0D1994E29F40AA900946D87 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0D1996A29F40B9C00946D87 /* Trip.swift in Sources */,
+				D0D1995729F40AAA00946D87 /* ContentView.swift in Sources */,
+				D0D1997529F40B9C00946D87 /* DepartureFilter.swift in Sources */,
+				D0D1997A29F40B9C00946D87 /* RegularStop.swift in Sources */,
+				D0D1997E29F40B9C00946D87 /* DepartureStatus.swift in Sources */,
+				D0D1995529F40AAA00946D87 /* WatchMonitorApp.swift in Sources */,
+				D0D1997629F40B9C00946D87 /* ConnectionFilter.swift in Sources */,
+				D0C21F4729F429EB001770F1 /* SingleTripRow.swift in Sources */,
+				D0C21F4529F426A8001770F1 /* SingleTripView.swift in Sources */,
+				D0D1997029F40B9C00946D87 /* StopData.swift in Sources */,
+				D0D1996B29F40B9C00946D87 /* Route.swift in Sources */,
+				D0D1997B29F40B9C00946D87 /* TripStandardSettings.swift in Sources */,
+				D0D1996F29F40B9C00946D87 /* Mot.swift in Sources */,
+				D0D1997429F40B9C00946D87 /* DepartureRequest.swift in Sources */,
+				D0D1998229F40C4B00946D87 /* StopRow.swift in Sources */,
+				D0D1998929F412DF00946D87 /* DepartureView.swift in Sources */,
+				D0D1996D29F40B9C00946D87 /* SingleTrip.swift in Sources */,
+				D0D1996C29F40B9C00946D87 /* FavoriteStop.swift in Sources */,
+				D0D1997729F40B9C00946D87 /* PartialRoute.swift in Sources */,
+				D0D1997C29F40B9C00946D87 /* DeparturePlatform.swift in Sources */,
+				D0D1996E29F40B9C00946D87 /* TripStop.swift in Sources */,
+				D0D1998B29F414BD00946D87 /* DepartureRow.swift in Sources */,
+				D0D1996929F40B9700946D87 /* DateParser.swift in Sources */,
+				D0D1997929F40B9C00946D87 /* Departure.swift in Sources */,
+				D0D1997329F40B9C00946D87 /* SingleTripRequest.swift in Sources */,
+				D0D1997F29F40B9C00946D87 /* TripRequest.swift in Sources */,
+				D0D1996829F40B8A00946D87 /* LocationManager.swift in Sources */,
+				D0D1997129F40B9C00946D87 /* Stop.swift in Sources */,
+				D0D1997D29F40B9C00946D87 /* DepartureMonitor.swift in Sources */,
+				D0D1997229F40B9C00946D87 /* PushTokenHistory.swift in Sources */,
+				D0D1997829F40B9C00946D87 /* ActivityRequest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -731,6 +912,11 @@
 			isa = PBXTargetDependency;
 			target = D0BD66A829EFECF1004E574C /* MonitorIntents */;
 			targetProxy = D0BD66B029EFECF1004E574C /* PBXContainerItemProxy */;
+		};
+		D0D1995E29F40AAA00946D87 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0D1995129F40AA900946D87 /* WatchMonitor Watch App */;
+			targetProxy = D0D1995D29F40AAA00946D87 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1042,6 +1228,66 @@
 			};
 			name = Release;
 		};
+		D0D1996129F40AAA00946D87 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_ASSET_PATHS = "\"WatchMonitor Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = WGL37RNHJ6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Der Standort wird verwendet um den Abstand zur nächsten Haltestelle zu berechnen.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "eu.Hanashi.Haltestellenmonitor1-DD";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.watchkitapp";
+				PRODUCT_NAME = "Haltestellenmonitor Dresden";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Debug;
+		};
+		D0D1996229F40AAA00946D87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_ASSET_PATHS = "\"WatchMonitor Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = WGL37RNHJ6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Der Standort wird verwendet um den Abstand zur nächsten Haltestelle zu berechnen.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "eu.Hanashi.Haltestellenmonitor1-DD";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.watchkitapp";
+				PRODUCT_NAME = "Haltestellenmonitor Dresden";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1077,6 +1323,15 @@
 			buildConfigurations = (
 				D0BD66B429EFECF2004E574C /* Debug */,
 				D0BD66B529EFECF2004E574C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0D1996029F40AAA00946D87 /* Build configuration list for PBXNativeTarget "WatchMonitor Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0D1996129F40AAA00946D87 /* Debug */,
+				D0D1996229F40AAA00946D87 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

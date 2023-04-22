@@ -10,7 +10,7 @@ import RegexBuilder
 
 struct DateParser {
     static func extractTimestamp(time: String) -> Date? {
-        let timeRef = Reference(Int.self)
+        let timeRef = Reference(Int64.self)
         let timeZoneRef = Reference(Int.self)
         let pattern = Regex {
             "/Date("
@@ -18,17 +18,17 @@ struct DateParser {
             TryCapture(as: timeRef) {
                 OneOrMore(.digit)
             } transform: { match in
-                Int(match)
+                Int64(match)
             }
-            
+
             "-"
-            
+
             TryCapture(as: timeZoneRef) {
                 OneOrMore(.digit)
             } transform: { match in
                 Int(match)
             }
-            
+
             ")/"
         }
 
@@ -37,7 +37,7 @@ struct DateParser {
             timestamp = timestamp / 1000
             return Date(timeIntervalSince1970: TimeInterval(timestamp))
         }
-        
+
         return nil
     }
 }

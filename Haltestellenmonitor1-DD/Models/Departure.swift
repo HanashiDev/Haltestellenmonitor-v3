@@ -75,6 +75,9 @@ struct Departure: Hashable, Codable {
             time = self.RealTime!
         }
         let timeDate = DateParser.extractTimestamp(time: time)
+        if (timeDate == nil) {
+            return 0
+        }
         
         let calendar = Calendar.current
         
