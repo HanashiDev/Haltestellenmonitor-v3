@@ -17,9 +17,12 @@ struct StopsView: View {
         NavigationSplitView {
             List(searchResults, id: \.self, selection: $stopManager.selectedStop) { stop in
                 ZStack {
-                    NavigationLink {
-                        DepartureView(stop: stop)
-                    } label: {
+//                    NavigationLink {
+//                        DepartureView(stop: stop)
+//                    } label: {
+//                        EmptyView()
+//                    }
+                    NavigationLink(value: stop) {
                         EmptyView()
                     }
                     .opacity(0.0)
@@ -55,8 +58,12 @@ struct StopsView: View {
             }
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         } detail: {
-            NavigationStack {
-                DepartureView(stop: stopManager.selectedStop ?? stops[0])
+            if (stopManager.selectedStop == nil) {
+                EmptyView()
+            } else {
+                NavigationStack {
+                    DepartureView(stop: stopManager.selectedStop ?? stops[0])
+                }
             }
         }
         .onAppear {
