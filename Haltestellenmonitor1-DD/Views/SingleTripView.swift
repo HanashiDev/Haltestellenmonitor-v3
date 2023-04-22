@@ -15,6 +15,8 @@ struct SingleTripView: View {
     @State var singleTrip: SingleTrip? = nil
     @State private var isLoaded = false
     @State private var searchText = ""
+    @State private var showingSuccessAlert = false
+    @State private var showingErrorAlert = false
     var stop: Stop
     var departure: Departure
     
@@ -46,6 +48,20 @@ struct SingleTripView: View {
         .navigationTitle(departure.getName())
         .task(id: departure.Id, priority: .userInitiated) {
             getSingleTrip()
+        }
+        .alert("Diese Abfahrt wird nun als Live-Aktivität angezeigt.", isPresented: $showingSuccessAlert) {
+            Button {
+                // do nothing
+            } label: {
+                Text("OK")
+            }
+        }
+        .alert("Die Live-Aktivität wurde nicht korrekt registriert. Sie wird nicht aktualisiert.", isPresented: $showingErrorAlert) {
+            Button {
+                // do nothing
+            } label: {
+                Text("OK")
+            }
         }
         #if os(iOS)
         .toolbar {
@@ -113,6 +129,8 @@ struct SingleTripView: View {
                 let activity = try Activity.request(attributes: attributes, content: activityContent, pushType: .token)
                 print("Requested an activity \(String(activity.id)).")
                 
+                showingSuccessAlert = true
+                
                 Task {
                     for await data in activity.pushTokenUpdates {
                         let token = data.map {String(format: "%02x", $0)}.joined()
@@ -140,11 +158,13 @@ struct SingleTripView: View {
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             guard error == nil else {
                 print ("error: \(error!)")
+                showingErrorAlert = true
                 return
             }
 
             guard let content = data else {
                 print("No data")
+                showingErrorAlert = true
                 return
             }
             
