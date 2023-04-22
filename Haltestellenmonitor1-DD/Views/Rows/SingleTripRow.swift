@@ -12,9 +12,16 @@ struct SingleTripRow: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(tripStop.Name)
-                .font(.headline)
+            HStack {
+                Text(tripStop.Name)
+                    .font(.headline)
                 .lineLimit(1)
+                Spacer()
+                if (tripStop.Platform != nil) {
+                    Text(tripStop.getPlatForm())
+                        .font(.footnote)
+                }
+            }
             HStack {
                 Text("\(tripStop.getTime()) Uhr")
                 if (tripStop.getTimeDifference() > 0) {

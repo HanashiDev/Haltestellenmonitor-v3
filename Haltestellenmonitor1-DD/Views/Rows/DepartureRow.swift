@@ -13,30 +13,35 @@ struct DepartureRow: View {
     var body: some View {
         HStack(alignment: .center) {
             Image(systemName: departure.getIcon())
+            
             VStack(alignment: .leading) {
                 Text(departure.getName())
                     .font(.headline)
+                
                     .lineLimit(1)
                 HStack {
                     Text("\(departure.getScheduledTime()) Uhr")
-                        .font(.subheadline)
                     if (departure.getTimeDifference() > 0) {
                         Text("+\(departure.getTimeDifference())")
-                            .font(.subheadline)
                             .foregroundColor(Color.red)
                     } else if (departure.getTimeDifference() < 0) {
                         Text("\(departure.getTimeDifference())")
-                            .font(.subheadline)
                             .foregroundColor(Color.green)
                     }
+                    Spacer()
+                    Text("\(departure.getRealTime()) Uhr")
                 }
-            }
-            Spacer()
-            VStack(alignment: .trailing) {
-                Text("in \(departure.getIn()) min")
-                    .font(.subheadline)
-                Text("\(departure.getRealTime()) Uhr")
-                    .font(.subheadline)
+                .font(.subheadline)
+                
+                HStack {
+                    if (departure.Platform != nil) {
+                        Text(departure.getPlatForm())
+                            .font(.footnote)
+                    }
+                    Spacer()
+                    Text("in \(departure.getIn()) min")
+                }
+                .font(.subheadline)
             }
         }
     }

@@ -36,6 +36,18 @@ struct PartialRouteRow: View {
                     }
                     .font(.subheadline)
                 }
+                if (partialRoute.getFirstPlatform() != nil || partialRoute.getLastPlatform() != nil) {
+                    HStack {
+                        if partialRoute.getFirstPlatform() != nil {
+                            Text(partialRoute.getFirstPlatform() ?? "")
+                        }
+                        Spacer()
+                        if partialRoute.getLastPlatform() != nil {
+                            Text(partialRoute.getLastPlatform() ?? "")
+                        }
+                    }
+                    .font(.footnote)
+                }
             }
         }
     }

@@ -116,4 +116,15 @@ struct Departure: Hashable, Codable {
             return "cablecar"
         }
     }
+    
+    func getPlatForm() -> String {
+        switch (Platform?.type) {
+        case "Railtrack":
+            return "Gleis \(Platform?.Name ?? "0")"
+        case "Platform":
+            return "Steig \(Platform?.Name ?? "0")"
+        default:
+            return ""
+        }
+    }
 }

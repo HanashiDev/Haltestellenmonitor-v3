@@ -68,4 +68,15 @@ struct TripStop: Hashable, Codable {
             return String(stop.stopId) == self.Id
         }
     }
+    
+    func getPlatForm() -> String {
+        switch (Platform?.type) {
+        case "Railtrack":
+            return "Gleis \(Platform?.Name ?? "0")"
+        case "Platform":
+            return "Steig \(Platform?.Name ?? "0")"
+        default:
+            return ""
+        }
+    }
 }

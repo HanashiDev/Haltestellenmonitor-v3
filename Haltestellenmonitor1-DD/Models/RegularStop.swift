@@ -15,6 +15,7 @@ struct RegularStop: Hashable, Codable {
     var Place: String
     var Name: String
     var type: String
+    var Platform: DeparturePlatform?
     var Latitude: Int
     var Longitude: Int
     var DepartureState: String?
@@ -22,7 +23,7 @@ struct RegularStop: Hashable, Codable {
     var DataId: String
     
     private enum CodingKeys : String, CodingKey {
-        case ArrivalTime, DepartureTime, ArrivalRealTime, DepartureRealTime, Place, Name, type = "Type", Latitude, Longitude, DepartureState, ArrivalState, DataId
+        case ArrivalTime, DepartureTime, ArrivalRealTime, DepartureRealTime, Place, Name, type = "Type", Platform, Latitude, Longitude, DepartureState, ArrivalState, DataId
     }
     
     func getArrivalTime() -> String {
@@ -116,6 +117,17 @@ struct RegularStop: Hashable, Codable {
     func getStop() -> Stop? {
         return stops.first { stop in
             return String(stop.stopId) == self.DataId
+        }
+    }
+    
+    func getPlatform() -> String? {
+        switch (Platform?.type) {
+        case "Railtrack":
+            return "Gleis \(Platform?.Name ?? "0")"
+        case "Platform":
+            return "Steig \(Platform?.Name ?? "0")"
+        default:
+            return nil
         }
     }
 }

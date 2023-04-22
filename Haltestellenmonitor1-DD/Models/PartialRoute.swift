@@ -129,4 +129,12 @@ struct PartialRoute: Hashable, Codable {
     func getLastStation() -> String? {
         return self.RegularStops?.last?.Name
     }
+    
+    func getFirstPlatform() -> String? {
+        return RegularStops?.first?.getPlatform()
+    }
+    
+    func getLastPlatform() -> String? {
+        return RegularStops?.last?.getPlatform()
+    }
 }

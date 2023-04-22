@@ -13,27 +13,30 @@ struct RegularStopRow: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(regularStop.Name)
+            HStack {
+                Text(regularStop.Name)
+                Spacer()
+                if (regularStop.getPlatform() != nil) {
+                    Text(regularStop.getPlatform() ?? "")
+                        .font(.footnote)
+                }
+            }
             HStack {
                 Text("\(isFirst ? regularStop.getDepartureTime() :  regularStop.getArrivalTime()) Uhr")
                 if (isFirst) {
                     if (regularStop.getTimeDifferenceDeparture() > 0) {
                         Text("+\(regularStop.getTimeDifferenceDeparture())")
-                            .font(.subheadline)
                             .foregroundColor(Color.red)
                     } else if (regularStop.getTimeDifferenceDeparture() < 0) {
                         Text("\(regularStop.getTimeDifferenceDeparture())")
-                            .font(.subheadline)
                             .foregroundColor(Color.green)
                     }
                 } else {
                     if (regularStop.getTimeDifference() > 0) {
                         Text("+\(regularStop.getTimeDifference())")
-                            .font(.subheadline)
                             .foregroundColor(Color.red)
                     } else if (regularStop.getTimeDifference() < 0) {
                         Text("\(regularStop.getTimeDifference())")
-                            .font(.subheadline)
                             .foregroundColor(Color.green)
                     }
                 }
