@@ -63,15 +63,15 @@ struct SingleTripView: View {
                 Text("OK")
             }
         }
-        #if os(iOS)
         .toolbar {
-            Button {
-                startActivity()
-            } label: {
-                Label("", systemImage: "pin")
+            if !ProcessInfo().isiOSAppOnMac {
+                Button {
+                    startActivity()
+                } label: {
+                    Label("", systemImage: "pin")
+                }
             }
         }
-        #endif
         .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
     }
     
