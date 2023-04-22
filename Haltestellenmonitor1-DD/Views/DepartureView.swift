@@ -75,7 +75,7 @@ struct DepartureView: View {
         }
         .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
         .onChange(of: dateTime) { newValue in
-            getDeparture(time: newValue.ISO8601Format())
+            getDeparture()
         }
         .environmentObject(departureFilter)
     }
@@ -102,23 +102,23 @@ struct DepartureView: View {
     }
     
     // TODO: View aller 30 Sekunden aktualisieren
-    func getDeparture(time: String? = nil) {
+    func getDeparture() {
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: String(stop.stopId), time: time))
+        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: String(stop.stopId), time: dateTime.ISO8601Format()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             guard error == nil else {
                 print ("error: \(error!)")
-                getDeparture(time: time)
+                getDeparture()
                 return
             }
 
             guard let content = data else {
                 print("No data")
-                getDeparture(time: time)
+                getDeparture()
                 return
             }
 
@@ -129,14 +129,12 @@ struct DepartureView: View {
                     self.departureM = try decoder.decode(DepartureMonitor.self, from: content)
                     isLoaded = true
                     
-                    if  (time == nil) {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
-                            getDeparture()
-                        }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
+                        getDeparture()
                     }
                 } catch {
                     print(error)
-                    getDeparture(time: time)
+                    getDeparture()
                 }
             }
 
