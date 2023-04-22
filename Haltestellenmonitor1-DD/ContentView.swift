@@ -22,10 +22,18 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selection.onUpdate {
             if selection == oldSelection {
-                if selection == 1 {
+                switch selection {
+                case 1:
                     stopManager.selectedStop = nil
-                } else if (selection == 2) {
+                    break
+                case 2:
                     stopManager.presentedStops.removeAll()
+                    break
+                case 3:
+                    stopManager.presentedMapStops.removeAll()
+                    break
+                default:
+                    break
                 }
             }
             oldSelection = selection

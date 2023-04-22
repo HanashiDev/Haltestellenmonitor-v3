@@ -10,11 +10,11 @@ import MapKit
 
 struct MapView: View {
     @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var stopManager: StopManager
     @State var tracking: MapUserTrackingMode = .none
-    @State var presentedStops = [Stop]()
     
     var body: some View {
-        NavigationStack(path: $presentedStops) {
+        NavigationStack(path: $stopManager.presentedMapStops) {
             Map(coordinateRegion: .constant(locationManager.region), interactionModes: .all, showsUserLocation: true, userTrackingMode: $tracking, annotationItems: stops, annotationContent: { stop in
                 MapAnnotation(coordinate: stop.coordinates, content: {
                     NavigationLink(value: stop) {
@@ -35,5 +35,6 @@ struct MapView_Previews: PreviewProvider {
     static var previews: some View {
         MapView()
             .environmentObject(LocationManager())
+            .environmentObject(StopManager())
     }
 }
