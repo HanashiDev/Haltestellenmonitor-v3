@@ -12,9 +12,10 @@ struct StopsView: View {
     @EnvironmentObject var favoriteStops: FavoriteStop
     @EnvironmentObject var stopManager: StopManager
     @State private var searchText = ""
+    @State private var visible: NavigationSplitViewVisibility = .doubleColumn
 
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $visible) {
             List(searchResults, id: \.self, selection: $stopManager.selectedStop) { stop in
                 ZStack {
                     NavigationLink(value: stop) {
@@ -61,6 +62,7 @@ struct StopsView: View {
                 }
             }
         }
+        .navigationSplitViewStyle(.balanced)
         .onAppear {
             locationManager.requestLocation()
         }
