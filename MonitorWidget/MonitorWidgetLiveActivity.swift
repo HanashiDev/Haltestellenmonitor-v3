@@ -54,6 +54,7 @@ struct MonitorWidgetLiveActivity: Widget {
             .padding()
             .activityBackgroundTint(Color("NotificationBackground"))
             .activitySystemActionForegroundColor(Color.black)
+            .dynamicTypeSize(.medium ... .large)
 
         } dynamicIsland: { context in
             DynamicIsland {

@@ -15,6 +15,7 @@ struct Haltestellenmonitor1_DDApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .dynamicTypeSize(.medium ... .large)
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {

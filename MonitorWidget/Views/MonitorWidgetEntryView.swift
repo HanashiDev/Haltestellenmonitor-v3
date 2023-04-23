@@ -38,6 +38,7 @@ struct MonitorWidgetEntryView : View {
         .padding(.trailing, 5.0)
         .background(colorScheme == .dark ? Color.black : Color.yellow)
         .widgetURL(URL(string: "widget://stop/\(entry.getStopID().addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"))
+        .dynamicTypeSize(.medium ... .large)
     }
 }
 

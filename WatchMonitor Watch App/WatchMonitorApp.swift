@@ -12,6 +12,7 @@ struct WatchMonitor_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .dynamicTypeSize(.medium ... .large)
         }
     }
 }
