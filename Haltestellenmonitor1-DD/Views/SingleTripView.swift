@@ -6,9 +6,7 @@
 //
 
 import SwiftUI
-#if os(iOS)
 import ActivityKit
-#endif
 
 struct SingleTripView: View {
     @EnvironmentObject var pushTokenHistory: PushTokenHistory

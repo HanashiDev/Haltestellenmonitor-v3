@@ -6,15 +6,19 @@
 //
 
 import SwiftUI
+import ActivityKit
 
 struct DepartureView: View {
     var stop: Stop
     @EnvironmentObject var favoriteStops: FavoriteStop
+    @EnvironmentObject var pushTokenHistory: PushTokenHistory
     @State var departureM: DepartureMonitor? = nil
     @State private var searchText = ""
     @State private var isLoaded = false
     @State private var dateTime = Date.now
     @State private var topExpanded: Bool = true
+    @State private var showingSuccessAlert = false
+    @State private var showingErrorAlert = false
     @StateObject var departureFilter = DepartureFilter()
     
     var body: some View {
@@ -41,6 +45,16 @@ struct DepartureView: View {
                                     
                                     DepartureRow(departure: departure)
                                 }
+                                .swipeActions(edge: .trailing) {
+                                    if !ProcessInfo().isiOSAppOnMac {
+                                        Button {
+                                            startActivity(departure: departure)
+                                        } label: {
+                                            Label("", systemImage: "pin")
+                                        }
+                                        .tint(.yellow)
+                                    }
+                                }
                             }
                         }
                     }
@@ -66,6 +80,20 @@ struct DepartureView: View {
                 } else {
                     Label("", systemImage: "star")
                 }
+            }
+        }
+        .alert("Diese Abfahrt wird nun als Live-Aktivität angezeigt.", isPresented: $showingSuccessAlert) {
+            Button {
+                // do nothing
+            } label: {
+                Text("OK")
+            }
+        }
+        .alert("Die Live-Aktivität wurde nicht korrekt registriert. Sie wird nicht aktualisiert.", isPresented: $showingErrorAlert) {
+            Button {
+                // do nothing
+            } label: {
+                Text("OK")
             }
         }
         .task(id: stop.stopId) {
@@ -141,12 +169,70 @@ struct DepartureView: View {
         }
         task.resume()
     }
+    
+    func startActivity(departure: Departure) {
+        // TODO: Erfolgsmeldung anzeigen fürn Benutzer
+        if ActivityAuthorizationInfo().areActivitiesEnabled {
+            let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
+            let attributes = TripAttributes(name: stop.name, type: departure.Mot, stopID: String(stop.stopId), departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
+            
+            let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
+            
+            do {
+                let activity = try Activity.request(attributes: attributes, content: activityContent, pushType: .token)
+                print("Requested an activity \(String(activity.id)).")
+                
+                showingSuccessAlert = true
+                
+                Task {
+                    for await data in activity.pushTokenUpdates {
+                        let token = data.map {String(format: "%02x", $0)}.joined()
+                        saveAcitivityOnServer(departure: departure, token: token)
+                    }
+                }
+            } catch {
+                print("Error \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func saveAcitivityOnServer(departure: Departure, token: String) {
+        if (pushTokenHistory.isInHistory(token: token)) {
+            return
+        }
+        pushTokenHistory.add(token: token)
+        
+        let url = URL(string: "https://dvb.hsrv.me/api/activity")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            guard error == nil else {
+                print ("error: \(error!)")
+                showingErrorAlert = true
+                return
+            }
+
+            guard let content = data else {
+                print("No data")
+                showingErrorAlert = true
+                return
+            }
+            
+            print(content)
+        }
+        task.resume()
+    }
 }
 
 struct DepartureView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             DepartureView(stop: stops[1])
-        }.environmentObject(FavoriteStop())
+        }
+            .environmentObject(FavoriteStop())
+            .environmentObject(PushTokenHistory())
     }
 }
