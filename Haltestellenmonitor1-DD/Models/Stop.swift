@@ -31,4 +31,8 @@ struct Stop: Hashable, Codable, Identifiable {
     private enum CodingKeys : String, CodingKey {
         case stopId, name, city, gpsX, gpsY
     }
+    
+    func getFullName() -> String {
+        return "\(name) \(city)"
+    }
 }

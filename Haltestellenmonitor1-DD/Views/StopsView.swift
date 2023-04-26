@@ -104,7 +104,7 @@ struct StopsView: View {
         if searchText.isEmpty {
             return stops
         } else {
-            return stops.filter { $0.name.contains(searchText) }
+            return stops.filter { $0.getFullName().contains(searchText) }
         }
     }
 }
