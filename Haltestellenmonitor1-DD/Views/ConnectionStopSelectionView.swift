@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ConnectionStopSelectionView: View {
+    @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var favoriteStops: FavoriteStop
     @EnvironmentObject var filter: ConnectionFilter
     @Environment(\.dismiss) var dismiss
@@ -30,13 +31,21 @@ struct ConnectionStopSelectionView: View {
             .navigationTitle(filter.start ? "Startpunkt" : "Zielpunkt")
             .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
             .toolbar {
-                ToolbarItem(placement: ToolbarItemPlacement.confirmationAction) {
+                ToolbarItem(placement: ToolbarItemPlacement.cancellationAction) {
                     Button("Schließen") {
                         dismiss()
                     }
                 }
+                ToolbarItem(placement: ToolbarItemPlacement.confirmationAction) {
+                    Button {
+                        locationManager.requestCurrentLocation()
+                    } label: {
+                        Label("", systemImage: "location")
+                    }
+                }
             }
         }
+        .dynamicTypeSize(.medium ... .large)
     }
     
     var searchResults: [Stop] {
@@ -67,6 +76,9 @@ struct ConnectionStopSelectionView: View {
 
 struct ConnectionStopSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionStopSelectionView().environmentObject(FavoriteStop()).environmentObject(ConnectionFilter())
+        ConnectionStopSelectionView()
+            .environmentObject(LocationManager())
+            .environmentObject(FavoriteStop())
+            .environmentObject(ConnectionFilter())
     }
 }
