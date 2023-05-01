@@ -25,12 +25,12 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     }
 
     func requestLocation() {
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
     }
     
     func requestCurrentLocation() {
-        locationManager.requestLocation()
+        locationManager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -55,6 +55,8 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                 span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
             )
         }
+        
+        locationManager.stopUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
