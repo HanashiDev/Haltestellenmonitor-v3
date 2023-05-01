@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ConnectionView: View {
+    @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var stopManager: StopManager
     @State var day = ""
     @State var showingSheet = false
@@ -24,31 +25,51 @@ struct ConnectionView: View {
                 Form {
                     Section {
                         HStack {
-                            Text("Startpunkt")
-                                .lineLimit(1)
-                            Spacer()
-                            Text(filter.startStop == nil ? "Keine Auswahl" : filter.startStop?.name ?? "")
-                                .foregroundColor(Color.gray)
-                                .lineLimit(1)
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            filter.start = true
-                            showingSheet = true
+                            HStack {
+                                Text("Startpunkt")
+                                    .lineLimit(1)
+                                Spacer()
+                                Text(filter.startStop == nil ? "Keine Auswahl" : filter.startStop?.name ?? "")
+                                    .foregroundColor(Color.gray)
+                                    .lineLimit(1)
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                filter.start = true
+                                showingSheet = true
+                            }
+
+                            Button {
+                                locationManager.requestCurrentLocationComplete {
+                                    filter.startStop = stops[0]
+                                }
+                            } label: {
+                                Image(systemName: "location")
+                            }
                         }
 
                         HStack {
-                            Text("Zielpunkt")
-                                .lineLimit(1)
-                            Spacer()
-                            Text(filter.endStop == nil ? "Keine Auswahl" : filter.endStop?.name ?? "")
-                                .foregroundColor(Color.gray)
-                                .lineLimit(1)
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            filter.start = false
-                            showingSheet = true
+                            HStack {
+                                Text("Zielpunkt")
+                                    .lineLimit(1)
+                                Spacer()
+                                Text(filter.endStop == nil ? "Keine Auswahl" : filter.endStop?.name ?? "")
+                                    .foregroundColor(Color.gray)
+                                    .lineLimit(1)
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                filter.start = false
+                                showingSheet = true
+                            }
+
+                            Button {
+                                locationManager.requestCurrentLocationComplete {
+                                    filter.endStop = stops[0]
+                                }
+                            } label: {
+                                Image(systemName: "location")
+                            }
                         }
                         
                         DisclosureGroup("Verkehrsmittel") {
@@ -185,6 +206,7 @@ struct ConnectionView: View {
 struct ConnectionView_Previews: PreviewProvider {
     static var previews: some View {
         ConnectionView(trip: tripTmp)
+            .environmentObject(LocationManager())
             .environmentObject(StopManager())
     }
 }

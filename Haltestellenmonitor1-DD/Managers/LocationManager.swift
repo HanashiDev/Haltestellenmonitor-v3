@@ -18,6 +18,8 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
     )
     @Published var locationUpdated: Bool = false
+    
+    private var completion: (() -> Void)? = nil
 
     override init() {
         super.init()
@@ -30,6 +32,11 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     }
     
     func requestCurrentLocation() {
+        locationManager.startUpdatingLocation()
+    }
+    
+    func requestCurrentLocationComplete(completion: @escaping () -> Void) {
+        self.completion = completion
         locationManager.startUpdatingLocation()
     }
     
@@ -54,6 +61,11 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                 center: location.coordinate,
                 span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
             )
+        }
+        
+        if (completion != nil) {
+            completion!()
+            completion = nil
         }
         
         locationManager.stopUpdatingLocation()
