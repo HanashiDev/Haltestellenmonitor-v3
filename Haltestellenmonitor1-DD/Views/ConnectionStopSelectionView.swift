@@ -28,7 +28,7 @@ struct ConnectionStopSelectionView: View {
                         dismiss()
                     }
             }
-            .navigationTitle(filter.start ? "Startpunkt" : "Zielpunkt")
+            .navigationTitle(filter.start ? "🏠 Startpunkt" : "🏠 Zielpunkt")
             .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.cancellationAction) {
