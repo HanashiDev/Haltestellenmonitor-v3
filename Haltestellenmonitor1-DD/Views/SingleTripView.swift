@@ -77,7 +77,7 @@ struct SingleTripView: View {
         if searchText.isEmpty {
             return singleTrip?.Stops ?? []
         } else {
-            return (singleTrip?.Stops ?? []).filter { $0.Name.contains(searchText) }
+            return (singleTrip?.Stops ?? []).filter { $0.Name.lowercased().contains(searchText.lowercased()) }
         }
     }
     

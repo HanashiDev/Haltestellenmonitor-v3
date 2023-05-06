@@ -124,7 +124,7 @@ struct DepartureView: View {
             return departures
         } else {
             return departures.filter {
-                $0.getName().contains(searchText)
+                $0.getName().lowercased().contains(searchText.lowercased())
             }
         }
     }
