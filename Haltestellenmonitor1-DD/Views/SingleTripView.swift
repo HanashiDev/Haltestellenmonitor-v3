@@ -43,7 +43,7 @@ struct SingleTripView: View {
         .refreshable {
             getSingleTrip()
         }
-        .navigationTitle(departure.getName())
+        .navigationTitle("\(departure.getIcon()) \(departure.getName())")
         .task(id: departure.Id, priority: .userInitiated) {
             getSingleTrip()
         }

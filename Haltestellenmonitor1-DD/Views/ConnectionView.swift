@@ -96,7 +96,7 @@ struct ConnectionView: View {
                     ConnectionStopSelectionView()
                 })
             }
-            .navigationTitle("Verbindungen")
+            .navigationTitle("🏘️ Verbindungen")
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.cancellationAction) {
                     if (isLoading) {

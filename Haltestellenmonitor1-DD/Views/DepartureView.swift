@@ -66,7 +66,7 @@ struct DepartureView: View {
         .refreshable {
             getDeparture()
         }
-        .navigationTitle(stop.name)
+        .navigationTitle("🚏 \(stop.name)")
         .toolbar {
             Button {
                 if (favoriteStops.isFavorite(stopID: stop.stopId)) {

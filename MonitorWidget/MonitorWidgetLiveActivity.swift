@@ -18,7 +18,7 @@ struct MonitorWidgetLiveActivity: Widget {
                     .font(.headline)
                     .lineLimit(1)
                 HStack {
-                    Image(systemName: context.attributes.getIcon())
+                    Text(context.attributes.getIcon())
                     VStack {
                         HStack {
                             Text("\(context.attributes.lineName) \(context.attributes.direction)")
@@ -97,7 +97,7 @@ struct MonitorWidgetLiveActivity: Widget {
                         }
                         .padding(.bottom, 1.0)
                         HStack {
-                            Image(systemName: context.attributes.getIcon())
+                            Text(context.attributes.getIcon())
                             Text("\(context.attributes.lineName) \(context.attributes.direction)")
                                 .lineLimit(1)
                         }

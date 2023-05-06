@@ -13,43 +13,43 @@ struct DepartureDisclosureSection: View {
     var body: some View {
         Toggle(isOn: $departureFilter.tram) {
             HStack {
-                Image(systemName: "cablecar")
+                Text("🚊")
                 Text("Straßenbahn")
             }
         }
         Toggle(isOn: $departureFilter.bus) {
             HStack {
-                Image(systemName: "bus")
+                Text("🚍")
                 Text("Bus")
             }
         }
         Toggle(isOn: $departureFilter.suburbanRailway) {
             HStack {
-                Image(systemName: "tram")
+                Text("🚈")
                 Text("S-Bahn")
             }
         }
         Toggle(isOn: $departureFilter.train) {
             HStack {
-                Image(systemName: "tram")
+                Text("🚆")
                 Text("Zug")
             }
         }
         Toggle(isOn: $departureFilter.cableway) {
             HStack {
-                Image(systemName: "cablecar.fill")
+                Text("🚞")
                 Text("Standseilbahn")
             }
         }
         Toggle(isOn: $departureFilter.ferry) {
             HStack {
-                Image(systemName: "ferry")
+                Text("⛴️")
                 Text("Fähre")
             }
         }
         Toggle(isOn: $departureFilter.taxi) {
             HStack {
-                Image(systemName: "car")
+                Text("🚖")
                 Text("Taxi")
             }
         }
