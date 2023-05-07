@@ -76,7 +76,14 @@ struct ConnectionView: View {
                             DepartureDisclosureSection()
                         }
                         
-                        DatePicker("Zeit", selection: $dateTime)
+                        HStack {
+                            DatePicker("Zeit", selection: $dateTime)
+                            Button {
+                                dateTime = Date.now
+                            } label: {
+                                Text("Jetzt")
+                            }
+                        }
                         
                         Button {
                             getTripData()
@@ -96,7 +103,7 @@ struct ConnectionView: View {
                     ConnectionStopSelectionView()
                 })
             }
-            .navigationTitle("Verbindungen")
+            .navigationTitle("🏘️ Verbindungen")
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.cancellationAction) {
                     if (isLoading) {

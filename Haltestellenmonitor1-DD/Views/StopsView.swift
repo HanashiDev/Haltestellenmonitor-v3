@@ -44,7 +44,7 @@ struct StopsView: View {
                     }
                 }
             }
-            .navigationTitle("Haltestellen")
+            .navigationTitle("🚏 Haltestellen")
             .toolbar {
                 Button {
                     locationManager.requestCurrentLocation()
