@@ -119,7 +119,7 @@ struct DepartureView: View {
         var departures = departureM?.Departures ?? []
         departures = departures.filter {
             departureFilter.tram && $0.Mot == "Tram" ||
-            departureFilter.bus && ($0.Mot == "CityBus" || $0.Mot == "IntercityBus") ||
+            departureFilter.bus && ($0.Mot == "CityBus" || $0.Mot == "IntercityBus" || $0.Mot == "PlusBus") ||
             departureFilter.suburbanRailway && $0.Mot == "SuburbanRailway" ||
             departureFilter.train && $0.Mot == "Train" ||
             departureFilter.cableway && $0.Mot == "Cableway" ||

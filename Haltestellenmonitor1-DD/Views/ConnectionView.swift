@@ -153,6 +153,7 @@ struct ConnectionView: View {
         if (departureFilter.bus) {
             mot.append("CityBus")
             mot.append("IntercityBus")
+            mot.append("PlusBus")
         }
         if (departureFilter.suburbanRailway) {
             mot.append("SuburbanRailway")
