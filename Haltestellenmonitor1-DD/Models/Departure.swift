@@ -105,6 +105,8 @@ struct Departure: Hashable, Codable {
             return "bus"
         case "IntercityBus":
             return "bus"
+        case "PlusBus":
+            return "bus"
         case "SuburbanRailway":
             return "tram"
         case "Train":
