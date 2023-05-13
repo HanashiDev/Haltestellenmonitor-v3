@@ -10,6 +10,14 @@ import SwiftUI
 struct DepartureRow: View {
     var departure: Departure
     
+    @ObservedObject private var departureBinding: DepartureBinding
+    
+    init(departure: Departure) {
+        self.departure = departure
+        
+        self.departureBinding = DepartureBinding(inMinute: departure.getIn())
+    }
+    
     var body: some View {
         HStack(alignment: .center) {
             Text(departure.getIcon())
@@ -39,7 +47,7 @@ struct DepartureRow: View {
                             .font(.footnote)
                     }
                     Spacer()
-                    Text("in \(departure.getIn()) min")
+                    Text("in \(departureBinding.inMinute) min")
                 }
                 .font(.subheadline)
             }

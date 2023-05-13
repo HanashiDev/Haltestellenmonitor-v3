@@ -71,7 +71,10 @@ struct DepartureView: View {
             }
         }
         .refreshable {
-            getDeparture()
+            if dateTime < Date.now {
+                dateTime = Date.now
+            }
+            await getDeparture()
         }
         .navigationTitle("🚏 \(stop.name)")
         .toolbar {
@@ -106,11 +109,13 @@ struct DepartureView: View {
         .task(id: stop.stopId) {
             departureM = nil
             isLoaded = false
-            getDeparture()
+            await getDeparture()
         }
         .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
         .onChange(of: dateTime) { newValue in
-            getDeparture()
+            Task {
+                await getDeparture()
+            }
         }
         .environmentObject(departureFilter)
     }
@@ -135,46 +140,33 @@ struct DepartureView: View {
             }
         }
     }
-    
-    // TODO: View aller 30 Sekunden aktualisieren
-    func getDeparture() {
+
+        func getDeparture() async {
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: String(stop.stopId), time: dateTime.ISO8601Format()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
-            guard error == nil else {
-                print ("error: \(error!)")
-                getDeparture()
-                return
-            }
-
-            guard let content = data else {
-                print("No data")
-                getDeparture()
-                return
-            }
-
-
-            DispatchQueue.main.async {
-                do {
-                    let decoder = JSONDecoder()
-                    self.departureM = try decoder.decode(DepartureMonitor.self, from: content)
-                    isLoaded = true
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
-                        getDeparture()
-                    }
-                } catch {
-                    print(error)
-                    getDeparture()
+        
+        do {
+            let (content, _) = try await URLSession.shared.data(for: request)
+            
+            let decoder = JSONDecoder()
+            self.departureM = try decoder.decode(DepartureMonitor.self, from: content)
+            isLoaded = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
+                if dateTime < Date.now {
+                    dateTime = Date.now
+                }
+                Task {
+                    await getDeparture()
                 }
             }
-
+        } catch {
+            print ("error: \(error)")
+            await getDeparture()
         }
-        task.resume()
     }
     
     func startActivity(departure: Departure) {
