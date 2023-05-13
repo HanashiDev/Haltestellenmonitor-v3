@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D0142C3A2A0F909E00646C94 /* DepartureBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C392A0F909E00646C94 /* DepartureBinding.swift */; };
+		D0142C3B2A0F90AA00646C94 /* DepartureBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C392A0F909E00646C94 /* DepartureBinding.swift */; };
+		D0142C3C2A0F90AB00646C94 /* DepartureBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C392A0F909E00646C94 /* DepartureBinding.swift */; };
+		D0142C3D2A0F90AB00646C94 /* DepartureBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C392A0F909E00646C94 /* DepartureBinding.swift */; };
 		D03A268329EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A268229EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift */; };
 		D03A268529EEB6C9005B0600 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A268429EEB6C9005B0600 /* ContentView.swift */; };
 		D03A268729EEB6C9005B0600 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D03A268629EEB6C9005B0600 /* Assets.xcassets */; };
@@ -220,6 +224,7 @@
 /* Begin PBXFileReference section */
 		D011C45829F58875008DF9E1 /* MonitorWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonitorWidgetExtension.entitlements; sourceTree = "<group>"; };
 		D011C45929F588B7008DF9E1 /* MonitorIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonitorIntents.entitlements; sourceTree = "<group>"; };
+		D0142C392A0F909E00646C94 /* DepartureBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureBinding.swift; sourceTree = "<group>"; };
 		D03A267F29EEB6C9005B0600 /* Haltestellenmonitor1-DD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Haltestellenmonitor1-DD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D03A268229EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haltestellenmonitor1_DDApp.swift; sourceTree = "<group>"; };
 		D03A268429EEB6C9005B0600 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -456,6 +461,7 @@
 			isa = PBXGroup;
 			children = (
 				D040EC2129EED774002DFEBF /* DateParser.swift */,
+				D0142C392A0F909E00646C94 /* DepartureBinding.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -754,6 +760,7 @@
 				D0BD66D829F02C39004E574C /* TripRequest.swift in Sources */,
 				D040EC2E29EF0371002DFEBF /* StopManager.swift in Sources */,
 				D0BD66DA29F03056004E574C /* Trip.swift in Sources */,
+				D0142C3A2A0F909E00646C94 /* DepartureBinding.swift in Sources */,
 				D040EC2729EEEB85002DFEBF /* LocationManager.swift in Sources */,
 				D0C1ECDA29F2FA50001D214D /* TripStandardSettings.swift in Sources */,
 				D0C1ECE029F325CC001D214D /* MapView.swift in Sources */,
@@ -800,6 +807,7 @@
 			files = (
 				D0BD66EB29F03C06004E574C /* Trip.swift in Sources */,
 				D0C1ECC929F28C2F001D214D /* TripAttributes.swift in Sources */,
+				D0142C3B2A0F90AA00646C94 /* DepartureBinding.swift in Sources */,
 				D0BD66EF29F03C0D004E574C /* PartialRoute.swift in Sources */,
 				D0BD66A129EFEA0D004E574C /* DepartureStatus.swift in Sources */,
 				D0BD669E29EFEA03004E574C /* Stop.swift in Sources */,
@@ -851,6 +859,7 @@
 				D0BD66B929EFEEC0004E574C /* StopData.swift in Sources */,
 				D0C1ECB629F28032001D214D /* TripStop.swift in Sources */,
 				D0C1ECD229F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
+				D0142C3C2A0F90AB00646C94 /* DepartureBinding.swift in Sources */,
 				D0BD66FD29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */,
 				D0BD66EA29F03C04004E574C /* TripRequest.swift in Sources */,
 				D0BD66F029F03C0D004E574C /* PartialRoute.swift in Sources */,
@@ -894,6 +903,7 @@
 				D0D1998B29F414BD00946D87 /* DepartureRow.swift in Sources */,
 				D0D1996929F40B9700946D87 /* DateParser.swift in Sources */,
 				D0D1997929F40B9C00946D87 /* Departure.swift in Sources */,
+				D0142C3D2A0F90AB00646C94 /* DepartureBinding.swift in Sources */,
 				D0D1997329F40B9C00946D87 /* SingleTripRequest.swift in Sources */,
 				D0D1997F29F40B9C00946D87 /* TripRequest.swift in Sources */,
 				D0D1996829F40B8A00946D87 /* LocationManager.swift in Sources */,
@@ -1058,7 +1068,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Haltestellenmonitor1-DD/Haltestellenmonitor1-DD.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Haltestellenmonitor1-DD/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
@@ -1078,7 +1088,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1095,7 +1105,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Haltestellenmonitor1-DD/Haltestellenmonitor1-DD.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Haltestellenmonitor1-DD/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
@@ -1115,7 +1125,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1131,7 +1141,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MonitorWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorWidget/Info.plist;
@@ -1143,7 +1153,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1161,7 +1171,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MonitorWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorWidget/Info.plist;
@@ -1173,7 +1183,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1189,7 +1199,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = MonitorIntents/MonitorIntents.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorIntents/Info.plist;
@@ -1201,7 +1211,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorIntents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1217,7 +1227,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = MonitorIntents/MonitorIntents.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorIntents/Info.plist;
@@ -1229,7 +1239,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorIntents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1246,7 +1256,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchMonitor Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
@@ -1258,7 +1268,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.watchkitapp";
 				PRODUCT_NAME = "Haltestellenmonitor Dresden";
 				SDKROOT = watchos;
@@ -1276,7 +1286,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchMonitor Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
@@ -1288,7 +1298,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.watchkitapp";
 				PRODUCT_NAME = "Haltestellenmonitor Dresden";
 				SDKROOT = watchos;

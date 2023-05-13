@@ -10,6 +10,14 @@ import SwiftUI
 struct DepartureRow: View {
     var departure: Departure
     
+    @ObservedObject private var departureBinding: DepartureBinding
+    
+    init(departure: Departure) {
+        self.departure = departure
+        
+        self.departureBinding = DepartureBinding(inMinute: departure.getIn())
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text(departure.getName())
@@ -32,7 +40,7 @@ struct DepartureRow: View {
                     Text(departure.getPlatForm())
                 }
                 Spacer()
-                Text("in \(departure.getIn()) min")
+                Text("in \(departureBinding.inMinute) min")
             }
             .font(.footnote)
         }

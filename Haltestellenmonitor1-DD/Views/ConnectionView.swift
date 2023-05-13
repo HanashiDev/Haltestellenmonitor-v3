@@ -79,7 +79,9 @@ struct ConnectionView: View {
                         DatePicker("Zeit", selection: $dateTime)
                         
                         Button {
-                            getTripData()
+                            Task {
+                                await getTripData()
+                            }
                         } label: {
                             Text("Verbindungen anzeigen")
                         }
@@ -129,7 +131,7 @@ struct ConnectionView: View {
         .environmentObject(departureFilter)
     }
     
-    func getTripData() {
+    func getTripData() async {
         if (isLoading) {
             return
         }
@@ -173,34 +175,19 @@ struct ConnectionView: View {
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(requestData)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
-            guard error == nil else {
-                print ("error: \(error!)")
-                getTripData()
-                return
-            }
-
-            guard let content = data else {
-                print("No data")
-                getTripData()
-                return
-            }
-
-
-            DispatchQueue.main.async {
-                do {
-                    let decoder = JSONDecoder()
-                    self.trip = try decoder.decode(Trip.self, from: content)
-                } catch {
-                    print(error)
-                    getTripData()
-                }
-                isLoading = false
-            }
-
+        
+        do {
+            let (content, _) = try await URLSession.shared.data(for: request)
+            
+            let decoder = JSONDecoder()
+            self.trip = try decoder.decode(Trip.self, from: content)
+            
+            isLoading = false
+        } catch {
+            isLoading = false
+            print ("error: \(error)")
+            await getTripData()
         }
-        task.resume()
     }
 }
 
