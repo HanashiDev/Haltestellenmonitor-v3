@@ -30,7 +30,14 @@ struct DepartureView: View {
                             DisclosureGroup("Verkehrsmittel") {
                                 DepartureDisclosureSection()
                             }
-                            DatePicker("Zeit", selection: $dateTime)
+                            HStack {
+                                DatePicker("Zeit", selection: $dateTime)
+                                Button {
+                                    dateTime = Date.now
+                                } label: {
+                                    Text("Jetzt")
+                                }
+                            }
                         }
                         Section {
                             List(searchResults, id: \.self) { departure in
@@ -69,7 +76,7 @@ struct DepartureView: View {
             }
             await getDeparture()
         }
-        .navigationTitle(stop.name)
+        .navigationTitle("🚏 \(stop.name)")
         .toolbar {
             Button {
                 if (favoriteStops.isFavorite(stopID: stop.stopId)) {

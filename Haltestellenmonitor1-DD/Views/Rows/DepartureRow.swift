@@ -20,7 +20,7 @@ struct DepartureRow: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            Image(systemName: departure.getIcon())
+            Text(departure.getIcon())
             
             VStack(alignment: .leading) {
                 Text(departure.getName())

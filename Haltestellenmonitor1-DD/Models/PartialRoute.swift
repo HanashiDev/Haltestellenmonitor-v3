@@ -36,31 +36,31 @@ struct PartialRoute: Hashable, Codable {
     func getIcon() -> String {
         switch (self.Mot.type) {
         case "Tram":
-            return "cablecar"
+            return "🚊"
         case "CityBus":
-            return "bus"
+            return "🚍"
         case "PlusBus":
-            return "bus"
+            return "🚍"
         case "Bus":
-            return "bus"
+            return "🚍"
         case "IntercityBus":
-            return "bus"
+            return "🚍"
         case "SuburbanRailway":
-            return "tram"
+            return "🚈"
         case "Train":
-            return "tram"
+            return "🚆"
         case "Cableway":
-            return "cablecar"
+            return "🚞"
         case "Ferry":
-            return "ferry"
+            return "⛴️"
         case "HailedSharedTaxi":
-            return "car"
+            return "🚖"
         case "Footpath":
-            return "figure.walk"
+            return "🚶"
         case "MobilityStairsUp":
-            return "figure.stairs"
+            return "📈"
         case "MobilityStairsDown":
-            return "figure.stairs"
+            return "📉"
         default:
             return "cablecar"
         }

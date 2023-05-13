@@ -100,25 +100,25 @@ struct Departure: Hashable, Codable {
     func getIcon() -> String {
         switch (self.Mot) {
         case "Tram":
-            return "cablecar"
+            return "🚊"
         case "CityBus":
-            return "bus"
+            return "🚍"
         case "IntercityBus":
-            return "bus"
+            return "🚍"
         case "PlusBus":
-            return "bus"
+            return "🚍"
         case "SuburbanRailway":
-            return "tram"
+            return "🚈"
         case "Train":
-            return "tram"
+            return "🚆"
         case "Cableway":
-            return "cablecar.fill"
+            return "🚞"
         case "Ferry":
-            return "ferry"
+            return "⛴️"
         case "HailedSharedTaxi":
-            return "car"
+            return "🚖"
         default:
-            return "cablecar"
+            return "🚊"
         }
     }
     

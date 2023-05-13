@@ -12,7 +12,7 @@ struct PartialRouteRow: View {
 
     var body: some View {
         HStack {
-            Image(systemName: partialRoute.getIcon())
+            Text(partialRoute.getIcon())
             VStack(alignment: .leading) {
                 Text(partialRoute.getName())
                     .font(.headline)
