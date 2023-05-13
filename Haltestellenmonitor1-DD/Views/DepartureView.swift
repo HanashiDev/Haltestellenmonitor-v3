@@ -134,7 +134,7 @@ struct DepartureView: View {
         }
     }
 
-        func getDeparture() async {
+    func getDeparture() async {
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
