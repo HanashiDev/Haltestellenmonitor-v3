@@ -31,7 +31,9 @@ struct SingleTripView: View {
         }
         .navigationTitle(departure.getName())
         .onAppear {
-            getSingleTrip()
+            Task {
+                await getSingleTrip()
+            }
         }
     }
     
@@ -43,38 +45,23 @@ struct SingleTripView: View {
         }
     }
     
-    func getSingleTrip() {
+    func getSingleTrip() async {
         let url = URL(string: "https://webapi.vvo-online.de/dm/trip")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(SingleTripRequest(stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
-            guard error == nil else {
-                print ("error: \(error!)")
-                getSingleTrip()
-                return
-            }
-
-            guard let content = data else {
-                print("No data")
-                getSingleTrip()
-                return
-            }
-
-            DispatchQueue.main.async {
-                do {
-                    let decoder = JSONDecoder()
-                    self.singleTrip = try decoder.decode(SingleTrip.self, from: content)
-                    isLoaded = true
-                } catch {
-                    print(error)
-                    getSingleTrip()
-                }
-            }
+        
+        do {
+            let (content, _) = try await URLSession.shared.data(for: request)
+            
+            let decoder = JSONDecoder()
+            self.singleTrip = try decoder.decode(SingleTrip.self, from: content)
+            isLoaded = true
+        } catch {
+            print(error)
+            await getSingleTrip()
         }
-        task.resume()
     }
 }
 
