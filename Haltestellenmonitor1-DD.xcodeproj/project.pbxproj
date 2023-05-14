@@ -24,6 +24,7 @@
 		D0142C542A1110E700646C94 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C522A1110BE00646C94 /* Point.swift */; };
 		D0142C552A1110E800646C94 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C522A1110BE00646C94 /* Point.swift */; };
 		D0142C562A1110E900646C94 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C522A1110BE00646C94 /* Point.swift */; };
+		D0142C582A1119D500646C94 /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C572A1119D500646C94 /* About.swift */; };
 		D03A268329EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A268229EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift */; };
 		D03A268529EEB6C9005B0600 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A268429EEB6C9005B0600 /* ContentView.swift */; };
 		D03A268729EEB6C9005B0600 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D03A268629EEB6C9005B0600 /* Assets.xcassets */; };
@@ -242,6 +243,7 @@
 		D0142C482A10F73900646C94 /* ConnectionStop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStop.swift; sourceTree = "<group>"; };
 		D0142C4D2A11039600646C94 /* GaussKrueger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaussKrueger.swift; sourceTree = "<group>"; };
 		D0142C522A1110BE00646C94 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		D0142C572A1119D500646C94 /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		D03A267F29EEB6C9005B0600 /* Haltestellenmonitor1-DD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Haltestellenmonitor1-DD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D03A268229EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haltestellenmonitor1_DDApp.swift; sourceTree = "<group>"; };
 		D03A268429EEB6C9005B0600 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				D0BD66D529F026D7004E574C /* ConnectionStopSelectionView.swift */,
 				D0C1ECBB29F2823E001D214D /* SingleTripView.swift */,
 				D0C1ECDF29F325CC001D214D /* MapView.swift */,
+				D0142C572A1119D500646C94 /* About.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -820,6 +823,7 @@
 				D040EC1729EECA20002DFEBF /* DepartureMonitor.swift in Sources */,
 				D0C1ECD829F2F071001D214D /* DepartureDisclosureSection.swift in Sources */,
 				D0C1ECD029F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
+				D0142C582A1119D500646C94 /* About.swift in Sources */,
 				D03A26A029EEC248005B0600 /* DepartureRow.swift in Sources */,
 				D0BD66FA29F04593004E574C /* PartialRouteRow.swift in Sources */,
 				D03A268329EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift in Sources */,
