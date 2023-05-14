@@ -15,7 +15,7 @@ struct MapView: View {
     
     var body: some View {
         NavigationStack(path: $stopManager.presentedMapStops) {
-            Map(coordinateRegion: .constant(locationManager.region), interactionModes: .all, showsUserLocation: true, userTrackingMode: $tracking, annotationItems: stops, annotationContent: { stop in
+            Map(coordinateRegion: locationManager.region, interactionModes: .all, showsUserLocation: true, userTrackingMode: $tracking, annotationItems: stops, annotationContent: { stop in
                 MapAnnotation(coordinate: stop.coordinates, content: {
                     NavigationLink(value: stop) {
                         Image(systemName: "h.circle.fill")
