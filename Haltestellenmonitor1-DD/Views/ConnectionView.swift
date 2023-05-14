@@ -16,6 +16,9 @@ struct ConnectionView: View {
     @State var dateTime = Date.now
     @State var trip: Trip? = nil
     @State var isLoading = false
+    @State private var requestData: TripRequest?
+    @State private var numberprev = 0
+    @State private var numbernext = 0
     @StateObject var filter: ConnectionFilter = ConnectionFilter()
     @StateObject var departureFilter = DepartureFilter()
 
@@ -87,6 +90,11 @@ struct ConnectionView: View {
                         
                         Button {
                             Task {
+                                if isLoading {
+                                    return
+                                }
+                                isLoading = true
+                                await createRequestData()
                                 await getTripData()
                             }
                         } label: {
@@ -99,6 +107,25 @@ struct ConnectionView: View {
                         ForEach(trip?.Routes ?? [], id: \.self) { route in
                             TripSection(route: route)
                         }
+                        
+                        Button {
+                            if isLoading || requestData == nil || self.trip == nil {
+                                return
+                            }
+                            isLoading = true
+                            numbernext = numbernext + 1
+                            
+                            requestData!.sessionId = self.trip!.SessionId
+                            requestData!.numberprev = 0
+                            requestData!.numbernext = numbernext
+                            
+                            Task {
+                                await getTripData(isNext: true)
+                            }
+                        } label: {
+                            Text("später")
+                        }
+                        .frame(maxWidth: .infinity)
                     }
                 }
                 .sheet(isPresented: $showingSheet, content: {
@@ -138,11 +165,7 @@ struct ConnectionView: View {
         .environmentObject(departureFilter)
     }
     
-    func getTripData() async {
-        if (isLoading) {
-            return
-        }
-        isLoading = true
+    func createRequestData() async {
         if (filter.startStop == nil || filter.endStop == nil) {
             showingAlert = true
             return
@@ -181,9 +204,18 @@ struct ConnectionView: View {
         let startStr = await startStrPromise
         let endStr = await endStrPromise
         
-        let requestData = TripRequest(time: dateTime.ISO8601Format(), origin: startStr, destination: endStr, standardSettings: standardSettings)
+        requestData = TripRequest(time: dateTime.ISO8601Format(), origin: startStr, destination: endStr, standardSettings: standardSettings)
+    }
+    
+    func getTripData(isNext: Bool = false) async {
+        if requestData == nil {
+            return
+        }
 
-        let url = URL(string: "https://webapi.vvo-online.de/tr/trips")!
+        var url = URL(string: "https://webapi.vvo-online.de/tr/trips")!
+        if isNext {
+            url = URL(string: "https://webapi.vvo-online.de/tr/prevnext")!
+        }
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(requestData)

@@ -20,7 +20,7 @@ struct About: View {
                 }
                 
                 Section(header: Text("Kontakt")) {
-                    Link("📧 info@hanashi.dev", destination: URL(string: "mailto:info@hanashi.dev")!)
+                    Link("📧 info@hanashi.dev", destination: URL(string: "mailto:info@hanashi.dev?subject=Haltestellenmonitor%20Dresden%20Feedback")!)
                     Link("🌍 Homepage", destination: URL(string: "https://hanashi.dev")!)
                 }
             }
