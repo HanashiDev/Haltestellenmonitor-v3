@@ -29,7 +29,7 @@ struct ConnectionView: View {
                                 Text("Startpunkt")
                                     .lineLimit(1)
                                 Spacer()
-                                Text(filter.startStop == nil ? "Keine Auswahl" : filter.startStop?.name ?? "")
+                                Text(filter.startStop == nil ? "Keine Auswahl" : filter.startStop?.displayName ?? "Keine Auswahl")
                                     .foregroundColor(Color.gray)
                                     .lineLimit(1)
                             }
@@ -41,7 +41,7 @@ struct ConnectionView: View {
 
                             Button {
                                 locationManager.requestCurrentLocationComplete {
-                                    filter.startStop = stops[0]
+                                    filter.startStop = ConnectionStop(displayName: stops[0].getFullName(), stop: stops[0])
                                 }
                             } label: {
                                 Image(systemName: "location")
@@ -53,7 +53,7 @@ struct ConnectionView: View {
                                 Text("Zielpunkt")
                                     .lineLimit(1)
                                 Spacer()
-                                Text(filter.endStop == nil ? "Keine Auswahl" : filter.endStop?.name ?? "")
+                                Text(filter.endStop == nil ? "Keine Auswahl" : filter.endStop?.displayName ?? "Keine Auswahl")
                                     .foregroundColor(Color.gray)
                                     .lineLimit(1)
                             }
@@ -65,7 +65,7 @@ struct ConnectionView: View {
 
                             Button {
                                 locationManager.requestCurrentLocationComplete {
-                                    filter.endStop = stops[0]
+                                    filter.endStop = ConnectionStop(displayName: stops[0].getFullName(), stop: stops[0])
                                 }
                             } label: {
                                 Image(systemName: "location")
@@ -175,20 +175,26 @@ struct ConnectionView: View {
         
         let standardSettings = TripStandardSettings(mot: mot)
         
-        let requestData = TripRequest(time: dateTime.ISO8601Format(), origin: String(filter.startStop?.stopId ?? 0), destination: String(filter.endStop?.stopId ?? 0), standardSettings: standardSettings)
+        async let startStrPromise = filter.startStop!.getDestinationString()
+        async let endStrPromise = filter.endStop!.getDestinationString()
         
+        let startStr = await startStrPromise
+        let endStr = await endStrPromise
+        
+        let requestData = TripRequest(time: dateTime.ISO8601Format(), origin: startStr, destination: endStr, standardSettings: standardSettings)
+
         let url = URL(string: "https://webapi.vvo-online.de/tr/trips")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(requestData)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            
+
             let decoder = JSONDecoder()
             self.trip = try decoder.decode(Trip.self, from: content)
-            
+
             isLoading = false
         } catch {
             isLoading = false
