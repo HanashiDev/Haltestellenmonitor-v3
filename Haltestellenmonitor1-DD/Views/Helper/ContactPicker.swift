@@ -20,6 +20,7 @@ struct ContactPicker: UIViewControllerRepresentable {
     func makeUIViewController(context: UIViewControllerRepresentableContext<ContactPicker>) -> CNContactPickerViewController {
         let picker = CNContactPickerViewController()
         picker.delegate = context.coordinator
+        picker.predicateForEnablingContact = NSPredicate(format: "postalAddresses.@count > 0")
         return picker
     }
     
