@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct About: View {
+    @Environment(\.openURL) var openURL
+
     var body: some View {
         NavigationStack {
             Form {
@@ -20,9 +22,15 @@ struct About: View {
                 }
                 
                 Section(header: Text("Kontakt")) {
-                    Link("📧 info@hanashi.dev", destination: URL(string: "mailto:info@hanashi.dev?subject=Haltestellenmonitor%20Dresden%20Feedback")!)
-                    Link("🦣 @Hanashi@dresden.network", destination: URL(string: "https://dresden.network/@Hanashi")!)
-                    Link("🌍 Homepage", destination: URL(string: "https://hanashi.dev")!)
+                    Link(destination: URL(string: "mailto:info@hanashi.dev?subject=Haltestellenmonitor%20Dresden%20Feedback")!) {
+                        Text(verbatim: "📧 info@hanashi.dev")
+                    }
+                    Link(destination: URL(string: "https://dresden.network/@Hanashi")!) {
+                        Text(verbatim: "🦣 @Hanashi@dresden.network")
+                    }
+                    Link(destination: URL(string: "https://hanashi.dev")!) {
+                        Text(verbatim: "🌍 Homepage")
+                    }
                 }
             }
             .navigationTitle("Über")
