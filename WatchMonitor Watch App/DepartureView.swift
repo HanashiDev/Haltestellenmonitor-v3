@@ -69,7 +69,11 @@ struct DepartureView: View {
             }
         } catch {
             print(error)
-            await getDeparture()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Task {
+                    await getDeparture()
+                }
+            }
         }
     }
 }

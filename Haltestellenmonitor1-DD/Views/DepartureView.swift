@@ -150,7 +150,7 @@ struct DepartureView: View {
         
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            
+
             let decoder = JSONDecoder()
             self.departureM = try decoder.decode(DepartureMonitor.self, from: content)
             isLoaded = true
@@ -165,7 +165,11 @@ struct DepartureView: View {
             }
         } catch {
             print ("error: \(error)")
-            await getDeparture()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Task {
+                    await getDeparture()
+                }
+            }
         }
     }
     

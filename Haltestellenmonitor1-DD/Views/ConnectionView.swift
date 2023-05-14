@@ -243,9 +243,12 @@ struct ConnectionView: View {
 
             isLoading = false
         } catch {
-            isLoading = false
             print ("error: \(error)")
-            await getTripData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Task {
+                    await getTripData(isNext: isNext)
+                }
+            }
         }
     }
     

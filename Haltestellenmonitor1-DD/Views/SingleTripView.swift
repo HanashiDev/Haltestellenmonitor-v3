@@ -96,7 +96,11 @@ struct SingleTripView: View {
             isLoaded = true
         } catch {
             print ("error: \(error)")
-            await getSingleTrip()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Task {
+                    await getSingleTrip()
+                }
+            }
         }
     }
     
