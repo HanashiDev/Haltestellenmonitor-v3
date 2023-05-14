@@ -31,6 +31,7 @@ struct ConnectionStopSelectionView: View {
                     if addressString != "" {
                         HStack {
                             Text("🏘️ \(addressString)")
+                                .lineLimit(1)
                             Spacer()
                         }
                         .contentShape(Rectangle())
@@ -46,9 +47,11 @@ struct ConnectionStopSelectionView: View {
                     HStack {
                         if contactName != "" {
                             Text("📒 \(contactName)")
+                                .lineLimit(1)
                         } else {
                             Text("📒 Kontakt auswählen")
                                 .foregroundColor(Color.gray)
+                                .lineLimit(1)
                         }
                         Spacer()
                     }
