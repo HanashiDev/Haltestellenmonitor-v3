@@ -47,6 +47,8 @@ struct PartialRoute: Hashable, Codable {
             return "🚍"
         case "SuburbanRailway":
             return "🚈"
+        case "RapidTransit":
+            return "🚈"
         case "Train":
             return "🚆"
         case "Cableway":
@@ -62,7 +64,7 @@ struct PartialRoute: Hashable, Codable {
         case "MobilityStairsDown":
             return "📉"
         default:
-            return "cablecar"
+            return "🚊"
         }
     }
     
