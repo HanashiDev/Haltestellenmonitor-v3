@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct About: View {
-    @Environment(\.openURL) var openURL
-
     var body: some View {
         NavigationStack {
             Form {
