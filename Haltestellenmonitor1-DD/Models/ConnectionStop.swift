@@ -8,10 +8,10 @@
 import Foundation
 import CoreLocation
 
-struct ConnectionStop {
+struct ConnectionStop: Hashable, Codable {
     var displayName: String
     var stop: Stop?
-    var location: CLLocation?
+    var location: StopCoordinate?
     
     func getDestinationString() async -> String {
         if stop != nil {
@@ -21,7 +21,7 @@ struct ConnectionStop {
             return "0"
         }
         
-        let coordinate = wgs2gk(wgs: location!.coordinate)
+        let coordinate = wgs2gk(wgs: location!)
         if coordinate == nil {
             return "0"
         }

@@ -18,7 +18,7 @@ public struct GKCoordinate {
     }
 }
 
-public func wgs2gk(wgs: CLLocationCoordinate2D) -> GKCoordinate? {
+public func wgs2gk(wgs: StopCoordinate) -> GKCoordinate? {
     guard let pot = wgs2pot(wgs: wgs) else { return nil }
     return pot2gk(pot: pot)
 }
@@ -104,7 +104,7 @@ func pot2gk(pot: GKCoordinate) -> GKCoordinate? {
     return GKCoordinate(x: rw, y: hw)
 }
 
-func wgs2pot(wgs: CLLocationCoordinate2D) -> GKCoordinate? {
+func wgs2pot(wgs: StopCoordinate) -> GKCoordinate? {
     let lw = wgs.longitude
     let bw = wgs.latitude
 

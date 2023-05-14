@@ -13,20 +13,45 @@ struct ConnectionView: View {
     @State var day = ""
     @State var showingSheet = false
     @State var showingAlert = false
+    @State var showingSaveAlert = false
     @State var dateTime = Date.now
     @State var trip: Trip? = nil
     @State var isLoading = false
     @State private var requestData: TripRequest?
     @State private var numberprev = 0
     @State private var numbernext = 0
+    @State private var favoriteName = ""
     @StateObject var filter: ConnectionFilter = ConnectionFilter()
     @StateObject var departureFilter = DepartureFilter()
+    @StateObject var favoriteConnections = FavoriteConnection()
 
     var body: some View {
         NavigationStack(path: $stopManager.presentedStops) {
             VStack {
                 Form {
                     Section {
+                        if favoriteConnections.favorites.count > 0 {
+                            DisclosureGroup("Favoriten") {
+                                List(favoriteConnections.favorites, id: \.id) { favoriteConnection in
+                                    HStack {
+                                        Text(favoriteConnection.name)
+                                            .swipeActions(edge: .trailing) {
+                                                Button {
+                                                    favoriteConnections.remove(trip: favoriteConnection)
+                                                } label: {
+                                                    Label("Löschen", systemImage: "trash")
+                                                }
+                                                .tint(.red)
+                                        }
+                                        Spacer()
+                                    }
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        showFavorite(favorite: favoriteConnection)
+                                    }
+                                }
+                            }
+                        }
                         HStack {
                             HStack {
                                 Text("Startpunkt")
@@ -104,6 +129,13 @@ struct ConnectionView: View {
                     }
                     
                     if (trip?.Routes != nil) {
+                        Button {
+                            showingSaveAlert.toggle()
+                        } label: {
+                            Text("Als Favorit speichern")
+                        }
+                        .frame(maxWidth: .infinity)
+                        
                         ForEach(trip?.Routes ?? [], id: \.self) { route in
                             TripSection(route: route)
                         }
@@ -157,6 +189,14 @@ struct ConnectionView: View {
                     Text("OK")
                 }
             }
+            .alert("Wie soll der Favorit gespeichert werden?", isPresented: $showingSaveAlert) {
+                TextField("Name", text: $favoriteName)
+                Button {
+                    saveFavorite()
+                } label: {
+                    Text("OK")
+                }
+            }
             .navigationDestination(for: Stop.self) { stop in
                 DepartureView(stop: stop)
             }
@@ -170,33 +210,7 @@ struct ConnectionView: View {
             showingAlert = true
             return
         }
-        
-        var mot: [String] = []
-        if (departureFilter.tram) {
-            mot.append("Tram")
-        }
-        if (departureFilter.bus) {
-            mot.append("CityBus")
-            mot.append("IntercityBus")
-            mot.append("PlusBus")
-        }
-        if (departureFilter.suburbanRailway) {
-            mot.append("SuburbanRailway")
-        }
-        if (departureFilter.train) {
-            mot.append("Train")
-        }
-        if (departureFilter.cableway) {
-            mot.append("Cableway")
-        }
-        if (departureFilter.ferry) {
-            mot.append("Ferry")
-        }
-        if (departureFilter.taxi) {
-            mot.append("HailedSharedTaxi")
-        }
-        
-        let standardSettings = TripStandardSettings(mot: mot)
+        let standardSettings = getStandardSettings()
         
         async let startStrPromise = filter.startStop!.getDestinationString()
         async let endStrPromise = filter.endStop!.getDestinationString()
@@ -231,6 +245,108 @@ struct ConnectionView: View {
         } catch {
             isLoading = false
             print ("error: \(error)")
+            await getTripData()
+        }
+    }
+    
+    func getStandardSettings() -> TripStandardSettings {
+        var mot: [String] = []
+        if (departureFilter.tram) {
+            mot.append("Tram")
+        }
+        if (departureFilter.bus) {
+            mot.append("CityBus")
+            mot.append("IntercityBus")
+            mot.append("PlusBus")
+        }
+        if (departureFilter.suburbanRailway) {
+            mot.append("SuburbanRailway")
+        }
+        if (departureFilter.train) {
+            mot.append("Train")
+        }
+        if (departureFilter.cableway) {
+            mot.append("Cableway")
+        }
+        if (departureFilter.ferry) {
+            mot.append("Ferry")
+        }
+        if (departureFilter.taxi) {
+            mot.append("HailedSharedTaxi")
+        }
+        
+        return TripStandardSettings(mot: mot)
+    }
+    
+    func saveFavorite() {
+        let standardSettings = getStandardSettings()
+        
+        if favoriteName.isEmpty {
+            favoriteName = "Standard"
+        }
+
+        let requestShort = TripRequestShort(name: favoriteName, origin: filter.startStop!, destination: filter.endStop!, standardSettings: standardSettings)
+        
+        favoriteName = ""
+        
+        favoriteConnections.add(trip: requestShort)
+    }
+    
+    func showFavorite(favorite: TripRequestShort) {
+        filter.startStop = favorite.origin
+        filter.endStop = favorite.destination
+        
+        departureFilter.tram = false
+        departureFilter.bus = false
+        departureFilter.suburbanRailway = false
+        departureFilter.train = false
+        departureFilter.cableway = false
+        departureFilter.ferry = false
+        departureFilter.taxi = false
+        
+        let mots = favorite.standardSettings?.mot ?? []
+        for mot in mots {
+            switch mot {
+            case "Tram":
+                departureFilter.tram = true
+                break
+            case "CityBus":
+                departureFilter.bus = true
+                break
+            case "IntercityBus":
+                departureFilter.bus = true
+                break
+            case "PlusBus":
+                departureFilter.bus = true
+                break
+            case "SuburbanRailway":
+                departureFilter.suburbanRailway = true
+                break
+            case "Train":
+                departureFilter.train = true
+                break
+            case "Cableway":
+                departureFilter.cableway = true
+                break
+            case "Ferry":
+                departureFilter.ferry = true
+                break
+            case "HailedSharedTaxi":
+                departureFilter.taxi = true
+                break
+            default:
+                break
+            }
+        }
+        
+        dateTime = Date.now
+        
+        Task {
+            if isLoading {
+                return
+            }
+            isLoading = true
+            await createRequestData()
             await getTripData()
         }
     }

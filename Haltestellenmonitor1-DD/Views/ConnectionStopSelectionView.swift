@@ -37,9 +37,9 @@ struct ConnectionStopSelectionView: View {
                         .contentShape(Rectangle())
                         .onTapGesture {
                             if (filter.start) {
-                                filter.startStop = ConnectionStop(displayName: addressString, location: location)
+                                filter.startStop = ConnectionStop(displayName: addressString, location: StopCoordinate(latitude: location?.coordinate.latitude ?? 0, longitude: location?.coordinate.longitude ?? 0))
                             } else {
-                                filter.endStop = ConnectionStop(displayName: addressString, location: location)
+                                filter.endStop = ConnectionStop(displayName: addressString, location: StopCoordinate(latitude: location?.coordinate.latitude ?? 0, longitude: location?.coordinate.longitude ?? 0))
                             }
                             dismiss()
                         }
@@ -170,9 +170,9 @@ struct ConnectionStopSelectionView: View {
             }
             
             if (filter.start) {
-                filter.startStop = ConnectionStop(displayName: contactName, location: location)
+                filter.startStop = ConnectionStop(displayName: contactName, location: StopCoordinate(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude ))
             } else {
-                filter.endStop = ConnectionStop(displayName: contactName, location: location)
+                filter.endStop = ConnectionStop(displayName: contactName, location: StopCoordinate(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
             }
             dismiss()
         }

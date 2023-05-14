@@ -25,6 +25,12 @@
 		D0142C552A1110E800646C94 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C522A1110BE00646C94 /* Point.swift */; };
 		D0142C562A1110E900646C94 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C522A1110BE00646C94 /* Point.swift */; };
 		D0142C582A1119D500646C94 /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C572A1119D500646C94 /* About.swift */; };
+		D0142C5A2A11285700646C94 /* FavoriteConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C592A11285700646C94 /* FavoriteConnection.swift */; };
+		D0142C5C2A1128E900646C94 /* TripRequestShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C5B2A1128E900646C94 /* TripRequestShort.swift */; };
+		D0142C5F2A112CA900646C94 /* StopCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C5E2A112CA900646C94 /* StopCoordinate.swift */; };
+		D0142C602A112CBC00646C94 /* StopCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C5E2A112CA900646C94 /* StopCoordinate.swift */; };
+		D0142C612A112CBD00646C94 /* StopCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C5E2A112CA900646C94 /* StopCoordinate.swift */; };
+		D0142C622A112CBF00646C94 /* StopCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C5E2A112CA900646C94 /* StopCoordinate.swift */; };
 		D03A268329EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A268229EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift */; };
 		D03A268529EEB6C9005B0600 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03A268429EEB6C9005B0600 /* ContentView.swift */; };
 		D03A268729EEB6C9005B0600 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D03A268629EEB6C9005B0600 /* Assets.xcassets */; };
@@ -244,6 +250,9 @@
 		D0142C4D2A11039600646C94 /* GaussKrueger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaussKrueger.swift; sourceTree = "<group>"; };
 		D0142C522A1110BE00646C94 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		D0142C572A1119D500646C94 /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
+		D0142C592A11285700646C94 /* FavoriteConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteConnection.swift; sourceTree = "<group>"; };
+		D0142C5B2A1128E900646C94 /* TripRequestShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRequestShort.swift; sourceTree = "<group>"; };
+		D0142C5E2A112CA900646C94 /* StopCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopCoordinate.swift; sourceTree = "<group>"; };
 		D03A267F29EEB6C9005B0600 /* Haltestellenmonitor1-DD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Haltestellenmonitor1-DD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D03A268229EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haltestellenmonitor1_DDApp.swift; sourceTree = "<group>"; };
 		D03A268429EEB6C9005B0600 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -484,6 +493,9 @@
 				D0C1ECD929F2FA50001D214D /* TripStandardSettings.swift */,
 				D0142C482A10F73900646C94 /* ConnectionStop.swift */,
 				D0142C522A1110BE00646C94 /* Point.swift */,
+				D0142C592A11285700646C94 /* FavoriteConnection.swift */,
+				D0142C5B2A1128E900646C94 /* TripRequestShort.swift */,
+				D0142C5E2A112CA900646C94 /* StopCoordinate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -798,6 +810,7 @@
 				D040EC2729EEEB85002DFEBF /* LocationManager.swift in Sources */,
 				D0C1ECDA29F2FA50001D214D /* TripStandardSettings.swift in Sources */,
 				D0142C4E2A11039600646C94 /* GaussKrueger.swift in Sources */,
+				D0142C5C2A1128E900646C94 /* TripRequestShort.swift in Sources */,
 				D0C1ECE029F325CC001D214D /* MapView.swift in Sources */,
 				D0C1ECCC29F2B165001D214D /* ActivityRequest.swift in Sources */,
 				D040EC2B29EEFA3E002DFEBF /* FavoriteStop.swift in Sources */,
@@ -814,8 +827,10 @@
 				D03A269629EEB9A7005B0600 /* StopRow.swift in Sources */,
 				D040EC1F29EECDFB002DFEBF /* DepartureRequest.swift in Sources */,
 				D040EC2229EED774002DFEBF /* DateParser.swift in Sources */,
+				D0142C5F2A112CA900646C94 /* StopCoordinate.swift in Sources */,
 				D0C1ECDE29F3008B001D214D /* RegularStopRow.swift in Sources */,
 				D0BD66D629F026D7004E574C /* ConnectionStopSelectionView.swift in Sources */,
+				D0142C5A2A11285700646C94 /* FavoriteConnection.swift in Sources */,
 				D0BD66D229F01B99004E574C /* ConnectionView.swift in Sources */,
 				D0C1ECB429F28032001D214D /* TripStop.swift in Sources */,
 				D0142C472A10E7CC00646C94 /* ContactPicker.swift in Sources */,
@@ -853,6 +868,7 @@
 				D0BD669D29EFEA00004E574C /* StopData.swift in Sources */,
 				D0BD66CE29EFFAFF004E574C /* MonitorWidgetRow.swift in Sources */,
 				D0C1ECC529F288D3001D214D /* SingleTripRequest.swift in Sources */,
+				D0142C602A112CBC00646C94 /* StopCoordinate.swift in Sources */,
 				D0C1ECB929F28135001D214D /* SingleTrip.swift in Sources */,
 				D0C1ECB529F28032001D214D /* TripStop.swift in Sources */,
 				D0BD66A229EFEA0F004E574C /* Departure.swift in Sources */,
@@ -888,6 +904,7 @@
 				D0C1ECCE29F2B165001D214D /* ActivityRequest.swift in Sources */,
 				D0142C502A110F9E00646C94 /* GaussKrueger.swift in Sources */,
 				D0BD66F429F03C15004E574C /* Mot.swift in Sources */,
+				D0142C612A112CBD00646C94 /* StopCoordinate.swift in Sources */,
 				D0BD66D029EFFFC5004E574C /* FavoriteStop.swift in Sources */,
 				D0BD66BE29EFEEDF004E574C /* DeparturePlatform.swift in Sources */,
 				D0C1ECCA29F28C2F001D214D /* TripAttributes.swift in Sources */,
@@ -935,6 +952,7 @@
 				D0D1996B29F40B9C00946D87 /* Route.swift in Sources */,
 				D0142C552A1110E800646C94 /* Point.swift in Sources */,
 				D0D1997B29F40B9C00946D87 /* TripStandardSettings.swift in Sources */,
+				D0142C622A112CBF00646C94 /* StopCoordinate.swift in Sources */,
 				D0D1996F29F40B9C00946D87 /* Mot.swift in Sources */,
 				D0142C4C2A10FB1100646C94 /* ConnectionStop.swift in Sources */,
 				D0D1997429F40B9C00946D87 /* DepartureRequest.swift in Sources */,
