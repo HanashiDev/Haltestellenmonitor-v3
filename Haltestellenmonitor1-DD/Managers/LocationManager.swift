@@ -28,6 +28,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     @Published var flag = false
     
     @Published var location: CLLocationCoordinate2D?
+    @Published var llocation: CLLocation?
     @Published var locationUpdated: Bool = false
     
     private var completion: (() -> Void)? = nil
@@ -73,6 +74,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                 span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
             )
         }
+        self.llocation = location
         
         if (completion != nil) {
             completion!()

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct ConnectionView: View {
     @EnvironmentObject var locationManager: LocationManager
@@ -69,7 +70,11 @@ struct ConnectionView: View {
 
                             Button {
                                 locationManager.requestCurrentLocationComplete {
-                                    filter.startStop = ConnectionStop(displayName: stops[0].getFullName(), stop: stops[0])
+                                    self.lookUpCurrentLocation { placemark in
+                                        if placemark != nil {
+                                            filter.startStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
+                                        }
+                                    }
                                 }
                             } label: {
                                 Image(systemName: "location")
@@ -93,7 +98,11 @@ struct ConnectionView: View {
 
                             Button {
                                 locationManager.requestCurrentLocationComplete {
-                                    filter.endStop = ConnectionStop(displayName: stops[0].getFullName(), stop: stops[0])
+                                    self.lookUpCurrentLocation { placemark in
+                                        if placemark != nil {
+                                            filter.endStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
+                                        }
+                                    }
                                 }
                             } label: {
                                 Image(systemName: "location")
@@ -351,6 +360,31 @@ struct ConnectionView: View {
             isLoading = true
             await createRequestData()
             await getTripData()
+        }
+    }
+    
+    func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?)
+                    -> Void ) {
+        // Use the last reported location.
+        if let lastLocation = self.locationManager.llocation {
+            let geocoder = CLGeocoder()
+                
+            // Look up the location and pass it to the completion handler
+            geocoder.reverseGeocodeLocation(lastLocation,
+                        completionHandler: { (placemarks, error) in
+                if error == nil {
+                    let firstLocation = placemarks?[0]
+                    completionHandler(firstLocation)
+                }
+                else {
+                 // An error occurred during geocoding.
+                    completionHandler(nil)
+                }
+            })
+        }
+        else {
+            // No location was available.
+            completionHandler(nil)
         }
     }
 }
