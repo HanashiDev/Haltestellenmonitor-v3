@@ -13,9 +13,11 @@ struct PartialRouteRow: View {
     var body: some View {
         HStack {
             Text(partialRoute.getIcon())
+                .frame(width: 20.0, alignment: .center)
             VStack(alignment: .leading) {
                 Text(partialRoute.getName())
                     .font(.headline)
+                    .lineLimit(1)
                 if (partialRoute.getStartTimeString() != nil || partialRoute.getEndTimeString() != nil) {
                     HStack {
                         Text("\(partialRoute.getStartTimeString()!) Uhr")
@@ -49,6 +51,7 @@ struct PartialRouteRow: View {
                     .font(.footnote)
                 }
             }
+            .padding(.leading, 1)
         }
     }
 }
