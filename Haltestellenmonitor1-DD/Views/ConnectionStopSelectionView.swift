@@ -173,6 +173,16 @@ struct ConnectionStopSelectionView: View {
                 filter.startStop = ConnectionStop(displayName: contactName, location: StopCoordinate(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude ))
             } else {
                 filter.endStop = ConnectionStop(displayName: contactName, location: StopCoordinate(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+                
+                if filter.startStop == nil {
+                    locationManager.requestCurrentLocationComplete {
+                        locationManager.lookUpCurrentLocation { placemark in
+                            if placemark != nil {
+                                filter.startStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
+                            }
+                        }
+                    }
+                }
             }
             dismiss()
         }
