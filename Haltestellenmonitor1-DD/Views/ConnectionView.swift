@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct ConnectionView: View {
     @EnvironmentObject var locationManager: LocationManager
@@ -13,23 +14,51 @@ struct ConnectionView: View {
     @State var day = ""
     @State var showingSheet = false
     @State var showingAlert = false
+    @State var showingSaveAlert = false
     @State var dateTime = Date.now
     @State var trip: Trip? = nil
     @State var isLoading = false
+    @State private var requestData: TripRequest?
+    @State private var numberprev = 0
+    @State private var numbernext = 0
+    @State private var favoriteName = ""
     @StateObject var filter: ConnectionFilter = ConnectionFilter()
     @StateObject var departureFilter = DepartureFilter()
+    @StateObject var favoriteConnections = FavoriteConnection()
 
     var body: some View {
         NavigationStack(path: $stopManager.presentedStops) {
             VStack {
                 Form {
                     Section {
+                        if favoriteConnections.favorites.count > 0 {
+                            DisclosureGroup("Favoriten") {
+                                List(favoriteConnections.favorites, id: \.id) { favoriteConnection in
+                                    HStack {
+                                        Text(favoriteConnection.name)
+                                            .swipeActions(edge: .trailing) {
+                                                Button {
+                                                    favoriteConnections.remove(trip: favoriteConnection)
+                                                } label: {
+                                                    Label("Löschen", systemImage: "trash")
+                                                }
+                                                .tint(.red)
+                                        }
+                                        Spacer()
+                                    }
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        showFavorite(favorite: favoriteConnection)
+                                    }
+                                }
+                            }
+                        }
                         HStack {
                             HStack {
                                 Text("Startpunkt")
                                     .lineLimit(1)
                                 Spacer()
-                                Text(filter.startStop == nil ? "Keine Auswahl" : filter.startStop?.name ?? "")
+                                Text(filter.startStop == nil ? "Keine Auswahl" : filter.startStop?.displayName ?? "Keine Auswahl")
                                     .foregroundColor(Color.gray)
                                     .lineLimit(1)
                             }
@@ -41,7 +70,11 @@ struct ConnectionView: View {
 
                             Button {
                                 locationManager.requestCurrentLocationComplete {
-                                    filter.startStop = stops[0]
+                                    locationManager.lookUpCurrentLocation { placemark in
+                                        if placemark != nil {
+                                            filter.startStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
+                                        }
+                                    }
                                 }
                             } label: {
                                 Image(systemName: "location")
@@ -53,7 +86,7 @@ struct ConnectionView: View {
                                 Text("Zielpunkt")
                                     .lineLimit(1)
                                 Spacer()
-                                Text(filter.endStop == nil ? "Keine Auswahl" : filter.endStop?.name ?? "")
+                                Text(filter.endStop == nil ? "Keine Auswahl" : filter.endStop?.displayName ?? "Keine Auswahl")
                                     .foregroundColor(Color.gray)
                                     .lineLimit(1)
                             }
@@ -65,7 +98,11 @@ struct ConnectionView: View {
 
                             Button {
                                 locationManager.requestCurrentLocationComplete {
-                                    filter.endStop = stops[0]
+                                    locationManager.lookUpCurrentLocation { placemark in
+                                        if placemark != nil {
+                                            filter.endStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
+                                        }
+                                    }
                                 }
                             } label: {
                                 Image(systemName: "location")
@@ -76,10 +113,22 @@ struct ConnectionView: View {
                             DepartureDisclosureSection()
                         }
                         
-                        DatePicker("Zeit", selection: $dateTime)
+                        HStack {
+                            DatePicker("Zeit", selection: $dateTime)
+                            Button {
+                                dateTime = Date.now
+                            } label: {
+                                Text("Jetzt")
+                            }
+                        }
                         
                         Button {
                             Task {
+                                if isLoading {
+                                    return
+                                }
+                                isLoading = true
+                                await createRequestData()
                                 await getTripData()
                             }
                         } label: {
@@ -89,16 +138,42 @@ struct ConnectionView: View {
                     }
                     
                     if (trip?.Routes != nil) {
+                        Button {
+                            showingSaveAlert.toggle()
+                        } label: {
+                            Text("Als Favorit speichern")
+                        }
+                        .frame(maxWidth: .infinity)
+                        
                         ForEach(trip?.Routes ?? [], id: \.self) { route in
                             TripSection(route: route)
                         }
+                        
+                        Button {
+                            if isLoading || requestData == nil || self.trip == nil {
+                                return
+                            }
+                            isLoading = true
+                            numbernext = numbernext + 1
+                            
+                            requestData!.sessionId = self.trip!.SessionId
+                            requestData!.numberprev = 0
+                            requestData!.numbernext = numbernext
+                            
+                            Task {
+                                await getTripData(isNext: true)
+                            }
+                        } label: {
+                            Text("später")
+                        }
+                        .frame(maxWidth: .infinity)
                     }
                 }
                 .sheet(isPresented: $showingSheet, content: {
                     ConnectionStopSelectionView()
                 })
             }
-            .navigationTitle("Verbindungen")
+            .navigationTitle("🏘️ Verbindungen")
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.cancellationAction) {
                     if (isLoading) {
@@ -112,6 +187,9 @@ struct ConnectionView: View {
                         }
                         filter.startStop = nil
                         filter.endStop = nil
+                        trip = nil
+                        requestData = nil
+                        numbernext = 0
                         dateTime = Date.now
                     }
                 }
@@ -119,6 +197,14 @@ struct ConnectionView: View {
             .alert("Es muss ein Start- und Endziel ausgewählt werden", isPresented: $showingAlert) {
                 Button {
                     isLoading = false
+                } label: {
+                    Text("OK")
+                }
+            }
+            .alert("Wie soll der Favorit gespeichert werden?", isPresented: $showingSaveAlert) {
+                TextField("Name", text: $favoriteName)
+                Button {
+                    saveFavorite()
                 } label: {
                     Text("OK")
                 }
@@ -131,16 +217,55 @@ struct ConnectionView: View {
         .environmentObject(departureFilter)
     }
     
-    func getTripData() async {
-        if (isLoading) {
-            return
-        }
-        isLoading = true
+    func createRequestData() async {
         if (filter.startStop == nil || filter.endStop == nil) {
             showingAlert = true
             return
         }
+        let standardSettings = getStandardSettings()
         
+        async let startStrPromise = filter.startStop!.getDestinationString()
+        async let endStrPromise = filter.endStop!.getDestinationString()
+        
+        let startStr = await startStrPromise
+        let endStr = await endStrPromise
+        
+        requestData = TripRequest(time: dateTime.ISO8601Format(), origin: startStr, destination: endStr, standardSettings: standardSettings)
+    }
+    
+    func getTripData(isNext: Bool = false) async {
+        if requestData == nil {
+            return
+        }
+
+        var url = URL(string: "https://webapi.vvo-online.de/tr/trips")!
+        if isNext {
+            url = URL(string: "https://webapi.vvo-online.de/tr/prevnext")!
+        }
+        var request = URLRequest(url: url, timeoutInterval: 20)
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONEncoder().encode(requestData)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        do {
+            let (content, _) = try await URLSession.shared.data(for: request)
+
+            let decoder = JSONDecoder()
+            numbernext = 0
+            self.trip = try decoder.decode(Trip.self, from: content)
+
+            isLoading = false
+        } catch {
+            print ("error: \(error)")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Task {
+                    await getTripData(isNext: isNext)
+                }
+            }
+        }
+    }
+    
+    func getStandardSettings() -> TripStandardSettings {
         var mot: [String] = []
         if (departureFilter.tram) {
             mot.append("Tram")
@@ -166,26 +291,78 @@ struct ConnectionView: View {
             mot.append("HailedSharedTaxi")
         }
         
-        let standardSettings = TripStandardSettings(mot: mot)
+        return TripStandardSettings(mot: mot)
+    }
+    
+    func saveFavorite() {
+        let standardSettings = getStandardSettings()
         
-        let requestData = TripRequest(time: dateTime.ISO8601Format(), origin: String(filter.startStop?.stopId ?? 0), destination: String(filter.endStop?.stopId ?? 0), standardSettings: standardSettings)
+        if favoriteName.isEmpty {
+            favoriteName = "Standard"
+        }
+
+        let requestShort = TripRequestShort(name: favoriteName, origin: filter.startStop!, destination: filter.endStop!, standardSettings: standardSettings)
         
-        let url = URL(string: "https://webapi.vvo-online.de/tr/trips")!
-        var request = URLRequest(url: url, timeoutInterval: 20)
-        request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(requestData)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        favoriteName = ""
         
-        do {
-            let (content, _) = try await URLSession.shared.data(for: request)
-            
-            let decoder = JSONDecoder()
-            self.trip = try decoder.decode(Trip.self, from: content)
-            
-            isLoading = false
-        } catch {
-            isLoading = false
-            print ("error: \(error)")
+        favoriteConnections.add(trip: requestShort)
+    }
+    
+    func showFavorite(favorite: TripRequestShort) {
+        filter.startStop = favorite.origin
+        filter.endStop = favorite.destination
+        
+        departureFilter.tram = false
+        departureFilter.bus = false
+        departureFilter.suburbanRailway = false
+        departureFilter.train = false
+        departureFilter.cableway = false
+        departureFilter.ferry = false
+        departureFilter.taxi = false
+        
+        let mots = favorite.standardSettings?.mot ?? []
+        for mot in mots {
+            switch mot {
+            case "Tram":
+                departureFilter.tram = true
+                break
+            case "CityBus":
+                departureFilter.bus = true
+                break
+            case "IntercityBus":
+                departureFilter.bus = true
+                break
+            case "PlusBus":
+                departureFilter.bus = true
+                break
+            case "SuburbanRailway":
+                departureFilter.suburbanRailway = true
+                break
+            case "Train":
+                departureFilter.train = true
+                break
+            case "Cableway":
+                departureFilter.cableway = true
+                break
+            case "Ferry":
+                departureFilter.ferry = true
+                break
+            case "HailedSharedTaxi":
+                departureFilter.taxi = true
+                break
+            default:
+                break
+            }
+        }
+        
+        dateTime = Date.now
+        
+        Task {
+            if isLoading {
+                return
+            }
+            isLoading = true
+            await createRequestData()
             await getTripData()
         }
     }

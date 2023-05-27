@@ -43,7 +43,7 @@ struct SingleTripView: View {
         .refreshable {
             await getSingleTrip()
         }
-        .navigationTitle(departure.getName())
+        .navigationTitle("\(departure.getIcon()) \(departure.getName())")
         .task(id: departure.Id, priority: .userInitiated) {
             await getSingleTrip()
         }
@@ -96,7 +96,11 @@ struct SingleTripView: View {
             isLoaded = true
         } catch {
             print ("error: \(error)")
-            await getSingleTrip()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Task {
+                    await getSingleTrip()
+                }
+            }
         }
     }
     

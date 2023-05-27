@@ -8,5 +8,6 @@
 import Foundation
 
 struct Trip: Hashable, Codable {
+    var SessionId: String
     var Routes: [Route]
 }
