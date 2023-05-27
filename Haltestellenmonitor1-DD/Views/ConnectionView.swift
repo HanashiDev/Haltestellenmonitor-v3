@@ -187,6 +187,9 @@ struct ConnectionView: View {
                         }
                         filter.startStop = nil
                         filter.endStop = nil
+                        trip = nil
+                        requestData = nil
+                        numbernext = 0
                         dateTime = Date.now
                     }
                 }
@@ -248,6 +251,7 @@ struct ConnectionView: View {
             let (content, _) = try await URLSession.shared.data(for: request)
 
             let decoder = JSONDecoder()
+            numbernext = 0
             self.trip = try decoder.decode(Trip.self, from: content)
 
             isLoading = false
