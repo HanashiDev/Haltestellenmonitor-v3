@@ -204,7 +204,7 @@
     },
     {
         "stopId": 33000033,
-        "name": "Webergasse",
+        "name": "Postplatz \/ Webergasse",
         "city": "Dresden",
         "gpsX": "51.048082213518",
         "gpsY": "13.734472759617"
@@ -400,7 +400,7 @@
     },
     {
         "stopId": 33000067,
-        "name": "Striesen Altenberger Str.",
+        "name": "Altenberger Stra\u00dfe",
         "city": "Dresden",
         "gpsX": "51.039512815142",
         "gpsY": "13.805818854931"
@@ -456,7 +456,7 @@
     },
     {
         "stopId": 33000075,
-        "name": "Laubegast Gleisschleife",
+        "name": "Kronst\u00e4dter Platz",
         "city": "Dresden",
         "gpsX": "51.022882515765",
         "gpsY": "13.838612516318"
@@ -588,6 +588,13 @@
         "gpsY": "13.830877968984"
     },
     {
+        "stopId": 33000095,
+        "name": "Leuben Klettestra\u00dfe",
+        "city": "Dresden",
+        "gpsX": "51.007344506098",
+        "gpsY": "13.82795220059"
+    },
+    {
         "stopId": 33000096,
         "name": "Guerickestra\u00dfe",
         "city": "Dresden",
@@ -596,7 +603,7 @@
     },
     {
         "stopId": 33000097,
-        "name": "Hennigsdorfer Stra\u00dfe",
+        "name": "Stra\u00dfe des 17. Juni",
         "city": "Dresden",
         "gpsX": "51.002427240418",
         "gpsY": "13.826790043303"
@@ -624,7 +631,7 @@
     },
     {
         "stopId": 33000101,
-        "name": "Kleinzschachwitz Gleisschleife",
+        "name": "Freystra\u00dfe",
         "city": "Dresden",
         "gpsX": "51.008358354477",
         "gpsY": "13.85488113658"
@@ -656,6 +663,13 @@
         "city": "Dresden",
         "gpsX": "51.034604352112",
         "gpsY": "13.758078923075"
+    },
+    {
+        "stopId": 33000114,
+        "name": "Julius-Otto-Stra\u00dfe",
+        "city": "Dresden",
+        "gpsX": "51.032570408694",
+        "gpsY": "13.757631261537"
     },
     {
         "stopId": 33000115,
@@ -1519,6 +1533,13 @@
         "gpsY": "13.759939675889"
     },
     {
+        "stopId": 33000290,
+        "name": "Pulsnitzer Stra\u00dfe",
+        "city": "Dresden",
+        "gpsX": "51.06332615412",
+        "gpsY": "13.757512052029"
+    },
+    {
         "stopId": 33000291,
         "name": "Diakonissenkrankenhaus",
         "city": "Dresden",
@@ -1639,7 +1660,7 @@
     },
     {
         "stopId": 33000314,
-        "name": "Zschertnitz M\u00fcnzmeisterstra\u00dfe",
+        "name": "M\u00fcnzmeisterstra\u00dfe",
         "city": "Dresden",
         "gpsX": "51.019474194221",
         "gpsY": "13.741899559901"
@@ -2038,7 +2059,7 @@
     },
     {
         "stopId": 33000461,
-        "name": "Talstr. (Weinbau Fehrmann)",
+        "name": "Talstra\u00dfe",
         "city": "Cossebaude\/Neu-Leuteritz",
         "gpsX": "51.079110010306",
         "gpsY": "13.61367204662"
@@ -2061,8 +2082,8 @@
         "stopId": 33000469,
         "name": "Gohlis",
         "city": "Dresden",
-        "gpsX": "51.085000607322",
-        "gpsY": "13.645734068637"
+        "gpsX": "51.084963662545",
+        "gpsY": "13.645804121668"
     },
     {
         "stopId": 33000470,
@@ -2299,8 +2320,8 @@
         "stopId": 33000532,
         "name": "Albert-Hensel-Stra\u00dfe",
         "city": "Dresden",
-        "gpsX": "51.094114176303",
-        "gpsY": "13.728086117067"
+        "gpsX": "51.094179600468",
+        "gpsY": "13.727917246273"
     },
     {
         "stopId": 33000535,
@@ -2569,6 +2590,13 @@
         "gpsY": "13.668244697548"
     },
     {
+        "stopId": 33000583,
+        "name": "Spitzhausstra\u00dfe",
+        "city": "Dresden",
+        "gpsX": "51.091510353108",
+        "gpsY": "13.673501472264"
+    },
+    {
         "stopId": 33000584,
         "name": "Seewiesenweg",
         "city": "Dresden",
@@ -2703,7 +2731,7 @@
     },
     {
         "stopId": 33000605,
-        "name": "Regierungspr\u00e4sidium Sachsen",
+        "name": "Landesdirektion Sachsen",
         "city": "Dresden",
         "gpsX": "51.0717555447",
         "gpsY": "13.770216894573"
@@ -2871,7 +2899,7 @@
     },
     {
         "stopId": 33000635,
-        "name": "Gewerbegebiet Airportpark",
+        "name": "Robert-Bosch-Ring",
         "city": "Dresden",
         "gpsX": "51.129151664828",
         "gpsY": "13.739880151206"
@@ -2903,6 +2931,13 @@
         "city": "Dresden",
         "gpsX": "51.126349953533",
         "gpsY": "13.731803394957"
+    },
+    {
+        "stopId": 33000640,
+        "name": "Sa\u00dfnitzer Stra\u00dfe",
+        "city": "Dresden",
+        "gpsX": "51.118180688674",
+        "gpsY": "13.731040813761"
     },
     {
         "stopId": 33000641,
@@ -3073,6 +3108,13 @@
         "gpsY": "13.774069871325"
     },
     {
+        "stopId": 33000671,
+        "name": "Zinnowitzer Stra\u00dfe",
+        "city": "Dresden",
+        "gpsX": "51.116670142824",
+        "gpsY": "13.778374733836"
+    },
+    {
         "stopId": 33000672,
         "name": "Hugo-Junkers-Ring",
         "city": "Dresden",
@@ -3207,7 +3249,7 @@
     },
     {
         "stopId": 33000697,
-        "name": "L\u00f6btau S\u00fcd Mohorner Str.",
+        "name": "Mohorner Stra\u00dfe",
         "city": "Dresden",
         "gpsX": "51.034534519033",
         "gpsY": "13.702087100091"
@@ -3907,7 +3949,7 @@
     },
     {
         "stopId": 33000818,
-        "name": "Nickern Alter Postweg",
+        "name": "Alter Postweg",
         "city": "Dresden",
         "gpsX": "50.992196123941",
         "gpsY": "13.789081535478"
@@ -4075,7 +4117,7 @@
     },
     {
         "stopId": 33000845,
-        "name": "Oberloschwitz",
+        "name": "Obere Station Schwebebahn",
         "city": "Dresden",
         "gpsX": "51.054122819091",
         "gpsY": "13.820779234742"
@@ -4376,7 +4418,7 @@
     },
     {
         "stopId": 33000896,
-        "name": "Dampfschiffstra\u00dfe",
+        "name": "Otto-Schindler-Stra\u00dfe",
         "city": "Dresden",
         "gpsX": "51.005807713696",
         "gpsY": "13.875554271641"
@@ -4411,7 +4453,7 @@
     },
     {
         "stopId": 33000902,
-        "name": "Striesen Niederwaldplatz",
+        "name": "Niederwaldplatz",
         "city": "Dresden",
         "gpsX": "51.043322105231",
         "gpsY": "13.80713634431"
@@ -4662,6 +4704,13 @@
         "gpsY": "13.852625954439"
     },
     {
+        "stopId": 33000942,
+        "name": "Wei\u00dfdornstra\u00dfe",
+        "city": "Dresden",
+        "gpsX": "51.005858645676",
+        "gpsY": "13.838423691144"
+    },
+    {
         "stopId": 33000943,
         "name": "Bahnhofstra\u00dfe",
         "city": "Dresden",
@@ -4688,6 +4737,13 @@
         "city": "Dresden",
         "gpsX": "50.996912778919",
         "gpsY": "13.855535825355"
+    },
+    {
+        "stopId": 33000947,
+        "name": "Tronitzer Stra\u00dfe",
+        "city": "Dresden",
+        "gpsX": "50.993161138758",
+        "gpsY": "13.864745139311"
     },
     {
         "stopId": 33000948,
@@ -4977,11 +5033,25 @@
         "gpsY": "13.757317296949"
     },
     {
+        "stopId": 33001001,
+        "name": "Klinikum Kreischa",
+        "city": "Kreischa (b Dresden)",
+        "gpsX": "50.947736625353",
+        "gpsY": "13.765159244857"
+    },
+    {
         "stopId": 33001002,
         "name": "Oberer Dorfplatz",
         "city": "Kreischa (b Dresden)",
         "gpsX": "50.944629537425",
         "gpsY": "13.749402774265"
+    },
+    {
+        "stopId": 33001003,
+        "name": "Kleinkreischa",
+        "city": "Kreischa (b Dresden)",
+        "gpsX": "50.942037706547",
+        "gpsY": "13.765114127136"
     },
     {
         "stopId": 33001005,
@@ -5122,6 +5192,20 @@
         "city": "Goppeln",
         "gpsX": "50.986895966637",
         "gpsY": "13.75923813475"
+    },
+    {
+        "stopId": 33001028,
+        "name": "Lindenstra\u00dfe",
+        "city": "Kautzsch",
+        "gpsX": "50.960775642179",
+        "gpsY": "13.765511063115"
+    },
+    {
+        "stopId": 33001029,
+        "name": "Abzweig nach Kleba",
+        "city": "Kleba (Sachsen)",
+        "gpsX": "50.964360733589",
+        "gpsY": "13.753105042824"
     },
     {
         "stopId": 33001030,
@@ -6084,7 +6168,7 @@
     },
     {
         "stopId": 33001202,
-        "name": "Evangelisches Gymnasium",
+        "name": "Markt",
         "city": "Tharandt",
         "gpsX": "50.984198835881",
         "gpsY": "13.580698536571"
@@ -6525,7 +6609,7 @@
     },
     {
         "stopId": 33001310,
-        "name": "Spechtritz Haltepunkt",
+        "name": "Hp",
         "city": "Spechtritz",
         "gpsX": "50.95265239054",
         "gpsY": "13.638848233303"
@@ -6742,7 +6826,7 @@
     },
     {
         "stopId": 33001400,
-        "name": "ZOB",
+        "name": "Busbahnhof",
         "city": "Dippoldiswalde",
         "gpsX": "50.895048519026",
         "gpsY": "13.668467099591"
@@ -7197,7 +7281,7 @@
     },
     {
         "stopId": 33001534,
-        "name": "Gie\u00dferei",
+        "name": "Ziegengasse",
         "city": "Schmiedeberg (Osterzgeb)",
         "gpsX": "50.833149559574",
         "gpsY": "13.681221178911"
@@ -7729,7 +7813,7 @@
     },
     {
         "stopId": 33001727,
-        "name": "Kammstra\u00dfe\/Abzw Oberdorf",
+        "name": "Kammstra\u00dfe Abzweig Oberdorf",
         "city": "Hermsdorf\/Erzgeb.",
         "gpsX": "50.742130910873",
         "gpsY": "13.640441146516"
@@ -8156,7 +8240,7 @@
     },
     {
         "stopId": 33001865,
-        "name": "B\u00e4renstein (b Glash\u00fctte\/Sachs)",
+        "name": "Bahnhof",
         "city": "B\u00e4renstein (Kr PIR)",
         "gpsX": "50.809522747195",
         "gpsY": "13.794720685222"
@@ -8380,7 +8464,7 @@
     },
     {
         "stopId": 33001953,
-        "name": "Haltepunkt Niederschlottwitz",
+        "name": "Hp Niederschlottwitz",
         "city": "Schlottwitz",
         "gpsX": "50.889786186841",
         "gpsY": "13.811008439818"
@@ -8610,6 +8694,13 @@
         "gpsY": "13.924019088746"
     },
     {
+        "stopId": 33003006,
+        "name": "Lindenallee",
+        "city": "Graupa",
+        "gpsX": "50.994339273024",
+        "gpsY": "13.92456620992"
+    },
+    {
         "stopId": 33003007,
         "name": "Lohengrinstra\u00dfe",
         "city": "Graupa",
@@ -8744,7 +8835,7 @@
     },
     {
         "stopId": 33003053,
-        "name": "Haltepunkt S\u00fcd",
+        "name": "S-Bahnhof S\u00fcd",
         "city": "Heidenau (Sachs)",
         "gpsX": "50.97239384927",
         "gpsY": "13.874321562538"
@@ -8828,7 +8919,7 @@
     },
     {
         "stopId": 33003065,
-        "name": "Haltepunkt Gro\u00dfsedlitz",
+        "name": "S-Bf. Gro\u00dfsedlitz",
         "city": "Heidenau (Sachs)",
         "gpsX": "50.961011816529",
         "gpsY": "13.89441906106"
@@ -8948,7 +9039,7 @@
     {
         "stopId": 33003091,
         "name": "Am Landgut",
-        "city": "Dresden",
+        "city": "R\u00f6hrsdorf (b Pirna)",
         "gpsX": "50.967466615567",
         "gpsY": "13.808233822509"
     },
@@ -10080,6 +10171,20 @@
         "gpsY": "13.9266139308"
     },
     {
+        "stopId": 33003391,
+        "name": "Postweg",
+        "city": "Pirna",
+        "gpsX": "50.952492131912",
+        "gpsY": "13.927747017808"
+    },
+    {
+        "stopId": 33003392,
+        "name": "Kohlbergstra\u00dfe",
+        "city": "Pirna",
+        "gpsX": "50.951422184699",
+        "gpsY": "13.931018879674"
+    },
+    {
         "stopId": 33003393,
         "name": "An der Seidewitz",
         "city": "Pirna",
@@ -10227,6 +10332,13 @@
         "gpsY": "13.957301777361"
     },
     {
+        "stopId": 33003415,
+        "name": "Klinikum Pirna",
+        "city": "Pirna",
+        "gpsX": "50.957211163225",
+        "gpsY": "13.954289745268"
+    },
+    {
         "stopId": 33003416,
         "name": "Sonnenstein Varkausring",
         "city": "Pirna",
@@ -10284,7 +10396,7 @@
     },
     {
         "stopId": 33003430,
-        "name": "Haltepunkt Copitz",
+        "name": "Hp Copitz",
         "city": "Pirna",
         "gpsX": "50.967896903918",
         "gpsY": "13.933980110459"
@@ -10501,7 +10613,7 @@
     },
     {
         "stopId": 33003465,
-        "name": "Haltepunkt Copitz Nord",
+        "name": "Hp Copitz Nord",
         "city": "Pirna",
         "gpsX": "50.977496903415",
         "gpsY": "13.935147991876"
@@ -10540,6 +10652,20 @@
         "city": "Struppen",
         "gpsX": "50.936865467932",
         "gpsY": "14.003149121602"
+    },
+    {
+        "stopId": 33003475,
+        "name": "Mitte",
+        "city": "Struppen",
+        "gpsX": "50.93511423627",
+        "gpsY": "14.010884760754"
+    },
+    {
+        "stopId": 33003476,
+        "name": "Post",
+        "city": "Struppen",
+        "gpsX": "50.933762822936",
+        "gpsY": "14.015222634966"
     },
     {
         "stopId": 33003477,
@@ -11161,15 +11287,15 @@
         "stopId": 33003611,
         "name": "Alte Schule",
         "city": "Krippen",
-        "gpsX": "50.90899325897",
-        "gpsY": "14.16636006312"
+        "gpsX": "50.908967365941",
+        "gpsY": "14.166301981375"
     },
     {
         "stopId": 33003612,
         "name": "Zum Kohlbornstein",
         "city": "Krippen",
-        "gpsX": "50.904190637941",
-        "gpsY": "14.164516171554"
+        "gpsX": "50.904439493562",
+        "gpsY": "14.164186473807"
     },
     {
         "stopId": 33003613,
@@ -11215,7 +11341,7 @@
     },
     {
         "stopId": 33003621,
-        "name": "F\u00e4hrstelle Stadt",
+        "name": "Elbkai",
         "city": "Bad Schandau",
         "gpsX": "50.917784465482",
         "gpsY": "14.149416969986"
@@ -11266,8 +11392,8 @@
         "stopId": 33003628,
         "name": "Postelwitz",
         "city": "Postelwitz",
-        "gpsX": "50.913259504644",
-        "gpsY": "14.172872393808"
+        "gpsX": "50.913299138559",
+        "gpsY": "14.172675143954"
     },
     {
         "stopId": 33003629,
@@ -11275,13 +11401,6 @@
         "city": "Bad Schandau",
         "gpsX": "50.927828864748",
         "gpsY": "14.162441219416"
-    },
-    {
-        "stopId": 33003634,
-        "name": "Personenaufzug",
-        "city": "Ostrau (Bad Schandau)",
-        "gpsX": "0",
-        "gpsY": "0"
     },
     {
         "stopId": 33003635,
@@ -11355,7 +11474,7 @@
     },
     {
         "stopId": 33003645,
-        "name": "Haltepunkt Hirschm\u00fchle",
+        "name": "Hp Hirschm\u00fchle",
         "city": "Schmilka",
         "gpsX": "50.889893998624",
         "gpsY": "14.228612498727"
@@ -11383,7 +11502,7 @@
     },
     {
         "stopId": 33003649,
-        "name": "Dampfschifffahrt",
+        "name": "F\u00e4hrstelle im Ort",
         "city": "Schmilka",
         "gpsX": "50.891454807239",
         "gpsY": "14.229738899299"
@@ -11446,8 +11565,8 @@
     },
     {
         "stopId": 33003659,
-        "name": "Porschdorfer Einkehr",
-        "city": "Bad Schandau",
+        "name": "Einkehr",
+        "city": "Porschdorf",
         "gpsX": "50.941194409768",
         "gpsY": "14.128369605893"
     },
@@ -11642,8 +11761,8 @@
     },
     {
         "stopId": 33003690,
-        "name": "Oberehrenberg Abzweig Cunnersdorf",
-        "city": "Hohnstein",
+        "name": "Abzweig Cunnersdorf",
+        "city": "Ehrenberg b Sebnitz",
         "gpsX": "50.998794959754",
         "gpsY": "14.141163214667"
     },
@@ -11698,8 +11817,8 @@
     },
     {
         "stopId": 33003699,
-        "name": "Zeschnig Hocksteinsch\u00e4nke",
-        "city": "Hohnstein",
+        "name": "Hocksteinsch\u00e4nke",
+        "city": "Rathewalde",
         "gpsX": "50.984737684915",
         "gpsY": "14.089355737938"
     },
@@ -12076,8 +12195,8 @@
     },
     {
         "stopId": 33003770,
-        "name": "Gasthof Wei\u00dfig",
-        "city": "Dresden",
+        "name": "Gasthof",
+        "city": "Wei\u00dfig (Dresden)",
         "gpsX": "51.060631671972",
         "gpsY": "13.884830891526"
     },
@@ -12168,7 +12287,7 @@
     {
         "stopId": 33003783,
         "name": "Fernsehturm",
-        "city": "Dresden",
+        "city": "Pappritz",
         "gpsX": "51.039660841832",
         "gpsY": "13.844110620815"
     },
@@ -12573,7 +12692,7 @@
     },
     {
         "stopId": 33003846,
-        "name": "Bahnhof",
+        "name": "Helmsdorf (b Pirna)",
         "city": "Helmsdorf (Stolpen)",
         "gpsX": "51.034498098418",
         "gpsY": "14.046195899925"
@@ -13518,7 +13637,7 @@
     },
     {
         "stopId": 33004007,
-        "name": "ZOB",
+        "name": "Busbahnhof",
         "city": "Mei\u00dfen",
         "gpsX": "51.163768983376",
         "gpsY": "13.483648042619"
@@ -13564,6 +13683,20 @@
         "city": "Mei\u00dfen",
         "gpsX": "51.158109283851",
         "gpsY": "13.456906001895"
+    },
+    {
+        "stopId": 33004015,
+        "name": "Kynastweg",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.158947145669",
+        "gpsY": "13.453144108284"
+    },
+    {
+        "stopId": 33004017,
+        "name": "Markt",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.163075993209",
+        "gpsY": "13.470186874701"
     },
     {
         "stopId": 33004018,
@@ -13622,6 +13755,13 @@
         "gpsY": "13.462315591957"
     },
     {
+        "stopId": 33004027,
+        "name": "Elbkai",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.166742848767",
+        "gpsY": "13.473820750407"
+    },
+    {
         "stopId": 33004028,
         "name": "Mei\u00dfner Burgstuben",
         "city": "Mei\u00dfen",
@@ -13674,8 +13814,8 @@
         "stopId": 33004036,
         "name": "Loosestra\u00dfe",
         "city": "Mei\u00dfen",
-        "gpsX": "51.161753664417",
-        "gpsY": "13.48661420383"
+        "gpsX": "51.161400772301",
+        "gpsY": "13.484672867658"
     },
     {
         "stopId": 33004037,
@@ -13723,8 +13863,8 @@
         "stopId": 33004045,
         "name": "Hochuferstra\u00dfe",
         "city": "Mei\u00dfen",
-        "gpsX": "51.164360352839",
-        "gpsY": "13.474559742446"
+        "gpsX": "51.164487774371",
+        "gpsY": "13.474435131587"
     },
     {
         "stopId": 33004046,
@@ -13732,6 +13872,13 @@
         "city": "Mei\u00dfen",
         "gpsX": "51.16788767154",
         "gpsY": "13.470711638399"
+    },
+    {
+        "stopId": 33004047,
+        "name": "Lommatzscher Tor",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.165426008979",
+        "gpsY": "13.465586332839"
     },
     {
         "stopId": 33004048,
@@ -13777,7 +13924,7 @@
     },
     {
         "stopId": 33004055,
-        "name": "Haltepunkt Altstadt",
+        "name": "S-Bahnhof Altstadt",
         "city": "Mei\u00dfen",
         "gpsX": "51.159138065813",
         "gpsY": "13.473092329526"
@@ -13788,6 +13935,13 @@
         "city": "Mei\u00dfen",
         "gpsX": "51.157058660375",
         "gpsY": "13.465449818232"
+    },
+    {
+        "stopId": 33004057,
+        "name": "Winzerstra\u00dfe",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.154767487163",
+        "gpsY": "13.496595698321"
     },
     {
         "stopId": 33004058,
@@ -13847,7 +14001,7 @@
     },
     {
         "stopId": 33004067,
-        "name": "Agentur f\u00fcr Arbeit",
+        "name": "Luisenstra\u00dfe",
         "city": "Mei\u00dfen",
         "gpsX": "51.16694724158",
         "gpsY": "13.497361684738"
@@ -14000,6 +14154,13 @@
         "gpsY": "13.447816369874"
     },
     {
+        "stopId": 33004089,
+        "name": "Ro\u00dfmarkt",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.162159440495",
+        "gpsY": "13.472302200128"
+    },
+    {
         "stopId": 33004090,
         "name": "Hafenstra\u00dfe",
         "city": "Mei\u00dfen",
@@ -14028,6 +14189,13 @@
         "gpsY": "13.48250042142"
     },
     {
+        "stopId": 33004094,
+        "name": "Knorre",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.175140873808",
+        "gpsY": "13.466509284707"
+    },
+    {
         "stopId": 33004095,
         "name": "Weg nach Rottewitz",
         "city": "Mei\u00dfen",
@@ -14040,6 +14208,13 @@
         "city": "Karpfensch\u00e4nke",
         "gpsX": "51.187802384517",
         "gpsY": "13.443738111292"
+    },
+    {
+        "stopId": 33004097,
+        "name": "VGM",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.171891361044",
+        "gpsY": "13.47685909148"
     },
     {
         "stopId": 33004098,
@@ -14178,8 +14353,8 @@
         "stopId": 33004117,
         "name": "Schule",
         "city": "Ockrilla",
-        "gpsX": "51.197071836458",
-        "gpsY": "13.507752401106"
+        "gpsX": "51.199580400915",
+        "gpsY": "13.512584590526"
     },
     {
         "stopId": 33004118,
@@ -14442,7 +14617,7 @@
     },
     {
         "stopId": 33004155,
-        "name": "Melanchthonstr. (EV4-Ersatzhalt \"Radebeuler Str.\")",
+        "name": "Melanchthonstra\u00dfe",
         "city": "Coswig (b Dresden)",
         "gpsX": "51.12591732464",
         "gpsY": "13.5868320399"
@@ -14507,8 +14682,8 @@
         "stopId": 33004165,
         "name": "Forsthaus Kreyern",
         "city": "Coswig (b Dresden)",
-        "gpsX": "51.157324110622",
-        "gpsY": "13.623032595775"
+        "gpsX": "51.156933063259",
+        "gpsY": "13.622061103928"
     },
     {
         "stopId": 33004166,
@@ -15086,7 +15261,7 @@
     },
     {
         "stopId": 33004254,
-        "name": "Fritz-Schulze-Stra\u00dfe (Radebeul)",
+        "name": "Fritz-Schulze-Stra\u00dfe",
         "city": "Radebeul",
         "gpsX": "51.108064387436",
         "gpsY": "13.678226321093"
@@ -15233,7 +15408,7 @@
     },
     {
         "stopId": 33004279,
-        "name": "Haltepunkt L\u00f6\u00dfnitzgrund",
+        "name": "Hp L\u00f6\u00dfnitzgrund",
         "city": "Radebeul",
         "gpsX": "51.121483102496",
         "gpsY": "13.653815314651"
@@ -15261,7 +15436,7 @@
     },
     {
         "stopId": 33004283,
-        "name": "Kaufland",
+        "name": "Serkowitz Kaufland",
         "city": "Radebeul",
         "gpsX": "51.099882490179",
         "gpsY": "13.654357846095"
@@ -15415,8 +15590,8 @@
     },
     {
         "stopId": 33004313,
-        "name": "Niedergasse",
-        "city": "Reichenberg (Kr MEI)",
+        "name": "Reichenberg (Kr Mei\u00dfen) Niedergasse",
+        "city": "Moritzburg",
         "gpsX": "51.130640012066",
         "gpsY": "13.685530968106"
     },
@@ -15436,8 +15611,8 @@
     },
     {
         "stopId": 33004319,
-        "name": "Am Brand",
-        "city": "Reichenberg (Kr MEI)",
+        "name": "Reichenberg (Kr Mei\u00dfen) Am Brand",
+        "city": "Moritzburg",
         "gpsX": "51.129416235949",
         "gpsY": "13.660484823015"
     },
@@ -15464,22 +15639,22 @@
     },
     {
         "stopId": 33004324,
-        "name": "Wartehalle",
-        "city": "Friedewald (Kr MEI)",
+        "name": "Friedewald (Kr Mei\u00dfen) Wartehalle",
+        "city": "Moritzburg",
         "gpsX": "51.133971808198",
         "gpsY": "13.647288973577"
     },
     {
         "stopId": 33004325,
-        "name": "Wendeplatz",
-        "city": "Friedewald (Kr MEI)",
+        "name": "Friedewald (Kr Mei\u00dfen) Wendeplatz",
+        "city": "Moritzburg",
         "gpsX": "51.136659973872",
         "gpsY": "13.651728455368"
     },
     {
         "stopId": 33004326,
-        "name": "Haltepunkt",
-        "city": "Friedewald (Kr MEI)",
+        "name": "Friedewald (Kr Mei\u00dfen) Haltepunkt",
+        "city": "Moritzburg",
         "gpsX": "51.131230612626",
         "gpsY": "13.651706158864"
     },
@@ -15519,11 +15694,25 @@
         "gpsY": "13.680489967363"
     },
     {
+        "stopId": 33004334,
+        "name": "Markt",
+        "city": "Moritzburg",
+        "gpsX": "51.164350300367",
+        "gpsY": "13.677437715135"
+    },
+    {
         "stopId": 33004335,
         "name": "Mittelteichbad",
         "city": "Moritzburg",
         "gpsX": "51.176742665764",
         "gpsY": "13.677100920471"
+    },
+    {
+        "stopId": 33004336,
+        "name": "Ro\u00dfmarkt",
+        "city": "Moritzburg",
+        "gpsX": "51.1599906947",
+        "gpsY": "13.679295308434"
     },
     {
         "stopId": 33004337,
@@ -15932,6 +16121,27 @@
         "gpsY": "13.522593552712"
     },
     {
+        "stopId": 33004435,
+        "name": "Proschwitz",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.179528652129",
+        "gpsY": "13.477146060402"
+    },
+    {
+        "stopId": 33004436,
+        "name": "Katzenstufen",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.17323264158",
+        "gpsY": "13.47528606062"
+    },
+    {
+        "stopId": 33004437,
+        "name": "Weingut Rothes Gut",
+        "city": "Mei\u00dfen",
+        "gpsX": "51.168507899921",
+        "gpsY": "13.448382981373"
+    },
+    {
         "stopId": 33004439,
         "name": "J\u00e4gerstra\u00dfe",
         "city": "Mei\u00dfen",
@@ -15965,6 +16175,20 @@
         "city": "L\u00f6bsal",
         "gpsX": "51.225959685464",
         "gpsY": "13.437329979088"
+    },
+    {
+        "stopId": 33004453,
+        "name": "Paradiesstra\u00dfe\/ J\u00e4germ\u00fchle",
+        "city": "Radebeul",
+        "gpsX": "51.108847913488",
+        "gpsY": "13.659233389245"
+    },
+    {
+        "stopId": 33004456,
+        "name": "J\u00e4gerhofstra\u00dfe\/ Auf den Bergen",
+        "city": "Radebeul",
+        "gpsX": "51.115029336328",
+        "gpsY": "13.653127829537"
     },
     {
         "stopId": 33004466,
@@ -17262,6 +17486,13 @@
         "gpsY": "13.592066815433"
     },
     {
+        "stopId": 33004783,
+        "name": "Weingut Wellh\u00f6fer",
+        "city": "Weistropp",
+        "gpsX": "51.087160676967",
+        "gpsY": "13.585719290771"
+    },
+    {
         "stopId": 33004790,
         "name": "R\u00fcsseina (SV)",
         "city": "R\u00fcsseina",
@@ -17330,6 +17561,13 @@
         "city": "Nossen",
         "gpsX": "51.060658116719",
         "gpsY": "13.293163451688"
+    },
+    {
+        "stopId": 33004801,
+        "name": "Markt",
+        "city": "Nossen",
+        "gpsX": "51.057069645314",
+        "gpsY": "13.298184188002"
     },
     {
         "stopId": 33004802,
@@ -17482,8 +17720,8 @@
         "stopId": 33004823,
         "name": "Triebischtal",
         "city": "Tanneberg (b Mei\u00dfen)",
-        "gpsX": "51.045120516061",
-        "gpsY": "13.427119106269"
+        "gpsX": "51.04544645231",
+        "gpsY": "13.426929477712"
     },
     {
         "stopId": 33004824,
@@ -17689,6 +17927,13 @@
         "gpsY": "13.273589705671"
     },
     {
+        "stopId": 33004854,
+        "name": "No\u00dflitz",
+        "city": "No\u00dflitz",
+        "gpsX": "51.1105700798",
+        "gpsY": "13.280604310708"
+    },
+    {
         "stopId": 33004856,
         "name": "Abzw Starbach",
         "city": "Starbach",
@@ -17736,6 +17981,13 @@
         "city": "Zetta",
         "gpsX": "51.114711062827",
         "gpsY": "13.33708819905"
+    },
+    {
+        "stopId": 33004863,
+        "name": "Krei\u00dfa",
+        "city": "Krei\u00dfa",
+        "gpsX": "51.108133885582",
+        "gpsY": "13.29530200941"
     },
     {
         "stopId": 33004864,
@@ -17820,6 +18072,13 @@
         "city": "Gruna (b Mei\u00dfen)",
         "gpsX": "51.073950588259",
         "gpsY": "13.299084608067"
+    },
+    {
+        "stopId": 33004876,
+        "name": "Wolkau",
+        "city": "Wolkau",
+        "gpsX": "51.087216035493",
+        "gpsY": "13.292847791914"
     },
     {
         "stopId": 33004877,
@@ -17923,8 +18182,8 @@
         "stopId": 33004893,
         "name": "Pitsch\u00fctz",
         "city": "Pitsch\u00fctz",
-        "gpsX": "51.190800265932",
-        "gpsY": "13.27221277618"
+        "gpsX": "51.192169808924",
+        "gpsY": "13.271091750552"
     },
     {
         "stopId": 33004894,
@@ -17932,6 +18191,13 @@
         "city": "Jessen (Lommatzsch)",
         "gpsX": "51.189507607913",
         "gpsY": "13.285208726333"
+    },
+    {
+        "stopId": 33004895,
+        "name": "Oschatzer Stra\u00dfe",
+        "city": "Lommatzsch",
+        "gpsX": "51.201777074088",
+        "gpsY": "13.303149614938"
     },
     {
         "stopId": 33004896,
@@ -17986,8 +18252,8 @@
         "stopId": 33004903,
         "name": "Sachsenplatz",
         "city": "Lommatzsch",
-        "gpsX": "51.200709355389",
-        "gpsY": "13.306195739582"
+        "gpsX": "51.200389042077",
+        "gpsY": "13.305900518075"
     },
     {
         "stopId": 33004904,
@@ -18016,6 +18282,13 @@
         "city": "Lommatzsch",
         "gpsX": "51.194656461973",
         "gpsY": "13.313707040616"
+    },
+    {
+        "stopId": 33004908,
+        "name": "Mei\u00dfner Stra\u00dfe",
+        "city": "Lommatzsch",
+        "gpsX": "51.196936567471",
+        "gpsY": "13.313986500983"
     },
     {
         "stopId": 33004909,
@@ -18172,6 +18445,13 @@
         "gpsY": "13.358503233805"
     },
     {
+        "stopId": 33004932,
+        "name": "Prositz",
+        "city": "Prositz (b Mei\u00dfen)",
+        "gpsX": "51.194842350036",
+        "gpsY": "13.362683094825"
+    },
+    {
         "stopId": 33004933,
         "name": "Daubnitz",
         "city": "Daubnitz",
@@ -18219,6 +18499,13 @@
         "city": "Albertitz",
         "gpsX": "51.196306141004",
         "gpsY": "13.259330977155"
+    },
+    {
+        "stopId": 33004942,
+        "name": "Wuhnitz",
+        "city": "Wuhnitz",
+        "gpsX": "51.197572564875",
+        "gpsY": "13.241767740873"
     },
     {
         "stopId": 33004943,
@@ -18459,6 +18746,13 @@
         "gpsY": "13.273550234863"
     },
     {
+        "stopId": 33004984,
+        "name": "Roitzsch (b Lommatzsch)",
+        "city": "Roitzsch(Lommatzsch)",
+        "gpsX": "51.231617433276",
+        "gpsY": "13.279022320823"
+    },
+    {
         "stopId": 33004986,
         "name": "Abzw Trogen",
         "city": "Altsattel (Sachs)",
@@ -18485,6 +18779,13 @@
         "city": "Sieglitz\/Lommatzsch",
         "gpsX": "51.236262600873",
         "gpsY": "13.347310555087"
+    },
+    {
+        "stopId": 33004991,
+        "name": "Poititz",
+        "city": "Poititz",
+        "gpsX": "51.187581283754",
+        "gpsY": "13.248093339709"
     },
     {
         "stopId": 33004992,
@@ -18567,8 +18868,8 @@
         "stopId": 33005005,
         "name": "Lessingplatz",
         "city": "Gro\u00dfenhain",
-        "gpsX": "51.291268167085",
-        "gpsY": "13.53487853548"
+        "gpsX": "51.291856342494",
+        "gpsY": "13.534582740773"
     },
     {
         "stopId": 33005006,
@@ -18698,7 +18999,7 @@
     },
     {
         "stopId": 33005029,
-        "name": "Fr-Schubert-Allee",
+        "name": "Franz-Schubert-Allee",
         "city": "Gro\u00dfenhain",
         "gpsX": "51.29391987617",
         "gpsY": "13.531454299303"
@@ -18793,6 +19094,13 @@
         "city": "Gro\u00dfenhain",
         "gpsX": "51.290307403834",
         "gpsY": "13.532050915935"
+    },
+    {
+        "stopId": 33005057,
+        "name": "Schillerstra\u00dfe",
+        "city": "Gro\u00dfenhain",
+        "gpsX": "51.294580862552",
+        "gpsY": "13.531089178905"
     },
     {
         "stopId": 33005060,
@@ -19551,6 +19859,13 @@
         "gpsY": "13.498594533796"
     },
     {
+        "stopId": 33005392,
+        "name": "Barockgarten",
+        "city": "Zabeltitz",
+        "gpsX": "51.35605039858",
+        "gpsY": "13.49405864836"
+    },
+    {
         "stopId": 33005393,
         "name": "Bauernmuseum",
         "city": "Zabeltitz",
@@ -19743,8 +20058,8 @@
         "stopId": 33005446,
         "name": "M\u00fchlbach b Gro\u00dfenhain",
         "city": "M\u00fchlbach (b Gro\u00dfenhain)",
-        "gpsX": "51.295746615581",
-        "gpsY": "13.668142908634"
+        "gpsX": "51.295839108194",
+        "gpsY": "13.666698099379"
     },
     {
         "stopId": 33005450,
@@ -19944,7 +20259,7 @@
     },
     {
         "stopId": 33005500,
-        "name": "Busbahnhof \/ Bahnhof",
+        "name": "ZOB",
         "city": "Riesa",
         "gpsX": "51.309422895771",
         "gpsY": "13.288355491843"
@@ -20317,8 +20632,8 @@
         "stopId": 33005556,
         "name": "Pausitz Wendeplatz",
         "city": "Riesa",
-        "gpsX": "51.292394719862",
-        "gpsY": "13.292710245269"
+        "gpsX": "51.29252195086",
+        "gpsY": "13.292584788532"
     },
     {
         "stopId": 33005557,
@@ -20499,8 +20814,8 @@
         "stopId": 33005594,
         "name": "Elbwinkel",
         "city": "Strehla",
-        "gpsX": "51.345900958229",
-        "gpsY": "13.246734578107"
+        "gpsX": "51.345856332269",
+        "gpsY": "13.246704660494"
     },
     {
         "stopId": 33005595,
@@ -20520,8 +20835,8 @@
         "stopId": 33005597,
         "name": "Freibad",
         "city": "Strehla",
-        "gpsX": "51.362413769633",
-        "gpsY": "13.222831029971"
+        "gpsX": "51.36236015127",
+        "gpsY": "13.222800885116"
     },
     {
         "stopId": 33005598,
@@ -21402,8 +21717,8 @@
         "stopId": 33005912,
         "name": "Althirschstein",
         "city": "Althirschstein",
-        "gpsX": "51.263510740462",
-        "gpsY": "13.393196610332"
+        "gpsX": "51.263511763273",
+        "gpsY": "13.393110674603"
     },
     {
         "stopId": 33005920,
@@ -21939,14 +22254,14 @@
     },
     {
         "stopId": 33006039,
-        "name": "Schillerstra\u00dfe (Schule)",
+        "name": "Schillerstra\u00dfe",
         "city": "Pulsnitz",
         "gpsX": "51.184418945703",
         "gpsY": "14.021160029406"
     },
     {
         "stopId": 33006040,
-        "name": "Kamenzer Stra\u00dfe",
+        "name": "An der Walke",
         "city": "Pulsnitz",
         "gpsX": "51.192425876883",
         "gpsY": "14.017690547747"
@@ -21955,8 +22270,8 @@
         "stopId": 33006041,
         "name": "Waldschl\u00f6sschensiedlung",
         "city": "Pulsnitz",
-        "gpsX": "51.200268342848",
-        "gpsY": "14.022182916392"
+        "gpsX": "51.200090659659",
+        "gpsY": "14.022060661182"
     },
     {
         "stopId": 33006042,
@@ -22018,8 +22333,8 @@
         "stopId": 33006051,
         "name": "Wartehalle",
         "city": "Friedersdorf b KM",
-        "gpsX": "51.206262453557",
-        "gpsY": "14.003497761557"
+        "gpsX": "51.205937346424",
+        "gpsY": "14.003583826656"
     },
     {
         "stopId": 33006052,
@@ -22081,8 +22396,8 @@
         "stopId": 33006060,
         "name": "Wei\u00dfbacher Stra\u00dfe",
         "city": "Oberlichtenau\/Lausi.",
-        "gpsX": "51.215154428992",
-        "gpsY": "13.9992318519"
+        "gpsX": "51.21435242259",
+        "gpsY": "13.999869838218"
     },
     {
         "stopId": 33006061,
@@ -22256,8 +22571,8 @@
         "stopId": 33006106,
         "name": "Abzw Reichenau",
         "city": "K\u00f6nigsbr\u00fcck",
-        "gpsX": "51.263846467916",
-        "gpsY": "13.942438734253"
+        "gpsX": "51.263756205415",
+        "gpsY": "13.941919094308"
     },
     {
         "stopId": 33006107,
@@ -22282,10 +22597,10 @@
     },
     {
         "stopId": 33006111,
-        "name": "Wei\u00dfbacher Stra\u00dfe",
+        "name": "Schloss",
         "city": "Schmorkau b K\u00f6nigsbr",
-        "gpsX": "51.294942480209",
-        "gpsY": "13.918400843435"
+        "gpsX": "51.296719904561",
+        "gpsY": "13.91745688656"
     },
     {
         "stopId": 33006112,
@@ -22424,8 +22739,8 @@
         "stopId": 33006170,
         "name": "S\u00e4gewerk",
         "city": "Reichenbach (Kr BZ)",
-        "gpsX": "51.239939069356",
-        "gpsY": "13.988161879242"
+        "gpsX": "51.239454708222",
+        "gpsY": "13.988098028223"
     },
     {
         "stopId": 33006171,
@@ -22445,15 +22760,15 @@
         "stopId": 33006174,
         "name": "H\u00e4slicher Weg",
         "city": "Reichenbach (Kr BZ)",
-        "gpsX": "51.244355111558",
-        "gpsY": "13.98061805015"
+        "gpsX": "51.243855705775",
+        "gpsY": "13.980911689638"
     },
     {
         "stopId": 33006180,
         "name": "Bergstra\u00dfe",
         "city": "Reichenau a d Pulsn.",
-        "gpsX": "51.254830067403",
-        "gpsY": "13.9634329637"
+        "gpsX": "51.254461896123",
+        "gpsY": "13.962872893299"
     },
     {
         "stopId": 33006181,
@@ -22501,8 +22816,8 @@
         "stopId": 33006199,
         "name": "Neukircher Stra\u00dfe",
         "city": "Gottschdorf",
-        "gpsX": "51.307141434302",
-        "gpsY": "13.968218235325"
+        "gpsX": "51.30677191978",
+        "gpsY": "13.968274133298"
     },
     {
         "stopId": 33006200,
@@ -23142,6 +23457,13 @@
         "gpsY": "14.065114769139"
     },
     {
+        "stopId": 33006358,
+        "name": "Moritzbad",
+        "city": "L\u00fcckersdorf",
+        "gpsX": "51.262037650499",
+        "gpsY": "14.073022276558"
+    },
+    {
         "stopId": 33006359,
         "name": "Hennersdorf",
         "city": "Hennersdorf (Kamenz)",
@@ -23219,6 +23541,13 @@
         "gpsY": "14.203301895982"
     },
     {
+        "stopId": 33006380,
+        "name": "O\u00dfling",
+        "city": "O\u00dfling",
+        "gpsX": "51.360077049054",
+        "gpsY": "14.167033326289"
+    },
+    {
         "stopId": 33006381,
         "name": "Abzw Scheckthal",
         "city": "O\u00dfling",
@@ -23240,6 +23569,13 @@
         "gpsY": "14.196823407509"
     },
     {
+        "stopId": 33006384,
+        "name": "Skaska",
+        "city": "Skaska",
+        "gpsX": "51.345449483262",
+        "gpsY": "14.179204816103"
+    },
+    {
         "stopId": 33006385,
         "name": "Wendeplatz",
         "city": "Trado",
@@ -23254,11 +23590,25 @@
         "gpsY": "14.171976686572"
     },
     {
+        "stopId": 33006388,
+        "name": "Mittelstra\u00dfe",
+        "city": "Milstrich",
+        "gpsX": "51.325330496131",
+        "gpsY": "14.158320836532"
+    },
+    {
         "stopId": 33006389,
         "name": "Forsthaus",
         "city": "Milstrich",
         "gpsX": "51.327738931478",
         "gpsY": "14.152995645915"
+    },
+    {
+        "stopId": 33006390,
+        "name": "Ort",
+        "city": "Wei\u00dfig (O\u00dfling)",
+        "gpsX": "51.350577220053",
+        "gpsY": "14.120745612295"
     },
     {
         "stopId": 33006392,
@@ -23633,7 +23983,7 @@
     },
     {
         "stopId": 33006493,
-        "name": "Dorfstra\u00dfe",
+        "name": "Nucknitz",
         "city": "Nucknitz",
         "gpsX": "51.224612254687",
         "gpsY": "14.265063011214"
@@ -24101,6 +24451,13 @@
         "gpsY": "13.777761939237"
     },
     {
+        "stopId": 33006639,
+        "name": "Poststra\u00dfe",
+        "city": "Ottendorf-Okrilla",
+        "gpsX": "51.185844602939",
+        "gpsY": "13.82971383115"
+    },
+    {
         "stopId": 33006640,
         "name": "Kreuzung",
         "city": "Lomnitz",
@@ -24291,7 +24648,7 @@
     },
     {
         "stopId": 33006700,
-        "name": "Bahnhof",
+        "name": "Busbf.\/ZOB",
         "city": "Radeberg",
         "gpsX": "51.111973895591",
         "gpsY": "13.912426399631"
@@ -24549,6 +24906,13 @@
         "gpsY": "13.899168176833"
     },
     {
+        "stopId": 33006746,
+        "name": "Am Wald",
+        "city": "Liegau-Augustusbad",
+        "gpsX": "51.135698445446",
+        "gpsY": "13.87465509523"
+    },
+    {
         "stopId": 33006750,
         "name": "M\u00fchle",
         "city": "Ullersdorf b Radebg.",
@@ -24614,7 +24978,7 @@
     {
         "stopId": 33006764,
         "name": "Siedlung B 6",
-        "city": "Gro\u00dferkmannsdorf",
+        "city": "Rossendorf (Dresden)",
         "gpsX": "51.063796624645",
         "gpsY": "13.941356087087"
     },
@@ -24642,56 +25006,56 @@
     {
         "stopId": 33006770,
         "name": "Bahnhof",
-        "city": "Arnsdorf b Dresden",
+        "city": "Arnsdorf (b Dresden)",
         "gpsX": "51.093301722706",
         "gpsY": "13.982578688656"
     },
     {
         "stopId": 33006771,
         "name": "Bahnhofstra\u00dfe",
-        "city": "Arnsdorf b Dresden",
+        "city": "Arnsdorf (b Dresden)",
         "gpsX": "51.093504392124",
         "gpsY": "13.988112196542"
     },
     {
         "stopId": 33006772,
         "name": "Kirche",
-        "city": "Arnsdorf b Dresden",
+        "city": "Arnsdorf (b Dresden)",
         "gpsX": "51.097295587364",
         "gpsY": "13.991958374832"
     },
     {
         "stopId": 33006773,
         "name": "Kleinwolmsdorfer Str",
-        "city": "Arnsdorf b Dresden",
+        "city": "Arnsdorf (b Dresden)",
         "gpsX": "51.090970840436",
         "gpsY": "13.981665295398"
     },
     {
         "stopId": 33006774,
         "name": "Krankenhaus",
-        "city": "Arnsdorf b Dresden",
+        "city": "Arnsdorf (b Dresden)",
         "gpsX": "51.093171018456",
         "gpsY": "14.002373878842"
     },
     {
         "stopId": 33006775,
         "name": "Obere Glash\u00fctte",
-        "city": "Arnsdorf b Dresden",
+        "city": "Arnsdorf (b Dresden)",
         "gpsX": "51.103260073947",
         "gpsY": "13.977950012668"
     },
     {
         "stopId": 33006776,
         "name": "Siedlung",
-        "city": "Arnsdorf b Dresden",
+        "city": "Arnsdorf (b Dresden)",
         "gpsX": "51.090446567427",
         "gpsY": "13.975461757035"
     },
     {
         "stopId": 33006777,
         "name": "Schule",
-        "city": "Arnsdorf b Dresden",
+        "city": "Arnsdorf (b Dresden)",
         "gpsX": "51.096986864876",
         "gpsY": "13.995300235892"
     },
@@ -24732,7 +25096,7 @@
     },
     {
         "stopId": 33006791,
-        "name": "Abzw Wilschdorf B6",
+        "name": "Abzweig Wilschdorf B6",
         "city": "Wilschdorf (Kr PIR)",
         "gpsX": "51.063768834716",
         "gpsY": "13.98210110071"
@@ -24823,7 +25187,7 @@
     },
     {
         "stopId": 33006810,
-        "name": "Bahnhof",
+        "name": "Lauta (NL)",
         "city": "Lauta\/Niederlausitz",
         "gpsX": "51.447201343116",
         "gpsY": "14.093081387619"
@@ -25278,7 +25642,7 @@
     },
     {
         "stopId": 33006921,
-        "name": "Bahnhof",
+        "name": "Stra\u00dfgr\u00e4bchen-Bernsdorf",
         "city": "Bernsdorf (OL)",
         "gpsX": "51.363417519419",
         "gpsY": "14.051950850451"
@@ -25383,7 +25747,7 @@
     },
     {
         "stopId": 33006936,
-        "name": "Kegelbahn",
+        "name": "Brauerei-Gasthaus",
         "city": "Wittichenau",
         "gpsX": "51.381840766462",
         "gpsY": "14.250020200283"
@@ -25411,7 +25775,7 @@
     },
     {
         "stopId": 33006941,
-        "name": "Dubring",
+        "name": "Am Spielplatz",
         "city": "Dubring",
         "gpsX": "51.378623171481",
         "gpsY": "14.183481076826"
@@ -25425,7 +25789,7 @@
     },
     {
         "stopId": 33006943,
-        "name": "Gasthaus",
+        "name": "Gastst\u00e4tte",
         "city": "Rachlau (Kr BZ)",
         "gpsX": "51.354697270178",
         "gpsY": "14.279458269334"
@@ -25439,7 +25803,7 @@
     },
     {
         "stopId": 33006945,
-        "name": "Sollschwitz (b Hoyerswerda)",
+        "name": "Feuerwehr",
         "city": "Sollschwitz (b Kamenz)",
         "gpsX": "51.348714789069",
         "gpsY": "14.215507498641"
@@ -25453,7 +25817,7 @@
     },
     {
         "stopId": 33006947,
-        "name": "Saalau",
+        "name": "Spielplatz",
         "city": "Saalau",
         "gpsX": "51.361742100298",
         "gpsY": "14.233439910773"
@@ -25474,7 +25838,7 @@
     },
     {
         "stopId": 33006950,
-        "name": "Spohla",
+        "name": "Dorf",
         "city": "Spohla",
         "gpsX": "51.405730028809",
         "gpsY": "14.269893204511"
@@ -25492,6 +25856,13 @@
         "city": "Maukendorf",
         "gpsX": "51.398667827907",
         "gpsY": "14.296447020333"
+    },
+    {
+        "stopId": 33006954,
+        "name": "B 96",
+        "city": "Maukendorf",
+        "gpsX": "51.397136908881",
+        "gpsY": "14.294746385811"
     },
     {
         "stopId": 33006955,
@@ -25544,7 +25915,7 @@
     },
     {
         "stopId": 33006969,
-        "name": "Wartha bei Hoyerswerda (B 96)",
+        "name": "Wartha (b K\u00f6nigswartha) B 96",
         "city": "Wartha b Hoyerswerda",
         "gpsX": "51.350495056595",
         "gpsY": "14.326281583407"
@@ -25599,6 +25970,13 @@
         "gpsY": "14.433970543635"
     },
     {
+        "stopId": 33006985,
+        "name": "Mortka",
+        "city": "Mortka",
+        "gpsX": "51.3690611135",
+        "gpsY": "14.36924722117"
+    },
+    {
         "stopId": 33006987,
         "name": "Bahnhof",
         "city": "Lohsa",
@@ -25639,6 +26017,13 @@
         "city": "Litschen",
         "gpsX": "51.368254307648",
         "gpsY": "14.417520266979"
+    },
+    {
+        "stopId": 33006994,
+        "name": "Litschen",
+        "city": "Litschen",
+        "gpsX": "51.368569948047",
+        "gpsY": "14.408747094758"
     },
     {
         "stopId": 33006995,
@@ -27259,8 +27644,8 @@
     },
     {
         "stopId": 33007355,
-        "name": "Gasthaus",
-        "city": "Halbau (Kr BZ)",
+        "name": "Halbau am Hochstein Gasthaus",
+        "city": "Cunewalde",
         "gpsX": "51.104565496506",
         "gpsY": "14.574255400915"
     },
@@ -27511,7 +27896,7 @@
     },
     {
         "stopId": 33007411,
-        "name": "Bahnhofstra\u00dfe",
+        "name": "Pumphut",
         "city": "Wilthen",
         "gpsX": "51.094715561437",
         "gpsY": "14.388643670561"
@@ -27522,6 +27907,13 @@
         "city": "Tautewalde",
         "gpsX": "51.099047114598",
         "gpsY": "14.359081930079"
+    },
+    {
+        "stopId": 33007419,
+        "name": "Irgersdorf",
+        "city": "Irgersdorf",
+        "gpsX": "51.109324779968",
+        "gpsY": "14.386455061544"
     },
     {
         "stopId": 33007420,
@@ -28694,10 +29086,10 @@
     },
     {
         "stopId": 33007647,
-        "name": "Feuerwehr",
+        "name": "Salzenforst",
         "city": "Salzenforst",
-        "gpsX": "51.196582627014",
-        "gpsY": "14.371116573085"
+        "gpsX": "51.197031386656",
+        "gpsY": "14.370710355701"
     },
     {
         "stopId": 33007648,
@@ -28813,7 +29205,7 @@
     },
     {
         "stopId": 33007670,
-        "name": "Abzw Schmochtitz",
+        "name": "An der Schanze",
         "city": "Loga (Kr Bautzen)",
         "gpsX": "51.231171549117",
         "gpsY": "14.332041516062"
@@ -28883,14 +29275,14 @@
     },
     {
         "stopId": 33007685,
-        "name": "Kreuzung Luga\/Quoos",
+        "name": "B 96",
         "city": "Luga b Bautzen",
         "gpsX": "51.247200556471",
         "gpsY": "14.357633731077"
     },
     {
         "stopId": 33007686,
-        "name": "Abzw Neschwitz",
+        "name": "Teich",
         "city": "Holscha",
         "gpsX": "51.266922494168",
         "gpsY": "14.344785645301"
@@ -28925,7 +29317,7 @@
     },
     {
         "stopId": 33007692,
-        "name": "Abzw Zescha",
+        "name": "Zescha B 96",
         "city": "Zescha",
         "gpsX": "51.292725998849",
         "gpsY": "14.328033883389"
@@ -28990,8 +29382,8 @@
         "stopId": 33007703,
         "name": "Kreuzung",
         "city": "Wetro",
-        "gpsX": "51.256944685768",
-        "gpsY": "14.300794207814"
+        "gpsX": "51.257310921944",
+        "gpsY": "14.301371268495"
     },
     {
         "stopId": 33007704,
@@ -29198,8 +29590,8 @@
     },
     {
         "stopId": 33007760,
-        "name": "Teicha (bei Milkel)",
-        "city": "Radibor",
+        "name": "Teicha",
+        "city": "Milkel",
         "gpsX": "51.304825218703",
         "gpsY": "14.457398436225"
     },
@@ -29394,7 +29786,7 @@
     },
     {
         "stopId": 33007812,
-        "name": "Abzw nach Adolfsh\u00fctte",
+        "name": "Zur Adria",
         "city": "Crosta",
         "gpsX": "51.268166626008",
         "gpsY": "14.456358755961"
@@ -29620,8 +30012,8 @@
         "stopId": 33007853,
         "name": "Am Schafberg",
         "city": "Dobersch\u00fctz(Malschw)",
-        "gpsX": "51.221755442296",
-        "gpsY": "14.496836575364"
+        "gpsX": "51.219613553996",
+        "gpsY": "14.497780027525"
     },
     {
         "stopId": 33007855,
@@ -30031,7 +30423,7 @@
     },
     {
         "stopId": 33007937,
-        "name": "Je\u00dfnitz\/Gebirge",
+        "name": "Je\u00dfnitz (bei Kubsch\u00fctz)",
         "city": "Grubditz",
         "gpsX": "51.155251866603",
         "gpsY": "14.462978356695"
@@ -30595,6 +30987,13 @@
         "city": "Hoyerswerda",
         "gpsX": "51.441093677988",
         "gpsY": "14.249508450359"
+    },
+    {
+        "stopId": 33008038,
+        "name": "Industriegel\u00e4nde S\u00fcd",
+        "city": "Hoyerswerda",
+        "gpsX": "51.429163083406",
+        "gpsY": "14.284875006372"
     },
     {
         "stopId": 33008039,
@@ -31172,8 +31571,8 @@
     },
     {
         "stopId": 33008140,
-        "name": "Neukollm Auerhahn",
-        "city": "Hoyerswerda",
+        "name": "Auerhahn",
+        "city": "Schwarzkollm",
         "gpsX": "51.40761865959",
         "gpsY": "14.14386745658"
     },
