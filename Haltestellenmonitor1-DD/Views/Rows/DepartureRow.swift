@@ -47,7 +47,12 @@ struct DepartureRow: View {
                             .font(.footnote)
                     }
                     Spacer()
-                    Text("in \(departureBinding.inMinute) min")
+                    if departure.State == "Cancelled" {
+                        Text("Halt fällt aus")
+                            .foregroundColor(Color.red)
+                    } else {
+                        Text("in \(departureBinding.inMinute) min")
+                    }
                 }
                 .font(.subheadline)
             }

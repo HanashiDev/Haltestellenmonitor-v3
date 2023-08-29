@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D00059C52A52F3800007468A /* Haltestellenmonitor1_DDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00059C42A52F3800007468A /* Haltestellenmonitor1_DDTests.swift */; };
 		D0142C3A2A0F909E00646C94 /* DepartureBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C392A0F909E00646C94 /* DepartureBinding.swift */; };
 		D0142C3B2A0F90AA00646C94 /* DepartureBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C392A0F909E00646C94 /* DepartureBinding.swift */; };
 		D0142C3C2A0F90AB00646C94 /* DepartureBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0142C392A0F909E00646C94 /* DepartureBinding.swift */; };
@@ -192,6 +193,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D00059C62A52F3800007468A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D03A267729EEB6C9005B0600 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D03A267E29EEB6C9005B0600;
+			remoteInfo = "Haltestellenmonitor1-DD";
+		};
 		D0BD669329EFE0AB004E574C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D03A267729EEB6C9005B0600 /* Project object */;
@@ -242,6 +250,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D00059C22A52F3800007468A /* Haltestellenmonitor1-DDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Haltestellenmonitor1-DDTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D00059C42A52F3800007468A /* Haltestellenmonitor1_DDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haltestellenmonitor1_DDTests.swift; sourceTree = "<group>"; };
 		D011C45829F58875008DF9E1 /* MonitorWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonitorWidgetExtension.entitlements; sourceTree = "<group>"; };
 		D011C45929F588B7008DF9E1 /* MonitorIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonitorIntents.entitlements; sourceTree = "<group>"; };
 		D0142C392A0F909E00646C94 /* DepartureBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureBinding.swift; sourceTree = "<group>"; };
@@ -333,6 +343,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D00059BF2A52F3800007468A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D03A267C29EEB6C9005B0600 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -368,6 +385,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D00059C32A52F3800007468A /* Haltestellenmonitor1-DDTests */ = {
+			isa = PBXGroup;
+			children = (
+				D00059C42A52F3800007468A /* Haltestellenmonitor1_DDTests.swift */,
+			);
+			path = "Haltestellenmonitor1-DDTests";
+			sourceTree = "<group>";
+		};
 		D0142C452A10E7C100646C94 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -385,6 +410,7 @@
 				D0BD668629EFE0AA004E574C /* MonitorWidget */,
 				D0BD66AC29EFECF1004E574C /* MonitorIntents */,
 				D0D1995329F40AAA00946D87 /* WatchMonitor Watch App */,
+				D00059C32A52F3800007468A /* Haltestellenmonitor1-DDTests */,
 				D0BD664829EFDD50004E574C /* Frameworks */,
 				D03A268029EEB6C9005B0600 /* Products */,
 			);
@@ -397,6 +423,7 @@
 				D0BD668329EFE0AA004E574C /* MonitorWidgetExtension.appex */,
 				D0BD66A929EFECF1004E574C /* MonitorIntents.appex */,
 				D0D1995229F40AA900946D87 /* Haltestellenmonitor Dresden.app */,
+				D00059C22A52F3800007468A /* Haltestellenmonitor1-DDTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -625,6 +652,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D00059C12A52F3800007468A /* Haltestellenmonitor1-DDTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D00059CA2A52F3800007468A /* Build configuration list for PBXNativeTarget "Haltestellenmonitor1-DDTests" */;
+			buildPhases = (
+				D00059BE2A52F3800007468A /* Sources */,
+				D00059BF2A52F3800007468A /* Frameworks */,
+				D00059C02A52F3800007468A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D00059C72A52F3800007468A /* PBXTargetDependency */,
+			);
+			name = "Haltestellenmonitor1-DDTests";
+			productName = "Haltestellenmonitor1-DDTests";
+			productReference = D00059C22A52F3800007468A /* Haltestellenmonitor1-DDTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D03A267E29EEB6C9005B0600 /* Haltestellenmonitor1-DD */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D03A268D29EEB6C9005B0600 /* Build configuration list for PBXNativeTarget "Haltestellenmonitor1-DD" */;
@@ -708,6 +753,10 @@
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					D00059C12A52F3800007468A = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = D03A267E29EEB6C9005B0600;
+					};
 					D03A267E29EEB6C9005B0600 = {
 						CreatedOnToolsVersion = 14.3;
 					};
@@ -739,11 +788,19 @@
 				D0BD668229EFE0AA004E574C /* MonitorWidgetExtension */,
 				D0BD66A829EFECF1004E574C /* MonitorIntents */,
 				D0D1995129F40AA900946D87 /* WatchMonitor Watch App */,
+				D00059C12A52F3800007468A /* Haltestellenmonitor1-DDTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D00059C02A52F3800007468A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D03A267D29EEB6C9005B0600 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -795,6 +852,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D00059BE2A52F3800007468A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D00059C52A52F3800007468A /* Haltestellenmonitor1_DDTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D03A267B29EEB6C9005B0600 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -981,6 +1046,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		D00059C72A52F3800007468A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D03A267E29EEB6C9005B0600 /* Haltestellenmonitor1-DD */;
+			targetProxy = D00059C62A52F3800007468A /* PBXContainerItemProxy */;
+		};
 		D0BD669429EFE0AB004E574C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D0BD668229EFE0AA004E574C /* MonitorWidgetExtension */;
@@ -1010,6 +1080,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D00059C82A52F3800007468A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WGL37RNHJ6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.hanashi.Haltestellenmonitor1-DDTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Haltestellenmonitor1-DD.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Haltestellenmonitor1-DD";
+			};
+			name = Debug;
+		};
+		D00059C92A52F3800007468A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WGL37RNHJ6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.hanashi.Haltestellenmonitor1-DDTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Haltestellenmonitor1-DD.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Haltestellenmonitor1-DD";
+			};
+			name = Release;
+		};
 		D03A268B29EEB6C9005B0600 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1377,6 +1483,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D00059CA2A52F3800007468A /* Build configuration list for PBXNativeTarget "Haltestellenmonitor1-DDTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D00059C82A52F3800007468A /* Debug */,
+				D00059C92A52F3800007468A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D03A267A29EEB6C9005B0600 /* Build configuration list for PBXProject "Haltestellenmonitor1-DD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
