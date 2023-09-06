@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct PartialRoute: Hashable, Codable {
     var Mot: Mot
@@ -32,6 +33,29 @@ struct PartialRoute: Hashable, Codable {
         }
         return "\(self.Mot.Name!) \(self.Mot.Direction!)"
     }
+    
+    func getNameShort() -> String {
+        if (self.Mot.type == "Footpath") {
+            return "Fußweg"
+        }
+        if (self.Mot.type == "MobilityStairsUp") {
+            return "↑ Treppe"
+        }
+        if (self.Mot.type == "MobilityStairsDown") {
+            return "↓ Treppe"
+        }
+        if (self.Mot.Name != nil && self.Mot.Direction == nil) {
+            return self.Mot.Name!
+        }
+        if (self.Mot.Name == nil && self.Mot.Direction != nil) {
+            return self.Mot.Direction!
+        }
+        if (self.Mot.Name == nil && self.Mot.Direction == nil) {
+            return "Unbekannt"
+        }
+        return "\(self.Mot.Name!)"
+    }
+    
     
     func getIcon() -> String {
         switch (self.Mot.type) {
@@ -65,6 +89,41 @@ struct PartialRoute: Hashable, Codable {
             return "📉"
         default:
             return "🚊"
+        }
+    }
+    
+    func getColor() -> Color { // TODO: replace purple olors
+        switch (self.Mot.type) {
+        case "Tram":
+            return Color.red
+        case "CityBus":
+            return Color.blue
+        case "PlusBus":
+            return Color.blue
+        case "Bus":
+            return Color.blue
+        case "IntercityBus":
+            return Color.blue
+        case "SuburbanRailway":
+            return Color.green
+        case "RapidTransit":
+            return Color.green
+        case "Train":
+            return Color.green
+        case "Cableway":
+            return Color.purple
+        case "Ferry":
+            return Color.purple
+        case "HailedSharedTaxi":
+            return Color.yellow
+        case "Footpath":
+            return Color.gray
+        case "MobilityStairsUp":
+            return Color.purple
+        case "MobilityStairsDown":
+            return Color.purple
+        default:
+             return Color.purple
         }
     }
     
@@ -138,5 +197,11 @@ struct PartialRoute: Hashable, Codable {
     
     func getLastPlatform() -> String? {
         return RegularStops?.last?.getPlatform()
+    }
+    
+    func getDuration() -> Int {
+        let start: Double = getStartTime()?.timeIntervalSince1970 ?? 0
+        let end: Double = getEndTime()?.timeIntervalSince1970 ?? 0
+        return Int((end - start) / 60)
     }
 }
