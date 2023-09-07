@@ -36,7 +36,7 @@ struct PartialRoute: Hashable, Codable {
     
     func getNameShort() -> String {
         if (self.Mot.type == "Footpath") {
-            return "Fußweg"
+            return "🚶"
         }
         if (self.Mot.type == "MobilityStairsUp") {
             return "↑ Treppe"
