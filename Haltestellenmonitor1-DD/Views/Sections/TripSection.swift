@@ -25,7 +25,31 @@ struct TripSection: View {
                 Text("\(getUmstiege())")
             }
             
-            tripView()
+            DisclosureGroup {
+                ForEach(route.PartialRoutes, id: \.self) { partialRoute in
+                    if (partialRoute.RegularStops == nil) {
+                        PartialRouteRow(partialRoute: partialRoute)
+                    } else {
+                        DisclosureGroup {
+                            ForEach (partialRoute.RegularStops ?? [], id: \.self) { regularStop in
+                                ZStack {
+                                    NavigationLink(value: regularStop.getStop() ?? stops[0]) {
+                                        EmptyView()
+                                    }
+                                    .opacity(0.0)
+                                    .buttonStyle(.plain)
+                                    
+                                    RegularStopRow(regularStop: regularStop, isFirst: partialRoute.RegularStops?.first?.DataId == regularStop.DataId)
+                                }
+                            }
+                        } label: {
+                            PartialRouteRow(partialRoute: partialRoute)
+                        }
+                    }
+                }
+            }
+        label: { tripView()
+        }
         }
     }
     

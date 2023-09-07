@@ -39,10 +39,10 @@ struct PartialRoute: Hashable, Codable {
             return "🚶"
         }
         if (self.Mot.type == "MobilityStairsUp") {
-            return "↑ Treppe"
+            return "↑"
         }
         if (self.Mot.type == "MobilityStairsDown") {
-            return "↓ Treppe"
+            return "↓"
         }
         if (self.Mot.Name != nil && self.Mot.Direction == nil) {
             return self.Mot.Name!
