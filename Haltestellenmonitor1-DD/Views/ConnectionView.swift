@@ -16,6 +16,7 @@ struct ConnectionView: View {
     @State var showingAlert = false
     @State var showingSaveAlert = false
     @State var dateTime = Date.now
+    @State var isArrivalTime = 0 // false
     @State var trip: Trip? = nil
     @State var isLoading = false
     @State private var requestData: TripRequest?
@@ -113,13 +114,19 @@ struct ConnectionView: View {
                             DepartureDisclosureSection()
                         }
                         
-                        HStack {
-                            DatePicker("Zeit", selection: $dateTime)
-                            Button {
-                                dateTime = Date.now
-                            } label: {
-                                Text("Jetzt")
+                        VStack {
+                            HStack {
+                                DatePicker("Zeit", selection: $dateTime)
+                                Button {
+                                    dateTime = Date.now
+                                } label: {
+                                    Text("Jetzt")
+                                }
                             }
+                            Picker("", selection: $isArrivalTime) {
+                                Text("Abfahrt").tag(0)
+                                Text("Ankunft").tag(1)
+                            }.pickerStyle(.segmented)
                         }
                         
                         Button {
@@ -230,7 +237,7 @@ struct ConnectionView: View {
         let startStr = await startStrPromise
         let endStr = await endStrPromise
         
-        requestData = TripRequest(time: dateTime.ISO8601Format(), origin: startStr, destination: endStr, standardSettings: standardSettings)
+        requestData = TripRequest(time: dateTime.ISO8601Format(),isarrivaltime: isArrivalTime == 1 , origin: startStr, destination: endStr, standardSettings: standardSettings)
     }
     
     func getTripData(isNext: Bool = false) async {
