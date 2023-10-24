@@ -8,6 +8,8 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import CoreLocation
+import MapKit
 
 struct MonitorEntry: TimelineEntry {
     let date: Date
@@ -15,6 +17,30 @@ struct MonitorEntry: TimelineEntry {
     let departureMonitor: DepartureMonitor?
     
     func getStopID() -> String {
+        var favoriteStops: [Int] = []
+        
+        if configuration.favoriteFilter == FavoriteFilter.true {
+            let sharedUserDefaults = UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")
+            if let decoded = sharedUserDefaults?.array(forKey: "WidgetFavs") as? [Int]{
+                favoriteStops = decoded
+            }
+
+            var favStops = stops.filter{ favorite in
+                return favoriteStops.contains(favorite.stopId)
+            }
+            if favStops.isEmpty {
+                return "33000028"
+            } else {
+//                let locationM = CLLocationManager()
+                
+//                ForEach(favStops) {stop in
+//                    var newStop = stop
+//                    newstop.distance = location.distance(from: CLLocation(latitude: stop.coordinates.latitude, longitude: stop.coordinates.longitude))
+//                }
+                favStops = favStops.sorted{$0.distance ?? 0 > $1.distance ?? 0}
+                return String(favStops[0].stopId)
+            }
+        }
         return configuration.stopType?.identifier ?? "33000028"
     }
     

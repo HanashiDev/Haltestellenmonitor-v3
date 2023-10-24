@@ -8,12 +8,13 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import CoreLocation
 
 struct MonitorWidgetEntryView : View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.widgetFamily) var widgetFamily
     var entry: Provider.Entry
-
+    
     var body: some View {
         let prefix = (widgetFamily == .systemLarge || widgetFamily == .systemExtraLarge) ? 16 : 5
         

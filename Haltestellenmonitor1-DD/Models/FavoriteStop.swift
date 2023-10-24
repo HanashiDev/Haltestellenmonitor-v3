@@ -50,5 +50,10 @@ import Foundation
         if let encoded = try? JSONEncoder().encode(favorites) {
             UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")?.set(encoded, forKey: "FavoriteStops")
         }
+        // fürs Widget
+        
+        let sharedUserDefaults = UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")
+        sharedUserDefaults?.set(favorites, forKey: "WidgetFavs")
+
     }
 }

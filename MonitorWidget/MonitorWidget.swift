@@ -8,9 +8,92 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import CoreLocation
+import MapKit
 
-struct Provider: IntentTimelineProvider {
+class Provider: IntentTimelineProvider {
+    final class WidgetLocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+        private let locationManager = CLLocationManager()
+        
+        var _region: MKCoordinateRegion = MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: 51.050446, longitude: 13.737954),
+            span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+        )
+
+        var region: Binding<MKCoordinateRegion> {
+            Binding(
+                get: { self._region },
+                set: { self._region = $0 }
+            )
+        }
+        
+        @Published var flag = false
+        
+        @Published var location: CLLocationCoordinate2D?
+        @Published var llocation: CLLocation?
+        @Published var locationUpdated: Bool = false
+        
+        private var completion: (() -> Void)? = nil
+
+        override init() {
+            super.init()
+            locationManager.delegate = self
+        }
+
+        func requestLocation() {
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
+        func requestCurrentLocation() {
+            locationManager.startUpdatingLocation()
+        }
+        
+        func requestCurrentLocationComplete(completion: @escaping () -> Void) {
+            self.completion = completion
+            locationManager.startUpdatingLocation()
+        }
+        
+        func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+            self.requestCurrentLocation()
+        }
+        
+        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            //Handle any errors here...
+            print (error)
+        }
+        
+        func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?)
+                        -> Void ) {
+            // Use the last reported location.
+            if let lastLocation = self.llocation {
+                let geocoder = CLGeocoder()
+                    
+                // Look up the location and pass it to the completion handler
+                geocoder.reverseGeocodeLocation(lastLocation,
+                            completionHandler: { (placemarks, error) in
+                    if error == nil {
+                        let firstLocation = placemarks?[0]
+                        completionHandler(firstLocation)
+                    }
+                    else {
+                     // An error occurred during geocoding.
+                        completionHandler(nil)
+                    }
+                })
+            }
+            else {
+                // No location was available.
+                completionHandler(nil)
+            }
+        }
+    }
+    
+    
     typealias Entry = MonitorEntry
+    
+    var widgetLocationManager = WidgetLocationManager()
+
 
     func placeholder(in context: Context) -> MonitorEntry {
         MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: nil)
@@ -20,10 +103,49 @@ struct Provider: IntentTimelineProvider {
         let entry = MonitorEntry(date: Date(), configuration: configuration, departureMonitor: departureM)
         completion(entry)
     }
+    
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        let stopID = configuration.stopType?.identifier ?? "33000028"
         
+        var stopID: String = "33000028"
+        var favoriteStops: [Int] = []
+        
+        if configuration.favoriteFilter == FavoriteFilter.true {
+            
+            if let data = UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
+                if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
+                    favoriteStops = decoded
+                    print(favoriteStops)
+                }
+            }
+
+            var favStops : [Stop] = stops.filter{favorite in
+                return favoriteStops.contains(favorite.stopId)
+            }
+            
+            if favStops.isEmpty {
+                print("No favorites found.")
+                stopID = "33000028"
+                
+            } else {
+                print(favoriteStops)
+                print(favStops)
+                let location = widgetLocationManager.llocation
+                var favStopsLoc : [Stop] = []
+                favStops.forEach {stop in
+                    var newStop = stop
+                    newStop.distance = location?.distance(from: CLLocation(latitude: stop.coordinates.latitude, longitude: stop.coordinates.longitude))
+                    favStopsLoc.append(newStop)
+                }
+                favStops = favStopsLoc.sorted{$0.getDistance() > $1.getDistance()}
+                print(favStops)
+                stopID = String(favStops[0].stopId)
+            }
+        } else {
+            stopID = configuration.stopType?.identifier ?? "33000028"
+        }
+
+
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
@@ -35,13 +157,13 @@ struct Provider: IntentTimelineProvider {
             var departureMonitor: DepartureMonitor? = nil
             guard error == nil else {
                 print ("error: \(error!)")
-                getTimeline(for: configuration, in: context, completion: completion)
+                self.getTimeline(for: configuration, in: context, completion: completion)
                 return
             }
 
             guard let content = data else {
                 print("No data")
-                getTimeline(for: configuration, in: context, completion: completion)
+                self.getTimeline(for: configuration, in: context, completion: completion)
                 return
             }
 
@@ -54,7 +176,7 @@ struct Provider: IntentTimelineProvider {
                     departureMonitor = try decoder.decode(DepartureMonitor.self, from: content)
                 } catch {
                     print(error)
-                    getTimeline(for: configuration, in: context, completion: completion)
+                    self.getTimeline(for: configuration, in: context, completion: completion)
                     return
                 }
                 
@@ -76,12 +198,13 @@ struct Provider: IntentTimelineProvider {
 
 struct MonitorWidget: Widget {
     let kind: String = "MonitorWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             MonitorWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Haltestellenmonitor")
         .description("Widget zur Anzeige der Abfahrten an einer Haltestelle.")
+        
     }
 }
