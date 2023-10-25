@@ -14,6 +14,10 @@ struct PartialRoute: Hashable, Codable {
     
     func getName() -> String {
         if (self.Mot.type == "Footpath") {
+            print(self.RegularStops)
+            if getStartTimeString() == nil || getEndTimeString() == nil {
+                return "Warten"
+            }
             return "Fußweg"
         }
         if (self.Mot.type == "MobilityStairsUp") {
@@ -34,8 +38,15 @@ struct PartialRoute: Hashable, Codable {
         return "\(self.Mot.Name!) \(self.Mot.Direction!)"
     }
     
+    func shouldBeBold() -> Bool {
+        !(self.Mot.type == "Footpath" || self.Mot.type == "MobilityStairsUp" ||  self.Mot.type == "MobilityStairsDown")
+    }
+    
     func getNameShort() -> String {
         if (self.Mot.type == "Footpath") {
+            if getStartTimeString() == nil || getEndTimeString() == nil {
+                return "🕝"
+            }
             return "🚶"
         }
         if (self.Mot.type == "MobilityStairsUp") {
@@ -202,6 +213,11 @@ struct PartialRoute: Hashable, Codable {
     func getDuration() -> Int {
         let start: Double = getStartTime()?.timeIntervalSince1970 ?? 0
         let end: Double = getEndTime()?.timeIntervalSince1970 ?? 0
+        
+        
+        if self.Mot.type == "Footpath" {
+            print(">>>",start, end)
+        }
         return Int((end - start) / 60)
     }
 }

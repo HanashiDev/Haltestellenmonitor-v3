@@ -12,12 +12,22 @@ struct PartialRouteRow: View {
 
     var body: some View {
         HStack {
-            Text(partialRoute.getIcon())
-                .frame(width: 20.0, alignment: .center)
             VStack(alignment: .leading) {
-                Text(partialRoute.getName())
-                    .font(.headline)
-                    .lineLimit(1)
+                HStack {
+                    Text(partialRoute.getIcon())
+                        .frame(width: 20.0, alignment: .center)
+                    
+                    
+                    if partialRoute.shouldBeBold() {
+                        Text(partialRoute.getName())
+                            .font(.headline)
+                            .lineLimit(1)
+                    } else {
+                        Text(partialRoute.getName())
+                            .lineLimit(1)
+                    }
+                }
+          
                 if (partialRoute.getStartTimeString() != nil || partialRoute.getEndTimeString() != nil) {
                     HStack {
                         Text("\(partialRoute.getStartTimeString()!) Uhr")
@@ -36,6 +46,7 @@ struct PartialRouteRow: View {
                         Text(partialRoute.getLastStation() ?? "")
                             .lineLimit(1)
                     }
+                  //  .foregroundColor(.gray) // TODO: allgmeines grau
                     .font(.subheadline)
                 }
                 if (partialRoute.getFirstPlatform() != nil || partialRoute.getLastPlatform() != nil) {
@@ -47,7 +58,7 @@ struct PartialRouteRow: View {
                         if partialRoute.getLastPlatform() != nil {
                             Text(partialRoute.getLastPlatform() ?? "")
                         }
-                    }
+                    }   .foregroundColor(.gray)
                     .font(.footnote)
                 }
             }

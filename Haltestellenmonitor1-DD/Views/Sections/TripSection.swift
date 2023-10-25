@@ -19,11 +19,12 @@ struct TripSection: View {
                 Text("\(route.getEndTimeString()) Uhr")
                 Spacer()
                 Text("| \(getTime())")
+                    .foregroundColor(.gray)
+                if route.Interchanges > 0 {
+                    Text("| \(getUmstiege())")
+                        .foregroundColor(.gray)
+                }
             }.font(.subheadline)
-            
-            if route.Interchanges > 0 {
-                Text("\(getUmstiege())")
-            }
             
             DisclosureGroup {
                 ForEach(route.PartialRoutes, id: \.self) { partialRoute in
@@ -56,27 +57,36 @@ struct TripSection: View {
     @ViewBuilder
     func tripView() -> some View {
         let time: CGFloat = CGFloat(route.getTimeDifference())
+        print("------")
         
-        GeometryReader { geo in
-            HStack {
+        print(route.PartialRoutes.forEach({ e in
+            let stopTime = e.getDuration()
+            let currentTime = CGFloat(stopTime) / time
+            print(currentTime)
+        }))
+        
+        return GeometryReader { geo in
+            HStack (spacing: 0) {
                 ForEach(route.PartialRoutes, id: \.self) { partialRoute in
                     let stopTime = partialRoute.getDuration()
-                    let currentTime = CGFloat(100 * stopTime) / time
-                    let width = currentTime / 100 * geo.size.width
+                    let currentTime = CGFloat(stopTime) / time
+                    let width = currentTime * geo.size.width
+                    
                     
                     VStack {
                         RoundedRectangle(cornerRadius: 8)
                             .fill(partialRoute.getColor())
                             .frame(width: width, height: 5)
                         Text(partialRoute.getNameShort())
-                    }
+                            .foregroundColor(.black.opacity(0.7)) // TODO: darkmode
+                    }//.background(Color.purple)
                 }
-            }
+            }.frame(width: geo.size.width)
         }
     }
 
     func getTime() -> String {
-        route.getTimeDifference() == 1 ? "1 Minute" : "\(route.getTimeDifference()) Minuten"
+      "\(route.getTimeDifference()) Min"
     }
     
     func getUmstiege() -> String {
