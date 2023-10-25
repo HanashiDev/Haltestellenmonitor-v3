@@ -68,7 +68,7 @@ struct TripSection: View {
         return GeometryReader { geo in
             HStack (spacing: 0) {
                 ForEach(route.PartialRoutes, id: \.self) { partialRoute in
-                    let stopTime = partialRoute.getDuration()
+                    let stopTime = getDuration(partialRoute)
                     let currentTime = CGFloat(stopTime) / time
                     let width = currentTime * geo.size.width
                     
@@ -83,6 +83,51 @@ struct TripSection: View {
                 }
             }.frame(width: geo.size.width)
         }
+    }
+    
+    func getDuration(_ partialRoute: PartialRoute) -> Int {
+        if partialRoute.Mot.type == "Footpath" && partialRoute.hasNoTime(){
+            return  Int(getWaitingTime(partialRoute))
+        }
+        return partialRoute.getDuration()
+    }
+    
+    func getWaitingTime(_ e: PartialRoute) -> Int {
+        var value = 0
+        route.PartialRoutes.forEach { f in
+            if e == f {
+                guard let index = route.PartialRoutes.firstIndex(of: e) else { return }
+                if index - 1 < 0 || index + 1 >= route.PartialRoutes.count {
+                    return
+                }
+                
+                let defaultDate = Date()
+                var date1 = defaultDate
+                var date2  = defaultDate
+                var beforeIndex = index - 1
+                var afterIndex = index + 1
+                
+                while (route.PartialRoutes[beforeIndex].getDuration() == 0 && beforeIndex > 0) {
+                    beforeIndex -= 1
+                }
+                
+                while (route.PartialRoutes[afterIndex].getDuration() == 0 && afterIndex <=  route.PartialRoutes.count) {
+                    afterIndex += 1
+                }
+                
+                date1 = route.PartialRoutes[beforeIndex].getEndTime() ?? defaultDate
+                date2 = route.PartialRoutes[afterIndex].getStartTime() ?? defaultDate
+                
+                let difference = Calendar.current.dateComponents([.minute], from: date1, to: date2).minute
+                
+                value = difference ?? 0
+            }
+        }
+        
+        if value < 0 {
+            return 0
+        }
+        return value
     }
 
     func getTime() -> String {
