@@ -44,10 +44,7 @@ struct PartialRoute: Hashable, Codable {
     
     func getNameShort() -> String {
         if (self.Mot.type == "Footpath") {
-            if getStartTimeString() == nil || getEndTimeString() == nil {
-                return "🕝"
-            }
-            return "🚶"
+            return hasNoTime() ? "🕝" : "🚶"
         }
         if (self.Mot.type == "MobilityStairsUp") {
             return "↑"
@@ -103,38 +100,39 @@ struct PartialRoute: Hashable, Codable {
         }
     }
     
-    func getColor() -> Color { // TODO: replace purple olors
+    func getColor() -> Color { // TODO: replace purple colors
+        let opacity = 0.8
         switch (self.Mot.type) {
         case "Tram":
-            return Color.red
+            return Color.red.opacity(opacity)
         case "CityBus":
-            return Color.blue
+            return Color.blue.opacity(opacity)
         case "PlusBus":
-            return Color.blue
+            return Color.blue.opacity(opacity)
         case "Bus":
-            return Color.blue
+            return Color.blue.opacity(opacity)
         case "IntercityBus":
-            return Color.blue
+            return Color.blue.opacity(opacity)
         case "SuburbanRailway":
-            return Color.green
+            return Color.green.opacity(opacity)
         case "RapidTransit":
-            return Color.green
+            return Color.green.opacity(opacity)
         case "Train":
-            return Color.green
+            return Color.green.opacity(opacity)
         case "Cableway":
-            return Color.purple
+            return Color.purple.opacity(opacity)
         case "Ferry":
-            return Color.purple
+            return Color.purple.opacity(opacity)
         case "HailedSharedTaxi":
-            return Color.yellow
+            return Color.yellow.opacity(opacity)
         case "Footpath":
-            return Color.gray
+            return Color.gray.opacity(opacity)
         case "MobilityStairsUp":
-            return Color.purple
+            return Color.purple.opacity(opacity)
         case "MobilityStairsDown":
-            return Color.purple
+            return Color.purple.opacity(opacity)
         default:
-             return Color.purple
+             return Color.purple.opacity(opacity)
         }
     }
     

@@ -46,7 +46,6 @@ struct PartialRouteRow: View {
                         Text(partialRoute.getLastStation() ?? "")
                             .lineLimit(1)
                     }
-                  //  .foregroundColor(.gray) // TODO: allgmeines grau
                     .font(.subheadline)
                 }
                 if (partialRoute.getFirstPlatform() != nil || partialRoute.getLastPlatform() != nil) {

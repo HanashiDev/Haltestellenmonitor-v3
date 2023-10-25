@@ -57,29 +57,21 @@ struct TripSection: View {
     @ViewBuilder
     func tripView() -> some View {
         let time: CGFloat = CGFloat(route.getTimeDifference())
-        print("------")
         
-        print(route.PartialRoutes.forEach({ e in
-            let stopTime = e.getDuration()
-            let currentTime = CGFloat(stopTime) / time
-            print(currentTime)
-        }))
-        
-        return GeometryReader { geo in
+        GeometryReader { geo in
             HStack (spacing: 0) {
                 ForEach(route.PartialRoutes, id: \.self) { partialRoute in
                     let stopTime = getDuration(partialRoute)
                     let currentTime = CGFloat(stopTime) / time
                     let width = currentTime * geo.size.width
                     
-                    
                     VStack {
                         RoundedRectangle(cornerRadius: 8)
                             .fill(partialRoute.getColor())
                             .frame(width: width, height: 5)
                         Text(partialRoute.getNameShort())
-                            .foregroundColor(.black.opacity(0.7)) // TODO: darkmode
-                    }//.background(Color.purple)
+                            .foregroundColor(.customGray)
+                    }
                 }
             }.frame(width: geo.size.width)
         }
