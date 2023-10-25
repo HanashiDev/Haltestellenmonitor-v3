@@ -190,6 +190,7 @@
 		D0D1998229F40C4B00946D87 /* StopRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998129F40C4B00946D87 /* StopRow.swift */; };
 		D0D1998929F412DF00946D87 /* DepartureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998829F412DF00946D87 /* DepartureView.swift */; };
 		D0D1998B29F414BD00946D87 /* DepartureRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998A29F414BD00946D87 /* DepartureRow.swift */; };
+		F1520EE32AE96E5A001E3E05 /* widgetLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -340,6 +341,7 @@
 		D0D1998129F40C4B00946D87 /* StopRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopRow.swift; sourceTree = "<group>"; };
 		D0D1998829F412DF00946D87 /* DepartureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureView.swift; sourceTree = "<group>"; };
 		D0D1998A29F414BD00946D87 /* DepartureRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRow.swift; sourceTree = "<group>"; };
+		F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = widgetLocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -560,11 +562,12 @@
 		D0BD668629EFE0AA004E574C /* MonitorWidget */ = {
 			isa = PBXGroup;
 			children = (
+				F1520EE02AE96E2C001E3E05 /* Managers */,
 				D0BD66C629EFF621004E574C /* Models */,
 				D0BD669929EFE169004E574C /* Views */,
 				D0BD668729EFE0AA004E574C /* MonitorWidgetBundle.swift */,
-				D0BD668929EFE0AA004E574C /* MonitorWidgetLiveActivity.swift */,
 				D0BD668B29EFE0AA004E574C /* MonitorWidget.swift */,
+				D0BD668929EFE0AA004E574C /* MonitorWidgetLiveActivity.swift */,
 				D0BD66FF29F04D28004E574C /* MonitorWidget.intentdefinition */,
 				D0BD668E29EFE0AB004E574C /* Assets.xcassets */,
 				D0BD669029EFE0AB004E574C /* Info.plist */,
@@ -647,6 +650,14 @@
 				D0C21F4629F429EB001770F1 /* SingleTripRow.swift */,
 			);
 			path = Rows;
+			sourceTree = "<group>";
+		};
+		F1520EE02AE96E2C001E3E05 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -926,6 +937,7 @@
 				D0C1ECC929F28C2F001D214D /* TripAttributes.swift in Sources */,
 				D0142C3B2A0F90AA00646C94 /* DepartureBinding.swift in Sources */,
 				D0BD66EF29F03C0D004E574C /* PartialRoute.swift in Sources */,
+				F1520EE32AE96E5A001E3E05 /* widgetLocationManager.swift in Sources */,
 				D0BD66A129EFEA0D004E574C /* DepartureStatus.swift in Sources */,
 				D0BD669E29EFEA03004E574C /* Stop.swift in Sources */,
 				D0BD66C229EFEF0F004E574C /* DateParser.swift in Sources */,

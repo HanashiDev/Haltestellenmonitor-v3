@@ -15,6 +15,7 @@ struct MonitorEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
     let departureMonitor: DepartureMonitor?
+    let widgetLocationManager = WidgetLocationManager()
     
     func getStopID() -> String {
         var favoriteStops: [Int] = []
@@ -31,13 +32,16 @@ struct MonitorEntry: TimelineEntry {
             if favStops.isEmpty {
                 return "33000028"
             } else {
-//                let locationM = CLLocationManager()
-                
-//                ForEach(favStops) {stop in
-//                    var newStop = stop
-//                    newstop.distance = location.distance(from: CLLocation(latitude: stop.coordinates.latitude, longitude: stop.coordinates.longitude))
-//                }
-                favStops = favStops.sorted{$0.distance ?? 0 > $1.distance ?? 0}
+                widgetLocationManager.fetchLocation(handler: { location in
+                    print(">>", location)
+                    var favStopsLoc : [Stop] = []
+                    favStops.forEach {stop in
+                        var newStop = stop
+                        newStop.distance = location.distance(from: CLLocation(latitude: stop.coordinates.latitude, longitude: stop.coordinates.longitude))
+                        favStopsLoc.append(newStop)
+                    }
+                    favStops = favStopsLoc.sorted{$0.distance ?? 0 > $1.distance ?? 0}
+                })
                 return String(favStops[0].stopId)
             }
         }

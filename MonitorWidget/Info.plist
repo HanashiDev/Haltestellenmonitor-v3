@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Erlaubt ständiges Aktualisieren im Modus &quot;Automatisch nächsten Favoriten anzeigen&quot;</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Erlaubt ständiges Aktualisieren im Modus &quot;Automatisch nächsten Favoriten anzeigen&quot;</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Erlaubt ständiges Aktualisieren im Modus &quot;Automatisch nächsten Favoriten anzeigen&quot;</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Erlaubt ständiges Aktualisieren im Modus &quot;Automatisch nächsten Favoriten anzeigen&quot;</string>
+	<key>NSWidgetWantsLocation</key>
+	<true/>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>
