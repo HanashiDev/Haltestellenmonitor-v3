@@ -13,6 +13,7 @@ import MapKit
 
 class Provider: IntentTimelineProvider {
     
+    
     typealias Entry = MonitorEntry
     
     var widgetLocationManager = WidgetLocationManager()
@@ -53,18 +54,19 @@ class Provider: IntentTimelineProvider {
             } else {
                 print(favoriteStops)
                 print(favStops)
-                widgetLocationManager.fetchLocation(handler: { location in
-                    print(">>", location)
-                    var favStopsLoc : [Stop] = []
-                    favStops.forEach {stop in
-                        var newStop = stop
-                        newStop.distance = location.distance(from: CLLocation(latitude: stop.coordinates.latitude, longitude: stop.coordinates.longitude))
-                        favStopsLoc.append(newStop)
-                    }
-                    favStops = favStopsLoc.sorted{$0.getDistance() > $1.getDistance()}
-                    print(favStops)
-                    stopID = String(favStops[0].stopId)
-                })
+                let location = widgetLocationManager.fetchLocation { location in
+                    print(">>>", location)
+              
+                var favStopsLoc : [Stop] = []
+                favStops.forEach {stop in
+                    var newStop = stop
+                    newStop.distance = location.distance(from: CLLocation(latitude: stop.coordinates.latitude, longitude: stop.coordinates.longitude))
+                    favStopsLoc.append(newStop)
+                }
+                favStops = favStopsLoc.sorted{$0.getDistance() > $1.getDistance()}
+                print(favStops)
+                stopID = String(favStops[0].stopId)
+                }
             }
         } else {
             stopID = configuration.stopType?.identifier ?? "33000028"
@@ -133,3 +135,33 @@ struct MonitorWidget: Widget {
         
     }
 }
+
+
+class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
+    var locationManager: CLLocationManager?
+    private var handler: ((CLLocation) -> Void)?
+
+    override init() {
+        super.init()
+        DispatchQueue.main.async {
+            self.locationManager = CLLocationManager()
+            self.locationManager!.delegate = self
+            if self.locationManager!.authorizationStatus == .notDetermined {
+                self.locationManager!.requestWhenInUseAuthorization()
+            }
+        }
+    }
+    
+    func fetchLocation(handler: @escaping (CLLocation) -> Void) {
+        self.handler = handler
+        self.locationManager!.requestLocation()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.handler!(locations.last!)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            print(error)
+        }
+    }
