@@ -8,28 +8,38 @@
 import SwiftUI
 
 struct TripSection: View {
-    var route: Route
+    var vm: TripSectionViewModel
     
     var body: some View {
         // TODO: Steig bzw. Gleis überall einfügen
         Section {
             HStack {
-                Text("\(route.getStartTimeString()) Uhr")
+                Text("\(vm.route.getStartTimeString()) Uhr")
                 Image(systemName: "arrow.forward")
-                Text("\(route.getEndTimeString()) Uhr")
+                Text("\(vm.route.getEndTimeString()) Uhr")
+                
                 Spacer()
-                Text("| \(getTime())")
+                
+                Text("| \(vm.getTime())")
                     .foregroundColor(.gray)
-                if route.Interchanges > 0 {
-                    Text("| \(getUmstiege())")
+                
+                if vm.route.Interchanges > 0 {
+                    Text("| \(vm.getUmstiege())")
                         .foregroundColor(.gray)
                 }
             }.font(.subheadline)
             
             DisclosureGroup {
-                ForEach(route.PartialRoutes, id: \.self) { partialRoute in
-                    if (partialRoute.RegularStops == nil) {
-                        PartialRouteRow(partialRoute: partialRoute)
+                ForEach(vm.route.PartialRoutes, id: \.self) { partialRoute in
+                    if partialRoute.RegularStops == nil {
+                        if partialRoute.getDuration() == 0 {
+                            let tup = vm.getDuration(partialRoute)
+                            if tup.0 > 0 {
+                                PartialRouteRowWaitingTime(time: tup.0, text: tup.1)
+                            }
+                        } else {
+                            PartialRouteRow(partialRoute: partialRoute)
+                        }
                     } else {
                         DisclosureGroup {
                             ForEach (partialRoute.RegularStops ?? [], id: \.self) { regularStop in
@@ -56,12 +66,12 @@ struct TripSection: View {
     
     @ViewBuilder
     func tripView() -> some View {
-        let time: CGFloat = CGFloat(route.getTimeDifference())
+        let time: CGFloat = CGFloat(vm.route.getTimeDifference())
         
         GeometryReader { geo in
             HStack (spacing: 0) {
-                ForEach(route.PartialRoutes, id: \.self) { partialRoute in
-                    let stopTime = getDuration(partialRoute)
+                ForEach(vm.route.PartialRoutes, id: \.self) { partialRoute in
+                    let stopTime = vm.getDuration(partialRoute).0
                     let currentTime = CGFloat(stopTime) / time
                     let width = currentTime * geo.size.width
                     
@@ -76,66 +86,12 @@ struct TripSection: View {
             }.frame(width: geo.size.width)
         }
     }
-    
-    func getDuration(_ partialRoute: PartialRoute) -> Int {
-        if partialRoute.Mot.type == "Footpath" && partialRoute.hasNoTime(){
-            return  Int(getWaitingTime(partialRoute))
-        }
-        return partialRoute.getDuration()
-    }
-    
-    func getWaitingTime(_ e: PartialRoute) -> Int {
-        var value = 0
-        route.PartialRoutes.forEach { f in
-            if e == f {
-                guard let index = route.PartialRoutes.firstIndex(of: e) else { return }
-                if index - 1 < 0 || index + 1 >= route.PartialRoutes.count {
-                    return
-                }
-                
-                let defaultDate = Date()
-                var date1 = defaultDate
-                var date2  = defaultDate
-                var beforeIndex = index - 1
-                var afterIndex = index + 1
-                
-                while (route.PartialRoutes[beforeIndex].getDuration() == 0 && beforeIndex > 0) {
-                    beforeIndex -= 1
-                }
-                
-                while (route.PartialRoutes[afterIndex].getDuration() == 0 && afterIndex <=  route.PartialRoutes.count) {
-                    afterIndex += 1
-                }
-                
-                date1 = route.PartialRoutes[beforeIndex].getEndTime() ?? defaultDate
-                date2 = route.PartialRoutes[afterIndex].getStartTime() ?? defaultDate
-                
-                let difference = Calendar.current.dateComponents([.minute], from: date1, to: date2).minute
-                
-                value = difference ?? 0
-            }
-        }
-        
-        if value < 0 {
-            return 0
-        }
-        return value
-    }
-
-    func getTime() -> String {
-      "\(route.getTimeDifference()) Min"
-    }
-    
-    func getUmstiege() -> String {
-        route.Interchanges == 1 ? "1 Umstieg" : "\(route.Interchanges) Umstiege"
-    }
-    
 }
 
 struct TripSection_Previews: PreviewProvider {
     static var previews: some View {
         Form {
-            TripSection(route: tripTmp.Routes[0])
+            TripSection(vm: TripSectionViewModel(route: tripTmp.Routes[0]))
         }
     }
 }
