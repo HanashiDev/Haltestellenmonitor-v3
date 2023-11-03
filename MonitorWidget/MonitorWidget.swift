@@ -3,6 +3,8 @@
 //  MonitorWidget
 //
 //  Created by Peter Lohse on 19.04.23.
+//  Modiefied by Tom Braune on 03.11.23.
+//  Credit to https://github.com/AKORA-Studios for helping with the LocationManager
 //
 
 import WidgetKit
@@ -16,7 +18,7 @@ class Provider: IntentTimelineProvider {
     
     typealias Entry = MonitorEntry
     
-    var widgetLocationManager = WidgetLocationManager()
+    let widgetLocationManager = WidgetLocationManager()
 
 
     func placeholder(in context: Context) -> MonitorEntry {
@@ -28,21 +30,20 @@ class Provider: IntentTimelineProvider {
         completion(entry)
     }
     
-
+    
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
         var stopID: String = "33000028"
         var favoriteStops: [Int] = []
         
         if configuration.favoriteFilter == FavoriteFilter.true {
-            
             if let data = UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
                 if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
                     favoriteStops = decoded
-                    print(favoriteStops)
                 }
             }
-
+            
+            // Getting the location data for the favorites
             var favStops : [Stop] = stops.filter{favorite in
                 return favoriteStops.contains(favorite.stopId)
             }
@@ -52,27 +53,28 @@ class Provider: IntentTimelineProvider {
                 stopID = "33000028"
                 
             } else {
-                print(favoriteStops)
-                print(favStops)
-                let location = widgetLocationManager.fetchLocation { location in
-                    print(">>>", location)
-              
                 var favStopsLoc : [Stop] = []
+
+                Task() {
+                    await widgetLocationManager.fetchLocation { llocation in
+                        print(">>>", llocation.coordinate)}
+                }
+                // Dresden Standardwerte GPS
+                let location = widgetLocationManager.llocation ?? CLLocation(latitude: +51.04750, longitude: +13.74035)
+               
                 favStops.forEach {stop in
                     var newStop = stop
                     newStop.distance = location.distance(from: CLLocation(latitude: stop.coordinates.latitude, longitude: stop.coordinates.longitude))
+                    //print(newStop.name, " - ", newStop.distance ?? -1)
                     favStopsLoc.append(newStop)
                 }
-                favStops = favStopsLoc.sorted{$0.getDistance() > $1.getDistance()}
-                print(favStops)
+                favStops = favStopsLoc.sorted{$0.getDistance() < $1.getDistance()}
                 stopID = String(favStops[0].stopId)
-                }
             }
         } else {
             stopID = configuration.stopType?.identifier ?? "33000028"
         }
-
-
+        
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
@@ -80,6 +82,7 @@ class Provider: IntentTimelineProvider {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+
             var entries: [MonitorEntry] = []
             var departureMonitor: DepartureMonitor? = nil
             guard error == nil else {
@@ -101,6 +104,7 @@ class Provider: IntentTimelineProvider {
                 do {
                     let decoder = JSONDecoder()
                     departureMonitor = try decoder.decode(DepartureMonitor.self, from: content)
+                    print(content)
                 } catch {
                     print(error)
                     self.getTimeline(for: configuration, in: context, completion: completion)
@@ -135,33 +139,3 @@ struct MonitorWidget: Widget {
         
     }
 }
-
-
-class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
-    var locationManager: CLLocationManager?
-    private var handler: ((CLLocation) -> Void)?
-
-    override init() {
-        super.init()
-        DispatchQueue.main.async {
-            self.locationManager = CLLocationManager()
-            self.locationManager!.delegate = self
-            if self.locationManager!.authorizationStatus == .notDetermined {
-                self.locationManager!.requestWhenInUseAuthorization()
-            }
-        }
-    }
-    
-    func fetchLocation(handler: @escaping (CLLocation) -> Void) {
-        self.handler = handler
-        self.locationManager!.requestLocation()
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.handler!(locations.last!)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-            print(error)
-        }
-    }

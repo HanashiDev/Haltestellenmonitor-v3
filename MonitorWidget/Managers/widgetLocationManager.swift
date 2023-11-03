@@ -2,33 +2,53 @@
 //  widgetLocationManager.swift
 //  Haltestellenmonitor1-DD
 //
-//  Created by Tom Braune on 25.10.23.
+//  Created by Tom Braune on 03.11.23
 //
 
 import Foundation
 import CoreLocation
 
 class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
-    var locationManager: CLLocationManager?
-    private var handler: ((CLLocation) -> Void)?
+    var locationManager = CLLocationManager()
     
+    private var handler: ((CLLocation) -> Void)?
+    private var completion: ((CLLocation) -> Void)? = nil
+    private var distanceFilter : CLLocationDistance = 250.0
+
+    @Published var llocation: CLLocation?
+
+
     override init() {
         super.init()
+        self.locationManager.delegate = self
         DispatchQueue.main.async {
-            self.locationManager = CLLocationManager()
-            self.locationManager!.delegate = self
-            if self.locationManager!.authorizationStatus == .notDetermined {
-                self.locationManager!.requestWhenInUseAuthorization()
+            if self.locationManager.authorizationStatus == .notDetermined {
+                self.locationManager.requestWhenInUseAuthorization()
             }
         }
     }
-    
-    func fetchLocation(handler: @escaping (CLLocation) -> Void) {
-        self.handler = handler
-        self.locationManager!.requestLocation()
+
+    func fetchLocation(completion: @escaping (CLLocation) -> Void) async {
+        self.completion = completion
+        locationManager.requestLocation()
+
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.handler!(locations.last!)
+        guard let location = locations.first else { return }
+
+        self.llocation = location
+        
+        //print(location.coordinate)
+        
+        if (completion != nil) {
+            print("Completion\n")
+            completion!(location)
+            completion = nil
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            print("MonitorWidgetLocationManagerError ", error)
     }
 }

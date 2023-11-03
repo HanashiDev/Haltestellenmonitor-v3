@@ -3,12 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationUsageDescription</key>
-	<string>idk</string>
+	<string>We need access to your location to show it on the map.</string>
 	<key>CFBundleIdentifier</key>
 	<string></string>
-<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We need access to your location to show it on the map.</string>
-	<key>NSLocationUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need access to your location to show it on the map.</string>
 	<key>NSWidgetWantsLocation</key>
 	<true/>

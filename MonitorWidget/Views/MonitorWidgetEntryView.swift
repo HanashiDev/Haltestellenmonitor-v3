@@ -3,6 +3,7 @@
 //  MonitorWidgetExtension
 //
 //  Created by Peter Lohse on 19.04.23.
+//  Modified by Tom Braune on 03.11.23.
 //
 
 import WidgetKit
@@ -20,7 +21,7 @@ struct MonitorWidgetEntryView : View {
         
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                Text(entry.getStopName())
+                Text(entry.departureMonitor?.Name ?? "")
                     .font(.headline)
                     .padding(.bottom, 1.0)
                 if (entry.filterDepartures(departures:  entry.departureMonitor?.Departures ?? []).isEmpty) {
@@ -38,7 +39,7 @@ struct MonitorWidgetEntryView : View {
         .padding([.top, .leading, .bottom])
         .padding(.trailing, 5.0)
         .background(colorScheme == .dark ? Color.black : Color.yellow)
-        .widgetURL(URL(string: "widget://stop/\(entry.getStopID().addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"))
+        .widgetURL(URL(string: "widget://stop/\(entry.getStopID(Name: entry.departureMonitor?.Name ?? "-").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"))
         .dynamicTypeSize(.medium ... .large)
     }
 }

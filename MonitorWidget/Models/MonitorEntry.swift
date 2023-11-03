@@ -3,6 +3,7 @@
 //  MonitorWidgetExtension
 //
 //  Created by Peter Lohse on 19.04.23.
+//  Modified by Tom Braune on 03.11.23.
 //
 
 import WidgetKit
@@ -17,41 +18,18 @@ struct MonitorEntry: TimelineEntry {
     let departureMonitor: DepartureMonitor?
     let widgetLocationManager = WidgetLocationManager()
     
-    func getStopID() -> String {
-        var favoriteStops: [Int] = []
-        
-        if configuration.favoriteFilter == FavoriteFilter.true {
-            let sharedUserDefaults = UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")
-            if let decoded = sharedUserDefaults?.array(forKey: "WidgetFavs") as? [Int]{
-                favoriteStops = decoded
-            }
-
-            var favStops = stops.filter{ favorite in
-                return favoriteStops.contains(favorite.stopId)
-            }
-            if favStops.isEmpty {
-                return "33000028"
-            } else {
-                widgetLocationManager.fetchLocation(handler: { location in
-                    print(">>", location)
-                    var favStopsLoc : [Stop] = []
-                    favStops.forEach {stop in
-                        var newStop = stop
-                        newStop.distance = location.distance(from: CLLocation(latitude: stop.coordinates.latitude, longitude: stop.coordinates.longitude))
-                        favStopsLoc.append(newStop)
-                    }
-                    favStops = favStopsLoc.sorted{$0.distance ?? 0 > $1.distance ?? 0}
-                })
-                return String(favStops[0].stopId)
-            }
+    func getStopID(Name : String) -> String {
+        if Name == "_" {
+            return configuration.stopType?.identifier ?? "33000028"
         }
+        
+        let stop = stops.first(where: { String($0.name) == Name })
+        
+        if stop != nil {
+            return String(stop!.stopId)
+        }
+        
         return configuration.stopType?.identifier ?? "33000028"
-    }
-    
-    func getStopName() -> String {
-        let stopID = self.getStopID()
-        let stop = stops.first(where: { String($0.stopId) == stopID })
-        return stop?.name ?? "Unbekannt"
     }
     
     func getLineFilters() -> [String]? {
