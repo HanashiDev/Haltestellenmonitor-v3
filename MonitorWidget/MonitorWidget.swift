@@ -43,7 +43,7 @@ class Provider: IntentTimelineProvider {
                 }
             }
             
-            // Getting the location data for the favorites
+            // Retrieving stop data for marked favorites
             var favStops : [Stop] = stops.filter{favorite in
                 return favoriteStops.contains(favorite.stopId)
             }
@@ -54,14 +54,15 @@ class Provider: IntentTimelineProvider {
                 
             } else {
                 var favStopsLoc : [Stop] = []
-
+                // Retrieving location data
                 Task() {
                     await widgetLocationManager.fetchLocation { llocation in
                         print(">>>", llocation.coordinate)}
                 }
-                // Dresden Standardwerte GPS
+                // Dresden town hall GPS coordinates as default
                 let location = widgetLocationManager.llocation ?? CLLocation(latitude: +51.04750, longitude: +13.74035)
                
+                // sorting by distance
                 favStops.forEach {stop in
                     var newStop = stop
                     newStop.distance = location.distance(from: CLLocation(latitude: stop.coordinates.latitude, longitude: stop.coordinates.longitude))
@@ -69,6 +70,7 @@ class Provider: IntentTimelineProvider {
                     favStopsLoc.append(newStop)
                 }
                 favStops = favStopsLoc.sorted{$0.getDistance() < $1.getDistance()}
+                
                 stopID = String(favStops[0].stopId)
             }
         } else {

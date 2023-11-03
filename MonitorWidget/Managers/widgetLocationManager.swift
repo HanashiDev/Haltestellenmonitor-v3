@@ -42,7 +42,6 @@ class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
         //print(location.coordinate)
         
         if (completion != nil) {
-            print("Completion\n")
             completion!(location)
             completion = nil
         }
