@@ -3,6 +3,7 @@
 //  Haltestellenmonitor1-DD
 //
 //  Created by Tom Braune on 03.11.23
+//  Credit to https://github.com/AKORA-Studios for helping with the LocationManager
 //
 
 import Foundation
@@ -13,7 +14,6 @@ class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
     
     private var handler: ((CLLocation) -> Void)?
     private var completion: ((CLLocation) -> Void)? = nil
-    private var distanceFilter : CLLocationDistance = 250.0
 
     @Published var llocation: CLLocation?
 
