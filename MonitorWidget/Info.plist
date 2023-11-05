@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationUsageDescription</key>
-	<string>Um die stets die nächste favorisierte Haltestelle anzuzeigen, brauchen wir Zugriff auf Standortdaten.</string>
+	<string>Um Dir stets die nächste favorisierte Haltestelle anzuzeigen, benötigen wir Zugriff auf Standortdaten.</string>
 	<key>CFBundleIdentifier</key>
 	<string></string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Um die stets die nächste favorisierte Haltestelle anzuzeigen, brauchen wir Zugriff auf Standortdaten.</string>
+	<string>Um Dir stets die nächste favorisierte Haltestelle anzuzeigen, benötigen wir Zugriff auf Standortdaten.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Um die stets die nächste favorisierte Haltestelle anzuzeigen, brauchen wir Zugriff auf Standortdaten.</string>
+	<string>Um Dir stets die nächste favorisierte Haltestelle anzuzeigen, benötigen wir Zugriff auf Standortdaten.</string>
 	<key>NSWidgetWantsLocation</key>
 	<true/>
 	<key>NSExtension</key>

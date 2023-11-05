@@ -37,7 +37,7 @@ class Provider: IntentTimelineProvider {
         var favoriteStops: [Int] = []
         
         if configuration.favoriteFilter == FavoriteFilter.true {
-            if let data = UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
+            if let data = UserDefaults(suiteName: "group.eu.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
                 if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
                     favoriteStops = decoded
                 }
@@ -66,7 +66,6 @@ class Provider: IntentTimelineProvider {
                 favStops.forEach {stop in
                     var newStop = stop
                     newStop.distance = location.distance(from: CLLocation(latitude: stop.coordinates.latitude, longitude: stop.coordinates.longitude))
-                    //print(newStop.name, " - ", newStop.distance ?? -1)
                     favStopsLoc.append(newStop)
                 }
                 favStops = favStopsLoc.sorted{$0.getDistance() < $1.getDistance()}
@@ -84,7 +83,6 @@ class Provider: IntentTimelineProvider {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
-
             var entries: [MonitorEntry] = []
             var departureMonitor: DepartureMonitor? = nil
             guard error == nil else {
@@ -138,6 +136,5 @@ struct MonitorWidget: Widget {
         }
         .configurationDisplayName("Haltestellenmonitor")
         .description("Widget zur Anzeige der Abfahrten an einer Haltestelle.")
-        
     }
 }

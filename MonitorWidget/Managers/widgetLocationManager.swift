@@ -17,7 +17,6 @@ class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
 
     @Published var llocation: CLLocation?
 
-
     override init() {
         super.init()
         self.locationManager.delegate = self
@@ -31,16 +30,13 @@ class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
     func fetchLocation(completion: @escaping (CLLocation) -> Void) async {
         self.completion = completion
         locationManager.requestLocation()
-
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else { return }
 
         self.llocation = location
-        
-        //print(location.coordinate)
-        
+                
         if (completion != nil) {
             completion!(location)
             completion = nil
