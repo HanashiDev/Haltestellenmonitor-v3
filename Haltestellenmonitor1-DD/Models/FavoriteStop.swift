@@ -11,7 +11,7 @@ import Foundation
     @Published var favorites: [Int]
     
     init() {
-        if let data = UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
+        if let data = UserDefaults(suiteName: "group.eu.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
             if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
                 favorites = decoded
                 return
