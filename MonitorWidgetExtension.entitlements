@@ -8,7 +8,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.dev.hanashi.Haltestellenmonitor</string>
+		<string>group.eu.hanashi.Haltestellenmonitor</string>
 	</array>
 	<key>com.apple.security.network.client</key>
 	<true/>

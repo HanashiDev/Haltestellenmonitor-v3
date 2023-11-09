@@ -11,7 +11,7 @@ import Foundation
     @Published var favorites: [Int]
     
     init() {
-        if let data = UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
+        if let data = UserDefaults(suiteName: "group.eu.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
             if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
                 favorites = decoded
                 return
@@ -48,11 +48,11 @@ import Foundation
     
     func save() {
         if let encoded = try? JSONEncoder().encode(favorites) {
-            UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")?.set(encoded, forKey: "FavoriteStops")
+            UserDefaults(suiteName: "group.eu.hanashi.Haltestellenmonitor")?.set(encoded, forKey: "FavoriteStops")
         }
         // fürs Widget
         
-        let sharedUserDefaults = UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")
+        let sharedUserDefaults = UserDefaults(suiteName: "group.eu.hanashi.Haltestellenmonitor")
         sharedUserDefaults?.set(favorites, forKey: "WidgetFavs")
 
     }
