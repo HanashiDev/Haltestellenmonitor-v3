@@ -37,7 +37,7 @@ class Provider: IntentTimelineProvider {
         var favoriteStops: [Int] = []
         
         if configuration.favoriteFilter == FavoriteFilter.true {
-            if let data = UserDefaults(suiteName: "group.eu.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
+            if let data = UserDefaults(suiteName: "group.dev.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
                 if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
                     favoriteStops = decoded
                 }
