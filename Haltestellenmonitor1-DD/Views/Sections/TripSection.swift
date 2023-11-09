@@ -59,8 +59,7 @@ struct TripSection: View {
                     }
                 }
             }
-        label: { tripView()
-        }
+        label: { tripView() }
         }
     }
     

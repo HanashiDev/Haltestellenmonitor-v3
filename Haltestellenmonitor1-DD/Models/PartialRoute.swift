@@ -46,12 +46,12 @@ struct PartialRoute: Hashable, Codable {
         if (self.Mot.type == "Footpath") {
             return hasNoTime() ? "🕝" : "🚶"
         }
-        if (self.Mot.type == "MobilityStairsUp") {
+       /* if (self.Mot.type == "MobilityStairsUp") {
             return "↑"
         }
         if (self.Mot.type == "MobilityStairsDown") {
             return "↓"
-        }
+        }*/
         if (self.Mot.Name != nil && self.Mot.Direction == nil) {
             return self.Mot.Name!
         }
