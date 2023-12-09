@@ -7,57 +7,99 @@
 
 import SwiftUI
 
+
+fileprivate var timeFrameWidth: CGFloat = 60
+
 struct PartialRouteRow: View {
     var partialRoute: PartialRoute
-
+    
     var body: some View {
-        HStack {
-            Text(partialRoute.getIcon())
-                .frame(width: 20.0, alignment: .center)
-            VStack(alignment: .leading) {
-                Text(partialRoute.getName())
-                    .font(.headline)
-                    .lineLimit(1)
+        HStack(spacing: 0){
+            
+            VStack {
+                if partialRoute.getStartTimeString() != nil {
+                    Text("\(partialRoute.getStartTimeString()!)")
+                }
+                
                 if (partialRoute.getStartTimeString() != nil || partialRoute.getEndTimeString() != nil) {
-                    HStack {
-                        Text("\(partialRoute.getStartTimeString()!) Uhr")
-                        Spacer()
-                        Text("\(partialRoute.getEndTimeString()!) Uhr")
-                    }
-                    .font(.subheadline)
+                    Text("|")
                 }
-                if (partialRoute.getFirstStation() != nil && partialRoute.getLastStation() != nil) {
-                    HStack {
-                        Text(partialRoute.getFirstStation() ?? "")
-                            .lineLimit(1)
-                        Spacer()
-                        Image(systemName: "arrow.right")
-                        Spacer()
-                        Text(partialRoute.getLastStation() ?? "")
-                            .lineLimit(1)
-                    }
-                    .font(.subheadline)
+                
+                if partialRoute.getEndTimeString() != nil {
+                    Text("\(partialRoute.getEndTimeString()!)")
                 }
-                if (partialRoute.getFirstPlatform() != nil || partialRoute.getLastPlatform() != nil) {
-                    HStack {
-                        if partialRoute.getFirstPlatform() != nil {
-                            Text(partialRoute.getFirstPlatform() ?? "")
-                        }
-                        Spacer()
-                        if partialRoute.getLastPlatform() != nil {
-                            Text(partialRoute.getLastPlatform() ?? "")
-                        }
-                    }
-                    .font(.footnote)
+            }.frame(width: timeFrameWidth)
+                .foregroundColor(.gray)
+                .font(.subheadline)
+            
+            VStack(alignment: .leading) {
+                HStack(spacing: 5) {
+                    Text(partialRoute.getIcon())
+                        .frame(width: 20.0, alignment: .center)
+                    
+                    Text(partialRoute.getName())
+                        .font(.headline)
+                        .lineLimit(1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                
+                Text("")
+                
+                if partialRoute.getEndTimeString() != nil {
+                    Text(partialRoute.getLastStation() ?? "")
                 }
             }
-            .padding(.leading, 1)
+            .frame(maxWidth: .infinity)
+            .lineLimit(1)
+            .font(.subheadline)
+            
+            VStack(alignment: .trailing) {
+                if partialRoute.getFirstPlatform() != nil {
+                    Text(partialRoute.getFirstPlatform() ?? "")  .foregroundColor(.gray)
+                }
+                
+                Text("")
+                
+                if partialRoute.getLastPlatform() != nil {
+                    Text(partialRoute.getLastPlatform() ?? "")  .foregroundColor(.gray)
+                }
+            }
+            .frame(width: 70)
+            .foregroundColor(.gray)
+            .lineLimit(1)
+            .font(.footnote)
         }
+        .padding(.leading, -35).padding(.trailing, -15)
     }
 }
 
 struct PartialRouteRow_Previews: PreviewProvider {
     static var previews: some View {
-        PartialRouteRow(partialRoute: tripTmp.Routes[0].PartialRoutes[0])
+        VStack {
+            PartialRouteRow(partialRoute: tripTmp.Routes[0].PartialRoutes[0])
+                .previewLayout(.fixed(width: 500, height: 100))
+                .padding()
+        }  .padding()
+    }
+}
+
+
+
+struct PartialRouteRowWaitingTime: View {
+    var time: Int
+    var text: String = "Wartezeit"
+    
+    var body: some View {
+        HStack(spacing: 0) {
+            Text("︙")
+                .frame(width: timeFrameWidth)
+            
+            Text("\(time) min \(text)")
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+        }
+        .foregroundColor(.gray)
+        .font(.subheadline)
+        .padding(.leading, -35).padding(.trailing, -15)
     }
 }
