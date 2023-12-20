@@ -3,25 +3,34 @@
 //  MonitorWidgetExtension
 //
 //  Created by Peter Lohse on 19.04.23.
+//  Modified by Tom Braune on 03.11.23.
 //
 
 import WidgetKit
 import SwiftUI
 import Intents
+import CoreLocation
+import MapKit
 
 struct MonitorEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
     let departureMonitor: DepartureMonitor?
+    let widgetLocationManager = WidgetLocationManager()
     
-    func getStopID() -> String {
+    func getStopID(Name : String) -> String {
+        if Name == "_" {
+            return configuration.stopType?.identifier ?? "33000028"
+        }
+        
+        // Retriving the stopID by the Stops' name
+        let stop = stops.first(where: { String($0.name) == Name })
+        
+        if stop != nil {
+            return String(stop!.stopId)
+        }
+        
         return configuration.stopType?.identifier ?? "33000028"
-    }
-    
-    func getStopName() -> String {
-        let stopID = self.getStopID()
-        let stop = stops.first(where: { String($0.stopId) == stopID })
-        return stop?.name ?? "Unbekannt"
     }
     
     func getLineFilters() -> [String]? {
