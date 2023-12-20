@@ -8,48 +8,81 @@
 import SwiftUI
 
 struct TripSection: View {
-    var route: Route
+    var vm: TripSectionViewModel
     
     var body: some View {
         // TODO: Steig bzw. Gleis überall einfügen
         Section {
             HStack {
-                Text("ab \(route.getStartTimeString()) Uhr")
-                    .font(.subheadline)
+                Text("\(vm.route.getStartTimeString()) Uhr")
+                Image(systemName: "arrow.forward")
+                Text("\(vm.route.getEndTimeString()) Uhr")
+                
                 Spacer()
-                Text("an \(route.getEndTimeString()) Uhr")
-                    .font(.subheadline)
-                    .multilineTextAlignment(.trailing)
-            }
-            HStack {
-                Text(route.Interchanges == 1 ? "1 Umstieg" : "\(route.Interchanges) Umstiege")
-                    .font(.subheadline)
-                Spacer()
-                Text(route.getTimeDifference() == 1 ? "1 Minute" : "\(route.getTimeDifference()) Minuten")
-                    .font(.subheadline)
-                    .multilineTextAlignment(.trailing)
-            }
-            ForEach(route.PartialRoutes, id: \.self) { partialRoute in
-                if (partialRoute.RegularStops == nil) {
-                    PartialRouteRow(partialRoute: partialRoute)
-                } else {
-                    DisclosureGroup {
-                        ForEach (partialRoute.RegularStops ?? [], id: \.self) { regularStop in
-                            ZStack {
-                                NavigationLink(value: regularStop.getStop() ?? stops[0]) {
-                                    EmptyView()
-                                }
-                                .opacity(0.0)
-                                .buttonStyle(.plain)
-                                
-                                RegularStopRow(regularStop: regularStop, isFirst: partialRoute.RegularStops?.first?.DataId == regularStop.DataId)
+                
+                Text("| \(vm.getTime())")
+                    .foregroundColor(.gray)
+                
+                if vm.route.Interchanges > 0 {
+                    Text("| \(vm.getUmstiege())")
+                        .foregroundColor(.gray)
+                }
+            }.font(.subheadline)
+            
+            DisclosureGroup {
+                ForEach(vm.route.PartialRoutes, id: \.self) { partialRoute in
+                    if partialRoute.RegularStops == nil {
+                        if partialRoute.getDuration() == 0 {
+                            let tup = vm.getDuration(partialRoute)
+                            if tup.0 > 0 {
+                                PartialRouteRowWaitingTime(time: tup.0, text: tup.1)
                             }
+                        } else {
+                            PartialRouteRow(partialRoute: partialRoute)
                         }
-                    } label: {
-                        PartialRouteRow(partialRoute: partialRoute)
+                    } else {
+                        DisclosureGroup {
+                            ForEach (partialRoute.RegularStops ?? [], id: \.self) { regularStop in
+                                ZStack {
+                                    NavigationLink(value: regularStop.getStop() ?? stops[0]) {
+                                        EmptyView()
+                                    }
+                                    .opacity(0.0)
+                                    .buttonStyle(.plain)
+                                    
+                                    RegularStopRow(regularStop: regularStop, isFirst: partialRoute.RegularStops?.first?.DataId == regularStop.DataId)
+                                }
+                            }
+                        } label: {
+                            PartialRouteRow(partialRoute: partialRoute)
+                        }
                     }
                 }
             }
+        label: { tripView() }
+        }
+    }
+    
+    @ViewBuilder
+    func tripView() -> some View {
+        let time: CGFloat = CGFloat(vm.route.getTimeDifference())
+        
+        GeometryReader { geo in
+            HStack (spacing: 0) {
+                ForEach(vm.route.PartialRoutes, id: \.self) { partialRoute in
+                    let stopTime = vm.getDuration(partialRoute).0
+                    let currentTime = CGFloat(stopTime) / time
+                    let width = currentTime * geo.size.width
+                    
+                    VStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(partialRoute.getColor())
+                            .frame(width: width, height: 5)
+                        Text(partialRoute.getNameShort())
+                            .foregroundColor(.customGray)
+                    }
+                }
+            }.frame(width: geo.size.width)
         }
     }
 }
@@ -57,7 +90,7 @@ struct TripSection: View {
 struct TripSection_Previews: PreviewProvider {
     static var previews: some View {
         Form {
-            TripSection(route: tripTmp.Routes[0])
+            TripSection(vm: TripSectionViewModel(route: tripTmp.Routes[0]))
         }
     }
 }

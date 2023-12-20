@@ -153,7 +153,7 @@ struct ConnectionView: View {
                         .frame(maxWidth: .infinity)
                         
                         ForEach(trip?.Routes ?? [], id: \.self) { route in
-                            TripSection(route: route)
+                            TripSection(vm: TripSectionViewModel(route: route))
                         }
                         
                         Button {

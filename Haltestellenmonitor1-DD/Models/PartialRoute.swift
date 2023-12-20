@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct PartialRoute: Hashable, Codable {
     var Mot: Mot
@@ -13,7 +14,7 @@ struct PartialRoute: Hashable, Codable {
     
     func getName() -> String {
         if (self.Mot.type == "Footpath") {
-            return "Fußweg"
+            return hasNoTime() ? "Warten" : "Fußweg"
         }
         if (self.Mot.type == "MobilityStairsUp") {
             return "aufwärts führende Treppe"
@@ -32,6 +33,37 @@ struct PartialRoute: Hashable, Codable {
         }
         return "\(self.Mot.Name!) \(self.Mot.Direction!)"
     }
+    
+    func shouldBeBold() -> Bool {
+        !(self.Mot.type == "Footpath" || self.Mot.type == "MobilityStairsUp" ||  self.Mot.type == "MobilityStairsDown")
+    }
+    
+    func hasNoTime() -> Bool {
+        return getStartTimeString() == nil || getEndTimeString() == nil
+    }
+    
+    func getNameShort() -> String {
+        if (self.Mot.type == "Footpath") {
+            return hasNoTime() ? "🕝" : "🚶"
+        }
+       /* if (self.Mot.type == "MobilityStairsUp") {
+            return "↑"
+        }
+        if (self.Mot.type == "MobilityStairsDown") {
+            return "↓"
+        }*/
+        if (self.Mot.Name != nil && self.Mot.Direction == nil) {
+            return self.Mot.Name!
+        }
+        if (self.Mot.Name == nil && self.Mot.Direction != nil) {
+            return self.Mot.Direction!
+        }
+        if (self.Mot.Name == nil && self.Mot.Direction == nil) {
+            return "Unbekannt"
+        }
+        return "\(self.Mot.Name!)"
+    }
+    
     
     func getIcon() -> String {
         switch (self.Mot.type) {
@@ -65,6 +97,42 @@ struct PartialRoute: Hashable, Codable {
             return "📉"
         default:
             return "🚊"
+        }
+    }
+    
+    func getColor() -> Color { // TODO: replace purple colors
+        let opacity = 0.8
+        switch (self.Mot.type) {
+        case "Tram":
+            return Color.red.opacity(opacity)
+        case "CityBus":
+            return Color.blue.opacity(opacity)
+        case "PlusBus":
+            return Color.blue.opacity(opacity)
+        case "Bus":
+            return Color.blue.opacity(opacity)
+        case "IntercityBus":
+            return Color.blue.opacity(opacity)
+        case "SuburbanRailway":
+            return Color.green.opacity(opacity)
+        case "RapidTransit":
+            return Color.green.opacity(opacity)
+        case "Train":
+            return Color.green.opacity(opacity)
+        case "Cableway":
+            return Color.purple.opacity(opacity)
+        case "Ferry":
+            return Color.purple.opacity(opacity)
+        case "HailedSharedTaxi":
+            return Color.yellow.opacity(opacity)
+        case "Footpath":
+            return Color.gray.opacity(opacity)
+        case "MobilityStairsUp":
+            return Color.purple.opacity(opacity)
+        case "MobilityStairsDown":
+            return Color.purple.opacity(opacity)
+        default:
+             return Color.purple.opacity(opacity)
         }
     }
     
@@ -138,5 +206,11 @@ struct PartialRoute: Hashable, Codable {
     
     func getLastPlatform() -> String? {
         return RegularStops?.last?.getPlatform()
+    }
+    
+    func getDuration() -> Int {
+        let start: Double = getStartTime()?.timeIntervalSince1970 ?? 0
+        let end: Double = getEndTime()?.timeIntervalSince1970 ?? 0
+        return Int((end - start) / 60)
     }
 }

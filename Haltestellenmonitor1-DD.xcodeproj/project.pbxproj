@@ -191,6 +191,8 @@
 		D0D1998929F412DF00946D87 /* DepartureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998829F412DF00946D87 /* DepartureView.swift */; };
 		D0D1998B29F414BD00946D87 /* DepartureRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998A29F414BD00946D87 /* DepartureRow.swift */; };
 		F1520EE32AE96E5A001E3E05 /* widgetLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */; };
+		F19FC6EE2AE9974C00F65316 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FC6ED2AE9974C00F65316 /* ColorManager.swift */; };
+		F1A7E7CB2AEA988C00E1910F /* TripSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -342,6 +344,8 @@
 		D0D1998829F412DF00946D87 /* DepartureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureView.swift; sourceTree = "<group>"; };
 		D0D1998A29F414BD00946D87 /* DepartureRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRow.swift; sourceTree = "<group>"; };
 		F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = widgetLocationManager.swift; sourceTree = "<group>"; };
+		F19FC6ED2AE9974C00F65316 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSectionViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -535,6 +539,7 @@
 				D040EC2129EED774002DFEBF /* DateParser.swift */,
 				D0142C392A0F909E00646C94 /* DepartureBinding.swift */,
 				D0142C4D2A11039600646C94 /* GaussKrueger.swift */,
+				F19FC6ED2AE9974C00F65316 /* ColorManager.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -616,6 +621,7 @@
 			children = (
 				D0BD66F629F03ED2004E574C /* TripSection.swift */,
 				D0C1ECD729F2F071001D214D /* DepartureDisclosureSection.swift */,
+				F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -882,6 +888,7 @@
 				D040EC2E29EF0371002DFEBF /* StopManager.swift in Sources */,
 				D0142C492A10F73900646C94 /* ConnectionStop.swift in Sources */,
 				D0BD66DA29F03056004E574C /* Trip.swift in Sources */,
+				F19FC6EE2AE9974C00F65316 /* ColorManager.swift in Sources */,
 				D0142C3A2A0F909E00646C94 /* DepartureBinding.swift in Sources */,
 				D040EC2729EEEB85002DFEBF /* LocationManager.swift in Sources */,
 				D0C1ECDA29F2FA50001D214D /* TripStandardSettings.swift in Sources */,
@@ -914,6 +921,7 @@
 				D040EC1729EECA20002DFEBF /* DepartureMonitor.swift in Sources */,
 				D0C1ECD829F2F071001D214D /* DepartureDisclosureSection.swift in Sources */,
 				D0C1ECD029F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
+				F1A7E7CB2AEA988C00E1910F /* TripSectionViewModel.swift in Sources */,
 				D0142C582A1119D500646C94 /* About.swift in Sources */,
 				D03A26A029EEC248005B0600 /* DepartureRow.swift in Sources */,
 				D0BD66FA29F04593004E574C /* PartialRouteRow.swift in Sources */,
