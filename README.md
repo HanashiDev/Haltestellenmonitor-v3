@@ -25,18 +25,18 @@ Für mehr Infos siehe: https://developer.apple.com/support/xcode/
 
 Bitte achte darauf das neuer Code zum Codestyle des bisher vorhandenen Codes ähnlich ist und verständlich geschrieben ist. 
 
-### Allgemiene Anmerkungen dazu 
-* Keine binary Files wie z.B. .DS_Store Datein oder so pushen. 
-* Keine Identifier vom z.B. dem Development Team des projektes in Pr ändern
-* Bei Fragen wegen Codestyle: [siehe hier](https://google.github.io/swift/)
+### Allgemeine Anmerkungen dazu 
+* Keine Binary Files (wie z.B. .DS_Store) Datein oder so pushen
+* Keine Identifier vom z.B. dem Development Team des projektes in der Pullrequest ändern
+* Bei Fragen zum Codestyle: [siehe hier](https://google.github.io/swift/)
 
 ## How to Install and Run the Project
 ```
 git clone https://github.com/HanashiDev/Haltestellenmonitor-v3
 ```
 
-Öffne die workspace Datei in Xcode
-Nutze CMD + R um das App Shema (Haltestellenmonitor1-DD) auszuführen c:
+1. Öffne die workspace Datei in Xcode
+2. Nutze CMD + R um das App Shema (Haltestellenmonitor1-DD) auszuführen c:
 
 
 ## License
