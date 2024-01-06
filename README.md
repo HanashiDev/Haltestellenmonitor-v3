@@ -1,6 +1,8 @@
 # Haltestellenmonitor-v3
 Haltestellen Navigator für Dresden
 
+[<img src="images/appstoreImage.svg" height="50">](https://apps.apple.com/de/app/haltestellenmonitor-dresden/id1266844674)
+
 ### Showcase
 <p align="center">
   <img src="images/example1.PNG" width="350">
