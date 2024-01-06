@@ -6,8 +6,8 @@ Haltestellen Navigator für Dresden
 ### Showcase
 <p align="center">
   <img src="images/example1.PNG" width="350">
-  <img src="images/example2.png" width="350">
-  <img src="images/example3.png" width="350">
+  <img src="images/example2.PNG" width="350">
+  <img src="images/example3.PNG" width="350">
 </p>
 
 ## Anforderungen
