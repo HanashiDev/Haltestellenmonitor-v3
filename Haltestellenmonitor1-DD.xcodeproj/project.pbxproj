@@ -190,6 +190,7 @@
 		D0D1998229F40C4B00946D87 /* StopRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998129F40C4B00946D87 /* StopRow.swift */; };
 		D0D1998929F412DF00946D87 /* DepartureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998829F412DF00946D87 /* DepartureView.swift */; };
 		D0D1998B29F414BD00946D87 /* DepartureRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998A29F414BD00946D87 /* DepartureRow.swift */; };
+		F1520EE32AE96E5A001E3E05 /* widgetLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */; };
 		F19FC6EE2AE9974C00F65316 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FC6ED2AE9974C00F65316 /* ColorManager.swift */; };
 		F1A7E7CB2AEA988C00E1910F /* TripSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -342,6 +343,7 @@
 		D0D1998129F40C4B00946D87 /* StopRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopRow.swift; sourceTree = "<group>"; };
 		D0D1998829F412DF00946D87 /* DepartureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureView.swift; sourceTree = "<group>"; };
 		D0D1998A29F414BD00946D87 /* DepartureRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRow.swift; sourceTree = "<group>"; };
+		F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = widgetLocationManager.swift; sourceTree = "<group>"; };
 		F19FC6ED2AE9974C00F65316 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSectionViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -565,6 +567,7 @@
 		D0BD668629EFE0AA004E574C /* MonitorWidget */ = {
 			isa = PBXGroup;
 			children = (
+				F1520EE02AE96E2C001E3E05 /* Managers */,
 				D0BD66C629EFF621004E574C /* Models */,
 				D0BD669929EFE169004E574C /* Views */,
 				D0BD668729EFE0AA004E574C /* MonitorWidgetBundle.swift */,
@@ -653,6 +656,14 @@
 				D0C21F4629F429EB001770F1 /* SingleTripRow.swift */,
 			);
 			path = Rows;
+			sourceTree = "<group>";
+		};
+		F1520EE02AE96E2C001E3E05 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -757,7 +768,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					D00059C12A52F3800007468A = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -934,6 +945,7 @@
 				D0C1ECC929F28C2F001D214D /* TripAttributes.swift in Sources */,
 				D0142C3B2A0F90AA00646C94 /* DepartureBinding.swift in Sources */,
 				D0BD66EF29F03C0D004E574C /* PartialRoute.swift in Sources */,
+				F1520EE32AE96E5A001E3E05 /* widgetLocationManager.swift in Sources */,
 				D0BD66A129EFEA0D004E574C /* DepartureStatus.swift in Sources */,
 				D0BD669E29EFEA03004E574C /* Stop.swift in Sources */,
 				D0BD66C229EFEF0F004E574C /* DateParser.swift in Sources */,
@@ -1096,7 +1108,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.hanashi.Haltestellenmonitor1-DDTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -1114,7 +1126,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.hanashi.Haltestellenmonitor1-DDTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -1160,6 +1172,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1220,6 +1233,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1246,7 +1261,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Haltestellenmonitor1-DD/Haltestellenmonitor1-DD.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Haltestellenmonitor1-DD/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
@@ -1262,11 +1277,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1283,7 +1299,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Haltestellenmonitor1-DD/Haltestellenmonitor1-DD.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Haltestellenmonitor1-DD/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
@@ -1299,11 +1315,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1319,19 +1336,20 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MonitorWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MonitorWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Der Standort wird verwendet um den Abstand zur nächsten Haltestelle zu berechnen.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1349,7 +1367,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MonitorWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorWidget/Info.plist;
@@ -1361,7 +1379,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1377,7 +1395,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = MonitorIntents/MonitorIntents.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorIntents/Info.plist;
@@ -1389,7 +1407,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorIntents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1405,7 +1423,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = MonitorIntents/MonitorIntents.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MonitorIntents/Info.plist;
@@ -1417,7 +1435,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.MonitorIntents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1434,7 +1452,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchMonitor Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
@@ -1442,11 +1460,12 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Der Standort wird verwendet um den Abstand zur nächsten Haltestelle zu berechnen.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "eu.Hanashi.Haltestellenmonitor1-DD";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.watchkitapp";
 				PRODUCT_NAME = "Haltestellenmonitor Dresden";
 				SDKROOT = watchos;
@@ -1464,7 +1483,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchMonitor Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = WGL37RNHJ6;
 				ENABLE_PREVIEWS = YES;
@@ -1472,11 +1491,12 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Der Standort wird verwendet um den Abstand zur nächsten Haltestelle zu berechnen.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "eu.Hanashi.Haltestellenmonitor1-DD";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "eu.Hanashi.Haltestellenmonitor1-DD.watchkitapp";
 				PRODUCT_NAME = "Haltestellenmonitor Dresden";
 				SDKROOT = watchos;
