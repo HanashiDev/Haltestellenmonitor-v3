@@ -81,7 +81,7 @@ struct TripSection: View {
                         Text(partialRoute.getNameShort())
                             .foregroundColor(.customGray)
                             .font(.footnote)
-                            .frame(width: width, height: 5)
+                            .frame(width: width, height: 15)
                     }.padding(0)
                 }
             }.frame(width: geo.size.width)
