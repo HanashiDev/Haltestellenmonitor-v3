@@ -87,6 +87,7 @@ struct SingleTripView: View {
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(SingleTripRequest(stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
         
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
@@ -141,6 +142,7 @@ struct SingleTripView: View {
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             guard error == nil else {

@@ -3,23 +3,25 @@
 //  MonitorWidgetExtension
 //
 //  Created by Peter Lohse on 19.04.23.
+//  Modified by Tom Braune on 03.11.23.
 //
 
 import WidgetKit
 import SwiftUI
 import Intents
+import CoreLocation
 
 struct MonitorWidgetEntryView : View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.widgetFamily) var widgetFamily
     var entry: Provider.Entry
-
+    
     var body: some View {
         let prefix = (widgetFamily == .systemLarge || widgetFamily == .systemExtraLarge) ? 16 : 5
         
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                Text(entry.getStopName())
+                Text(entry.departureMonitor?.Name ?? "")
                     .font(.headline)
                     .padding(.bottom, 1.0)
                 if (entry.filterDepartures(departures:  entry.departureMonitor?.Departures ?? []).isEmpty) {
@@ -36,9 +38,21 @@ struct MonitorWidgetEntryView : View {
         }
         .padding([.top, .leading, .bottom])
         .padding(.trailing, 5.0)
-        .background(colorScheme == .dark ? Color.black : Color.yellow)
-        .widgetURL(URL(string: "widget://stop/\(entry.getStopID().addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"))
+        .widgetBackground(colorScheme == .dark ? Color.black : Color.yellow)
+        .widgetURL(URL(string: "widget://stop/\(entry.getStopID(Name: entry.departureMonitor?.Name ?? "-").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"))
         .dynamicTypeSize(.medium ... .large)
+    }
+}
+
+extension View {
+    func widgetBackground(_ backgroundView: some View) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            return containerBackground(for: .widget) {
+                backgroundView
+            }
+        } else {
+            return background(backgroundView)
+        }
     }
 }
 
