@@ -81,6 +81,7 @@ class Provider: IntentTimelineProvider {
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: stopID))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             var entries: [MonitorEntry] = []

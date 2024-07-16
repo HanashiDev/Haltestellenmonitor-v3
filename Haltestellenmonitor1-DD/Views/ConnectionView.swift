@@ -253,6 +253,7 @@ struct ConnectionView: View {
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(requestData)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
         do {
             let (content, _) = try await URLSession.shared.data(for: request)

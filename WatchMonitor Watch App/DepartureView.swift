@@ -54,6 +54,7 @@ struct DepartureView: View {
         request.httpMethod = "POST"
         request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: String(stop.stopId)))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
         
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
