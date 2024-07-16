@@ -38,9 +38,21 @@ struct MonitorWidgetEntryView : View {
         }
         .padding([.top, .leading, .bottom])
         .padding(.trailing, 5.0)
-        .background(colorScheme == .dark ? Color.black : Color.yellow)
+        .widgetBackground(colorScheme == .dark ? Color.black : Color.yellow)
         .widgetURL(URL(string: "widget://stop/\(entry.getStopID(Name: entry.departureMonitor?.Name ?? "-").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"))
         .dynamicTypeSize(.medium ... .large)
+    }
+}
+
+extension View {
+    func widgetBackground(_ backgroundView: some View) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            return containerBackground(for: .widget) {
+                backgroundView
+            }
+        } else {
+            return background(backgroundView)
+        }
     }
 }
 
