@@ -15,7 +15,14 @@ struct MonitorWidgetRow: View {
     
     var body: some View {
         HStack {
-            Text(departure.getName())
+            Text(departure.getName().split(separator: " ")[0])
+                .font(.subheadline)
+                .lineLimit(1)
+                .padding(.horizontal, 3)
+                .background {
+                    RoundedRectangle(cornerRadius: 5).fill(departure.Mot.getColor())
+                }
+            Text(departure.getName().split(separator: " ")[1])
                 .font(.subheadline)
                 .lineLimit(1)
             Spacer()
