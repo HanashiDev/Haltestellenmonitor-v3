@@ -34,18 +34,18 @@ class Provider: IntentTimelineProvider {
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
         var stopID: String = "33000028"
-        var favoriteStops: [Int] = []
+        var favoriteStops: [String] = []
         
         if configuration.favoriteFilter == FavoriteFilter.true {
             if let data = UserDefaults(suiteName: "group.eu.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
-                if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
+                if let decoded = try? JSONDecoder().decode([String].self, from: data) {
                     favoriteStops = decoded
                 }
             }
             
             // Retrieving stop data for marked favorites
             var favStops : [Stop] = stops.filter{favorite in
-                return favoriteStops.contains(favorite.stopId)
+                return favoriteStops.contains(favorite.stopPointRef)
             }
             
             if favStops.isEmpty {
@@ -70,7 +70,7 @@ class Provider: IntentTimelineProvider {
                 }
                 favStops = favStopsLoc.sorted{$0.getDistance() < $1.getDistance()}
                 
-                stopID = String(favStops[0].stopId)
+                stopID = String(favStops[0].stopPointRef)
             }
         } else {
             stopID = configuration.stopType?.identifier ?? "33000028"
@@ -79,7 +79,7 @@ class Provider: IntentTimelineProvider {
         let url = URL(string: "https://webapi.vvo-online.de/dm")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: stopID))
+        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopPointRef: stopID))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 

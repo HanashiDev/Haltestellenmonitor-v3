@@ -65,7 +65,7 @@ struct TripStop: Hashable, Codable {
     
     func getStop() -> Stop? {
         return stops.first { stop in
-            return String(stop.stopId) == self.Id
+            return String(stop.stopPointRef) == self.Id
         }
     }
     

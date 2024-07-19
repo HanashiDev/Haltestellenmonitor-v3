@@ -139,12 +139,12 @@ struct ConnectionStopSelectionView: View {
         
         var newStops: [Stop] = []
         stops.forEach { stop in
-            if (favoriteStops.isFavorite(stopID: stop.stopId)) {
+            if (favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
                 newStops.append(stop)
             }
         }
         stops.forEach { stop in
-            if (!favoriteStops.isFavorite(stopID: stop.stopId)) {
+            if (!favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
                 newStops.append(stop)
             }
         }
@@ -153,7 +153,7 @@ struct ConnectionStopSelectionView: View {
         if searchText.isEmpty {
             return stops
         } else {
-            return stops.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return stops.filter { $0.stopPointName.lowercased().contains(searchText.lowercased()) }
         }
     }
     

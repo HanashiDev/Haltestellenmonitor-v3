@@ -53,6 +53,20 @@
 		D040EC2729EEEB85002DFEBF /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2629EEEB85002DFEBF /* LocationManager.swift */; };
 		D040EC2B29EEFA3E002DFEBF /* FavoriteStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */; };
 		D040EC2E29EF0371002DFEBF /* StopManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2D29EF0371002DFEBF /* StopManager.swift */; };
+		D068983A2C4AF2720085FD4D /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = D06898392C4AF2720085FD4D /* AEXML */; };
+		D068983C2C4AF66C0085FD4D /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = D068983B2C4AF66C0085FD4D /* AEXML */; };
+		D068983E2C4AF6BE0085FD4D /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = D068983D2C4AF6BE0085FD4D /* AEXML */; };
+		D06898402C4AF6C60085FD4D /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = D068983F2C4AF6C60085FD4D /* AEXML */; };
+		D06898422C4AFE280085FD4D /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898412C4AFE280085FD4D /* Service.swift */; };
+		D06898432C4AFE470085FD4D /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898412C4AFE280085FD4D /* Service.swift */; };
+		D06898442C4AFE480085FD4D /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898412C4AFE280085FD4D /* Service.swift */; };
+		D06898452C4AFE480085FD4D /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898412C4AFE280085FD4D /* Service.swift */; };
+		D06898462C4AFE490085FD4D /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898412C4AFE280085FD4D /* Service.swift */; };
+		D06898492C4AFE720085FD4D /* ServiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898482C4AFE720085FD4D /* ServiceParser.swift */; };
+		D068984A2C4AFE720085FD4D /* ServiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898482C4AFE720085FD4D /* ServiceParser.swift */; };
+		D068984B2C4AFE720085FD4D /* ServiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898482C4AFE720085FD4D /* ServiceParser.swift */; };
+		D068984C2C4AFE720085FD4D /* ServiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898482C4AFE720085FD4D /* ServiceParser.swift */; };
+		D068984D2C4AFE720085FD4D /* ServiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898482C4AFE720085FD4D /* ServiceParser.swift */; };
 		D0BD668429EFE0AA004E574C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BD664929EFDD50004E574C /* WidgetKit.framework */; };
 		D0BD668529EFE0AA004E574C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BD664B29EFDD50004E574C /* SwiftUI.framework */; };
 		D0BD668829EFE0AA004E574C /* MonitorWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD668729EFE0AA004E574C /* MonitorWidgetBundle.swift */; };
@@ -229,7 +243,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		D0BD665D29EFDD51004E574C /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
@@ -237,7 +251,7 @@
 				D0BD66B229EFECF1004E574C /* MonitorIntents.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		D0D1996329F40AAA00946D87 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -290,6 +304,8 @@
 		D040EC2929EEF92C002DFEBF /* Haltestellenmonitor1-DD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Haltestellenmonitor1-DD.entitlements"; sourceTree = "<group>"; };
 		D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteStop.swift; sourceTree = "<group>"; };
 		D040EC2D29EF0371002DFEBF /* StopManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopManager.swift; sourceTree = "<group>"; };
+		D06898412C4AFE280085FD4D /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		D06898482C4AFE720085FD4D /* ServiceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceParser.swift; sourceTree = "<group>"; };
 		D0BD664929EFDD50004E574C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		D0BD664B29EFDD50004E574C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		D0BD668329EFE0AA004E574C /* MonitorWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MonitorWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -360,6 +376,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D068983A2C4AF2720085FD4D /* AEXML in Frameworks */,
 				D0C1ECE429F333F9001D214D /* ActivityKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +385,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D068983E2C4AF6BE0085FD4D /* AEXML in Frameworks */,
 				D0BD668529EFE0AA004E574C /* SwiftUI.framework in Frameworks */,
 				D0BD668429EFE0AA004E574C /* WidgetKit.framework in Frameworks */,
 			);
@@ -377,6 +395,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D068983C2C4AF66C0085FD4D /* AEXML in Frameworks */,
 				D0BD66AB29EFECF1004E574C /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -385,6 +404,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D06898402C4AF6C60085FD4D /* AEXML in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +459,7 @@
 			children = (
 				D040EC2929EEF92C002DFEBF /* Haltestellenmonitor1-DD.entitlements */,
 				D040EC2829EEEC2B002DFEBF /* Info.plist */,
+				D06898472C4AFE4C0085FD4D /* Parser */,
 				D040EC2529EEEB7B002DFEBF /* Managers */,
 				D040EC2029EED766002DFEBF /* Helper */,
 				D03A269729EEBA87005B0600 /* Models */,
@@ -529,6 +550,7 @@
 				D0142C592A11285700646C94 /* FavoriteConnection.swift */,
 				D0142C5B2A1128E900646C94 /* TripRequestShort.swift */,
 				D0142C5E2A112CA900646C94 /* StopCoordinate.swift */,
+				D06898412C4AFE280085FD4D /* Service.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -551,6 +573,14 @@
 				D040EC2D29EF0371002DFEBF /* StopManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		D06898472C4AFE4C0085FD4D /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				D06898482C4AFE720085FD4D /* ServiceParser.swift */,
+			);
+			path = Parser;
 			sourceTree = "<group>";
 		};
 		D0BD664829EFDD50004E574C /* Frameworks */ = {
@@ -705,6 +735,9 @@
 				D0D1995E29F40AAA00946D87 /* PBXTargetDependency */,
 			);
 			name = "Haltestellenmonitor1-DD";
+			packageProductDependencies = (
+				D06898392C4AF2720085FD4D /* AEXML */,
+			);
 			productName = "Haltestellenmonitor1-DD";
 			productReference = D03A267F29EEB6C9005B0600 /* Haltestellenmonitor1-DD.app */;
 			productType = "com.apple.product-type.application";
@@ -722,6 +755,9 @@
 			dependencies = (
 			);
 			name = MonitorWidgetExtension;
+			packageProductDependencies = (
+				D068983D2C4AF6BE0085FD4D /* AEXML */,
+			);
 			productName = MonitorWidgetExtension;
 			productReference = D0BD668329EFE0AA004E574C /* MonitorWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -739,6 +775,9 @@
 			dependencies = (
 			);
 			name = MonitorIntents;
+			packageProductDependencies = (
+				D068983B2C4AF66C0085FD4D /* AEXML */,
+			);
 			productName = MonitorIntents;
 			productReference = D0BD66A929EFECF1004E574C /* MonitorIntents.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -756,6 +795,9 @@
 			dependencies = (
 			);
 			name = "WatchMonitor Watch App";
+			packageProductDependencies = (
+				D068983F2C4AF6C60085FD4D /* AEXML */,
+			);
 			productName = "WatchMonitor Watch App";
 			productReference = D0D1995229F40AA900946D87 /* Haltestellenmonitor Dresden.app */;
 			productType = "com.apple.product-type.application";
@@ -797,6 +839,9 @@
 				de,
 			);
 			mainGroup = D03A267629EEB6C9005B0600;
+			packageReferences = (
+				D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */,
+			);
 			productRefGroup = D03A268029EEB6C9005B0600 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -873,7 +918,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D068984D2C4AFE720085FD4D /* ServiceParser.swift in Sources */,
 				D00059C52A52F3800007468A /* Haltestellenmonitor1_DDTests.swift in Sources */,
+				D06898462C4AFE490085FD4D /* Service.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,6 +933,7 @@
 				D03A269C29EEBB3C005B0600 /* StopData.swift in Sources */,
 				D0BD66D829F02C39004E574C /* TripRequest.swift in Sources */,
 				D040EC2E29EF0371002DFEBF /* StopManager.swift in Sources */,
+				D06898422C4AFE280085FD4D /* Service.swift in Sources */,
 				D0142C492A10F73900646C94 /* ConnectionStop.swift in Sources */,
 				D0BD66DA29F03056004E574C /* Trip.swift in Sources */,
 				F19FC6EE2AE9974C00F65316 /* ColorManager.swift in Sources */,
@@ -924,6 +972,7 @@
 				F1A7E7CB2AEA988C00E1910F /* TripSectionViewModel.swift in Sources */,
 				D0142C582A1119D500646C94 /* About.swift in Sources */,
 				D03A26A029EEC248005B0600 /* DepartureRow.swift in Sources */,
+				D06898492C4AFE720085FD4D /* ServiceParser.swift in Sources */,
 				D0BD66FA29F04593004E574C /* PartialRouteRow.swift in Sources */,
 				D03A268329EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift in Sources */,
 				D0C1ECC429F288D3001D214D /* SingleTripRequest.swift in Sources */,
@@ -945,6 +994,7 @@
 				D0C1ECC929F28C2F001D214D /* TripAttributes.swift in Sources */,
 				D0142C3B2A0F90AA00646C94 /* DepartureBinding.swift in Sources */,
 				D0BD66EF29F03C0D004E574C /* PartialRoute.swift in Sources */,
+				D068984A2C4AFE720085FD4D /* ServiceParser.swift in Sources */,
 				F1520EE32AE96E5A001E3E05 /* widgetLocationManager.swift in Sources */,
 				D0BD66A129EFEA0D004E574C /* DepartureStatus.swift in Sources */,
 				D0BD669E29EFEA03004E574C /* Stop.swift in Sources */,
@@ -955,6 +1005,7 @@
 				D0C1ECC529F288D3001D214D /* SingleTripRequest.swift in Sources */,
 				D0142C602A112CBC00646C94 /* StopCoordinate.swift in Sources */,
 				D0C1ECB929F28135001D214D /* SingleTrip.swift in Sources */,
+				D06898432C4AFE470085FD4D /* Service.swift in Sources */,
 				D0C1ECB529F28032001D214D /* TripStop.swift in Sources */,
 				D0BD66A229EFEA0F004E574C /* Departure.swift in Sources */,
 				D0C1ECCD29F2B165001D214D /* ActivityRequest.swift in Sources */,
@@ -986,6 +1037,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D068984B2C4AFE720085FD4D /* ServiceParser.swift in Sources */,
 				D0C1ECCE29F2B165001D214D /* ActivityRequest.swift in Sources */,
 				D0142C502A110F9E00646C94 /* GaussKrueger.swift in Sources */,
 				D0BD66F429F03C15004E574C /* Mot.swift in Sources */,
@@ -1011,6 +1063,7 @@
 				D0C1ECDC29F2FB3C001D214D /* TripStandardSettings.swift in Sources */,
 				D0BD66F229F03C12004E574C /* RegularStop.swift in Sources */,
 				D0BD66BF29EFEEE1004E574C /* DepartureRequest.swift in Sources */,
+				D06898442C4AFE480085FD4D /* Service.swift in Sources */,
 				D0BD66C129EFEF0D004E574C /* DateParser.swift in Sources */,
 				D0C1ECC629F288D3001D214D /* SingleTripRequest.swift in Sources */,
 				D0142C562A1110E900646C94 /* Point.swift in Sources */,
@@ -1028,6 +1081,7 @@
 				D0D1995729F40AAA00946D87 /* ContentView.swift in Sources */,
 				D0D1997529F40B9C00946D87 /* DepartureFilter.swift in Sources */,
 				D0D1997A29F40B9C00946D87 /* RegularStop.swift in Sources */,
+				D068984C2C4AFE720085FD4D /* ServiceParser.swift in Sources */,
 				D0D1997E29F40B9C00946D87 /* DepartureStatus.swift in Sources */,
 				D0D1995529F40AAA00946D87 /* WatchMonitorApp.swift in Sources */,
 				D0D1997629F40B9C00946D87 /* ConnectionFilter.swift in Sources */,
@@ -1052,6 +1106,7 @@
 				D0D1998B29F414BD00946D87 /* DepartureRow.swift in Sources */,
 				D0D1996929F40B9700946D87 /* DateParser.swift in Sources */,
 				D0D1997929F40B9C00946D87 /* Departure.swift in Sources */,
+				D06898452C4AFE480085FD4D /* Service.swift in Sources */,
 				D0142C3D2A0F90AB00646C94 /* DepartureBinding.swift in Sources */,
 				D0D1997329F40B9C00946D87 /* SingleTripRequest.swift in Sources */,
 				D0D1997F29F40B9C00946D87 /* TripRequest.swift in Sources */,
@@ -1568,6 +1623,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tadija/AEXML.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D06898392C4AF2720085FD4D /* AEXML */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */;
+			productName = AEXML;
+		};
+		D068983B2C4AF66C0085FD4D /* AEXML */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */;
+			productName = AEXML;
+		};
+		D068983D2C4AF6BE0085FD4D /* AEXML */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */;
+			productName = AEXML;
+		};
+		D068983F2C4AF6C60085FD4D /* AEXML */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */;
+			productName = AEXML;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D03A267729EEB6C9005B0600 /* Project object */;
 }

@@ -12,7 +12,7 @@ struct DepartureView: View {
     var stop: Stop
     @EnvironmentObject var favoriteStops: FavoriteStop
     @EnvironmentObject var pushTokenHistory: PushTokenHistory
-    @State var departureM: DepartureMonitor? = nil
+    @State var services: [Service] = []
     @State private var searchText = ""
     @State private var isLoaded = false
     @State private var dateTime = Date.now
@@ -40,22 +40,24 @@ struct DepartureView: View {
                             }
                         }
                         Section {
-                            List(searchResults, id: \.self) { departure in
+                            List(searchResults, id: \.self) { service in
                                 ZStack {
                                     NavigationLink {
-                                        SingleTripView(stop: stop, departure: departure)
+                                        Text("TODO")
+                                        //SingleTripView(stop: stop, departure: departure)
                                     } label: {
                                         EmptyView()
                                     }
                                     .opacity(0.0)
                                     .buttonStyle(.plain)
                                     
-                                    DepartureRow(departure: departure)
+                                    DepartureRow(service: service)
                                 }
                                 .swipeActions(edge: .trailing) {
                                     if !ProcessInfo().isiOSAppOnMac {
                                         Button {
-                                            startActivity(departure: departure)
+                                            // TODO
+                                            //startActivity(departure: departure)
                                         } label: {
                                             Label("", systemImage: "pin")
                                         }
@@ -76,16 +78,16 @@ struct DepartureView: View {
             }
             await getDeparture()
         }
-        .navigationTitle("🚏 \(stop.name)")
+        .navigationTitle("🚏 \(stop.stopPointName)")
         .toolbar {
             Button {
-                if (favoriteStops.isFavorite(stopID: stop.stopId)) {
-                    favoriteStops.remove(stopID: stop.stopId)
+                if (favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
+                    favoriteStops.remove(stopPointRef: stop.stopPointRef)
                 } else {
-                    favoriteStops.add(stopID: stop.stopId)
+                    favoriteStops.add(stopPointRef: stop.stopPointRef)
                 }
             } label: {
-                if (favoriteStops.isFavorite(stopID: stop.stopId)) {
+                if (favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
                     Label("", systemImage: "star.fill")
                 } else {
                     Label("", systemImage: "star")
@@ -106,8 +108,8 @@ struct DepartureView: View {
                 Text("OK")
             }
         }
-        .task(id: stop.stopId) {
-            departureM = nil
+        .task(id: stop.stopPointRef) {
+            services = []
             isLoaded = false
             await getDeparture()
         }
@@ -120,32 +122,62 @@ struct DepartureView: View {
         .environmentObject(departureFilter)
     }
     
-    var searchResults: [Departure] {
-        var departures = departureM?.Departures ?? []
-        departures = departures.filter {
-            departureFilter.tram && $0.Mot == "Tram" ||
-            departureFilter.bus && ($0.Mot == "CityBus" || $0.Mot == "IntercityBus" || $0.Mot == "PlusBus") ||
-            departureFilter.suburbanRailway && $0.Mot == "SuburbanRailway" ||
-            departureFilter.train && $0.Mot == "Train" ||
-            departureFilter.cableway && $0.Mot == "Cableway" ||
-            departureFilter.ferry && $0.Mot == "Ferry" ||
-            departureFilter.taxi && $0.Mot == "HailedSharedTaxi"
+    var searchResults: [Service] {
+        var servicesTmp = services
+        servicesTmp = servicesTmp.filter {
+            departureFilter.tram && $0.ptMode == "tram" ||
+            departureFilter.bus && ($0.ptMode == "bus" || $0.ptMode == "trolleybus") ||
+            departureFilter.suburbanRailway && $0.ptMode == "urbanRail" ||
+            departureFilter.train && $0.ptMode == "rail" ||
+            departureFilter.cableway && $0.ptMode == "cableway" ||
+            departureFilter.ferry && $0.ptMode == "water" ||
+            departureFilter.taxi && $0.ptMode == "taxi"
         }
         
         if searchText.isEmpty {
-            return departures
+            return servicesTmp
         } else {
-            return departures.filter {
+            return servicesTmp.filter {
                 $0.getName().lowercased().contains(searchText.lowercased())
             }
         }
     }
 
     func getDeparture() async {
-        let url = URL(string: "https://webapi.vvo-online.de/dm")!
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: String(stop.stopId), time: dateTime.ISO8601Format()))
+        request.httpBody = DepartureRequest(stopPointRef: stop.stopPointRef, time: dateTime.ISO8601Format()).getXML()
+        request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let (content, _) = try await URLSession.shared.data(for: request)
+            let serviceParser = ServiceParser(data: content)
+            serviceParser.parse()
+            self.services = serviceParser.services
+            isLoaded = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
+                if dateTime < Date.now {
+                    dateTime = Date.now
+                }
+                Task {
+                    await getDeparture()
+                }
+            }
+        } catch {
+            print ("error: \(error)")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Task {
+                    await getDeparture()
+                }
+            }
+        }
+        
+        /*let url = URL(string: "https://webapi.vvo-online.de/dm")!
+        var request = URLRequest(url: url, timeoutInterval: 20)
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopPointRef: stop.stopPointRef, time: dateTime.ISO8601Format()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
         
@@ -171,14 +203,14 @@ struct DepartureView: View {
                     await getDeparture()
                 }
             }
-        }
+        }*/
     }
     
     func startActivity(departure: Departure) {
         // TODO: Erfolgsmeldung anzeigen fürn Benutzer
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
-            let attributes = TripAttributes(name: stop.name, type: departure.Mot, stopID: String(stop.stopId), departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
+            let attributes = TripAttributes(name: stop.stopPointName, type: departure.Mot, stopID: stop.stopPointRef, departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
             
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
             
@@ -209,7 +241,7 @@ struct DepartureView: View {
         let url = URL(string: "https://dvb.hsrv.me/api/activity")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: stop.stopPointRef, tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 

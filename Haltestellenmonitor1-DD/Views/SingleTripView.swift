@@ -85,7 +85,7 @@ struct SingleTripView: View {
         let url = URL(string: "https://webapi.vvo-online.de/dm/trip")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(SingleTripRequest(stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format()))
+        request.httpBody = try? JSONEncoder().encode(SingleTripRequest(stopID: stop.stopPointRef, tripID: departure.Id, time: departure.getDateTime().ISO8601Format()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
         
@@ -109,7 +109,7 @@ struct SingleTripView: View {
         // TODO: Erfolgsmeldung anzeigen fürn Benutzer
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
-            let attributes = TripAttributes(name: stop.name, type: departure.Mot, stopID: String(stop.stopId), departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
+            let attributes = TripAttributes(name: stop.stopPointName, type: departure.Mot, stopID: stop.stopPointRef, departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
             
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
             
@@ -140,7 +140,7 @@ struct SingleTripView: View {
         let url = URL(string: "https://dvb.hsrv.me/api/activity")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: String(stop.stopId), tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: stop.stopPointRef, tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
