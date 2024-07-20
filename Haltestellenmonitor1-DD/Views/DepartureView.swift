@@ -78,16 +78,16 @@ struct DepartureView: View {
             }
             await getDeparture()
         }
-        .navigationTitle("🚏 \(stop.stopPointName)")
+        .navigationTitle("🚏 \(stop.name)")
         .toolbar {
             Button {
-                if (favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
-                    favoriteStops.remove(stopPointRef: stop.stopPointRef)
+                if (favoriteStops.isFavorite(stopID: stop.stopID)) {
+                    favoriteStops.remove(stopID: stop.stopID)
                 } else {
-                    favoriteStops.add(stopPointRef: stop.stopPointRef)
+                    favoriteStops.add(stopID: stop.stopID)
                 }
             } label: {
-                if (favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
+                if (favoriteStops.isFavorite(stopID: stop.stopID)) {
                     Label("", systemImage: "star.fill")
                 } else {
                     Label("", systemImage: "star")
@@ -108,7 +108,7 @@ struct DepartureView: View {
                 Text("OK")
             }
         }
-        .task(id: stop.stopPointRef) {
+        .task(id: stop.stopID) {
             services = []
             isLoaded = false
             await getDeparture()
@@ -147,7 +147,7 @@ struct DepartureView: View {
         let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = DepartureRequest(stopPointRef: stop.stopPointRef, time: dateTime.ISO8601Format()).getXML()
+        request.httpBody = DepartureRequest(stopPointRef: stop.gid, time: dateTime.ISO8601Format()).getXML()
         request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
         
         do {
@@ -173,44 +173,13 @@ struct DepartureView: View {
                 }
             }
         }
-        
-        /*let url = URL(string: "https://webapi.vvo-online.de/dm")!
-        var request = URLRequest(url: url, timeoutInterval: 20)
-        request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopPointRef: stop.stopPointRef, time: dateTime.ISO8601Format()))
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
-        
-        do {
-            let (content, _) = try await URLSession.shared.data(for: request)
-
-            let decoder = JSONDecoder()
-            self.departureM = try decoder.decode(DepartureMonitor.self, from: content)
-            isLoaded = true
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
-                if dateTime < Date.now {
-                    dateTime = Date.now
-                }
-                Task {
-                    await getDeparture()
-                }
-            }
-        } catch {
-            print ("error: \(error)")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                Task {
-                    await getDeparture()
-                }
-            }
-        }*/
     }
     
     func startActivity(departure: Departure) {
         // TODO: Erfolgsmeldung anzeigen fürn Benutzer
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
-            let attributes = TripAttributes(name: stop.stopPointName, type: departure.Mot, stopID: stop.stopPointRef, departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
+            let attributes = TripAttributes(name: stop.name, type: departure.Mot, stopID: stop.gid, departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
             
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
             
@@ -241,7 +210,7 @@ struct DepartureView: View {
         let url = URL(string: "https://dvb.hsrv.me/api/activity")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: stop.stopPointRef, tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: stop.gid, tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 

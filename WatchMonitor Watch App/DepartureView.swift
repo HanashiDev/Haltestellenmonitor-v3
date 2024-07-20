@@ -29,7 +29,7 @@ struct DepartureView: View {
                 ProgressView()
             }
         }
-        .navigationTitle(stop.stopPointName)
+        .navigationTitle(stop.name)
         .onAppear {
             Task {
                 await getDeparture()
@@ -53,7 +53,7 @@ struct DepartureView: View {
         let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = DepartureRequest(stopPointRef: stop.stopPointRef).getXML()
+        request.httpBody = DepartureRequest(stopPointRef: stop.gid).getXML()
         request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
         
         do {

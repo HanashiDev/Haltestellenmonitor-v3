@@ -24,10 +24,10 @@ struct MonitorEntry: TimelineEntry {
         }
         
         // Retriving the stopID by the Stops' name
-        let stop = stops.first(where: { String($0.stopPointName) == Name })
+        let stop = stops.first(where: { String($0.name) == Name })
         
         if stop != nil {
-            return String(stop!.stopPointRef)
+            return String(stop!.stopID)
         }
         
         return configuration.stopType?.identifier ?? "33000028"

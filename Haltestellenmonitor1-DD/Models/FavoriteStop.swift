@@ -8,11 +8,11 @@
 import Foundation
 
 @MainActor class FavoriteStop: ObservableObject {
-    @Published var favorites: [String]
+    @Published var favorites: [Int]
     
     init() {
         if let data = UserDefaults(suiteName: "group.eu.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
-            if let decoded = try? JSONDecoder().decode([String].self, from: data) {
+            if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
                 favorites = decoded
                 return
             }
@@ -21,23 +21,23 @@ import Foundation
         self.favorites = []
     }
     
-    func add(stopPointRef: String) {
-        if !isFavorite(stopPointRef: stopPointRef) {
-            favorites.append(stopPointRef)
+    func add(stopID: Int) {
+        if !isFavorite(stopID: stopID) {
+            favorites.append(stopID)
             save()
         }
     }
     
-    func remove(stopPointRef: String) {
-        if let firstIndex = favorites.firstIndex(of: stopPointRef) {
+    func remove(stopID: Int) {
+        if let firstIndex = favorites.firstIndex(of: stopID) {
             favorites.remove(at: firstIndex)
             save()
         }
     }
     
-    func isFavorite(stopPointRef: String) -> Bool {
+    func isFavorite(stopID: Int) -> Bool {
         let cons = favorites.contains { element in
-            if element == stopPointRef {
+            if element == stopID {
                 return true
             } else {
                 return false

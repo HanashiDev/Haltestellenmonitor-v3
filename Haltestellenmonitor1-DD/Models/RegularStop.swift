@@ -116,7 +116,7 @@ struct RegularStop: Hashable, Codable {
     
     func getStop() -> Stop? {
         return stops.first { stop in
-            return String(stop.stopPointRef) == self.DataId
+            return String(stop.stopID) == self.DataId
         }
     }
     

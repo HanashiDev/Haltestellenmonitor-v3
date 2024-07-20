@@ -64,7 +64,7 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
         var stopItems: [StopType] = []
         
         stops.forEach { stop in
-            stopItems.append(StopType(identifier: String(stop.stopPointRef), display: "\(stop.stopPointName) (\(stop.locationName))"))
+            stopItems.append(StopType(identifier: String(stop.stopID), display: stop.getFullName()))
         }
         
         let collection = INObjectCollection(items: stopItems)

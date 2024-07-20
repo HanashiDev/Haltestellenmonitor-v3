@@ -27,16 +27,16 @@ struct StopsView: View {
                     StopRow(stop: stop)
                 }
                 .swipeActions(edge: .trailing) {
-                    if (favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
+                    if (favoriteStops.isFavorite(stopID: stop.stopID)) {
                         Button {
-                            favoriteStops.remove(stopPointRef:  stop.stopPointRef)
+                            favoriteStops.remove(stopID: stop.stopID)
                         } label: {
                             Label("Unstar", systemImage: "star.fill")
                         }
                         .tint(.red)
                     } else {
                         Button {
-                            favoriteStops.add(stopPointRef: stop.stopPointRef)
+                            favoriteStops.add(stopID: stop.stopID)
                         } label: {
                             Label("Star", systemImage: "star")
                         }
@@ -75,11 +75,11 @@ struct StopsView: View {
         if (url.host() != "stop" && url.host() != "trip") {
             return
         }
-        let stopPointRef = String(url.pathComponents[1])
-        if (stopPointRef == "") {
+        let stopID = Int(url.pathComponents[1])
+        if (stopID == nil) {
             return
         }
-        let stop = stops.first(where: {$0.stopPointRef == stopPointRef})
+        let stop = stops.first(where: {$0.stopID == stopID})
         stopManager.selectedStop = stop
     }
     
@@ -90,12 +90,12 @@ struct StopsView: View {
         
         var newStops: [Stop] = []
         stops.forEach { stop in
-            if (favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
+            if (favoriteStops.isFavorite(stopID: stop.stopID)) {
                 newStops.append(stop)
             }
         }
         stops.forEach { stop in
-            if (!favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
+            if (!favoriteStops.isFavorite(stopID: stop.stopID)) {
                 newStops.append(stop)
             }
         }

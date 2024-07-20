@@ -11,17 +11,18 @@ import CoreLocation
 struct Stop: Hashable, Codable, Identifiable {
     let id = UUID()
 
-    var stopPointRef: String
-    var stopPointName: String
-    var locationName: String
-    var longitude: String
-    var latitude: String
+    var stopID: Int
+    var gid: String
+    var name: String
+    var place: String
+    var x: String
+    var y: String
     
     var distance: Double?
     var isFavorite: Bool?
     
     var coordinates: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: Double(self.latitude) ?? 0, longitude: Double(self.longitude) ?? 0)
+        CLLocationCoordinate2D(latitude: Double(self.y) ?? 0, longitude: Double(self.x) ?? 0)
     }
     
     func getDistance() -> Int {
@@ -29,10 +30,10 @@ struct Stop: Hashable, Codable, Identifiable {
     }
     
     private enum CodingKeys : String, CodingKey {
-        case stopPointRef, stopPointName, locationName, longitude, latitude
+        case stopID, gid, name, place, x, y
     }
     
     func getFullName() -> String {
-        return "\(stopPointName) \(locationName)"
+        return "\(name) \(place)"
     }
 }

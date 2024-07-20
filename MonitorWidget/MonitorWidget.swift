@@ -34,18 +34,18 @@ class Provider: IntentTimelineProvider {
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
         var stopID: String = "33000028"
-        var favoriteStops: [String] = []
+        var favoriteStops: [Int] = []
         
         if configuration.favoriteFilter == FavoriteFilter.true {
             if let data = UserDefaults(suiteName: "group.eu.hanashi.Haltestellenmonitor")?.data(forKey: "FavoriteStops") {
-                if let decoded = try? JSONDecoder().decode([String].self, from: data) {
+                if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
                     favoriteStops = decoded
                 }
             }
             
             // Retrieving stop data for marked favorites
             var favStops : [Stop] = stops.filter{favorite in
-                return favoriteStops.contains(favorite.stopPointRef)
+                return favoriteStops.contains(favorite.stopID)
             }
             
             if favStops.isEmpty {
@@ -70,7 +70,7 @@ class Provider: IntentTimelineProvider {
                 }
                 favStops = favStopsLoc.sorted{$0.getDistance() < $1.getDistance()}
                 
-                stopID = String(favStops[0].stopPointRef)
+                stopID = String(favStops[0].stopID)
             }
         } else {
             stopID = configuration.stopType?.identifier ?? "33000028"

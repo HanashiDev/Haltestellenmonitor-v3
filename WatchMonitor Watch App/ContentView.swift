@@ -19,16 +19,16 @@ struct ContentView: View {
                     StopRow(stop: stop)
                 }
                     .swipeActions(edge: .trailing) {
-                        if (favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
+                        if (favoriteStops.isFavorite(stopID: stop.stopID)) {
                             Button {
-                                favoriteStops.remove(stopPointRef: stop.stopPointRef)
+                                favoriteStops.remove(stopID: stop.stopID)
                             } label: {
                                 Label("Unstar", systemImage: "star.fill")
                             }
                             .tint(.red)
                         } else {
                             Button {
-                                favoriteStops.add(stopPointRef: stop.stopPointRef)
+                                favoriteStops.add(stopID: stop.stopID)
                             } label: {
                                 Label("Star", systemImage: "star")
                             }
@@ -55,12 +55,12 @@ struct ContentView: View {
         
         var newStops: [Stop] = []
         stops.forEach { stop in
-            if (favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
+            if (favoriteStops.isFavorite(stopID: stop.stopID)) {
                 newStops.append(stop)
             }
         }
         stops.forEach { stop in
-            if (!favoriteStops.isFavorite(stopPointRef: stop.stopPointRef)) {
+            if (!favoriteStops.isFavorite(stopID: stop.stopID)) {
                 newStops.append(stop)
             }
         }
@@ -69,7 +69,7 @@ struct ContentView: View {
         if searchText.isEmpty {
             return stops
         } else {
-            return stops.filter { $0.stopPointName.contains(searchText) }
+            return stops.filter { $0.name.contains(searchText) }
         }
     }
 }
