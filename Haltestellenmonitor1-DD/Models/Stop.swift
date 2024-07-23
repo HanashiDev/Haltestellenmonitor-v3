@@ -41,6 +41,12 @@ struct Stop: Hashable, Codable, Identifiable {
         return name
     }
     
+    static func getBystopID(stopID: String) -> Stop? {
+        return stops.first { stop in
+            return stopID == String(stop.stopID)
+        }
+    }
+    
     static func getByGID(gid: String) -> Stop? {
         return stops.first { stop in
             return gid == stop.gid

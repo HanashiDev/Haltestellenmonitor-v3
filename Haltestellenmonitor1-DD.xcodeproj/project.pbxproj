@@ -229,7 +229,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		D0BD665D29EFDD51004E574C /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
@@ -237,7 +237,7 @@
 				D0BD66B229EFECF1004E574C /* MonitorIntents.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D0D1996329F40AAA00946D87 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;

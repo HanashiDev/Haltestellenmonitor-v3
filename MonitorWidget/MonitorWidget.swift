@@ -31,7 +31,7 @@ class Provider: IntentTimelineProvider {
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
-        var stopID: String = "de:14612:28"
+        var stop: Stop = Stop.getByGID(gid: "de:14612:28")!
         var favoriteStops: [Int] = []
         
         if configuration.favoriteFilter == FavoriteFilter.true {
@@ -48,7 +48,6 @@ class Provider: IntentTimelineProvider {
             
             if favStops.isEmpty {
                 print("No favorites found.")
-                stopID = "de:14612:28"
                 
             } else {
                 var favStopsLoc : [Stop] = []
@@ -68,18 +67,19 @@ class Provider: IntentTimelineProvider {
                 }
                 favStops = favStopsLoc.sorted{$0.getDistance() < $1.getDistance()}
                 
-                stopID = String(favStops[0].gid)
+                stop = favStops[0]
             }
         } else {
-            stopID = configuration.stopType?.identifier ?? "de:14612:28"
+            let stopTmp = Stop.getBystopID(stopID: configuration.stopType?.identifier ?? "0")
+            if stopTmp != nil {
+                stop = stopTmp!
+            }
         }
-        
-        let stop = Stop.getByGID(gid: stopID)
         
         let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = DepartureRequest(stopPointRef: stopID, numberOfResults: 75).getXML()
+        request.httpBody = DepartureRequest(stopPointRef: stop.gid, numberOfResults: 75).getXML()
         request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
