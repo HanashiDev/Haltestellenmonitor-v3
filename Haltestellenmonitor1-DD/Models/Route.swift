@@ -12,7 +12,7 @@ struct Route: Hashable, Codable {
     var Interchanges: Int
     var PartialRoutes: [PartialRoute]
     
-    func getStartTime() -> Date? {
+    /*func getStartTime() -> Date? {
         let regularStop = self.PartialRoutes.first?.RegularStops?.first
         if (regularStop == nil) {
             return nil
@@ -81,5 +81,5 @@ struct Route: Hashable, Codable {
         let endComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: endTime!)
         
         return calendar.dateComponents([.minute], from: startComponents, to: endComponents).minute!
-    }
+    }*/
 }

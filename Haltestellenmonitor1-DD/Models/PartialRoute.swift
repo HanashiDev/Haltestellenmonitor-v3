@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct PartialRoute: Hashable, Codable {
-    var Mot: Mot
+    /*var Mot: Mot
     var RegularStops: [RegularStop]?
     
     func getName() -> String {
@@ -180,5 +180,5 @@ struct PartialRoute: Hashable, Codable {
         let start: Double = getStartTime()?.timeIntervalSince1970 ?? 0
         let end: Double = getEndTime()?.timeIntervalSince1970 ?? 0
         return Int((end - start) / 60)
-    }
+    }*/
 }

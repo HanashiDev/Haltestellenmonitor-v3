@@ -15,23 +15,9 @@ import MapKit
 struct MonitorEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
-    let departureMonitor: DepartureMonitor?
+    let stop: Stop?
+    let stopEvents: [StopEvent]?
     let widgetLocationManager = WidgetLocationManager()
-    
-    func getStopID(Name : String) -> String {
-        if Name == "_" {
-            return configuration.stopType?.identifier ?? "33000028"
-        }
-        
-        // Retriving the stopID by the Stops' name
-        let stop = stops.first(where: { String($0.name) == Name })
-        
-        if stop != nil {
-            return String(stop!.stopID)
-        }
-        
-        return configuration.stopType?.identifier ?? "33000028"
-    }
     
     func getLineFilters() -> [String]? {
         if (configuration.lineFilter == nil || configuration.lineFilter?.isEmpty == true) {
@@ -48,24 +34,24 @@ struct MonitorEntry: TimelineEntry {
         return lines
     }
     
-    func filterDepartures(departures: [Departure]) -> [Departure] {
+    func filterStopEvents(stopEvents: [StopEvent]) -> [StopEvent] {
         let lineFilters = self.getLineFilters()
-        var newDepartures: [Departure] = []
+        var newStopEvents: [StopEvent] = []
         
-        departures.forEach { departure in
+        stopEvents.forEach { stopEvent in
             var embed = true
             if (lineFilters != nil || lineFilters?.isEmpty == false) {
-                embed = lineFilters?.contains(departure.LineName) == true
+                embed = lineFilters?.contains(stopEvent.PublishedLineName) == true
             }
             if (!embed) {
                 return
             }
             
-            if (departure.getIn(date: self.date, realInTime: true) >= 0) {
-                newDepartures.append(departure)
+            if (stopEvent.getIn(date: self.date, realInTime: true) >= 0) {
+                newStopEvents.append(stopEvent)
             }
         }
         
-        return newDepartures
+        return newStopEvents
     }
 }

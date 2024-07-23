@@ -2,7 +2,7 @@
 //  DepartureRequest.swift
 //  Haltestellenmonitor1-DD
 //
-//  Created by Peter Lohse on 18.04.23.
+//  Created by Peter Lohse on 23.07.24.
 //
 
 import Foundation
@@ -11,8 +11,13 @@ import AEXML
 struct DepartureRequest: Hashable, Codable {
     var stopPointRef: String
     var time: String?
-    var limit: Int = 100
-    var eventType: String = "departure"
+    var lineRef: String?
+    var directionRef: String?
+    var numberOfResults: Int = 50
+    var stopEventType: String = "both"
+    var includePreviousCalls = false
+    var includeOnwardCalls = false
+    var includeRealtimeData = true
     
     func getXML() -> Data? {
         let xml = AEXMLDocument()
@@ -45,14 +50,30 @@ struct DepartureRequest: Hashable, Codable {
         
         let params = stopEventRequest.addChild(name: "Params")
         
+        if self.lineRef != nil {
+            
+        }
+        
         let numberOfResults = params.addChild(name: "NumberOfResults")
-        numberOfResults.value = String(self.limit)
+        numberOfResults.value = String(self.numberOfResults)
         
         let stopEventType = params.addChild(name: "StopEventType")
-        stopEventType.value = self.eventType
+        stopEventType.value = self.stopEventType
         
-        let includeRealtimeData = params.addChild(name: "IncludeRealtimeData")
-        includeRealtimeData.value = "true"
+        if (self.includePreviousCalls) {
+            let includePreviousCalls = params.addChild(name: "IncludePreviousCalls")
+            includePreviousCalls.value = "true"
+        }
+        
+        if (self.includeOnwardCalls) {
+            let includeOnwardCalls = params.addChild(name: "IncludeOnwardCalls")
+            includeOnwardCalls.value = "true"
+        }
+        
+        if (self.includeRealtimeData) {
+            let includeRealtimeData = params.addChild(name: "IncludeRealtimeData")
+            includeRealtimeData.value = "true"
+        }
         
         return xml.xml.data(using: .utf8)
     }

@@ -36,4 +36,14 @@ struct Stop: Hashable, Codable, Identifiable {
     func getFullName() -> String {
         return "\(name) \(place)"
     }
+    
+    func getName() -> String {
+        return name
+    }
+    
+    static func getByGID(gid: String) -> Stop? {
+        return stops.first { stop in
+            return gid == stop.gid
+        }
+    }
 }

@@ -16,7 +16,8 @@ class TripSectionViewModel: ObservableObject {
     }
     
     func getTime() -> String {
-      "\(route.getTimeDifference()) Min"
+      //"\(route.getTimeDifference()) Min"
+        return ""
     }
     
     func getUmstiege() -> String {
@@ -24,10 +25,11 @@ class TripSectionViewModel: ObservableObject {
     }
     
     func getDuration(_ partialRoute: PartialRoute) -> (Int, String) {
-        if partialRoute.Mot.type == "Footpath" && partialRoute.hasNoTime(){
+        return (0, "")
+        /*if partialRoute.Mot.type == "Footpath" && partialRoute.hasNoTime(){
             return  getWaitingTime(partialRoute, routes: route.PartialRoutes)
         }
-        return (partialRoute.getDuration(), "")
+        return (partialRoute.getDuration(), "")*/
     }
     
     func getWaitingTime(_ e: PartialRoute, routes: [PartialRoute]) -> (Int, String) {
@@ -47,7 +49,7 @@ class TripSectionViewModel: ObservableObject {
                 var beforeIndex = index - 1
                 var afterIndex = index + 1
                 
-                while (routes[beforeIndex].getDuration() == 0 && beforeIndex > 0) {
+                /*while (routes[beforeIndex].getDuration() == 0 && beforeIndex > 0) {
                     let item =  routes[beforeIndex]
                     if item.Mot.type == "MobilityStairsUp" {
                         str += " | Treppe ↑"
@@ -72,7 +74,7 @@ class TripSectionViewModel: ObservableObject {
                 
                 let difference = Calendar.current.dateComponents([.minute], from: date1, to: date2).minute
                 
-                value = difference ?? 0
+                value = difference ?? 0*/
             }
         }
         

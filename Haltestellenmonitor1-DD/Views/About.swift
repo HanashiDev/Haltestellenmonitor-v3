@@ -23,9 +23,6 @@ struct About: View {
                     Link(destination: URL(string: "mailto:info@hanashi.dev?subject=Haltestellenmonitor%20Dresden%20Feedback")!) {
                         Text(verbatim: "📧 info@hanashi.dev")
                     }
-                    Link(destination: URL(string: "https://dresden.network/@Hanashi")!) {
-                        Text(verbatim: "🦣 @Hanashi@dresden.network")
-                    }
                     Link(destination: URL(string: "https://hanashi.dev")!) {
                         Text(verbatim: "🌍 Homepage")
                     }

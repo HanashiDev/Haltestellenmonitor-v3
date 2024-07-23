@@ -11,8 +11,9 @@ struct TripSection: View {
     var vm: TripSectionViewModel
     
     var body: some View {
+        Text("TODO")
         // TODO: Steig bzw. Gleis überall einfügen
-        Section {
+        /*Section {
             HStack {
                 Text("\(vm.route.getStartTimeString()) Uhr")
                 Image(systemName: "arrow.forward")
@@ -60,12 +61,13 @@ struct TripSection: View {
                 }
             }
         label: { tripView() }
-        }
+        }*/
     }
     
     @ViewBuilder
     func tripView() -> some View {
-        let time: CGFloat = CGFloat(vm.route.getTimeDifference())
+        Text("TODO")
+        /*let time: CGFloat = CGFloat(vm.route.getTimeDifference())
         
         GeometryReader { geo in
             HStack (spacing: 0) {
@@ -85,14 +87,14 @@ struct TripSection: View {
                     }.padding(0)
                 }
             }.frame(width: geo.size.width)
-        }
+        }*/
     }
 }
 
-struct TripSection_Previews: PreviewProvider {
+/*struct TripSection_Previews: PreviewProvider {
     static var previews: some View {
         Form {
             TripSection(vm: TripSectionViewModel(route: tripTmp.Routes[0]))
         }
     }
-}
+}*/

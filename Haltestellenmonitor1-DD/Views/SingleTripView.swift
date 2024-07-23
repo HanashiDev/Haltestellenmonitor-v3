@@ -10,30 +10,28 @@ import ActivityKit
 
 struct SingleTripView: View {
     @EnvironmentObject var pushTokenHistory: PushTokenHistory
-    @State var singleTrip: SingleTrip? = nil
+    @State var callAtStops: [CallAtStop] = []
     @State private var isLoaded = false
     @State private var searchText = ""
     @State private var showingSuccessAlert = false
     @State private var showingErrorAlert = false
     var stop: Stop
-    var departure: Departure
+    var stopEvent: StopEvent
     
     var body: some View {
         Group {
             if (isLoaded) {
-                List(searchResults, id: \.self) { tripStop in
-                    if (tripStop.Position == "Current" || tripStop.Position == "Next") {
-                        ZStack {
-                            NavigationLink {
-                                DepartureView(stop: tripStop.getStop() ?? stop)
-                            } label: {
-                                EmptyView()
-                            }
-                            .opacity(0.0)
-                            .buttonStyle(.plain)
-
-                            SingleTripRow(tripStop: tripStop)
+                List(searchResults, id: \.self) { callAtStop in
+                    ZStack {
+                        NavigationLink {
+                            DepartureView(stop: callAtStop.getStop() ?? stop)
+                        } label: {
+                            EmptyView()
                         }
+                        .opacity(0.0)
+                        .buttonStyle(.plain)
+
+                        SingleTripRow(callAtStop: callAtStop)
                     }
                 }
             } else {
@@ -43,8 +41,8 @@ struct SingleTripView: View {
         .refreshable {
             await getSingleTrip()
         }
-        .navigationTitle("\(departure.getIcon()) \(departure.getName())")
-        .task(id: departure.Id, priority: .userInitiated) {
+        .navigationTitle("\(stopEvent.getIcon()) \(stopEvent.getName())")
+        .task(id: stopEvent.LineRef, priority: .userInitiated) {
             await getSingleTrip()
         }
         .alert("Diese Abfahrt wird nun als Live-Aktivität angezeigt.", isPresented: $showingSuccessAlert) {
@@ -73,28 +71,30 @@ struct SingleTripView: View {
         .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
     }
     
-    var searchResults: [TripStop] {
+    var searchResults: [CallAtStop] {
         if searchText.isEmpty {
-            return singleTrip?.Stops ?? []
+            return callAtStops
         } else {
-            return (singleTrip?.Stops ?? []).filter { $0.Name.lowercased().contains(searchText.lowercased()) }
+            return callAtStops.filter { $0.StopPointName.lowercased().contains(searchText.lowercased()) }
         }
     }
     
     func getSingleTrip() async {
-        let url = URL(string: "https://webapi.vvo-online.de/dm/trip")!
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(SingleTripRequest(stopID: stop.gid, tripID: departure.Id, time: departure.getDateTime().ISO8601Format()))
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
+        request.httpBody = DepartureRequest(stopPointRef: stop.gid, time: self.stopEvent.ThisCall.ServiceArrival?.EstimatedTime ?? "", lineRef: self.stopEvent.LineRef, directionRef: self.stopEvent.DirectionRef, numberOfResults: 1, includeOnwardCalls: true).getXML()
+        request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
         
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            
-            let decoder = JSONDecoder()
-            self.singleTrip = try decoder.decode(SingleTrip.self, from: content)
-            isLoaded = true
+            let stopEventParser = StopEventResponseParser(data: content)
+            stopEventParser.parse()
+            if (stopEventParser.stopEvents.count > 0) {
+                callAtStops.append(stopEventParser.stopEvents[0].ThisCall)
+                callAtStops.append(contentsOf: stopEventParser.stopEvents[0].OnwardCalls ?? [])
+                isLoaded = true
+            }
         } catch {
             print ("error: \(error)")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -107,7 +107,7 @@ struct SingleTripView: View {
     
     func startActivity() {
         // TODO: Erfolgsmeldung anzeigen fürn Benutzer
-        if ActivityAuthorizationInfo().areActivitiesEnabled {
+        /*if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
             let attributes = TripAttributes(name: stop.name, type: departure.Mot, stopID: stop.gid, departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
             
@@ -128,11 +128,11 @@ struct SingleTripView: View {
             } catch {
                 print("Error \(error.localizedDescription)")
             }
-        }
+        }*/
     }
     
     func saveAcitivityOnServer(token: String) {
-        if (pushTokenHistory.isInHistory(token: token)) {
+        /*if (pushTokenHistory.isInHistory(token: token)) {
             return
         }
         pushTokenHistory.add(token: token)
@@ -159,14 +159,14 @@ struct SingleTripView: View {
             
             print(content)
         }
-        task.resume()
+        task.resume()*/
     }
 }
 
-struct SingleTripView_Previews: PreviewProvider {
+/*struct SingleTripView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            SingleTripView(stop: stops[0], departure: departureM.Departures[0])
+            SingleTripView(stopEvent: StopEvent(ThisCall: CallAtStop(StopPointRef: "", StopPointName: ""), OperatingDayRef: "", JourneyRef: "", LineRef: "", DirectionRef: "", Mode: "", ModeName: "", PublishedLineName: "", DestinationText: ""), stopPointRef: "")
         }.environmentObject(PushTokenHistory())
     }
-}
+}*/

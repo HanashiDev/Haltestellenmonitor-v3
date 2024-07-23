@@ -12,7 +12,7 @@ struct DepartureView: View {
     var stop: Stop
     @EnvironmentObject var favoriteStops: FavoriteStop
     @EnvironmentObject var pushTokenHistory: PushTokenHistory
-    @State var services: [Service] = []
+    @State var stopEvents: [StopEvent] = []
     @State private var searchText = ""
     @State private var isLoaded = false
     @State private var dateTime = Date.now
@@ -40,18 +40,17 @@ struct DepartureView: View {
                             }
                         }
                         Section {
-                            List(searchResults, id: \.self) { service in
+                            List(searchResults, id: \.self) { stopEvent in
                                 ZStack {
                                     NavigationLink {
-                                        Text("TODO")
-                                        //SingleTripView(stop: stop, departure: departure)
+                                        SingleTripView(stop: stop, stopEvent: stopEvent)
                                     } label: {
                                         EmptyView()
                                     }
                                     .opacity(0.0)
                                     .buttonStyle(.plain)
                                     
-                                    DepartureRow(service: service)
+                                    DepartureRow(stopEvent: stopEvent)
                                 }
                                 .swipeActions(edge: .trailing) {
                                     if !ProcessInfo().isiOSAppOnMac {
@@ -108,9 +107,9 @@ struct DepartureView: View {
                 Text("OK")
             }
         }
-        .task(id: stop.stopID) {
-            services = []
-            isLoaded = false
+        .task(id: stop.id) {
+            /*stopEvents = []
+            isLoaded = false*/
             await getDeparture()
         }
         .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
@@ -122,22 +121,22 @@ struct DepartureView: View {
         .environmentObject(departureFilter)
     }
     
-    var searchResults: [Service] {
-        var servicesTmp = services
-        servicesTmp = servicesTmp.filter {
-            departureFilter.tram && $0.ptMode == "tram" ||
-            departureFilter.bus && ($0.ptMode == "bus" || $0.ptMode == "trolleybus") ||
-            departureFilter.suburbanRailway && $0.ptMode == "urbanRail" ||
-            departureFilter.train && $0.ptMode == "rail" ||
-            departureFilter.cableway && $0.ptMode == "cableway" ||
-            departureFilter.ferry && $0.ptMode == "water" ||
-            departureFilter.taxi && $0.ptMode == "taxi"
+    var searchResults: [StopEvent] {
+        var stopEventsTmp = stopEvents
+        stopEventsTmp = stopEventsTmp.filter {
+            departureFilter.tram && $0.Mode == "tram" ||
+            departureFilter.bus && ($0.Mode == "bus" || $0.Mode == "trolleybus") ||
+            departureFilter.suburbanRailway && $0.Mode == "urbanRail" ||
+            departureFilter.train && $0.Mode == "rail" ||
+            departureFilter.cableway && $0.Mode == "cableway" ||
+            departureFilter.ferry && $0.Mode == "water" ||
+            departureFilter.taxi && $0.Mode == "taxi"
         }
         
         if searchText.isEmpty {
-            return servicesTmp
+            return stopEventsTmp
         } else {
-            return servicesTmp.filter {
+            return stopEventsTmp.filter {
                 $0.getName().lowercased().contains(searchText.lowercased())
             }
         }
@@ -152,9 +151,9 @@ struct DepartureView: View {
         
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            let serviceParser = ServiceParser(data: content)
-            serviceParser.parse()
-            self.services = serviceParser.services
+            let stopEventParser = StopEventResponseParser(data: content)
+            stopEventParser.parse()
+            self.stopEvents = stopEventParser.stopEvents
             isLoaded = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
@@ -175,7 +174,7 @@ struct DepartureView: View {
         }
     }
     
-    func startActivity(departure: Departure) {
+    /*func startActivity(departure: Departure) {
         // TODO: Erfolgsmeldung anzeigen fürn Benutzer
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
@@ -199,9 +198,9 @@ struct DepartureView: View {
                 print("Error \(error.localizedDescription)")
             }
         }
-    }
+    }*/
     
-    func saveAcitivityOnServer(departure: Departure, token: String) {
+    /*func saveAcitivityOnServer(departure: Departure, token: String) {
         if (pushTokenHistory.isInHistory(token: token)) {
             return
         }
@@ -230,10 +229,10 @@ struct DepartureView: View {
             print(content)
         }
         task.resume()
-    }
+    }*/
 }
 
-struct DepartureView_Previews: PreviewProvider {
+/*struct DepartureView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             DepartureView(stop: stops[1])
@@ -241,4 +240,4 @@ struct DepartureView_Previews: PreviewProvider {
             .environmentObject(FavoriteStop())
             .environmentObject(PushTokenHistory())
     }
-}
+}*/

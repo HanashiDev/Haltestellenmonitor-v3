@@ -10,18 +10,17 @@ import SwiftUI
 struct DepartureView: View {
     var stop: Stop
     @State private var searchText = ""
-    @State private var services: [Service] = []
+    @State private var stopEvents: [StopEvent] = []
     @State private var isLoaded = false
 
     var body: some View {
         Group {
             if (isLoaded) {
-                List(searchResults, id: \.self) { service in
+                List(searchResults, id: \.self) { stopEvent in
                     NavigationLink {
-                        Text("TODO")
-                        // SingleTripView(stop: stop, departure: departure)
+                        SingleTripView(stop: stop, stopEvent: stopEvent)
                     } label: {
-                        DepartureRow(service: service)
+                        DepartureRow(stopEvent: stopEvent)
                     }
                 }
                 .searchable(text: $searchText)
@@ -37,8 +36,8 @@ struct DepartureView: View {
         }
     }
     
-    var searchResults: [Service] {
-        let departures = services
+    var searchResults: [StopEvent] {
+        let departures = stopEvents
 
         if searchText.isEmpty {
             return departures
@@ -58,9 +57,9 @@ struct DepartureView: View {
         
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            let serviceParser = ServiceParser(data: content)
+            let serviceParser = StopEventResponseParser(data: content)
             serviceParser.parse()
-            self.services = serviceParser.services
+            self.stopEvents = serviceParser.stopEvents
             isLoaded = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {

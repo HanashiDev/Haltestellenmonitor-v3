@@ -8,51 +8,51 @@
 import SwiftUI
 
 struct DepartureRow: View {
-    var service: Service
+    var stopEvent: StopEvent
     
     @ObservedObject private var departureBinding: DepartureBinding
     
-    init(service: Service) {
-        self.service = service
+    init(stopEvent: StopEvent) {
+        self.stopEvent = stopEvent
         
-        self.departureBinding = DepartureBinding(inMinute: service.getIn())
+        self.departureBinding = DepartureBinding(inMinute: stopEvent.getIn())
     }
     
     var body: some View {
         HStack(alignment: .center) {
-            Text(service.getIcon())
+            Text(stopEvent.getIcon())
             
             VStack(alignment: .leading) {
-                Text(service.getName())
+                Text(stopEvent.getName())
                     .font(.headline)
                 
                     .lineLimit(1)
                 HStack {
-                    Text("\(service.getScheduledTime()) Uhr")
-                    if (service.getTimeDifference() > 0) {
-                        Text("+\(service.getTimeDifference())")
+                    Text("\(stopEvent.getScheduledTime()) Uhr")
+                    if (stopEvent.getTimeDifference() > 0) {
+                        Text("+\(stopEvent.getTimeDifference())")
                             .foregroundColor(Color.red)
-                    } else if (service.getTimeDifference() < 0) {
-                        Text("\(service.getTimeDifference())")
+                    } else if (stopEvent.getTimeDifference() < 0) {
+                        Text("\(stopEvent.getTimeDifference())")
                             .foregroundColor(Color.green)
                     }
                     Spacer()
-                    Text("\(service.getRealTime()) Uhr")
+                    Text("\(stopEvent.getRealTime()) Uhr")
                 }
                 .font(.subheadline)
                 
                 HStack {
-                    if (service.plannedBay != "") {
-                        Text(service.getPlatForm())
+                    if (stopEvent.ThisCall.PlannedBay != nil || stopEvent.ThisCall.EstimatedBay != nil) {
+                        Text(stopEvent.getPlatForm())
                             .font(.footnote)
                     }
                     Spacer()
-                    /*if departure.State == "Cancelled" {
+                    if stopEvent.Cancelled == "true" {
                         Text("Halt fällt aus")
                             .foregroundColor(Color.red)
-                    } else {*/
+                    } else {
                         Text("in \(departureBinding.inMinute) min")
-                    //}
+                    }
                 }
                 .font(.subheadline)
             }

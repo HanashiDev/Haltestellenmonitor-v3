@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TripStop: Hashable, Codable {
+/*struct TripStop: Hashable, Codable {
     var Id: String
     var Place: String
     var Name: String
@@ -79,4 +79,4 @@ struct TripStop: Hashable, Codable {
             return ""
         }
     }
-}
+}*/
