@@ -51,7 +51,20 @@ struct DepartureRequest: Hashable, Codable {
         let params = stopEventRequest.addChild(name: "Params")
         
         if self.lineRef != nil {
+            let lineFilter = params.addChild(name: "LineFilter")
             
+            let line = lineFilter.addChild(name: "Line")
+            
+            let lineRef = line.addChild(name: "LineRef")
+            lineRef.value = self.lineRef
+            
+            if (self.directionRef != nil) {
+                let directionRef = line.addChild(name: "DirectionRef")
+                directionRef.value = self.directionRef
+            }
+            
+            let exclude = lineFilter.addChild(name: "Exclude")
+            exclude.value = "false"
         }
         
         let numberOfResults = params.addChild(name: "NumberOfResults")
