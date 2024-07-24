@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ActivityKit
+import AEXML
 
 struct DepartureView: View {
     var stop: Stop
@@ -19,6 +20,7 @@ struct DepartureView: View {
     @State private var topExpanded: Bool = true
     @State private var showingSuccessAlert = false
     @State private var showingErrorAlert = false
+    @State private var alreadyStarted = false
     @StateObject var departureFilter = DepartureFilter()
     
     var body: some View {
@@ -143,10 +145,15 @@ struct DepartureView: View {
     }
 
     func getDeparture() async {
+        var localDateTime = dateTime
+        if localDateTime < Date.now {
+            localDateTime = Date.now
+        }
+        
         let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = DepartureRequest(stopPointRef: stop.gid, time: dateTime.ISO8601Format()).getXML()
+        request.httpBody = DepartureRequest(stopPointRef: stop.gid, time: localDateTime.ISO8601Format()).getXML()
         request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
         
         do {
@@ -157,9 +164,6 @@ struct DepartureView: View {
             isLoaded = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
-                if dateTime < Date.now {
-                    dateTime = Date.now
-                }
                 Task {
                     await getDeparture()
                 }
