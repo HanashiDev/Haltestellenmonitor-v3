@@ -12,5 +12,6 @@ struct ActivityRequest: Hashable, Codable {
     var stopGID: String
     var lineRef: String
     var directionRef: String
+    var timetabledTime: String
     var estimatedTime: String
 }
