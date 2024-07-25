@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct RegularStopRow: View {
-    //var regularStop: RegularStop
+    var regularStop: RegularStop
     var isFirst: Bool
     
     var body: some View {
-        /*VStack(alignment: .leading) {
+        VStack(alignment: .leading) {
             HStack {
                 Text(regularStop.Name)
                 Spacer()
@@ -44,8 +44,7 @@ struct RegularStopRow: View {
                 Text("\(isFirst ? regularStop.getRealDepartureTime() : regularStop.getRealArrivalTime()) Uhr")
             }
         }
-        .font(.subheadline)*/
-        Text("TODO")
+        .font(.subheadline)
     }
 }
 

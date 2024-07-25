@@ -14,8 +14,7 @@ struct PartialRouteRow: View {
     var partialRoute: PartialRoute
     
     var body: some View {
-        Text("TODO")
-        /*HStack(spacing: 0){
+        HStack(spacing: 0){
             
             VStack {
                 if partialRoute.getStartTimeString() != nil {
@@ -70,7 +69,7 @@ struct PartialRouteRow: View {
             .lineLimit(1)
             .font(.footnote)
         }
-        .padding(.leading, -35).padding(.trailing, -15)*/
+        .padding(.leading, -35).padding(.trailing, -15)
     }
 }
 
