@@ -178,11 +178,10 @@ struct DepartureView: View {
         }
     }
     
-    /*func startActivity(departure: Departure) {
-        // TODO: Erfolgsmeldung anzeigen fürn Benutzer
+    func startActivity(stopEvent: StopEvent) {
         if ActivityAuthorizationInfo().areActivitiesEnabled {
-            let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
-            let attributes = TripAttributes(name: stop.name, type: departure.Mot, stopID: stop.gid, departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
+            let state = TripAttributes.ContentState(timetabledTime: stopEvent.ThisCall.getTimetabledTime(), estimatedTime: stopEvent.ThisCall.getEstimatedTime())
+            let attributes = TripAttributes(name: stop.name, mode: stopEvent.Mode, stopID: String(stop.stopID), lineRef: stopEvent.LineRef, estimatedTime: stopEvent.ThisCall.getEstimatedTime(), directionRef: stopEvent.DirectionRef, publishedLineName: stopEvent.PublishedLineName, destinationText: stopEvent.DestinationText)
             
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
             
@@ -195,16 +194,16 @@ struct DepartureView: View {
                 Task {
                     for await data in activity.pushTokenUpdates {
                         let token = data.map {String(format: "%02x", $0)}.joined()
-                        saveAcitivityOnServer(departure: departure, token: token)
+                        saveAcitivityOnServer(stopEvent: stopEvent, token: token)
                     }
                 }
             } catch {
                 print("Error \(error.localizedDescription)")
             }
         }
-    }*/
+    }
     
-    /*func saveAcitivityOnServer(departure: Departure, token: String) {
+    func saveAcitivityOnServer(stopEvent: StopEvent, token: String) {
         if (pushTokenHistory.isInHistory(token: token)) {
             return
         }
@@ -213,7 +212,7 @@ struct DepartureView: View {
         let url = URL(string: "https://dvb.hsrv.me/api/activity")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: stop.gid, tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopGID: stop.gid, lineRef: stopEvent.LineRef, directionRef: stopEvent.DirectionRef, estimatedTime: stopEvent.ThisCall.ServiceArrival?.EstimatedTime ?? ""))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
@@ -233,7 +232,7 @@ struct DepartureView: View {
             print(content)
         }
         task.resume()
-    }*/
+    }
 }
 
 /*struct DepartureView_Previews: PreviewProvider {

@@ -22,6 +22,26 @@ struct CallAtStop: Hashable {
     var NoBoardingAtStop: String?
     var NoAlightingAtStop: String?
     
+    func getTimetabledTime() -> String {
+        if self.ServiceArrival?.TimetabledTime != nil {
+            return self.ServiceArrival!.TimetabledTime!
+        } else if self.ServiceDeparture!.TimetabledTime != nil {
+            return self.ServiceDeparture!.TimetabledTime!
+        }
+        
+        return ""
+    }
+    
+    func getEstimatedTime() -> String {
+        if self.ServiceArrival?.EstimatedTime != nil {
+            return self.ServiceArrival!.EstimatedTime!
+        } else if self.ServiceDeparture!.EstimatedTime != nil {
+            return self.ServiceDeparture!.EstimatedTime!
+        }
+        
+        return ""
+    }
+    
     func getScheduledTime() -> String {
         let formatter = ISO8601DateFormatter()
         let date = formatter.date(from: self.ServiceArrival?.TimetabledTime ?? "")

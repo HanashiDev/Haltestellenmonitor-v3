@@ -21,7 +21,7 @@ struct MonitorWidgetLiveActivity: Widget {
                     Text(context.attributes.getIcon())
                     VStack {
                         HStack {
-                            Text("\(context.attributes.lineName) \(context.attributes.direction)")
+                            Text("\(context.attributes.publishedLineName) \(context.attributes.destinationText)")
                                 .lineLimit(1)
                             Spacer()
                             if (context.state.done) {
@@ -98,14 +98,14 @@ struct MonitorWidgetLiveActivity: Widget {
                         .padding(.bottom, 1.0)
                         HStack {
                             Text(context.attributes.getIcon())
-                            Text("\(context.attributes.lineName) \(context.attributes.direction)")
+                            Text("\(context.attributes.publishedLineName) \(context.attributes.destinationText)")
                                 .lineLimit(1)
                         }
                     }
                     .font(.subheadline)
                 }
             } compactLeading: {
-                Text("\(context.attributes.lineName) \(context.attributes.direction)")
+                Text("\(context.attributes.publishedLineName) \(context.attributes.destinationText)")
                     .font(.subheadline)
                     .lineLimit(1)
             } compactTrailing: {
@@ -130,13 +130,13 @@ struct MonitorWidgetLiveActivity: Widget {
     }
     
     func getWidgetUrl(context: ActivityViewContext<TripAttributes>) -> URL? {
-        let str = "widget://trip/\(context.attributes.stopID.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.departureID.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.lineName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.direction.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.state.time.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"
+        let str = "widget://trip/\(context.attributes.stopID.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.lineRef.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.directionRef.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.estimatedTime.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!))"
         
         return URL(string: str)
     }
 }
 
-struct MonitorWidgetLiveActivity_Previews: PreviewProvider {
+/*struct MonitorWidgetLiveActivity_Previews: PreviewProvider {
     static let attributes = TripAttributes(name: "Pirnaischer Platz", type: "Tram", stopID: "300001", departureID: "10000", lineName: "4", direction: "Laubegast")
     static let contentState = TripAttributes.ContentState(time: "/Date(1681824120000-0000)/", realTime: "/Date(1681825120000-0000)/", done: true)
 
@@ -155,4 +155,4 @@ struct MonitorWidgetLiveActivity_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
             .previewDisplayName("Notification")
     }
-}
+}*/

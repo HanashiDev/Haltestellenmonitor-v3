@@ -106,10 +106,9 @@ struct SingleTripView: View {
     }
     
     func startActivity() {
-        // TODO: Erfolgsmeldung anzeigen fürn Benutzer
-        /*if ActivityAuthorizationInfo().areActivitiesEnabled {
-            let state = TripAttributes.ContentState(time: departure.ScheduledTime, realTime: departure.RealTime)
-            let attributes = TripAttributes(name: stop.name, type: departure.Mot, stopID: stop.gid, departureID: departure.Id, lineName: departure.LineName, direction: departure.Direction)
+        if ActivityAuthorizationInfo().areActivitiesEnabled {
+            let state = TripAttributes.ContentState(timetabledTime: stopEvent.ThisCall.getTimetabledTime(), estimatedTime: stopEvent.ThisCall.getEstimatedTime())
+            let attributes = TripAttributes(name: stop.name, mode: stopEvent.Mode, stopID: String(stop.stopID), lineRef: stopEvent.LineRef, estimatedTime: stopEvent.ThisCall.getEstimatedTime(), directionRef: stopEvent.DirectionRef, publishedLineName: stopEvent.PublishedLineName, destinationText: stopEvent.DestinationText)
             
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
             
@@ -128,11 +127,11 @@ struct SingleTripView: View {
             } catch {
                 print("Error \(error.localizedDescription)")
             }
-        }*/
+        }
     }
     
     func saveAcitivityOnServer(token: String) {
-        /*if (pushTokenHistory.isInHistory(token: token)) {
+        if (pushTokenHistory.isInHistory(token: token)) {
             return
         }
         pushTokenHistory.add(token: token)
@@ -140,7 +139,7 @@ struct SingleTripView: View {
         let url = URL(string: "https://dvb.hsrv.me/api/activity")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: stop.gid, tripID: departure.Id, time: departure.getDateTime().ISO8601Format(), scheduledTime: departure.ScheduledTime, realTime: departure.RealTime))
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopGID: stop.gid, lineRef: stopEvent.LineRef, directionRef: stopEvent.DirectionRef, estimatedTime: stopEvent.ThisCall.getEstimatedTime()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
@@ -159,7 +158,7 @@ struct SingleTripView: View {
             
             print(content)
         }
-        task.resume()*/
+        task.resume()
     }
 }
 

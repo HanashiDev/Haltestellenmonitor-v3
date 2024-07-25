@@ -11,42 +11,45 @@ import ActivityKit
 struct TripAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
-        var time: String
-        var realTime: String? = nil
+        var timetabledTime: String
+        var estimatedTime: String? = nil
         var done: Bool = false
         
         func getScheduledTime() -> String {
-            let date = DateParser.extractTimestamp(time: self.time)
+            let formatter = ISO8601DateFormatter()
+            let date = formatter.date(from: self.timetabledTime)
             if (date == nil) {
-                return "00:00"
+                return "n/a"
             }
             
             let dFormatter = DateFormatter()
             dFormatter.dateFormat = "HH:mm"
-            return dFormatter.string(for: date) ?? "00:00"
+            return dFormatter.string(for: date) ?? "n/a"
         }
         
         func getRealTime() -> String {
-            if (self.realTime == nil) {
+            if (self.estimatedTime == nil) {
                 return self.getScheduledTime()
             }
-
-            let date = DateParser.extractTimestamp(time: self.realTime!)
+            
+            let formatter = ISO8601DateFormatter()
+            let date = formatter.date(from: self.estimatedTime ?? "")
             if (date == nil) {
-                return "00:00"
+                return "n/a"
             }
             
             let dFormatter = DateFormatter()
             dFormatter.dateFormat = "HH:mm"
-            return dFormatter.string(for: date) ?? "00:00"
+            return dFormatter.string(for: date) ?? "n/a"
         }
         
         func getTimeDifference() -> Int {
-            if (self.realTime == nil) {
+            if (self.estimatedTime == nil) {
                 return 0
             }
-            let realtimeDate = DateParser.extractTimestamp(time: self.realTime!)
-            let scheduledTimeDate = DateParser.extractTimestamp(time: self.time)
+            let formatter = ISO8601DateFormatter()
+            let realtimeDate = formatter.date(from: self.estimatedTime ?? "")
+            let scheduledTimeDate = formatter.date(from: self.timetabledTime)
             if (realtimeDate == nil || scheduledTimeDate == nil) {
                 return 0
             }
@@ -59,21 +62,25 @@ struct TripAttributes: ActivityAttributes {
             return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
         }
         
-        func getIn() -> Int {
-            var time = self.time
-            if (self.realTime != nil) {
-                time = self.realTime!
+        func getIn(date: Date = Date(), realInTime: Bool = false) -> Int {
+            var time = self.timetabledTime
+            if (self.estimatedTime != nil) {
+                time = self.estimatedTime!
             }
-            let timeDate = DateParser.extractTimestamp(time: time)
+            let formatter = ISO8601DateFormatter()
+            let timeDate = formatter.date(from: time)
+            if (timeDate == nil) {
+                return 0
+            }
             
             let calendar = Calendar.current
             
             let timeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: timeDate!)
-            let currentComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
+            let currentComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
             
             var inTime = calendar.dateComponents([.minute], from: currentComponents, to: timeComponents).minute!
             
-            if (inTime < 0) {
+            if (!realInTime && inTime < 0) {
                 inTime = 0
             }
 
@@ -83,29 +90,34 @@ struct TripAttributes: ActivityAttributes {
 
     // Fixed non-changing properties about your activity go here!
     var name: String
-    var type: String
+    var mode: String
     var stopID: String
-    var departureID: String
-    var lineName: String
-    var direction: String
+    var lineRef: String
+    var estimatedTime: String
+    var directionRef: String
+    var publishedLineName: String
+    var destinationText: String
+    var cancelled: String?
     
     func getIcon() -> String {
-        switch (self.type) {
-        case "Tram":
+        switch (self.mode) {
+        case "tram":
             return "🚊"
-        case "CityBus":
+        case "bus":
             return "🚍"
-        case "IntercityBus":
+        case "trolleybus":
             return "🚍"
-        case "SuburbanRailway":
+        case "urbanRail":
             return "🚈"
-        case "Train":
+        case "rail":
             return "🚆"
-        case "Cableway":
+        case "intercityRail":
+            return "🚆"
+        case "cableway":
             return "🚞"
-        case "Ferry":
+        case "water":
             return "⛴️"
-        case "HailedSharedTaxi":
+        case "taxi":
             return "🚖"
         default:
             return "🚊"
