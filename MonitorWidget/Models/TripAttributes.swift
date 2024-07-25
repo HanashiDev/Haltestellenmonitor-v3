@@ -93,7 +93,7 @@ struct TripAttributes: ActivityAttributes {
     var mode: String
     var stopID: String
     var lineRef: String
-    var estimatedTime: String
+    var timetabledTime: String
     var directionRef: String
     var publishedLineName: String
     var destinationText: String

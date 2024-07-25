@@ -130,7 +130,7 @@ struct MonitorWidgetLiveActivity: Widget {
     }
     
     func getWidgetUrl(context: ActivityViewContext<TripAttributes>) -> URL? {
-        let str = "widget://trip/\(context.attributes.stopID.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.lineRef.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.directionRef.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.estimatedTime.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!))"
+        let str = "widget://trip/\(context.attributes.stopID.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.lineRef.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.directionRef.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.timetabledTime.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!))"
         
         return URL(string: str)
     }

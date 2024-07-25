@@ -25,7 +25,7 @@ struct CallAtStop: Hashable {
     func getTimetabledTime() -> String {
         if self.ServiceArrival?.TimetabledTime != nil {
             return self.ServiceArrival!.TimetabledTime!
-        } else if self.ServiceDeparture!.TimetabledTime != nil {
+        } else if self.ServiceDeparture?.TimetabledTime != nil {
             return self.ServiceDeparture!.TimetabledTime!
         }
         
@@ -35,16 +35,24 @@ struct CallAtStop: Hashable {
     func getEstimatedTime() -> String {
         if self.ServiceArrival?.EstimatedTime != nil {
             return self.ServiceArrival!.EstimatedTime!
-        } else if self.ServiceDeparture!.EstimatedTime != nil {
+        } else if self.ServiceDeparture?.EstimatedTime != nil {
             return self.ServiceDeparture!.EstimatedTime!
         }
         
         return ""
     }
     
+    func getTime() -> String {
+        if self.getEstimatedTime() != "" {
+            return self.getEstimatedTime()
+        }
+        
+        return self.getTimetabledTime()
+    }
+    
     func getScheduledTime() -> String {
         let formatter = ISO8601DateFormatter()
-        let date = formatter.date(from: self.ServiceArrival?.TimetabledTime ?? "")
+        let date = formatter.date(from: self.getTimetabledTime())
         if (date == nil) {
             return "n/a"
         }
@@ -55,12 +63,12 @@ struct CallAtStop: Hashable {
     }
     
     func getRealTime() -> String {
-        if (self.ServiceArrival?.EstimatedTime == nil) {
+        if (self.getEstimatedTime() == "") {
             return self.getScheduledTime()
         }
         
         let formatter = ISO8601DateFormatter()
-        let date = formatter.date(from: self.ServiceArrival?.EstimatedTime ?? "")
+        let date = formatter.date(from: self.getEstimatedTime())
         if (date == nil) {
             return "n/a"
         }
@@ -71,12 +79,12 @@ struct CallAtStop: Hashable {
     }
     
     func getTimeDifference() -> Int {
-        if (self.ServiceArrival?.EstimatedTime == nil) {
+        if (self.getEstimatedTime() == "") {
             return 0
         }
         let formatter = ISO8601DateFormatter()
-        let realtimeDate = formatter.date(from: self.ServiceArrival?.EstimatedTime ?? "")
-        let scheduledTimeDate = formatter.date(from: self.ServiceArrival?.TimetabledTime ?? "")
+        let realtimeDate = formatter.date(from: self.getEstimatedTime())
+        let scheduledTimeDate = formatter.date(from: self.getTimetabledTime())
         if (realtimeDate == nil || scheduledTimeDate == nil) {
             return 0
         }
@@ -90,12 +98,12 @@ struct CallAtStop: Hashable {
     }
     
     func getIn(date: Date = Date(), realInTime: Bool = false) -> Int {
-        var time = self.ServiceArrival?.TimetabledTime
-        if (self.ServiceArrival?.EstimatedTime != nil) {
-            time = self.ServiceArrival?.EstimatedTime
+        var time = self.getTimetabledTime()
+        if (self.getEstimatedTime() != "") {
+            time = self.getEstimatedTime()
         }
         let formatter = ISO8601DateFormatter()
-        let timeDate = formatter.date(from: time ?? "")
+        let timeDate = formatter.date(from: time)
         if (timeDate == nil) {
             return 0
         }

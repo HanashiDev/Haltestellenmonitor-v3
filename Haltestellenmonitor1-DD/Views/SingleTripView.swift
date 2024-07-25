@@ -83,7 +83,7 @@ struct SingleTripView: View {
         let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = DepartureRequest(stopPointRef: stop.gid, time: self.stopEvent.ThisCall.ServiceArrival?.EstimatedTime ?? "", lineRef: self.stopEvent.LineRef, directionRef: self.stopEvent.DirectionRef, numberOfResults: 1, includeOnwardCalls: true).getXML()
+        request.httpBody = DepartureRequest(stopPointRef: stop.gid, time: self.stopEvent.ThisCall.getTime(), lineRef: self.stopEvent.LineRef, directionRef: self.stopEvent.DirectionRef, numberOfResults: 1, includeOnwardCalls: true).getXML()
         request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
         
         do {
@@ -108,7 +108,7 @@ struct SingleTripView: View {
     func startActivity() {
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(timetabledTime: stopEvent.ThisCall.getTimetabledTime(), estimatedTime: stopEvent.ThisCall.getEstimatedTime())
-            let attributes = TripAttributes(name: stop.name, mode: stopEvent.Mode, stopID: String(stop.stopID), lineRef: stopEvent.LineRef, estimatedTime: stopEvent.ThisCall.getEstimatedTime(), directionRef: stopEvent.DirectionRef, publishedLineName: stopEvent.PublishedLineName, destinationText: stopEvent.DestinationText)
+            let attributes = TripAttributes(name: stop.name, mode: stopEvent.Mode, stopID: String(stop.stopID), lineRef: stopEvent.LineRef, timetabledTime: stopEvent.ThisCall.getTime(), directionRef: stopEvent.DirectionRef, publishedLineName: stopEvent.PublishedLineName, destinationText: stopEvent.DestinationText)
             
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
             
@@ -139,7 +139,7 @@ struct SingleTripView: View {
         let url = URL(string: "https://dvb.hsrv.me/api/activity")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopGID: stop.gid, lineRef: stopEvent.LineRef, directionRef: stopEvent.DirectionRef, estimatedTime: stopEvent.ThisCall.getEstimatedTime()))
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopGID: stop.gid, lineRef: stopEvent.LineRef, directionRef: stopEvent.DirectionRef, estimatedTime: stopEvent.ThisCall.getTime()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
