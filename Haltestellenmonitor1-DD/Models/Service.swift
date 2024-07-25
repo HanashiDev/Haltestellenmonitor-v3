@@ -1,36 +1,25 @@
 //
-//  Departure.swift
+//  Service.swift
 //  Haltestellenmonitor1-DD
 //
-//  Created by Peter Lohse on 18.04.23.
+//  Created by Peter Lohse on 19.07.24.
 //
 
 import Foundation
-import RegexBuilder
 
-struct Departure: Hashable, Codable {
-    var Id: String
-    var DlId: String?
-    var LineName: String
-    var Direction: String
-    var Platform: DeparturePlatform?
-    var Mot: String
-    var RealTime: String?
-    var ScheduledTime: String
-    var State: String?
-    var RouteChanges: [String]?
-    
-    func getDateTime() -> Date {
-        var time = self.ScheduledTime
-        if self.RealTime != nil {
-            time = self.RealTime!
-        }
-        let date = DateParser.extractTimestamp(time: time)
-        return date ?? Date.now
-    }
+struct Service: Hashable {
+    var plannedBay: String
+    var timetabledTime: String
+    var estimatedTime: String
+    var operatingDayRef: String
+    var journeyRef: String
+    var ptMode: String
+    var publishedLineName: String
+    var destination: String
     
     func getScheduledTime() -> String {
-        let date = DateParser.extractTimestamp(time: self.ScheduledTime)
+        let formatter = ISO8601DateFormatter()
+        let date = formatter.date(from: self.timetabledTime)
         if (date == nil) {
             return "00:00"
         }
@@ -41,11 +30,12 @@ struct Departure: Hashable, Codable {
     }
     
     func getRealTime() -> String {
-        if (self.RealTime == nil) {
+        if (self.estimatedTime == "") {
             return self.getScheduledTime()
         }
-
-        let date = DateParser.extractTimestamp(time: self.RealTime!)
+        
+        let formatter = ISO8601DateFormatter()
+        let date = formatter.date(from: self.estimatedTime)
         if (date == nil) {
             return "00:00"
         }
@@ -56,11 +46,12 @@ struct Departure: Hashable, Codable {
     }
     
     func getTimeDifference() -> Int {
-        if (self.RealTime == nil) {
+        if (self.estimatedTime == "") {
             return 0
         }
-        let realtimeDate = DateParser.extractTimestamp(time: self.RealTime!)
-        let scheduledTimeDate = DateParser.extractTimestamp(time: self.ScheduledTime)
+        let formatter = ISO8601DateFormatter()
+        let realtimeDate = formatter.date(from: self.estimatedTime)
+        let scheduledTimeDate = formatter.date(from: self.timetabledTime)
         if (realtimeDate == nil || scheduledTimeDate == nil) {
             return 0
         }
@@ -74,11 +65,12 @@ struct Departure: Hashable, Codable {
     }
     
     func getIn(date: Date = Date(), realInTime: Bool = false) -> Int {
-        var time = self.ScheduledTime
-        if (self.RealTime != nil) {
-            time = self.RealTime!
+        var time = self.timetabledTime
+        if (self.estimatedTime != "") {
+            time = self.timetabledTime
         }
-        let timeDate = DateParser.extractTimestamp(time: time)
+        let formatter = ISO8601DateFormatter()
+        let timeDate = formatter.date(from: time)
         if (timeDate == nil) {
             return 0
         }
@@ -98,28 +90,28 @@ struct Departure: Hashable, Codable {
     }
     
     func getName() -> String {
-        return "\(self.LineName) \(self.Direction)"
+        return "\(self.publishedLineName) \(self.destination)"
     }
     
     func getIcon() -> String {
-        switch (self.Mot) {
-        case "Tram":
+        switch (self.ptMode) {
+        case "tram":
             return "🚊"
-        case "CityBus":
+        case "bus":
             return "🚍"
-        case "IntercityBus":
+        case "trolleybus":
             return "🚍"
-        case "PlusBus":
-            return "🚍"
-        case "SuburbanRailway":
+        case "urbanRail":
             return "🚈"
-        case "Train":
+        case "rail":
             return "🚆"
-        case "Cableway":
+        case "intercityRail":
+            return "🚆"
+        case "cableway":
             return "🚞"
-        case "Ferry":
+        case "water":
             return "⛴️"
-        case "HailedSharedTaxi":
+        case "taxi":
             return "🚖"
         default:
             return "🚊"
@@ -127,13 +119,10 @@ struct Departure: Hashable, Codable {
     }
     
     func getPlatForm() -> String {
-        switch (Platform?.type) {
-        case "Railtrack":
-            return "Gleis \(Platform?.Name ?? "0")"
-        case "Platform":
-            return "Steig \(Platform?.Name ?? "0")"
-        default:
+        if plannedBay == "" {
             return ""
         }
+
+        return "Steig \(self.plannedBay)"
     }
 }

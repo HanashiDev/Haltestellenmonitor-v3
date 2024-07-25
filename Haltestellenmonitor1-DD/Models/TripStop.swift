@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TripStop: Hashable, Codable {
+/*struct TripStop: Hashable, Codable {
     var Id: String
     var Place: String
     var Name: String
@@ -65,7 +65,7 @@ struct TripStop: Hashable, Codable {
     
     func getStop() -> Stop? {
         return stops.first { stop in
-            return String(stop.stopId) == self.Id
+            return String(stop.stopID) == self.Id
         }
     }
     
@@ -79,4 +79,4 @@ struct TripStop: Hashable, Codable {
             return ""
         }
     }
-}
+}*/

@@ -11,27 +11,23 @@ extension String {
     func getColor() -> Color { // TODO: replace purple colors
         let opacity = 0.8
         switch (self) {
-        case "Tram":
+        case "tram":
             return Color.red.opacity(opacity)
-        case "CityBus":
+        case "bus":
             return Color.blue.opacity(opacity)
-        case "PlusBus":
+        case "trolleybus":
             return Color.blue.opacity(opacity)
-        case "Bus":
-            return Color.blue.opacity(opacity)
-        case "IntercityBus":
-            return Color.blue.opacity(opacity)
-        case "SuburbanRailway":
+        case "urbanRail":
             return Color.green.opacity(opacity)
-        case "RapidTransit":
+        case "rail":
             return Color.green.opacity(opacity)
-        case "Train":
+        case "intercityRail":
             return Color.green.opacity(opacity)
-        case "Cableway":
+        case "cableway":
             return Color.purple.opacity(opacity)
-        case "Ferry":
+        case "water":
             return Color.purple.opacity(opacity)
-        case "HailedSharedTaxi":
+        case "taxi":
             return Color.yellow.opacity(opacity)
         case "Footpath":
             return Color.gray.opacity(opacity)

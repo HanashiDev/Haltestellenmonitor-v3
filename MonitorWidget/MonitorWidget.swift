@@ -15,25 +15,23 @@ import MapKit
 
 class Provider: IntentTimelineProvider {
     
-    
     typealias Entry = MonitorEntry
     
     let widgetLocationManager = WidgetLocationManager()
 
-
     func placeholder(in context: Context) -> MonitorEntry {
-        MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: nil)
+        MonitorEntry(date: Date(), configuration: ConfigurationIntent(), stop: nil, stopEvents: nil)
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (MonitorEntry) -> ()) {
-        let entry = MonitorEntry(date: Date(), configuration: configuration, departureMonitor: departureM)
+        // TODO: stopEvents
+        let entry = MonitorEntry(date: Date(), configuration: configuration, stop: stops[0], stopEvents: [])
         completion(entry)
     }
-    
-    
+
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
-        var stopID: String = "33000028"
+        var stop: Stop = Stop.getByGID(gid: "de:14612:28")!
         var favoriteStops: [Int] = []
         
         if configuration.favoriteFilter == FavoriteFilter.true {
@@ -45,12 +43,11 @@ class Provider: IntentTimelineProvider {
             
             // Retrieving stop data for marked favorites
             var favStops : [Stop] = stops.filter{favorite in
-                return favoriteStops.contains(favorite.stopId)
+                return favoriteStops.contains(favorite.stopID)
             }
             
             if favStops.isEmpty {
                 print("No favorites found.")
-                stopID = "33000028"
                 
             } else {
                 var favStopsLoc : [Stop] = []
@@ -70,22 +67,24 @@ class Provider: IntentTimelineProvider {
                 }
                 favStops = favStopsLoc.sorted{$0.getDistance() < $1.getDistance()}
                 
-                stopID = String(favStops[0].stopId)
+                stop = favStops[0]
             }
         } else {
-            stopID = configuration.stopType?.identifier ?? "33000028"
+            let stopTmp = Stop.getBystopID(stopID: configuration.stopType?.identifier ?? "0")
+            if stopTmp != nil {
+                stop = stopTmp!
+            }
         }
         
-        let url = URL(string: "https://webapi.vvo-online.de/dm")!
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: stopID))
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
+        request.httpBody = DepartureRequest(stopPointRef: stop.gid, numberOfResults: 75).getXML()
+        request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             var entries: [MonitorEntry] = []
-            var departureMonitor: DepartureMonitor? = nil
+            var stopEvents: [StopEvent] = []
             guard error == nil else {
                 print ("error: \(error!)")
                 self.getTimeline(for: configuration, in: context, completion: completion)
@@ -98,24 +97,15 @@ class Provider: IntentTimelineProvider {
                 return
             }
 
-
             DispatchQueue.main.async {
-                print("\(Date())")
-                
-                do {
-                    let decoder = JSONDecoder()
-                    departureMonitor = try decoder.decode(DepartureMonitor.self, from: content)
-                    print(content)
-                } catch {
-                    print(error)
-                    self.getTimeline(for: configuration, in: context, completion: completion)
-                    return
-                }
+                let stopEventParser = StopEventResponseParser(data: content)
+                stopEventParser.parse()
+                stopEvents = stopEventParser.stopEvents
                 
                 let currentDate = Date()
                 for i in 0 ..< 72 {
                     let entryDate = Calendar.current.date(byAdding: .second, value: 30 * i, to: currentDate)!
-                    let entry = MonitorEntry(date: entryDate, configuration: configuration, departureMonitor: departureMonitor)
+                    let entry = MonitorEntry(date: entryDate, configuration: configuration, stop: stop, stopEvents: stopEvents)
                     entries.append(entry)
                 }
                 

@@ -17,14 +17,14 @@ struct StopRow: View {
                 Text(stop.name)
                     .lineLimit(1)
                 Spacer()
-                if (favoriteStops.isFavorite(stopID: stop.stopId)) {
+                if (favoriteStops.isFavorite(stopID: stop.stopID)) {
                     Image(systemName: "star.fill")
                         .font(.footnote)
                         .foregroundColor(Color.yellow)
                 }
             }
             HStack {
-                Text(stop.city)
+                Text(stop.place)
                 .lineLimit(1)
                 Spacer()
                 if (stop.distance != nil) {

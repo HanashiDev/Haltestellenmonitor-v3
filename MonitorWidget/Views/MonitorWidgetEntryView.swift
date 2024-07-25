@@ -21,15 +21,15 @@ struct MonitorWidgetEntryView : View {
         
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                Text(entry.departureMonitor?.Name ?? "")
+                Text(entry.stop?.getName() ?? "")
                     .font(.headline)
                     .padding(.bottom, 1.0)
-                if (entry.filterDepartures(departures:  entry.departureMonitor?.Departures ?? []).isEmpty) {
+                if (entry.filterStopEvents(stopEvents: entry.stopEvents ?? []).isEmpty) {
                     Text("Es wurden keine Abfahrten gefunden.")
                         .font(.subheadline)
                 } else {
-                    ForEach(entry.filterDepartures(departures:  entry.departureMonitor?.Departures ?? []).prefix(prefix), id: \.self) { departure in
-                        MonitorWidgetRow(entry: entry, departure: departure)
+                    ForEach(entry.filterStopEvents(stopEvents: entry.stopEvents ?? []).prefix(prefix), id: \.self) { stopEvent in
+                        MonitorWidgetRow(entry: entry, stopEvent: stopEvent)
                     }
                 }
                 Spacer()
@@ -39,7 +39,7 @@ struct MonitorWidgetEntryView : View {
         .padding([.top, .leading, .bottom])
         .padding(.trailing, 5.0)
         .widgetBackground(colorScheme == .dark ? Color.black : Color.yellow)
-        .widgetURL(URL(string: "widget://stop/\(entry.getStopID(Name: entry.departureMonitor?.Name ?? "-").addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"))
+        .widgetURL(URL(string: "widget://stop/\(String(entry.stop?.stopID ?? 0).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)"))
         .dynamicTypeSize(.medium ... .large)
     }
 }
@@ -56,7 +56,7 @@ extension View {
     }
 }
 
-struct MonitorWidget_Previews: PreviewProvider {
+/*struct MonitorWidget_Previews: PreviewProvider {
     static var previews: some View {
         MonitorWidgetEntryView(entry: MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: departureM))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
@@ -74,4 +74,4 @@ struct MonitorWidget_Previews: PreviewProvider {
             .previewContext(WidgetPreviewContext(family: .systemExtraLarge))
             .previewDisplayName("Extra Large")
     }
-}
+}*/

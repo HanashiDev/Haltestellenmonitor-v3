@@ -89,10 +89,10 @@ struct TripSection: View {
     }
 }
 
-struct TripSection_Previews: PreviewProvider {
+/*struct TripSection_Previews: PreviewProvider {
     static var previews: some View {
         Form {
             TripSection(vm: TripSectionViewModel(route: tripTmp.Routes[0]))
         }
     }
-}
+}*/

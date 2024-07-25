@@ -13,7 +13,7 @@ struct ContentView: View {
     @State var oldSelection = 1
     @State var showingSheet = false
     @State var openingStop = stops[0]
-    @State var openingDeparture = departureM.Departures[0]
+    // @State var openingDeparture = departureM.Departures[0]
     @StateObject var locationManager = LocationManager()
     @StateObject var favoriteStops = FavoriteStop()
     @StateObject var pushTokenHistory = PushTokenHistory()
@@ -51,11 +51,11 @@ struct ContentView: View {
                 Label("Über", systemImage: "info.circle.fill")
             }.tag(4)
         }
-        .sheet(isPresented: $showingSheet, content: {
+        /*.sheet(isPresented: $showingSheet, content: {
             NavigationStack {
                 SingleTripView(stop: openingStop, departure: openingDeparture)
             }
-        })
+        })*/
         .environmentObject(locationManager)
         .environmentObject(favoriteStops)
         .environmentObject(pushTokenHistory)

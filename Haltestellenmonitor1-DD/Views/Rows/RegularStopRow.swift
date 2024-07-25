@@ -48,8 +48,8 @@ struct RegularStopRow: View {
     }
 }
 
-struct RegularStopRow_Previews: PreviewProvider {
+/*struct RegularStopRow_Previews: PreviewProvider {
     static var previews: some View {
         RegularStopRow(regularStop: tripTmp.Routes[0].PartialRoutes[0].RegularStops![0], isFirst: true)
     }
-}
+}*/

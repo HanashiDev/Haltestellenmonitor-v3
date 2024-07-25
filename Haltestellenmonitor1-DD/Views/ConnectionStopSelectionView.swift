@@ -139,12 +139,12 @@ struct ConnectionStopSelectionView: View {
         
         var newStops: [Stop] = []
         stops.forEach { stop in
-            if (favoriteStops.isFavorite(stopID: stop.stopId)) {
+            if (favoriteStops.isFavorite(stopID: stop.stopID)) {
                 newStops.append(stop)
             }
         }
         stops.forEach { stop in
-            if (!favoriteStops.isFavorite(stopID: stop.stopId)) {
+            if (!favoriteStops.isFavorite(stopID: stop.stopID)) {
                 newStops.append(stop)
             }
         }

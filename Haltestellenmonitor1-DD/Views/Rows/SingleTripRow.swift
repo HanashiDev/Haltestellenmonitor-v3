@@ -8,39 +8,39 @@
 import SwiftUI
 
 struct SingleTripRow: View {
-    var tripStop: TripStop
+    var callAtStop: CallAtStop
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(tripStop.Name)
+                Text(callAtStop.StopPointName)
                     .font(.headline)
                 .lineLimit(1)
                 Spacer()
-                if (tripStop.Platform != nil) {
-                    Text(tripStop.getPlatForm())
+                if (callAtStop.EstimatedBay != nil || callAtStop.PlannedBay != nil) {
+                    Text(callAtStop.getPlatForm())
                         .font(.footnote)
                 }
             }
             HStack {
-                Text("\(tripStop.getTime()) Uhr")
-                if (tripStop.getTimeDifference() > 0) {
-                    Text("+\(tripStop.getTimeDifference())")
+                Text("\(callAtStop.getScheduledTime()) Uhr")
+                if (callAtStop.getTimeDifference() > 0) {
+                    Text("+\(callAtStop.getTimeDifference())")
                         .foregroundColor(Color.red)
-                } else if (tripStop.getTimeDifference() < 0) {
-                    Text("\(tripStop.getTimeDifference())")
+                } else if (callAtStop.getTimeDifference() < 0) {
+                    Text("\(callAtStop.getTimeDifference())")
                         .foregroundColor(Color.green)
                 }
                 Spacer()
-                Text("\(tripStop.getRealTime()) Uhr")
+                Text("\(callAtStop.getRealTime()) Uhr")
             }
             .font(.subheadline)
         }
     }
 }
 
-struct SingleTripRow_Previews: PreviewProvider {
+/*struct SingleTripRow_Previews: PreviewProvider {
     static var previews: some View {
         SingleTripRow(tripStop: singleTripTmp.Stops[0])
     }
-}
+}*/

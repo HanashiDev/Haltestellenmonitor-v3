@@ -11,28 +11,28 @@ import WidgetKit
 struct MonitorWidgetRow: View {
     @Environment(\.widgetFamily) var widgetFamily
     var entry: Provider.Entry
-    var departure: Departure
+    var stopEvent: StopEvent
     
     var body: some View {
         HStack {
-            Text(departure.getName().split(separator: " ")[0])
+            Text(stopEvent.getName().split(separator: " ")[0])
                 .font(.subheadline)
                 .lineLimit(1)
                 .padding(.horizontal, 3)
                 .background {
-                    RoundedRectangle(cornerRadius: 5).fill(departure.Mot.getColor())
+                    RoundedRectangle(cornerRadius: 5).fill(stopEvent.Mode.getColor())
                 }
-            Text(departure.getName().split(separator: " ")[1])
+            Text(stopEvent.getName().split(separator: " ")[1])
                 .font(.subheadline)
                 .lineLimit(1)
             Spacer()
             if (entry.configuration.displayFormat == DisplayFormat.time) {
-                Text(widgetFamily == .systemSmall ? "\(departure.getRealTime())" : "\(departure.getRealTime()) Uhr")
+                Text(widgetFamily == .systemSmall ? "\(stopEvent.getRealTime())" : "\(stopEvent.getRealTime()) Uhr")
                     .font(.subheadline)
                     .multilineTextAlignment(.trailing)
                     .lineLimit(1)
             } else {
-                Text(widgetFamily == .systemSmall ? "\(departure.getIn(date: entry.date))" : "in \(departure.getIn(date: entry.date)) min")
+                Text(widgetFamily == .systemSmall ? "\(stopEvent.getIn(date: entry.date))" : "in \(stopEvent.getIn(date: entry.date)) min")
                     .font(.subheadline)
                     .multilineTextAlignment(.trailing)
                     .lineLimit(1)
@@ -41,7 +41,7 @@ struct MonitorWidgetRow: View {
     }
 }
 
-struct MonitorWidgetRow_Previews: PreviewProvider {
+/*struct MonitorWidgetRow_Previews: PreviewProvider {
     static var previews: some View {
         MonitorWidgetRow(entry: MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: departureM), departure: departureM.Departures[0])
             .previewContext(WidgetPreviewContext(family: .systemSmall))
@@ -59,4 +59,4 @@ struct MonitorWidgetRow_Previews: PreviewProvider {
             .previewContext(WidgetPreviewContext(family: .systemExtraLarge))
             .previewDisplayName("Extra Large")
     }
-}
+}*/

@@ -15,7 +15,7 @@ struct ConnectionStop: Hashable, Codable {
     
     func getDestinationString() async -> String {
         if stop != nil {
-            return String(stop?.stopId ?? 0)
+            return String(stop?.stopID ?? 0)
         }
         if location == nil {
             return "0"

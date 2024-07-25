@@ -10,17 +10,17 @@ import SwiftUI
 struct DepartureView: View {
     var stop: Stop
     @State private var searchText = ""
-    @State private var departureM: DepartureMonitor? = nil
+    @State private var stopEvents: [StopEvent] = []
     @State private var isLoaded = false
 
     var body: some View {
         Group {
             if (isLoaded) {
-                List(searchResults, id: \.self) { departure in
+                List(searchResults, id: \.self) { stopEvent in
                     NavigationLink {
-                        SingleTripView(stop: stop, departure: departure)
+                        SingleTripView(stop: stop, stopEvent: stopEvent)
                     } label: {
-                        DepartureRow(departure: departure)
+                        DepartureRow(stopEvent: stopEvent)
                     }
                 }
                 .searchable(text: $searchText)
@@ -36,9 +36,9 @@ struct DepartureView: View {
         }
     }
     
-    var searchResults: [Departure] {
-        let departures = departureM?.Departures ?? []
-        
+    var searchResults: [StopEvent] {
+        let departures = stopEvents
+
         if searchText.isEmpty {
             return departures
         } else {
@@ -49,18 +49,17 @@ struct DepartureView: View {
     }
     
     func getDeparture() async {
-        let url = URL(string: "https://webapi.vvo-online.de/dm")!
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(DepartureRequest(stopid: String(stop.stopId)))
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
+        request.httpBody = DepartureRequest(stopPointRef: stop.gid).getXML()
+        request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
         
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            
-            let decoder = JSONDecoder()
-            self.departureM = try decoder.decode(DepartureMonitor.self, from: content)
+            let serviceParser = StopEventResponseParser(data: content)
+            serviceParser.parse()
+            self.stopEvents = serviceParser.stopEvents
             isLoaded = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {

@@ -27,16 +27,16 @@ struct StopsView: View {
                     StopRow(stop: stop)
                 }
                 .swipeActions(edge: .trailing) {
-                    if (favoriteStops.isFavorite(stopID: stop.stopId)) {
+                    if (favoriteStops.isFavorite(stopID: stop.stopID)) {
                         Button {
-                            favoriteStops.remove(stopID: stop.stopId)
+                            favoriteStops.remove(stopID: stop.stopID)
                         } label: {
                             Label("Unstar", systemImage: "star.fill")
                         }
                         .tint(.red)
                     } else {
                         Button {
-                            favoriteStops.add(stopID: stop.stopId)
+                            favoriteStops.add(stopID: stop.stopID)
                         } label: {
                             Label("Star", systemImage: "star")
                         }
@@ -79,7 +79,7 @@ struct StopsView: View {
         if (stopID == nil) {
             return
         }
-        let stop = stops.first(where: {$0.stopId == stopID})
+        let stop = stops.first(where: {$0.stopID == stopID})
         stopManager.selectedStop = stop
     }
     
@@ -90,12 +90,12 @@ struct StopsView: View {
         
         var newStops: [Stop] = []
         stops.forEach { stop in
-            if (favoriteStops.isFavorite(stopID: stop.stopId)) {
+            if (favoriteStops.isFavorite(stopID: stop.stopID)) {
                 newStops.append(stop)
             }
         }
         stops.forEach { stop in
-            if (!favoriteStops.isFavorite(stopID: stop.stopId)) {
+            if (!favoriteStops.isFavorite(stopID: stop.stopID)) {
                 newStops.append(stop)
             }
         }
