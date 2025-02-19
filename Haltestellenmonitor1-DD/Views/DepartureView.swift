@@ -42,7 +42,7 @@ struct DepartureView: View {
                             }
                         }
                         Section {
-                            List(searchResults, id: \.self) { stopEvent in
+                            List(searchResults.sorted { $0.getRealTime() < $1.getRealTime() }, id: \.self) { stopEvent in
                                 ZStack {
                                     NavigationLink {
                                         SingleTripView(stop: stop, stopEvent: stopEvent)
