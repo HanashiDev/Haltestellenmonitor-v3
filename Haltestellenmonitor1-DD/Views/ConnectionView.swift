@@ -295,9 +295,9 @@ struct ConnectionView: View {
         if (departureFilter.ferry) {
             mot.append("Ferry")
         }
-        if (departureFilter.taxi) {
-            mot.append("HailedSharedTaxi")
-        }
+//        if (departureFilter.taxi) {
+//            mot.append("HailedSharedTaxi")
+//        }
         
         return TripStandardSettings(mot: mot)
     }
@@ -326,7 +326,7 @@ struct ConnectionView: View {
         departureFilter.train = false
         departureFilter.cableway = false
         departureFilter.ferry = false
-        departureFilter.taxi = false
+//        departureFilter.taxi = false
         
         let mots = favorite.standardSettings?.mot ?? []
         for mot in mots {
@@ -355,9 +355,9 @@ struct ConnectionView: View {
             case "Ferry":
                 departureFilter.ferry = true
                 break
-            case "HailedSharedTaxi":
-                departureFilter.taxi = true
-                break
+//            case "HailedSharedTaxi":
+//                departureFilter.taxi = true
+//                break
             default:
                 break
             }

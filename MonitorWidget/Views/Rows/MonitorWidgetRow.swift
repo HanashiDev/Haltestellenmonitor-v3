@@ -15,19 +15,19 @@ struct MonitorWidgetRow: View {
     
     var body: some View {
         HStack {
-            Text(stopEvent.getName().split(separator: " ")[0])
+            Text(stopEvent.transportation.number)
                 .font(.subheadline)
                 .lineLimit(1)
                 .padding(.horizontal, 3)
                 .background {
-                    RoundedRectangle(cornerRadius: 5).fill(stopEvent.Mode.getColor())
+                    RoundedRectangle(cornerRadius: 5).fill(stopEvent.getColor())
                 }
-            Text(stopEvent.getName().split(separator: " ")[1])
+            Text(stopEvent.transportation.destination.name)
                 .font(.subheadline)
                 .lineLimit(1)
             Spacer()
             if (entry.configuration.displayFormat == DisplayFormat.time) {
-                Text(widgetFamily == .systemSmall ? "\(stopEvent.getRealTime())" : "\(stopEvent.getRealTime()) Uhr")
+                Text(widgetFamily == .systemSmall ? "\(stopEvent.getEstimatedTime())" : "\(stopEvent.getEstimatedTime()) Uhr")
                     .font(.subheadline)
                     .multilineTextAlignment(.trailing)
                     .lineLimit(1)

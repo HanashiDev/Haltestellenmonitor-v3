@@ -41,7 +41,7 @@ struct MonitorEntry: TimelineEntry {
         stopEvents.forEach { stopEvent in
             var embed = true
             if (lineFilters != nil || lineFilters?.isEmpty == false) {
-                embed = lineFilters?.contains(stopEvent.PublishedLineName) == true
+                embed = lineFilters?.contains(stopEvent.getName()) == true
             }
             if (!embed) {
                 return

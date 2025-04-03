@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ActivityKit
-import AEXML
 
 struct DepartureView: View {
     var stop: Stop
@@ -42,28 +41,30 @@ struct DepartureView: View {
                             }
                         }
                         Section {
-                            List(searchResults.sorted { $0.getRealTime() < $1.getRealTime() }, id: \.self) { stopEvent in
-                                ZStack {
-                                    NavigationLink {
-                                        SingleTripView(stop: stop, stopEvent: stopEvent)
-                                    } label: {
-                                        EmptyView()
-                                    }
-                                    .opacity(0.0)
-                                    .buttonStyle(.plain)
-                                    
-                                    DepartureRow(stopEvent: stopEvent)
-                                }
-                                .swipeActions(edge: .trailing) {
-                                    if !ProcessInfo().isiOSAppOnMac {
-                                        Button {
-                                            startActivity(stopEvent: stopEvent)
+                            // speed-up: don't use the getter
+                            // no utc conversion needed for comparison
+                                List(searchResults.sorted { ($0.departureTimeEstimated ?? $0.departureTimePlanned) < ($1.departureTimeEstimated ?? $1.departureTimePlanned) }, id: \.self) { stopEvent in
+                                    ZStack {
+                                        NavigationLink {
+                                            SingleTripView(stop: stop, stopEvent: stopEvent)
                                         } label: {
-                                            Label("", systemImage: "pin")
+                                            EmptyView()
                                         }
-                                        .tint(.yellow)
+                                        .opacity(0.0)
+                                        .buttonStyle(.plain)
+                                        
+                                        DepartureRow(stopEvent: stopEvent)
                                     }
-                                }
+                                    .swipeActions(edge: .trailing) {
+                                        if !ProcessInfo().isiOSAppOnMac {
+                                            Button {
+                                                startActivity(stopEvent: stopEvent)
+                                            } label: {
+                                                Label("", systemImage: "pin")
+                                            }
+                                            .tint(.yellow)
+                                        }
+                                    }
                             }
                         }
                     }
@@ -108,6 +109,7 @@ struct DepartureView: View {
                 Text("OK")
             }
         }
+
         .task(id: stop.id) {
             /*stopEvents = []
             isLoaded = false*/
@@ -125,13 +127,12 @@ struct DepartureView: View {
     var searchResults: [StopEvent] {
         var stopEventsTmp = stopEvents
         stopEventsTmp = stopEventsTmp.filter {
-            departureFilter.tram && $0.Mode == "tram" ||
-            departureFilter.bus && ($0.Mode == "bus" || $0.Mode == "trolleybus") ||
-            departureFilter.suburbanRailway && $0.Mode == "urbanRail" ||
-            departureFilter.train && $0.Mode == "rail" ||
-            departureFilter.cableway && $0.Mode == "cableway" ||
-            departureFilter.ferry && $0.Mode == "water" ||
-            departureFilter.taxi && $0.Mode == "taxi"
+            (departureFilter.tram && $0.transportation.product.iconId == 4) ||
+            (departureFilter.bus && $0.transportation.product.iconId == 3) ||
+            (departureFilter.suburbanRailway && $0.transportation.product.iconId == 2) ||
+            (departureFilter.train && $0.transportation.product.iconId == 6) ||
+            (departureFilter.cableway && $0.transportation.product.iconId == 9) ||
+            (departureFilter.ferry && $0.transportation.product.iconId == 10)
         }
         
         if searchText.isEmpty {
@@ -149,18 +150,24 @@ struct DepartureView: View {
             localDateTime = Date.now
         }
         
-        let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_DM_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = DepartureRequest(stopPointRef: stop.gid, time: localDateTime.ISO8601Format()).getXML()
-        request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HHmm"
+        
+        request.httpBody = createDepartureRequest(stopId: stop.gid, itdDate: dateFormatter.string(from: localDateTime), itdTime: timeFormatter.string(from: localDateTime)).data(using: .utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            let stopEventParser = StopEventResponseParser(data: content)
-            stopEventParser.parse()
-            self.stopEvents = stopEventParser.stopEvents
-            isLoaded = true
+            let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
+            self.stopEvents = stopEventContainer.stopEvents
+            self.isLoaded = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
                 Task {
@@ -169,9 +176,11 @@ struct DepartureView: View {
             }
         } catch {
             print ("error: \(error)")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                Task {
-                    await getDeparture()
+            if !error.localizedDescription.contains("Abgebrochen") {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    Task {
+                        await getDeparture()
+                    }
                 }
             }
         }
@@ -179,8 +188,8 @@ struct DepartureView: View {
     
     func startActivity(stopEvent: StopEvent) {
         if ActivityAuthorizationInfo().areActivitiesEnabled {
-            let state = TripAttributes.ContentState(timetabledTime: stopEvent.ThisCall.getTimetabledTime(), estimatedTime: stopEvent.ThisCall.getTime())
-            let attributes = TripAttributes(name: stop.name, mode: stopEvent.Mode, stopID: String(stop.stopID), lineRef: stopEvent.LineRef, timetabledTime: stopEvent.ThisCall.getTime(), directionRef: stopEvent.DirectionRef, publishedLineName: stopEvent.PublishedLineName, destinationText: stopEvent.DestinationText)
+            let state = TripAttributes.ContentState(timetabledTime: stopEvent.departureTimePlanned, estimatedTime: stopEvent.departureTimeEstimated)
+            let attributes = TripAttributes(name: stop.name, icon: stopEvent.getIcon(), stopID: String(stop.stopID), lineRef: stopEvent.transportation.getLineRef(), timetabledTime: stopEvent.departureTimePlanned, directionRef: "outward", publishedLineName: stopEvent.transportation.number, destinationText: stopEvent.transportation.destination.name)
             
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
             
@@ -211,7 +220,7 @@ struct DepartureView: View {
         let url = URL(string: "https://dvb.hsrv.me/api/activity")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopGID: stop.gid, lineRef: stopEvent.LineRef, directionRef: stopEvent.DirectionRef, timetabledTime: stopEvent.ThisCall.getTimetabledTime(), estimatedTime: stopEvent.ThisCall.getTime()))
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopGID: stop.gid, lineRef: stopEvent.transportation.getLineRef(), directionRef: "outward", timetabledTime: stopEvent.getScheduledTime(), estimatedTime: stopEvent.getEstimatedTime()))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
@@ -233,13 +242,13 @@ struct DepartureView: View {
         task.resume()
     }
 }
-
-/*struct DepartureView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            DepartureView(stop: stops[1])
-        }
-            .environmentObject(FavoriteStop())
-            .environmentObject(PushTokenHistory())
-    }
-}*/
+//
+//struct DepartureView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationStack {
+//            DepartureView(stop: stops[100])
+//        }
+//            .environmentObject(FavoriteStop())
+//            .environmentObject(PushTokenHistory())
+//    }
+//}

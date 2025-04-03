@@ -75,12 +75,20 @@ class Provider: IntentTimelineProvider {
                 stop = stopTmp!
             }
         }
-        
-        let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_DM_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = DepartureRequest(stopPointRef: stop.gid, numberOfResults: 75).getXML()
-        request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HHmm"
+        
+        request.httpBody = createDepartureRequest(stopId: stop.gid, itdDate: dateFormatter.string(from: Date()), itdTime: timeFormatter.string(from: Date())).data(using: .utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        
+        
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             var entries: [MonitorEntry] = []
@@ -98,9 +106,15 @@ class Provider: IntentTimelineProvider {
             }
 
             DispatchQueue.main.async {
-                let stopEventParser = StopEventResponseParser(data: content)
-                stopEventParser.parse()
-                stopEvents = stopEventParser.stopEvents
+                do {
+                    let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
+                    stopEvents = stopEventContainer.stopEvents
+
+                } catch{
+                    print("JSON decoding failed")
+                    self.getTimeline(for: configuration, in: context, completion: completion)
+                    return
+                }
                 
                 let currentDate = Date()
                 for i in 0 ..< 72 {
@@ -111,6 +125,8 @@ class Provider: IntentTimelineProvider {
                 
                 let timeline = Timeline(entries: entries, policy: .atEnd)
                 completion(timeline)
+               
+                
             }
 
         }

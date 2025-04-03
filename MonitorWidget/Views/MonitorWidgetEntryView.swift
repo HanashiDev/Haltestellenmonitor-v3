@@ -28,7 +28,7 @@ struct MonitorWidgetEntryView : View {
                     Text("Es wurden keine Abfahrten gefunden.")
                         .font(.subheadline)
                 } else {
-                    ForEach(entry.filterStopEvents(stopEvents: entry.stopEvents ?? []).prefix(prefix), id: \.self) { stopEvent in
+                    ForEach(entry.filterStopEvents(stopEvents: entry.stopEvents ?? []).sorted{ ($0.departureTimeEstimated ?? $0.departureTimePlanned) < ($1.departureTimeEstimated ?? $1.departureTimePlanned) }.prefix(prefix), id: \.self) { stopEvent in
                         MonitorWidgetRow(entry: entry, stopEvent: stopEvent)
                     }
                 }
@@ -56,22 +56,22 @@ extension View {
     }
 }
 
-/*struct MonitorWidget_Previews: PreviewProvider {
-    static var previews: some View {
-        MonitorWidgetEntryView(entry: MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: departureM))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-            .previewDisplayName("Small")
-        
-        MonitorWidgetEntryView(entry: MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: departureM))
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
-            .previewDisplayName("Medium")
-        
-        MonitorWidgetEntryView(entry: MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: departureM))
-            .previewContext(WidgetPreviewContext(family: .systemLarge))
-            .previewDisplayName("Large")
-        
-        MonitorWidgetEntryView(entry: MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: departureM))
-            .previewContext(WidgetPreviewContext(family: .systemExtraLarge))
-            .previewDisplayName("Extra Large")
-    }
-}*/
+//struct MonitorWidget_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MonitorWidgetEntryView(entry: MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: departureM))
+//            .previewContext(WidgetPreviewContext(family: .systemSmall))
+//            .previewDisplayName("Small")
+//        
+//        MonitorWidgetEntryView(entry: MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: departureM))
+//            .previewContext(WidgetPreviewContext(family: .systemMedium))
+//            .previewDisplayName("Medium")
+//        
+//        MonitorWidgetEntryView(entry: MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: departureM))
+//            .previewContext(WidgetPreviewContext(family: .systemLarge))
+//            .previewDisplayName("Large")
+//        
+//        MonitorWidgetEntryView(entry: MonitorEntry(date: Date(), configuration: ConfigurationIntent(), departureMonitor: departureM))
+//            .previewContext(WidgetPreviewContext(family: .systemExtraLarge))
+//            .previewDisplayName("Extra Large")
+//    }
+//}

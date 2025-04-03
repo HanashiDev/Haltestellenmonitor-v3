@@ -1,42 +1,54 @@
 //
-//  CallAtStop.swift
+//  StopSequence.swift
 //  Haltestellenmonitor1-DD
 //
-//  Created by Peter Lohse on 23.07.24.
+//  Created by Tom Braune on 25.03.25.
 //
-
 import Foundation
 
-struct CallAtStop: Hashable {
-    var StopPointRef: String
-    var StopPointName: String
-    var NameSuffix: String?
-    var PlannedBay: String?
-    var EstimatedBay: String?
-    var ServiceArrival: ServiceCall?
-    var ServiceDeparture: ServiceCall?
-    var StopSeqNumber: String?
-    var DemandStop: String?
-    var UnplannedStop: String?
-    var NotServicedStop: String?
-    var NoBoardingAtStop: String?
-    var NoAlightingAtStop: String?
+
+struct StopSequenceItem: Hashable, Codable {
+    var isGlobalId: Bool?
+    var id: String
+    var name: String
+    var disassembledName: String?
+    var type: String
+    var pointType: String?
+    var coord: [Int]?
+    var niveau: Int
+    //var parent
+    var productClasses: [Int]
+    var properties: properties
+    struct properties: Hashable, Codable {
+        var AREA_NIVEAU_DIVA: String
+        var DestinationText: String
+        var stoppingPointPlanned: String?
+        var areaGid: String?
+        var area: String
+        var platform: String
+        var platfromName: String?
+        var plannedPlatformName: String?
+    }
+    var arrivalTimePlanned: String?
+    var departureTimePlanned: String?
+    var arrivalTimeEstimated: String?
+    var departureTimeEstimated: String?
     
     func getTimetabledTime() -> String {
-        if self.ServiceArrival?.TimetabledTime != nil {
-            return self.ServiceArrival!.TimetabledTime!
-        } else if self.ServiceDeparture?.TimetabledTime != nil {
-            return self.ServiceDeparture!.TimetabledTime!
+        if self.departureTimePlanned != nil {
+            return self.departureTimePlanned!
+        } else if self.arrivalTimePlanned != nil {
+            return self.arrivalTimePlanned!
         }
         
         return ""
     }
     
     func getEstimatedTime() -> String {
-        if self.ServiceArrival?.EstimatedTime != nil {
-            return self.ServiceArrival!.EstimatedTime!
-        } else if self.ServiceDeparture?.EstimatedTime != nil {
-            return self.ServiceDeparture!.EstimatedTime!
+        if self.departureTimeEstimated != nil {
+            return self.departureTimeEstimated!
+        } else if self.arrivalTimeEstimated != nil {
+            return self.arrivalTimeEstimated!
         }
         
         return ""
@@ -88,7 +100,7 @@ struct CallAtStop: Hashable {
         if (realtimeDate == nil || scheduledTimeDate == nil) {
             return 0
         }
-
+        
         let calendar = Calendar.current
         
         let realtimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: realtimeDate!)
@@ -118,25 +130,33 @@ struct CallAtStop: Hashable {
         if (!realInTime && inTime < 0) {
             inTime = 0
         }
-
+        
         return inTime
     }
     
     func getPlatform() -> String {
-        if self.PlannedBay == nil && self.EstimatedBay == nil {
+        if self.properties.plannedPlatformName == nil && self.properties.platfromName == nil {
             return ""
         }
         
-        if self.EstimatedBay != nil {
-            return "Steig \(self.EstimatedBay!)"
+        if self.properties.platfromName != nil {
+            return "Steig \(self.properties.platfromName!)"
         }
-
-        return "Steig \(self.PlannedBay!)"
+        
+        return "Steig \(self.properties.plannedPlatformName!)"
     }
     
     func getStop() -> Stop? {
         return stops.first { stop in
-            return self.StopPointRef.starts(with: stop.gid + ":")
+            return self.id.starts(with: stop.gid) // +":"
         }
+    }
+}
+
+struct StopSequenceContainer: Hashable, Codable {
+    var leg: leg
+    struct leg: Hashable, Codable {
+        var transportation: Transportation
+        var stopSequence: [StopSequenceItem]?
     }
 }

@@ -21,12 +21,18 @@ struct DepartureRow: View {
     var body: some View {
         HStack(alignment: .center) {
             Text(stopEvent.getIcon())
-            
+            Spacer() // prevent shifiting if delayed
             VStack(alignment: .leading) {
-                Text(stopEvent.getName())
-                    .font(.headline)
-                
-                    .lineLimit(1)
+                HStack {
+                    Text(stopEvent.getName())
+                        .font(.headline)
+                    
+                        .lineLimit(1)
+                    if stopEvent.hasInfos() {
+                        Spacer()
+                        Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
+                    }
+                }
                 HStack {
                     Text("\(stopEvent.getScheduledTime()) Uhr")
                     if (stopEvent.getTimeDifference() > 0) {
@@ -37,21 +43,21 @@ struct DepartureRow: View {
                             .foregroundColor(Color.green)
                     }
                     Spacer()
-                    Text("\(stopEvent.getRealTime()) Uhr")
+                    Text("\(stopEvent.getEstimatedTime()) Uhr")
                 }
                 .font(.subheadline)
                 
                 HStack {
-                    if (stopEvent.ThisCall.PlannedBay != nil || stopEvent.ThisCall.EstimatedBay != nil) {
-                        Text(stopEvent.getPlatForm())
+                    if (stopEvent.location.properties.platformName != nil || stopEvent.location.properties.plannedPlatformName != nil) {
+                        Text(stopEvent.getPlatform())
                             .font(.footnote)
                     }
                     Spacer()
-                    if stopEvent.Cancelled == "true" {
-                        Text("Halt fällt aus")
+                    if stopEvent.isCancelled ?? false {
+                        Text("Fahrt fällt aus")
                             .foregroundColor(Color.red)
                     } else {
-                        Text("in \(departureBinding.inMinute) min")
+                    Text("in \(departureBinding.inMinute) min")
                     }
                 }
                 .font(.subheadline)
