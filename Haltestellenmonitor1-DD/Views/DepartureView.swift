@@ -176,6 +176,8 @@ struct DepartureView: View {
             }
         } catch {
             print ("error: \(error)")
+            
+            // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     Task {
