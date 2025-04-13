@@ -101,7 +101,27 @@ struct PartialRoute: Hashable, Codable {
     }
     
     func getColor() -> Color {
-        return self.Mot.type.getColor()
+            let opacity = 0.8
+            switch (self.Mot.type) {
+            case "Tram":
+                return Color.red.opacity(opacity)
+            case "Bus", "PlusBus", "CityBus", "IntercityBus":
+                return Color.blue.opacity(opacity)
+            case "Train", "RapidTransit", "SuburbanRailway":
+                return Color.green.opacity(opacity)
+            case "Cableway":
+                return Color.gray.opacity(opacity)
+            case "Ferry":
+                return Color.cyan.opacity(opacity)
+            case "HailedSharedTaxi":
+                return Color.yellow.opacity(opacity)
+            case "Footpath", "MobilityStairsUp", "MobilityStairsDown":
+                return Color.mint.opacity(opacity)
+            default:
+                //print("Missing Color for \(self)")
+                return Color.purple.opacity(opacity)
+            
+        }
     }
     
     func getStartTime() -> Date? {
