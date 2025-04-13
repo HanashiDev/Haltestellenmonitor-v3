@@ -51,14 +51,14 @@ struct SingleTripView: View {
         request.httpMethod = "POST"
         
         let formatter = ISO8601DateFormatter()
-        let date = formatter.date(from: stopEvent.departureTimeEstimated ?? stopEvent.departureTimePlanned) ?? Date.now
+        let date = formatter.date(from: stopEvent.departureTimePlanned) ?? Date.now
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HHmm"
         
-        request.httpBody = createDepartureRequestSingle(stopId: stop.gid, line: stopEvent.transportation.id, tripCode: stopEvent.transportation.properties.tripCode ?? 0 , itdDate: dateFormatter.string(from: date), itdTime: timeFormatter.string(from: date)).data(using: .utf8)
+        request.httpBody = createDepartureRequestSingle(stopId: stop.gid, line: stopEvent.transportation.id, tripCode: stopEvent.transportation.properties.tripCode ?? 0 , date: dateFormatter.string(from: date), time: timeFormatter.string(from: date)).data(using: .utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
@@ -71,7 +71,7 @@ struct SingleTripView: View {
             }
             self.isLoaded = true
         } catch {
-            print ("error: \(error)")
+            print ("AW ST error: \(error)")
             
             // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {

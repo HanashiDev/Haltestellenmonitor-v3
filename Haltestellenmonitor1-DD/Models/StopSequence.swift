@@ -25,7 +25,7 @@ struct StopSequenceItem: Hashable, Codable {
         var stoppingPointPlanned: String?
         var areaGid: String?
         var area: String
-        var platform: String
+        var platform: String?
         var platfromName: String?
         var plannedPlatformName: String?
     }

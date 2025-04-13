@@ -94,7 +94,7 @@ class Provider: IntentTimelineProvider {
             var entries: [MonitorEntry] = []
             var stopEvents: [StopEvent] = []
             guard error == nil else {
-                print ("error: \(error!)")
+                print ("Widget error: \(error!)")
                 self.getTimeline(for: configuration, in: context, completion: completion)
                 return
             }

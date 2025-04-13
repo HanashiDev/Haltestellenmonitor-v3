@@ -175,7 +175,7 @@ struct DepartureView: View {
                 }
             }
         } catch {
-            print ("error: \(error)")
+            print ("DM error: \(error)")
             
             // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {
