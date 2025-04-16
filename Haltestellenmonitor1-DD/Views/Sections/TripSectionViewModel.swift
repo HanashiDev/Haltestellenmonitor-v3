@@ -6,7 +6,23 @@
 //
 
 import Foundation
+import SwiftUI
 
+class TripSectionViewData {
+    var nr: Int
+    var start: Date
+    var end: Date
+    var name: String = ""
+    var color: Color
+    
+    init(start: Date, end: Date, name: String, nr: Int, color: Color) {
+        self.start = start
+        self.end = end
+        self.name = name
+        self.nr = nr
+        self.color = color
+    }
+}
 
 class TripSectionViewModel: ObservableObject {
     @Published var route: Route
@@ -16,7 +32,7 @@ class TripSectionViewModel: ObservableObject {
     }
     
     func getTime() -> String {
-      "\(route.getTimeDifference()) Min"
+        "\(route.getTimeDifference()) Min"
     }
     
     func getUmstiege() -> String {
@@ -80,5 +96,58 @@ class TripSectionViewModel: ObservableObject {
             return (0, str)
         }
         return (value, str)
+    }
+    
+    func getRouteColoredBarDifference(a: TripSectionViewData) -> Int {
+        let start: Double = a.start.timeIntervalSince1970
+        let end: Double = a.end.timeIntervalSince1970
+        return Int((end - start) / 60)
+    }
+    
+    func getRouteColoredBars()  -> [TripSectionViewData] {
+        let time: CGFloat = CGFloat(route.getTimeDifference())
+    
+        var arr: [TripSectionViewData] = []
+        var index = 0
+        
+        for i in 0..<route.PartialRoutes.count {
+            let partialRoute = route.PartialRoutes[i]
+            var before: TripSectionViewData? = arr.count >= 1 ? arr.last : nil
+    
+            // Wartezeit
+            if(partialRoute.getStartTime() == nil || partialRoute.getEndTime() == nil) {
+                if(getDuration(partialRoute).0 == 0) {
+                    continue
+                }
+                
+                 guard let beforeSection = before  else {
+                    continue
+                }
+         
+                var date = beforeSection.end.addingTimeInterval(TimeInterval(Double(getDuration(partialRoute).0) * 60.0))
+                index = index + 1
+                arr.append(TripSectionViewData(start: beforeSection.end, end: date, name: "🕒", nr: index, color: Color.gray))
+                continue
+            }
+            let start = partialRoute.getStartTime() ?? Date()
+            let end = partialRoute.getEndTime() ?? Date()
+            
+            index = index + 1
+            let newEleemnt = TripSectionViewData(start:start, end: end, name: partialRoute.getNameShort(), nr: index, color: partialRoute.getColor())
+            
+            // LAufzeiten
+            if(before != nil ) {
+                if(before!.end != newEleemnt.start) {
+                    index = index + 1
+                    arr.append(TripSectionViewData(start: before!.end, end: newEleemnt.start, name: "🚶‍➡️", nr: index, color: Color.gray))
+                }
+            }
+            
+            // Add current element
+            if(newEleemnt.start != newEleemnt.end) {
+                arr.append(newEleemnt)
+            }
+        }
+        return arr
     }
 }

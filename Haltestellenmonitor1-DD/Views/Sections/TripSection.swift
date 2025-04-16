@@ -66,19 +66,19 @@ struct TripSection: View {
     @ViewBuilder
     func tripView() -> some View {
         let time: CGFloat = CGFloat(vm.route.getTimeDifference())
-        
-        GeometryReader { geo in
+
+         GeometryReader { geo in
             HStack (spacing: 0) {
-                ForEach(vm.route.PartialRoutes, id: \.self) { partialRoute in
-                    let stopTime = vm.getDuration(partialRoute).0
-                    let currentTime = CGFloat(stopTime) / time
-                    let width = currentTime * geo.size.width
+                
+                ForEach(vm.getRouteColoredBars(), id: \.self.nr) { routeEntry in
+                    let stopTime = vm.getRouteColoredBarDifference(a: routeEntry)
+                    let width = (CGFloat(stopTime) / time) * geo.size.width
                     
                     VStack {
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(partialRoute.getColor())
+                            .fill(routeEntry.color)
                             .frame(width: width, height: 5)
-                        Text(partialRoute.getNameShort())
+                        Text(routeEntry.name)
                             .foregroundColor(.customGray)
                             .font(.footnote)
                             .frame(width: width, height: 15)
