@@ -13,6 +13,9 @@ struct PartialRoute: Hashable, Codable {
     var RegularStops: [RegularStop]?
     
     func getName() -> String {
+        if(self.Mot.type == "InsertedWaiting") {
+            return "Wartezeit"
+        }
         if (self.Mot.type == "Footpath") {
             return hasNoTime() ? "Warten" : "Fußweg"
         }
@@ -43,6 +46,9 @@ struct PartialRoute: Hashable, Codable {
     }
     
     func getNameShort() -> String {
+        if(self.Mot.type == "InsertedWaiting") {
+            return "🕝"
+        }
         if (self.Mot.type == "Footpath") {
             return hasNoTime() ? "🕝" : "🚶"
         }
@@ -67,6 +73,8 @@ struct PartialRoute: Hashable, Codable {
     
     func getIcon() -> String {
         switch (self.Mot.type) {
+        case "InsertedWaiting":
+            return "🕝"
         case "Tram":
             return "🚊"
         case "CityBus":
@@ -139,6 +147,7 @@ struct PartialRoute: Hashable, Codable {
         }
         
         var time = regularStop?.ArrivalTime
+        
         if (regularStop?.ArrivalRealTime != nil) {
             time = regularStop?.ArrivalRealTime
         }

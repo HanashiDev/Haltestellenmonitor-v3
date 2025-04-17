@@ -30,7 +30,10 @@ struct TripSection: View {
             }.font(.subheadline)
             
             DisclosureGroup {
-                ForEach(vm.route.PartialRoutes, id: \.self) { partialRoute in
+                ForEach(vm.routesWithWaitingTimeUnder2Min, id: \.self) { partialRoute in
+                    if partialRoute.Mot.type == "InsertedWaiting" {
+                        PartialRouteRowWaitingTime(time: partialRoute.getDuration(), text:partialRoute.getName())
+                    }
                     if partialRoute.RegularStops == nil {
                         if partialRoute.getDuration() == 0 {
                             let tup = vm.getDuration(partialRoute)
@@ -40,22 +43,26 @@ struct TripSection: View {
                         } else {
                             PartialRouteRow(partialRoute: partialRoute)
                         }
-                    } else {
-                        DisclosureGroup {
-                            ForEach (partialRoute.RegularStops ?? [], id: \.self) { regularStop in
-                                ZStack {
-                                    NavigationLink(value: regularStop.getStop() ?? stops[0]) {
-                                        EmptyView()
+                    }
+                    
+                    else {
+                        if partialRoute.Mot.type != "InsertedWaiting" {
+                            // actual tram/bus etc parts
+                            DisclosureGroup {
+                                ForEach (partialRoute.RegularStops ?? [], id: \.self) { regularStop in
+                                    ZStack {
+                                        NavigationLink(value: regularStop.getStop() ?? stops[0]) {
+                                            EmptyView()
+                                        }
+                                        .opacity(0.0)
+                                        .buttonStyle(.plain)
+                                        
+                                        RegularStopRow(regularStop: regularStop, isFirst: partialRoute.RegularStops?.first?.DataId == regularStop.DataId)
                                     }
-                                    .opacity(0.0)
-                                    .buttonStyle(.plain)
-                                    
-                                    RegularStopRow(regularStop: regularStop, isFirst: partialRoute.RegularStops?.first?.DataId == regularStop.DataId)
                                 }
-                            }
-                        } label: {
-                            PartialRouteRow(partialRoute: partialRoute)
-                        }
+                            } label: {
+                                PartialRouteRow(partialRoute: partialRoute)
+                            }}
                     }
                 }
             }
@@ -66,23 +73,27 @@ struct TripSection: View {
     @ViewBuilder
     func tripView() -> some View {
         let time: CGFloat = CGFloat(vm.route.getTimeDifference())
-
-         GeometryReader { geo in
+        
+        GeometryReader { geo in
             HStack (spacing: 0) {
                 
                 ForEach(vm.getRouteColoredBars(), id: \.self.nr) { routeEntry in
                     let stopTime = vm.getRouteColoredBarDifference(a: routeEntry)
                     let width = (CGFloat(stopTime) / time) * geo.size.width
                     
-                    VStack {
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(routeEntry.color)
-                            .frame(width: width, height: 5)
-                        Text(routeEntry.name)
-                            .foregroundColor(.customGray)
-                            .font(.footnote)
-                            .frame(width: width, height: 15)
-                    }.padding(0)
+                    if(width > 0.0) {
+                        VStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(routeEntry.color)
+                                .frame(width: width, height: 5)
+                            Text(routeEntry.name)
+                                .foregroundColor(.customGray)
+                                .font(.footnote)
+                                .frame(width: width, height: 15)
+                        }.padding(0)
+                    }
+                    
+                 
                 }
             }.frame(width: geo.size.width)
         }
@@ -90,9 +101,9 @@ struct TripSection: View {
 }
 
 /*struct TripSection_Previews: PreviewProvider {
-    static var previews: some View {
-        Form {
-            TripSection(vm: TripSectionViewModel(route: tripTmp.Routes[0]))
-        }
-    }
-}*/
+ static var previews: some View {
+ Form {
+ TripSection(vm: TripSectionViewModel(route: tripTmp.Routes[0]))
+ }
+ }
+ }*/

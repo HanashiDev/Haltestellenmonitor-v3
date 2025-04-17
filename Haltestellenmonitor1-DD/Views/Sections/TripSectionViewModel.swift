@@ -26,9 +26,11 @@ class TripSectionViewData {
 
 class TripSectionViewModel: ObservableObject {
     @Published var route: Route
+    @Published var routesWithWaitingTimeUnder2Min:  [PartialRoute] = []
     
     init(route: Route) {
         self.route = route
+        insertWaitingTimePartialRoute()
     }
     
     func getTime() -> String {
@@ -98,6 +100,50 @@ class TripSectionViewModel: ObservableObject {
         return (value, str)
     }
     
+    func insertWaitingTimePartialRoute() {
+        routesWithWaitingTimeUnder2Min = []
+        
+        var arr: [PartialRoute] = []
+        
+        for i in 0..<route.PartialRoutes.count {
+            let partialRoute = route.PartialRoutes[i]
+            let before: PartialRoute? = arr.count >= 1 ? arr.last : nil
+            
+            // Wartezeit 1
+            if(partialRoute.getStartTime() == nil || partialRoute.getEndTime() == nil) {
+                continue
+            }
+            
+            let start = partialRoute.getStartTime() ?? Date()
+            let end = partialRoute.getEndTime() ?? Date()
+            
+            // Insert Wartezeit
+            if(before != nil ) {
+                if(before!.getEndTime() != start) {
+                    guard let insertedStart = before?.getEndTime() else {
+                        continue
+                    }
+                    guard let  insertedEnd = partialRoute.getStartTime() else {
+                        continue
+                    }
+                    let startTime = "/Date(\(Int(insertedStart.timeIntervalSince1970)*1000)-0000)/"
+                    let endime = "/Date(\(Int(insertedEnd.timeIntervalSince1970)*1000)-0000)/"
+                    
+                    let x =  PartialRoute(Mot: Mot(type: "InsertedWaiting"), RegularStops: [
+                        RegularStop(ArrivalTime:startTime, DepartureTime: startTime, Place: "", Name: "x", type: "", Latitude: -1, Longitude: -1, DataId: "-1"),
+                        RegularStop(ArrivalTime:endime, DepartureTime: endime, Place: "", Name: "x", type: "", Latitude: -1, Longitude: -1, DataId: "-1")
+                    ])
+                    arr.append(x)
+                }
+            }
+            // Add current element
+            if(start != end) {
+                arr.append(partialRoute)
+            }
+        }
+        routesWithWaitingTimeUnder2Min =  arr
+    }
+    
     func getRouteColoredBarDifference(a: TripSectionViewData) -> Int {
         let start: Double = a.start.timeIntervalSince1970
         let end: Double = a.end.timeIntervalSince1970
@@ -105,28 +151,26 @@ class TripSectionViewModel: ObservableObject {
     }
     
     func getRouteColoredBars()  -> [TripSectionViewData] {
-        let time: CGFloat = CGFloat(route.getTimeDifference())
-    
         var arr: [TripSectionViewData] = []
         var index = 0
         
         for i in 0..<route.PartialRoutes.count {
             let partialRoute = route.PartialRoutes[i]
-            var before: TripSectionViewData? = arr.count >= 1 ? arr.last : nil
-    
+            let before: TripSectionViewData? = arr.count >= 1 ? arr.last : nil
+            
             // Wartezeit
             if(partialRoute.getStartTime() == nil || partialRoute.getEndTime() == nil) {
                 if(getDuration(partialRoute).0 == 0) {
                     continue
                 }
                 
-                 guard let beforeSection = before  else {
+                guard let beforeSection = before  else {
                     continue
                 }
-         
-                var date = beforeSection.end.addingTimeInterval(TimeInterval(Double(getDuration(partialRoute).0) * 60.0))
+                
+                let date = beforeSection.end.addingTimeInterval(TimeInterval(Double(getDuration(partialRoute).0) * 60.0))
                 index = index + 1
-                arr.append(TripSectionViewData(start: beforeSection.end, end: date, name: "🕒", nr: index, color: Color.gray))
+                arr.append(TripSectionViewData(start: beforeSection.end, end: date, name: " ", nr: index, color: Color.gray.opacity(0.5)))
                 continue
             }
             let start = partialRoute.getStartTime() ?? Date()
@@ -135,11 +179,11 @@ class TripSectionViewModel: ObservableObject {
             index = index + 1
             let newEleemnt = TripSectionViewData(start:start, end: end, name: partialRoute.getNameShort(), nr: index, color: partialRoute.getColor())
             
-            // LAufzeiten
+            // Laufzeiten
             if(before != nil ) {
                 if(before!.end != newEleemnt.start) {
                     index = index + 1
-                    arr.append(TripSectionViewData(start: before!.end, end: newEleemnt.start, name: "🚶‍➡️", nr: index, color: Color.gray))
+                    arr.append(TripSectionViewData(start: before!.end, end: newEleemnt.start, name: " ", nr: index, color: Color.gray.opacity(0.5)))
                 }
             }
             
