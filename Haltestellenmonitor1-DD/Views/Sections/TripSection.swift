@@ -79,7 +79,7 @@ struct TripSection: View {
                 
                 ForEach(vm.getRouteColoredBars(), id: \.self.nr) { routeEntry in
                     let stopTime = vm.getRouteColoredBarDifference(a: routeEntry)
-                    let width = (CGFloat(stopTime) / time) * geo.size.width
+                    let width = (CGFloat(stopTime) / time) * (geo.size.width - 10)
                     
                     if(width > 0.0) {
                         VStack {
