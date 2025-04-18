@@ -31,7 +31,7 @@ struct TripSection: View {
             
             DisclosureGroup {
                 ForEach(vm.routesWithWaitingTimeUnder2Min, id: \.self) { partialRoute in
-                    if partialRoute.Mot.type == "InsertedWaiting" {
+                    if partialRoute.Mot.type == "InsertedWaiting" && partialRoute.getDuration() > 0 {
                         PartialRouteRowWaitingTime(time: partialRoute.getDuration(), text:partialRoute.getName())
                     }
                     if partialRoute.RegularStops == nil {
@@ -83,17 +83,24 @@ struct TripSection: View {
                     
                     if(width > 0.0) {
                         VStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(routeEntry.color)
-                                .frame(width: width, height: 5)
+                            if routeEntry.name.isEmpty {
+                                
+                                Line()
+                                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [3]))
+                                    .foregroundColor(.customGray.opacity(0.7))
+                                    .frame(width: width, height: 5)
+                                    .offset(y: 2.5)
+                            } else {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(routeEntry.color)
+                                    .frame(width: width, height: 5)
+                            }
                             Text(routeEntry.name)
                                 .foregroundColor(.customGray)
                                 .font(.footnote)
                                 .frame(width: width, height: 15)
                         }.padding(0)
                     }
-                    
-                 
                 }
             }.frame(width: geo.size.width)
         }
@@ -107,3 +114,12 @@ struct TripSection: View {
  }
  }
  }*/
+struct Line: Shape {
+    var y2: CGFloat = 0.0
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: 0, y: 0))
+        path.addLine(to: CGPoint(x: rect.width, y: y2))
+        return path
+    }
+}

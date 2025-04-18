@@ -153,6 +153,7 @@ class TripSectionViewModel: ObservableObject {
     func getRouteColoredBars()  -> [TripSectionViewData] {
         var arr: [TripSectionViewData] = []
         var index = 0
+        // let time: CGFloat = CGFloat(route.getTimeDifference())
         
         for i in 0..<route.PartialRoutes.count {
             let partialRoute = route.PartialRoutes[i]
@@ -170,7 +171,7 @@ class TripSectionViewModel: ObservableObject {
                 
                 let date = beforeSection.end.addingTimeInterval(TimeInterval(Double(getDuration(partialRoute).0) * 60.0))
                 index = index + 1
-                arr.append(TripSectionViewData(start: beforeSection.end, end: date, name: " ", nr: index, color: Color.gray.opacity(0.5)))
+                arr.append(TripSectionViewData(start: beforeSection.end, end: date, name: "", nr: index, color: Color.gray.opacity(0.5)))
                 continue
             }
             let start = partialRoute.getStartTime() ?? Date()
@@ -183,7 +184,7 @@ class TripSectionViewModel: ObservableObject {
             if(before != nil ) {
                 if(before!.end != newEleemnt.start) {
                     index = index + 1
-                    arr.append(TripSectionViewData(start: before!.end, end: newEleemnt.start, name: " ", nr: index, color: Color.gray.opacity(0.5)))
+                    arr.append(TripSectionViewData(start: before!.end, end: newEleemnt.start, name: "", nr: index, color: Color.gray.opacity(0.5)))
                 }
             }
             
