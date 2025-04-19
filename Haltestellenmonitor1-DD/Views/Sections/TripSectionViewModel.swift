@@ -8,19 +8,19 @@
 import Foundation
 import SwiftUI
 
-class TripSectionViewData {
-    var nr: Int
-    var start: Date
-    var end: Date
-    var name: String = ""
+struct TripSectionViewData {
+    var width: CGFloat
+    var name: String
     var color: Color
+    var difference: Int
+    var nr: Int
     
-    init(start: Date, end: Date, name: String, nr: Int, color: Color) {
-        self.start = start
-        self.end = end
+    init(width: CGFloat, name: String, color: Color, difference: Int, nr: Int) {
+        self.width = width
         self.name = name
-        self.nr = nr
         self.color = color
+        self.difference = difference
+        self.nr = nr
     }
 }
 
@@ -144,27 +144,22 @@ class TripSectionViewModel: ObservableObject {
         routesWithWaitingTimeUnder2Min =  arr
     }
     
-    func getRouteColoredBarDifference(a: TripSectionViewData) -> Int {
-        let start: Double = a.start.timeIntervalSince1970
-        let end: Double = a.end.timeIntervalSince1970
-        return Int((end - start) / 60)
-    }
-    
-    func getRouteColoredBarDifference2(_ startDate: Date, _ endDate: Date) -> Int {
+    /// Returns the difference of two dates in minutes
+    func getMinuteDifference(_ startDate: Date, _ endDate: Date) -> Int {
         let start: Double = startDate.timeIntervalSince1970
         let end: Double = endDate.timeIntervalSince1970
         return Int((end - start) / 60)
     }
     
-    func getRouteColoredBars(_ maxWidth: CGFloat)  -> [ABC] {
-        var arr: [TripSectionViewData] = []
-        var arr2: [ABC] = []
+    /// Transforms all the partial route data into bars to display
+    func getRouteColoredBars(_ maxWidth: CGFloat)  -> [TripSectionViewData] {
+        var endDates: [Date] = []
+        var arr2: [TripSectionViewData] = []
         var index = 0
-        let maxTime: CGFloat = CGFloat(route.getTimeDifference())
         
         for i in 0..<route.PartialRoutes.count {
             let partialRoute = route.PartialRoutes[i]
-            let before: TripSectionViewData? = arr.count >= 1 ? arr.last : nil
+            let before: Date? = endDates.count >= 1 ? endDates.last : nil
             
             // Wartezeit
             if(partialRoute.getStartTime() == nil || partialRoute.getEndTime() == nil) {
@@ -172,42 +167,46 @@ class TripSectionViewModel: ObservableObject {
                     continue
                 }
                 
-                guard let beforeSection = before  else {
+                guard let before = before else {
                     continue
                 }
                 
-                let date = beforeSection.end.addingTimeInterval(TimeInterval(Double(getDuration(partialRoute).0) * 60.0))
+                let date = before.addingTimeInterval(TimeInterval(Double(getDuration(partialRoute).0) * 60.0))
                 index = index + 1
-               arr.append(TripSectionViewData(start: beforeSection.end, end: date, name: "", nr: index, color: Color.gray.opacity(0.5)))
-                arr2.append(ABC(width: 0.0, name: "", color: Color.gray.opacity(0.5), difference: getRouteColoredBarDifference2(beforeSection.end, date), nr: index))
+                arr2.append(TripSectionViewData(width: 0.0, name: "", color: Color.gray.opacity(0.5), difference: getMinuteDifference(before, date), nr: index))
+                endDates.append(date)
                 continue
             }
+            
             let start = partialRoute.getStartTime() ?? Date()
             let end = partialRoute.getEndTime() ?? Date()
             
-            index = index + 1
-            let newEleemnt = TripSectionViewData(start:start, end: end, name: partialRoute.getNameShort(), nr: index, color: partialRoute.getColor())
+            index = index + 1 // index for current element
+            let newElementIndex = index
             
             // Laufzeiten
-            if(before != nil ) {
-                if(before!.end != newEleemnt.start) {
-                    index = index + 1
-                arr.append(TripSectionViewData(start: before!.end, end: newEleemnt.start, name: "", nr: index, color: Color.gray.opacity(0.5)))
-                    arr2.append(ABC(width: 0.0, name: "", color: Color.gray.opacity(0.5), difference: getRouteColoredBarDifference2(before!.end, newEleemnt.start), nr: index))
+            if before != start && before != nil {
+                guard let before = before else {
+                    continue
                 }
+                
+                index = index + 1
+                arr2.append(TripSectionViewData(width: 0.0, name: "", color: Color.gray.opacity(0.5), difference: getMinuteDifference(before, start), nr: index))
+                endDates.append(start)
             }
             
             // Add current element
-            if(newEleemnt.start != newEleemnt.end) {
-               arr.append(newEleemnt)
-                arr2.append(ABC(width: 0.0, name: newEleemnt.name, color: newEleemnt.color, difference: getRouteColoredBarDifference2(newEleemnt.start, newEleemnt.end), nr: newEleemnt.nr))
+            if start != end {
+                arr2.append(TripSectionViewData(width: 0.0, name: partialRoute.getNameShort(), color: partialRoute.getColor(), difference: getMinuteDifference(start, end), nr: newElementIndex))
+                endDates.append(end)
             }
         }
+        let maxTime: CGFloat = CGFloat(route.getTimeDifference())
         return adjustToMinWidth(maxWidth, arr2, maxTime)
     }
     
-    func adjustToMinWidth( _ maxWidth: CGFloat, _ entrys: [ABC], _ maxTime: Double) -> [ABC] {
-        var arr: [ABC] = []
+    func adjustToMinWidth( _ maxWidth: CGFloat, _ entrys: [TripSectionViewData], _ maxTime: Double) -> [TripSectionViewData] {
+        var arr: [TripSectionViewData] = []
         var minWidth: CGFloat = 30.0 // 3 letters
         var occupiedThroughMinWidth = CGFloat(entrys.count) * minWidth;
         
@@ -220,42 +219,26 @@ class TripSectionViewModel: ObservableObject {
         }
         
         let remainingWidth: CGFloat = maxWidth - occupiedThroughMinWidth
-
+        
         for entry in entrys {
             if(entry.difference <= 0) {
                 continue
             }
             let origWidth = CGFloat((Double(entry.difference) / maxTime)) * maxWidth
             
-            // Size was originally smaller then min
+            // Size was originally smaller then minWidth
             if origWidth < minWidth {
-                arr.append(ABC(width: minWidth, name: entry.name, color: entry.color, difference:entry.difference, nr: entry.nr))
+                arr.append(TripSectionViewData(width: minWidth, name: entry.name, color: entry.color, difference:entry.difference, nr: entry.nr))
                 continue
             }
             
             // Add orig percentage to minWidth
             let remainingNeededPercent = (origWidth - minWidth)/remainingWidth
             let newWidth = minWidth + (remainingNeededPercent * remainingWidth)
-            arr.append(ABC(width:  newWidth, name: entry.name, color: entry.color, difference:entry.difference, nr: entry.nr))
+            arr.append(TripSectionViewData(width:  newWidth, name: entry.name, color: entry.color, difference:entry.difference, nr: entry.nr))
         }
         print(arr.reduce(0, {(a, num) in return a + num.width})/maxWidth) // should be close to 1.0
         return arr
     }
 }
 
-struct ABC {
-    var width: CGFloat
-    var name: String
-    var color: Color
-    var difference: Int
-    var nr: Int
-    
-    init(width: CGFloat, name: String, color: Color, difference: Int, nr: Int) {
-        self.width = width
-        self.name = name
-        self.color = color
-        self.difference = difference
-        self.nr = nr
-    }
-    
-}
