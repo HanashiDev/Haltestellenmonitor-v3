@@ -181,9 +181,14 @@ class TripSectionViewModel: ObservableObject {
                 }
                 
                 let date = before.addingTimeInterval(TimeInterval(Double(getDuration(partialRoute).0) * 60.0))
-                index = index + 1
-                arr2.append(TripSectionViewData(width: 0.0, name: "", color: Color.gray.opacity(0.5), difference: getMinuteDifference(before, date), nr: index))
-                endDates.append(date)
+                
+                let difference = getMinuteDifference(before, date)
+                
+                if difference > 0 {
+                    index = index + 1
+                    arr2.append(TripSectionViewData(width: 0.0, name: "", color: Color.gray.opacity(0.5), difference: difference, nr: index))
+                    endDates.append(date)
+                }
                 continue
             }
             
@@ -198,16 +203,20 @@ class TripSectionViewModel: ObservableObject {
                 guard let before = before else {
                     continue
                 }
-                
-                index = index + 1
-                arr2.append(TripSectionViewData(width: 0.0, name: "", color: Color.gray.opacity(0.5), difference: getMinuteDifference(before, start), nr: index))
-                endDates.append(start)
+                let difference = getMinuteDifference(before, start)
+                if difference > 0 {
+                    index = index + 1
+                    arr2.append(TripSectionViewData(width: 0.0, name: "", color: Color.gray.opacity(0.5), difference: difference, nr: index))
+                    endDates.append(start)
+                }
             }
             
             // Add current element
             if start != end {
-                arr2.append(TripSectionViewData(width: 0.0, name: partialRoute.getNameShort(), color: partialRoute.getColor(), difference: getMinuteDifference(start, end), nr: newElementIndex))
-                endDates.append(end)
+                let difference = getMinuteDifference(start, end)
+                if difference > 0 {
+                    arr2.append(TripSectionViewData(width: 0.0, name: partialRoute.getNameShort(), color: partialRoute.getColor(), difference: difference, nr: newElementIndex))
+                    endDates.append(end) }
             }
         }
         let maxTime: CGFloat = CGFloat(route.getTimeDifference())
@@ -218,7 +227,7 @@ class TripSectionViewModel: ObservableObject {
         var arr: [TripSectionViewData] = []
         var minWidth: CGFloat = 30.0 // 3 letters
         var occupiedThroughMinWidth = CGFloat(entrys.count) * minWidth;
-       
+        
         // Adjust minWidth to be smaller if too much entrys
         var j: CGFloat = 1;
         while (occupiedThroughMinWidth > maxWidth && minWidth > 1.0) {
@@ -229,8 +238,9 @@ class TripSectionViewModel: ObservableObject {
         
         let remainingWidth: CGFloat = (maxWidth - occupiedThroughMinWidth)
         let totalWidthOriginalValues = entrys.map({CGFloat(Double($0.difference)/maxTime)*maxWidth < minWidth ? 0: CGFloat(Double($0.difference)/maxTime)*maxWidth}).reduce(0.0, {(a, e) in return a + e})
-
+        
         for entry in entrys {
+            // should not happen lol
             if(entry.difference <= 0) {
                 continue
             }
@@ -240,15 +250,15 @@ class TripSectionViewModel: ObservableObject {
             
             // Size was originally smaller then minWidth
             if origWidth < minWidth {
-                arr.append(TripSectionViewData(width: minWidth, name: entry.name, color: entry.color, difference:entry.difference, nr: entry.nr))
+                arr.append(TripSectionViewData(width: minWidth, name: entry.name, color: entry.color, difference: entry.difference, nr: entry.nr))
                 continue
             }
             
             // Add values where size was originally greater then minWidth
-            let newValue = ((origWidth/totalWidthOriginalValues)*remainingWidth)
-            arr.append(TripSectionViewData(width: minWidth + newValue, name: entry.name, color: entry.color, difference:entry.difference, nr: entry.nr))
+            let newValue = ((origWidth/totalWidthOriginalValues)*remainingWidth).rounded(.toNearestOrEven)
+            arr.append(TripSectionViewData(width: minWidth + newValue, name: entry.name, color: entry.color, difference: entry.difference, nr: entry.nr))
         }
-        // print(arr.reduce(0, {(a, num) in return a + num.width})/maxWidth) // should be close to 1.0
+        //print(arr.reduce(0, {(a, num) in return a + num.width})/maxWidth) // should be close to 1.0
         return arr
     }
 }
