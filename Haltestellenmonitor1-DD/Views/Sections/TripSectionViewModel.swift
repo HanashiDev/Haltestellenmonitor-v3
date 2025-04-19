@@ -150,10 +150,17 @@ class TripSectionViewModel: ObservableObject {
         return Int((end - start) / 60)
     }
     
-    func getRouteColoredBars()  -> [TripSectionViewData] {
+    func getRouteColoredBarDifference2(_ startDate: Date, _ endDate: Date) -> Int {
+        let start: Double = startDate.timeIntervalSince1970
+        let end: Double = endDate.timeIntervalSince1970
+        return Int((end - start) / 60)
+    }
+    
+    func getRouteColoredBars(_ maxWidth: CGFloat)  -> [ABC] {
         var arr: [TripSectionViewData] = []
+        var arr2: [ABC] = []
         var index = 0
-        // let time: CGFloat = CGFloat(route.getTimeDifference())
+        let maxTime: CGFloat = CGFloat(route.getTimeDifference())
         
         for i in 0..<route.PartialRoutes.count {
             let partialRoute = route.PartialRoutes[i]
@@ -171,7 +178,8 @@ class TripSectionViewModel: ObservableObject {
                 
                 let date = beforeSection.end.addingTimeInterval(TimeInterval(Double(getDuration(partialRoute).0) * 60.0))
                 index = index + 1
-                arr.append(TripSectionViewData(start: beforeSection.end, end: date, name: "", nr: index, color: Color.gray.opacity(0.5)))
+               arr.append(TripSectionViewData(start: beforeSection.end, end: date, name: "", nr: index, color: Color.gray.opacity(0.5)))
+                arr2.append(ABC(width: 0.0, name: "", color: Color.gray.opacity(0.5), difference: getRouteColoredBarDifference2(beforeSection.end, date), nr: index))
                 continue
             }
             let start = partialRoute.getStartTime() ?? Date()
@@ -184,15 +192,70 @@ class TripSectionViewModel: ObservableObject {
             if(before != nil ) {
                 if(before!.end != newEleemnt.start) {
                     index = index + 1
-                    arr.append(TripSectionViewData(start: before!.end, end: newEleemnt.start, name: "", nr: index, color: Color.gray.opacity(0.5)))
+                arr.append(TripSectionViewData(start: before!.end, end: newEleemnt.start, name: "", nr: index, color: Color.gray.opacity(0.5)))
+                    arr2.append(ABC(width: 0.0, name: "", color: Color.gray.opacity(0.5), difference: getRouteColoredBarDifference2(before!.end, newEleemnt.start), nr: index))
                 }
             }
             
             // Add current element
             if(newEleemnt.start != newEleemnt.end) {
-                arr.append(newEleemnt)
+               arr.append(newEleemnt)
+                arr2.append(ABC(width: 0.0, name: newEleemnt.name, color: newEleemnt.color, difference: getRouteColoredBarDifference2(newEleemnt.start, newEleemnt.end), nr: newEleemnt.nr))
             }
         }
+        return adjustToMinWidth(maxWidth, arr2, maxTime)
+    }
+    
+    func adjustToMinWidth( _ maxWidth: CGFloat, _ entrys: [ABC], _ maxTime: Double) -> [ABC] {
+        var arr: [ABC] = []
+        var minWidth: CGFloat = 30.0 // 3 letters
+        var occupiedThroughMinWidth = CGFloat(entrys.count) * minWidth;
+        
+        // Adjust minWidth to be smaller if too much entrys
+        var j: CGFloat = 1;
+        while (occupiedThroughMinWidth > maxWidth && minWidth > 1.0) {
+            occupiedThroughMinWidth = CGFloat(entrys.count) * minWidth - j
+            minWidth = minWidth - j
+            j = j + 1
+        }
+        
+        let remainingWidth: CGFloat = maxWidth - occupiedThroughMinWidth
+
+        for entry in entrys {
+            if(entry.difference <= 0) {
+                continue
+            }
+            let origWidth = CGFloat((Double(entry.difference) / maxTime)) * maxWidth
+            
+            // Size was originally smaller then min
+            if origWidth < minWidth {
+                arr.append(ABC(width: minWidth, name: entry.name, color: entry.color, difference:entry.difference, nr: entry.nr))
+                continue
+            }
+            
+            // Add orig percentage to minWidth
+            let remainingNeededPercent = (origWidth - minWidth)/remainingWidth
+            let newWidth = minWidth + (remainingNeededPercent * remainingWidth)
+            arr.append(ABC(width:  newWidth, name: entry.name, color: entry.color, difference:entry.difference, nr: entry.nr))
+        }
+        print(arr.reduce(0, {(a, num) in return a + num.width})/maxWidth) // should be close to 1.0
         return arr
     }
+}
+
+struct ABC {
+    var width: CGFloat
+    var name: String
+    var color: Color
+    var difference: Int
+    var nr: Int
+    
+    init(width: CGFloat, name: String, color: Color, difference: Int, nr: Int) {
+        self.width = width
+        self.name = name
+        self.color = color
+        self.difference = difference
+        self.nr = nr
+    }
+    
 }

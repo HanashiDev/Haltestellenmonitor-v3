@@ -72,35 +72,27 @@ struct TripSection: View {
     
     @ViewBuilder
     func tripView() -> some View {
-        let time: CGFloat = CGFloat(vm.route.getTimeDifference())
-        
         GeometryReader { geo in
             HStack (spacing: 0) {
                 
-                ForEach(vm.getRouteColoredBars(), id: \.self.nr) { routeEntry in
-                    let stopTime = vm.getRouteColoredBarDifference(a: routeEntry)
-                    let width = (CGFloat(stopTime) / time) * (geo.size.width - 10)
-                    
-                    if(width > 0.0) {
+                ForEach(vm.getRouteColoredBars(geo.size.width - 10), id: \.self.nr) { routeEntry in
                         VStack {
                             if routeEntry.name.isEmpty {
-                                
                                 Line()
                                     .stroke(style: StrokeStyle(lineWidth: 1, dash: [3]))
                                     .foregroundColor(.customGray.opacity(0.7))
-                                    .frame(width: width, height: 5)
+                                    .frame(width: routeEntry.width, height: 5)
                                     .offset(y: 2.5)
                             } else {
                                 RoundedRectangle(cornerRadius: 8)
                                     .fill(routeEntry.color)
-                                    .frame(width: width, height: 5)
+                                    .frame(width: routeEntry.width, height: 5)
                             }
                             Text(routeEntry.name)
                                 .foregroundColor(.customGray)
                                 .font(.footnote)
-                                .frame(width: width, height: 15)
+                                .frame(width: routeEntry.width, height: 15)
                         }.padding(0)
-                    }
                 }
             }.frame(width: geo.size.width)
         }
