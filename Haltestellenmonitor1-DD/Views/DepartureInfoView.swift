@@ -18,9 +18,36 @@ struct DepartureInfoViewRow: View {
     let infoLink: InfoLink
     @State private var convertedText: String = ""
     @State private var subtitleText: String = ""
+    
+    
+    func convertHTMLLinksToMarkdown(_ html: String) -> String {
+        let pattern = #"<a\s+href\s*=\s*"([^"]+)"[^>]*>(.*?)<\/a>"#
+        
+        let regex = try? NSRegularExpression(pattern: pattern, options: [.caseInsensitive])
+        let nsrange = NSRange(html.startIndex..<html.endIndex, in: html)
+        
+        var markdown = html
+        regex?.enumerateMatches(in: html, options: [], range: nsrange) { match, _, _ in
+            if let match = match,
+               let hrefRange = Range(match.range(at: 1), in: html),
+               let textRange = Range(match.range(at: 2), in: html) {
+                
+                let href = html[hrefRange]
+                let text = html[textRange]
+                let markdownLink = "[\(text)](\(href))"
+                
+                // Replace original HTML tag with Markdown link
+                markdown = markdown.replacingOccurrences(of: html[Range(match.range, in: html)!], with: markdownLink)
+            }
+        }
+        
+        return markdown
+    }
+
 
     func convertHTML(_ html: String) -> String {
-        guard let data = html.data(using: .utf8) else { return html }
+        guard let data = convertHTMLLinksToMarkdown(html).data(using: .utf8) else { return html }
+                
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
             .documentType: NSAttributedString.DocumentType.html,
             .characterEncoding: String.Encoding.utf8.rawValue,
@@ -41,7 +68,7 @@ struct DepartureInfoViewRow: View {
         DisclosureGroup(
             content: {
                 if !convertedText.isEmpty {
-                    Text(convertedText)
+                    Text(.init(convertedText))
                 }
             },
             label: {
@@ -49,7 +76,7 @@ struct DepartureInfoViewRow: View {
                     
                     Text(subtitleText)
                     
-                    if !infoLink.title!.isEmpty {
+                    if infoLink.title != nil && !infoLink.title!.isEmpty {
                         Text((infoLink.title!)
                             .replacingOccurrences(of: "oe", with: "ö")
                             .replacingOccurrences(of: "ue", with: "ü")
