@@ -22,6 +22,14 @@ struct TripSectionViewData {
         self.difference = difference
         self.nr = nr
     }
+    
+    init(orig: TripSectionViewData, _ difference: Int) {
+        self.width = orig.width
+        self.name = orig.name
+        self.color = orig.color
+        self.difference = difference
+        self.nr = orig.nr
+    }
 }
 
 class TripSectionViewModel: ObservableObject {
@@ -100,6 +108,7 @@ class TripSectionViewModel: ObservableObject {
         return (value, str)
     }
     
+    /// Insert waiting time as partial routes into the route
     func insertWaitingTimePartialRoute() {
         routesWithWaitingTimeUnder2Min = []
         
@@ -209,7 +218,7 @@ class TripSectionViewModel: ObservableObject {
         var arr: [TripSectionViewData] = []
         var minWidth: CGFloat = 30.0 // 3 letters
         var occupiedThroughMinWidth = CGFloat(entrys.count) * minWidth;
-        
+       
         // Adjust minWidth to be smaller if too much entrys
         var j: CGFloat = 1;
         while (occupiedThroughMinWidth > maxWidth && minWidth > 1.0) {
@@ -218,13 +227,16 @@ class TripSectionViewModel: ObservableObject {
             j = j + 1
         }
         
-        let remainingWidth: CGFloat = maxWidth - occupiedThroughMinWidth
-        
+        let remainingWidth: CGFloat = (maxWidth - occupiedThroughMinWidth)
+        let totalWidthOriginalValues = entrys.map({CGFloat(Double($0.difference)/maxTime)*maxWidth < minWidth ? 0: CGFloat(Double($0.difference)/maxTime)*maxWidth}).reduce(0.0, {(a, e) in return a + e})
+
         for entry in entrys {
             if(entry.difference <= 0) {
                 continue
             }
-            let origWidth = CGFloat((Double(entry.difference) / maxTime)) * maxWidth
+            
+            let originalPercent = Double(entry.difference) / maxTime
+            let origWidth = CGFloat(originalPercent) * maxWidth
             
             // Size was originally smaller then minWidth
             if origWidth < minWidth {
@@ -232,12 +244,11 @@ class TripSectionViewModel: ObservableObject {
                 continue
             }
             
-            // Add orig percentage to minWidth
-            let remainingNeededPercent = (origWidth - minWidth)/remainingWidth
-            let newWidth = minWidth + (remainingNeededPercent * remainingWidth)
-            arr.append(TripSectionViewData(width:  newWidth, name: entry.name, color: entry.color, difference:entry.difference, nr: entry.nr))
+            // Add values where size was originally greater then minWidth
+            let newValue = ((origWidth/totalWidthOriginalValues)*remainingWidth)
+            arr.append(TripSectionViewData(width: minWidth + newValue, name: entry.name, color: entry.color, difference:entry.difference, nr: entry.nr))
         }
-        print(arr.reduce(0, {(a, num) in return a + num.width})/maxWidth) // should be close to 1.0
+        // print(arr.reduce(0, {(a, num) in return a + num.width})/maxWidth) // should be close to 1.0
         return arr
     }
 }
