@@ -50,15 +50,9 @@ struct SingleTripView: View {
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
         
-        let formatter = ISO8601DateFormatter()
-        let date = formatter.date(from: stopEvent.departureTimePlanned) ?? Date.now
+        let date = getISO8601Date(dateString: stopEvent.departureTimePlanned)
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd"
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "HHmm"
-        
-        request.httpBody = createDepartureRequestSingle(stopId: stop.gid, line: stopEvent.transportation.id, tripCode: stopEvent.transportation.properties.tripCode ?? 0 , date: dateFormatter.string(from: date), time: timeFormatter.string(from: date)).data(using: .utf8)
+        request.httpBody = createDepartureRequestSingle(stopId: stop.gid, line: stopEvent.transportation.id, tripCode: stopEvent.transportation.properties.tripCode ?? 0 , date: getDateStampURL(date: date), time: getTimeStampURL(date: date)).data(using: .utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         

@@ -154,12 +154,7 @@ struct DepartureView: View {
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd"
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "HHmm"
-        
-        request.httpBody = createDepartureRequest(stopId: stop.gid, itdDate: dateFormatter.string(from: localDateTime), itdTime: timeFormatter.string(from: localDateTime)).data(using: .utf8)
+        request.httpBody = createDepartureRequest(stopId: stop.gid, itdDate: getDateStampURL(date: localDateTime), itdTime: getTimeStampURL(date: localDateTime)).data(using: .utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         

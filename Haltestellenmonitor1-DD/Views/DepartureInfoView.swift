@@ -110,7 +110,6 @@ struct DepartureInfoView: View {
                         DepartureInfoViewRow(infoLink: link)
                     }
                 }
-                .background(Color.clear)
                 .listStyle(PlainListStyle())
             }
         }

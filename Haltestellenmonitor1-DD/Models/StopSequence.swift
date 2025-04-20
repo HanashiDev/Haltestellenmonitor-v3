@@ -63,15 +63,9 @@ struct StopSequenceItem: Hashable, Codable {
     }
     
     func getScheduledTime() -> String {
-        let formatter = ISO8601DateFormatter()
-        let date = formatter.date(from: self.getTimetabledTime())
-        if (date == nil) {
-            return "n/a"
-        }
+        let date = getISO8601Date(dateString: self.getTimetabledTime())
         
-        let dFormatter = DateFormatter()
-        dFormatter.dateFormat = "HH:mm"
-        return dFormatter.string(for: date) ?? "n/a"
+        return getTimeStamp(date: date)
     }
     
     func getRealTime() -> String {
@@ -79,32 +73,22 @@ struct StopSequenceItem: Hashable, Codable {
             return self.getScheduledTime()
         }
         
-        let formatter = ISO8601DateFormatter()
-        let date = formatter.date(from: self.getEstimatedTime())
-        if (date == nil) {
-            return "n/a"
-        }
-        
-        let dFormatter = DateFormatter()
-        dFormatter.dateFormat = "HH:mm"
-        return dFormatter.string(for: date) ?? "n/a"
+        let date = getISO8601Date(dateString: self.getEstimatedTime())
+
+        return getTimeStamp(date: date)
     }
     
     func getTimeDifference() -> Int {
         if (self.getEstimatedTime() == "") {
             return 0
         }
-        let formatter = ISO8601DateFormatter()
-        let realtimeDate = formatter.date(from: self.getEstimatedTime())
-        let scheduledTimeDate = formatter.date(from: self.getTimetabledTime())
-        if (realtimeDate == nil || scheduledTimeDate == nil) {
-            return 0
-        }
+        let realtimeDate = getISO8601Date(dateString: self.getEstimatedTime())
+        let scheduledTimeDate = getISO8601Date(dateString: self.getTimetabledTime())
         
         let calendar = Calendar.current
         
-        let realtimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: realtimeDate!)
-        let scheduledTimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: scheduledTimeDate!)
+        let realtimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: realtimeDate)
+        let scheduledTimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: scheduledTimeDate)
         
         return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
     }
@@ -114,15 +98,11 @@ struct StopSequenceItem: Hashable, Codable {
         if (self.getEstimatedTime() != "") {
             time = self.getEstimatedTime()
         }
-        let formatter = ISO8601DateFormatter()
-        let timeDate = formatter.date(from: time)
-        if (timeDate == nil) {
-            return 0
-        }
+        let timeDate = getISO8601Date(dateString: time)
         
         let calendar = Calendar.current
         
-        let timeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: timeDate!)
+        let timeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: timeDate)
         let currentComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         
         var inTime = calendar.dateComponents([.minute], from: currentComponents, to: timeComponents).minute!
