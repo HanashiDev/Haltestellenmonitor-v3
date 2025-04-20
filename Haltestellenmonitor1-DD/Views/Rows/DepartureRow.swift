@@ -51,6 +51,7 @@ struct DepartureRow: View {
                     if (stopEvent.location.properties.platformName != nil || stopEvent.location.properties.plannedPlatformName != nil) {
                         Text(stopEvent.getPlatform())
                             .font(.footnote)
+                            .foregroundStyle(.secondary)
                     }
                     Spacer()
                     if stopEvent.isCancelled ?? false {

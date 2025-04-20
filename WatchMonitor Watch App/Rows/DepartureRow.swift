@@ -39,6 +39,8 @@ struct DepartureRow: View {
             HStack {
                 if ( stopEvent.location.properties.platform != nil) {
                     Text(stopEvent.getPlatform())
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
                 Spacer()
                 if stopEvent.isCancelled ?? false {

@@ -20,6 +20,8 @@ struct SingleTripRow: View {
                 if (stopSequenceItem.properties.platfromName != nil || stopSequenceItem.properties.plannedPlatformName != nil) {
                     Text(stopSequenceItem.getPlatform())
                         .font(.footnote)
+                        .foregroundStyle(.secondary)
+
                 }
             }
             HStack {

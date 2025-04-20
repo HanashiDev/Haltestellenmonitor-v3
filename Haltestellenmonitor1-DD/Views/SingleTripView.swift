@@ -22,31 +22,37 @@ struct SingleTripView: View {
 
         Group {
             if (isLoaded) {
-                VStack {
+                List {
                     if stopEvent.hasInfos(){
-                        Spacer()
-                        NavigationLink {
-                            DepartureInfoView(stopEvent: stopEvent)
-                        } label: {
-                            Image(systemName: "exclamationmark.triangle.fill")
-                            Text("Aktuelle Meldungen")
-
-                        }
-                        .buttonStyle(BorderedProminentButtonStyle())
-                        .tint(Color.orange)
-                    }
-                    
-                    List(searchResults, id: \.self) { stopSequenceItem in
-                        ZStack {
-                            NavigationLink {
-                                DepartureView(stop: stopSequenceItem.getStop() ?? stop)
-                            } label: {
-                                EmptyView()
+                        HStack {
+                            ZStack {
+                                NavigationLink {
+                                    DepartureInfoView(stopEvent: stopEvent)
+                                } label: {
+                                    EmptyView()
+                                }
+                                .opacity(0.0)
+                                HStack {
+                                    Image(systemName: "exclamationmark.triangle.fill")
+                                    Text("Aktuelle Meldungen")
+                                }
                             }
-                            .opacity(0.0)
-                            .buttonStyle(.plain)
-                            
-                            SingleTripRow(stopSequenceItem: stopSequenceItem)
+                        }
+                        .listRowBackground(Color.orange)
+                    }
+                    Section {
+                        ForEach(searchResults, id: \.self) { stopSequenceItem in
+                            ZStack {
+                                NavigationLink {
+                                    DepartureView(stop: stopSequenceItem.getStop() ?? stop)
+                                } label: {
+                                    EmptyView()
+                                }
+                                .opacity(0.0)
+                                .buttonStyle(.plain)
+                                
+                                SingleTripRow(stopSequenceItem: stopSequenceItem)
+                            }
                         }
                     }
                 }
