@@ -15,7 +15,7 @@ struct MonitorWidgetRow: View {
     
     var body: some View {
         HStack {
-            Text(stopEvent.transportation.number)
+            Text(getNumber())
                 .font(.subheadline)
                 .lineLimit(1)
                 .padding(.horizontal, 3)
@@ -38,6 +38,14 @@ struct MonitorWidgetRow: View {
                     .lineLimit(1)
             }
         }
+    }
+    
+    // Get Correct Number for Trains like ICE, IC, EC
+    func getNumber() -> String {
+        if self.stopEvent.transportation.properties.specialFares != nil {
+            return "\(self.stopEvent.transportation.properties.trainType ?? "")\(self.stopEvent.transportation.properties.trainNumber ?? "")"
+        }
+        return "\(self.stopEvent.transportation.number)"
     }
 }
 

@@ -66,62 +66,11 @@ struct PartialRoute: Hashable, Codable {
     
     
     func getIcon() -> String {
-        switch (self.Mot.type) {
-        case "Tram":
-            return "🚊"
-        case "CityBus":
-            return "🚍"
-        case "PlusBus":
-            return "🚍"
-        case "Bus":
-            return "🚍"
-        case "IntercityBus":
-            return "🚍"
-        case "SuburbanRailway":
-            return "🚈"
-        case "RapidTransit":
-            return "🚈"
-        case "Train":
-            return "🚆"
-        case "Cableway":
-            return "🚞"
-        case "Ferry":
-            return "⛴️"
-        case "HailedSharedTaxi":
-            return "🚖"
-        case "Footpath":
-            return "🚶"
-        case "MobilityStairsUp":
-            return "📈"
-        case "MobilityStairsDown":
-            return "📉"
-        default:
-            return "🚊"
-        }
+        getIconVVO(motType: self.Mot.type)
     }
     
     func getColor() -> Color {
-            let opacity = 0.8
-            switch (self.Mot.type) {
-            case "Tram":
-                return Color.red.opacity(opacity)
-            case "Bus", "PlusBus", "CityBus", "IntercityBus":
-                return Color.blue.opacity(opacity)
-            case "Train", "RapidTransit", "SuburbanRailway":
-                return Color.green.opacity(opacity)
-            case "Cableway":
-                return Color.gray.opacity(opacity)
-            case "Ferry":
-                return Color.cyan.opacity(opacity)
-            case "HailedSharedTaxi":
-                return Color.yellow.opacity(opacity)
-            case "Footpath", "MobilityStairsUp", "MobilityStairsDown":
-                return Color.mint.opacity(opacity)
-            default:
-                //print("Missing Color for \(self)")
-                return Color.purple.opacity(opacity)
-            
-        }
+        getColorVVO(motType: self.Mot.type)
     }
     
     func getStartTime() -> Date? {

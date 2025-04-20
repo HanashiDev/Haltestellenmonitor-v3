@@ -133,50 +133,17 @@ struct StopEvent: Hashable, Codable {
     }
     
     func getIcon() -> String {
-        switch (self.transportation.product.iconId) {
-        case 4: // Tram
-            return "🚊"
-        case 3: // Bus
-            return "🚍"
-//        case 2: // S-Bahn
-//            return "🚈"
-        case 2, 6: // Zug, S-Bahn
-            return "🚆"
-        case 9: // cable car
-            return "🚞"
-        case 10: // boat
-            return "⛴️"
-        default: //others needed?
-            return "🚊"
-        }
+        return getIconEFA(iconId: self.transportation.product.iconId)
     }
     
     func getColor() -> Color {
-        let opacity = 0.8
-        switch (self.transportation.product.iconId) {
-        case 4:
-            return Color.red.opacity(opacity)
-        case 3:
-            return Color.blue.opacity(opacity)
-        case 2, 6:
-            return Color.green.opacity(opacity)
-        case 9:
-            return Color.gray.opacity(opacity)
-        case 10:
-            return Color.cyan.opacity(opacity)
-        default:
-            return Color.purple.opacity(opacity)
-        }
+        getColorEFA(iconId: self.transportation.product.iconId)
     }
     
     func getScheduledTime() -> String {
-        let formatter = ISO8601DateFormatter()
-        let date = formatter.date(from: self.departureTimePlanned)
-        if (date == nil) {
-            return "n/a"
-        }
+        let date = getISO8601Date(dateString: self.departureTimePlanned)
         
-        return getTimeStamp(date: date!)
+        return getTimeStamp(date: date)
     }
     
     func getEstimatedTime() -> String {
