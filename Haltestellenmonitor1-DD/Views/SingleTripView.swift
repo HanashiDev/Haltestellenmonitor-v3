@@ -113,7 +113,7 @@ struct SingleTripView: View {
             self.isLoaded = true
 
         } catch {
-            print ("ST error: \(error)")
+            print ("SingleTrip error: \(error)")
             
             // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {
@@ -147,7 +147,7 @@ struct SingleTripView: View {
                     }
                 }
             } catch {
-                print("Error \(error.localizedDescription)")
+                print("SingleTrip Live Activity Start Error: \(error.localizedDescription)")
             }
         }
     }
@@ -167,13 +167,13 @@ struct SingleTripView: View {
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             guard error == nil else {
-                print ("error: \(error!)")
+                print ("SingleTrip Live Activity Request Error: \(error!)")
                 showingErrorAlert = true
                 return
             }
 
             guard let content = data else {
-                print("No data")
+                print("SingleTrip Live Activity: No Data")
                 showingErrorAlert = true
                 return
             }

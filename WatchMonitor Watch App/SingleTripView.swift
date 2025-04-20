@@ -65,7 +65,7 @@ struct SingleTripView: View {
             }
             self.isLoaded = true
         } catch {
-            print ("AW ST error: \(error)")
+            print ("Watch SingleTrip error: \(error)")
             
             // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {

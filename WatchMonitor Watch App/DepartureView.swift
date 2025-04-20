@@ -74,7 +74,7 @@ struct DepartureView: View {
                 }
             }
         } catch {
-            print ("AW DM error: \(error)")
+            print ("Watch DepartureMonitor error: \(error)")
             // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

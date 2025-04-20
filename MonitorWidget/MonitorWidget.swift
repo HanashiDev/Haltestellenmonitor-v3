@@ -47,14 +47,14 @@ class Provider: IntentTimelineProvider {
             }
             
             if favStops.isEmpty {
-                print("No favorites found.")
+                print("Widget: No favorites found.")
                 
             } else {
                 var favStopsLoc : [Stop] = []
                 // Retrieving location data
                 Task() {
                     await widgetLocationManager.fetchLocation { llocation in
-                        print(">>>", llocation.coordinate)}
+                        print("Widget: >>>", llocation.coordinate)}
                 }
                 // Dresden town hall GPS coordinates as default
                 let location = widgetLocationManager.llocation ?? CLLocation(latitude: +51.04750, longitude: +13.74035)
@@ -95,7 +95,7 @@ class Provider: IntentTimelineProvider {
             }
 
             guard let content = data else {
-                print("No data")
+                print("Widget: No data")
                 self.getTimeline(for: configuration, in: context, completion: completion)
                 return
             }
@@ -106,7 +106,7 @@ class Provider: IntentTimelineProvider {
                     stopEvents = stopEventContainer.stopEvents
 
                 } catch{
-                    print("JSON decoding failed")
+                    print("Widget: JSON decoding failed")
                     self.getTimeline(for: configuration, in: context, completion: completion)
                     return
                 }

@@ -170,7 +170,7 @@ struct DepartureView: View {
                 }
             }
         } catch {
-            print ("DM error: \(error)")
+            print ("DepartureMonitor error: \(error)")
             
             // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {
@@ -203,7 +203,7 @@ struct DepartureView: View {
                     }
                 }
             } catch {
-                print("Error \(error.localizedDescription)")
+                print("DepartureMonitor Live Activity Start Error: \(error)")
             }
         }
     }
@@ -223,13 +223,13 @@ struct DepartureView: View {
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             guard error == nil else {
-                print ("error: \(error!)")
+                print ("DepartureMonitor Live Activity Request error: \(error!)")
                 showingErrorAlert = true
                 return
             }
 
             guard let content = data else {
-                print("No data")
+                print("DepartureMonitor Live Activity Request: No data")
                 showingErrorAlert = true
                 return
             }
