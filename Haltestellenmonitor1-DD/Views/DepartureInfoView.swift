@@ -8,49 +8,69 @@
 import Foundation
 import SwiftUI
 
-extension Array {
-    public subscript(safeIndex index: Int) -> Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
-
 struct DepartureInfoViewRow: View {
     let infoLink: InfoLink
-    @State private var convertedText: String = ""
-    @State private var subtitleText: String = ""
-    
-    
-    func convertHTMLLinksToMarkdown(_ html: String) -> String {
-        let pattern = #"<a\s+href\s*=\s*"([^"]+)"[^>]*>(.*?)<\/a>"#
+    @State private var convertedText: NSAttributedString = NSAttributedString(string: "")
+    @State private var subtitleText: NSAttributedString = NSAttributedString(string: "")
+
+
+    func convertHTML(_ html: String) -> NSAttributedString? {
         
-        let regex = try? NSRegularExpression(pattern: pattern, options: [.caseInsensitive])
-        let nsrange = NSRange(html.startIndex..<html.endIndex, in: html)
+        // insert missing list markers
+        let marker_pattern = "<li>(.*?)<\\/li>"
+        let marker_regex = try! NSRegularExpression(pattern: marker_pattern, options: [])
         
-        var markdown = html
-        regex?.enumerateMatches(in: html, options: [], range: nsrange) { match, _, _ in
-            if let match = match,
-               let hrefRange = Range(match.range(at: 1), in: html),
-               let textRange = Range(match.range(at: 2), in: html) {
-                
-                let href = html[hrefRange]
-                let text = html[textRange]
-                let markdownLink = "[\(text)](\(href))"
-                
-                // Replace original HTML tag with Markdown link
-                markdown = markdown.replacingOccurrences(of: html[Range(match.range, in: html)!], with: markdownLink)
-            }
+        let range = NSRange(location: 0, length: html.utf16.count)
+        let modifiedHTML = marker_regex.stringByReplacingMatches(in: html, options: [], range: range, withTemplate: "<li>• $1</li>")
+        
+        // insert space before headings, but not before the first
+        let spacing_pattern = "(<h\\d>)"
+        let spacing_regex = try! NSRegularExpression(pattern: spacing_pattern, options: [])
+        
+        let matches = spacing_regex.matches(in: modifiedHTML, range: NSRange(location: 0, length: modifiedHTML.utf16.count))
+        
+        var temp_html = modifiedHTML as NSString
+        for match in matches.dropFirst().reversed() {
+            let contentRange = match.range(at: 1)
+            let content = temp_html.substring(with: contentRange)
+            let replacement = "<br>\(content)"
+            temp_html = temp_html.replacingCharacters(in: match.range, with: replacement) as NSString
         }
         
-        return markdown
-    }
+        let finalHTML = temp_html as String
+        
 
-
-    func convertHTML(_ html: String) -> String {
-        guard let data = convertHTMLLinksToMarkdown(html).data(using: .utf8) else { return html }
-                
+        let htmlTemplate = """
+        <!doctype html>
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: -apple-system;
+                font-size: 17px;
+              }
+              a {
+                color: #F4C643;
+              }
+            </style>
+          </head>
+          <body>
+            \(finalHTML)
+          </body>
+        </html>
+        """
+        
+        guard let data = htmlTemplate.data(using: .utf8) else { return nil }
+        
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.paragraphSpacing = 32
+        
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
             .documentType: NSAttributedString.DocumentType.html,
             .characterEncoding: String.Encoding.utf8.rawValue,
+            .defaultAttributes: [
+                NSAttributedString.Key.paragraphStyle: paraStyle
+            ]
         ]
 
         if let attributedString = try? NSAttributedString(
@@ -58,23 +78,23 @@ struct DepartureInfoViewRow: View {
             options: options,
             documentAttributes: nil
         ) {
-            return attributedString.string
+            return attributedString
         } else {
-            return html
+            return nil
         }
     }
 
     var body: some View {
         DisclosureGroup(
             content: {
-                if !convertedText.isEmpty {
+                if !convertedText.string.isEmpty {
                     Text(.init(convertedText))
                 }
             },
             label: {
                 VStack (alignment: .leading){
                     
-                    Text(subtitleText)
+                    Text(subtitleText.string)
                     
                     if infoLink.title != nil && !infoLink.title!.isEmpty {
                         Text((infoLink.title!)
@@ -89,8 +109,8 @@ struct DepartureInfoViewRow: View {
         .onAppear {
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
-                    subtitleText = convertHTML(infoLink.subtitle)
-                    convertedText = convertHTML(infoLink.content)
+                    subtitleText = convertHTML(infoLink.subtitle) ?? NSAttributedString(string: "")
+                    convertedText = convertHTML(infoLink.content) ?? NSAttributedString(string: "")
                 }
             }
         }
