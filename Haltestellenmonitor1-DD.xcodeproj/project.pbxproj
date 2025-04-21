@@ -200,6 +200,14 @@
 		F16B7FDF2D9321CD00851DC4 /* StopSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B7FDD2D9321C700851DC4 /* StopSequence.swift */; };
 		F16B7FE02D9321CD00851DC4 /* StopSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B7FDD2D9321C700851DC4 /* StopSequence.swift */; };
 		F16B7FE12D9321CD00851DC4 /* StopSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B7FDD2D9321C700851DC4 /* StopSequence.swift */; };
+		F17FF4C42DB4D83B00F553D1 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C32DB4D82E00F553D1 /* DateManager.swift */; };
+		F17FF4C52DB4D83B00F553D1 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C32DB4D82E00F553D1 /* DateManager.swift */; };
+		F17FF4C62DB4D83B00F553D1 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C32DB4D82E00F553D1 /* DateManager.swift */; };
+		F17FF4C72DB4D83B00F553D1 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C32DB4D82E00F553D1 /* DateManager.swift */; };
+		F17FF4C92DB4E14400F553D1 /* MOTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */; };
+		F17FF4CA2DB4E14400F553D1 /* MOTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */; };
+		F17FF4CB2DB4E14400F553D1 /* MOTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */; };
+		F17FF4CC2DB4E14400F553D1 /* MOTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */; };
 		F19FC6EE2AE9974C00F65316 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FC6ED2AE9974C00F65316 /* ColorManager.swift */; };
 		F1A7E7CB2AEA988C00E1910F /* TripSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */; };
 		F1B8C03C2D6BC03B00F77CE4 /* DepartureRequestSingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8C03B2D6BC02500F77CE4 /* DepartureRequestSingle.swift */; };
@@ -365,6 +373,8 @@
 		F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = widgetLocationManager.swift; sourceTree = "<group>"; };
 		F16B7FDB2D90861A00851DC4 /* DepartureInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureInfoView.swift; sourceTree = "<group>"; };
 		F16B7FDD2D9321C700851DC4 /* StopSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSequence.swift; sourceTree = "<group>"; };
+		F17FF4C32DB4D82E00F553D1 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
+		F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOTTypes.swift; sourceTree = "<group>"; };
 		F19FC6ED2AE9974C00F65316 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSectionViewModel.swift; sourceTree = "<group>"; };
 		F1B8C03B2D6BC02500F77CE4 /* DepartureRequestSingle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRequestSingle.swift; sourceTree = "<group>"; };
@@ -541,6 +551,7 @@
 				D0142C592A11285700646C94 /* FavoriteConnection.swift */,
 				D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */,
 				D0BD66E129F03949004E574C /* Mot.swift */,
+				F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */,
 				D0BD66DD29F03446004E574C /* PartialRoute.swift */,
 				D0142C522A1110BE00646C94 /* Point.swift */,
 				D0C1ECCF29F2B6C0001D214D /* PushTokenHistory.swift */,
@@ -565,6 +576,7 @@
 		D040EC2029EED766002DFEBF /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F17FF4C32DB4D82E00F553D1 /* DateManager.swift */,
 				F19FC6ED2AE9974C00F65316 /* ColorManager.swift */,
 				D040EC2129EED774002DFEBF /* DateParser.swift */,
 				D0142C392A0F909E00646C94 /* DepartureBinding.swift */,
@@ -968,10 +980,12 @@
 				D0C1ECDE29F3008B001D214D /* RegularStopRow.swift in Sources */,
 				D0BD66D629F026D7004E574C /* ConnectionStopSelectionView.swift in Sources */,
 				D0142C5A2A11285700646C94 /* FavoriteConnection.swift in Sources */,
+				F17FF4C62DB4D83B00F553D1 /* DateManager.swift in Sources */,
 				D0BD66D229F01B99004E574C /* ConnectionView.swift in Sources */,
 				D0C1ECB429F28032001D214D /* TripStop.swift in Sources */,
 				D0142C472A10E7CC00646C94 /* ContactPicker.swift in Sources */,
 				D0BD66E229F03949004E574C /* Mot.swift in Sources */,
+				F17FF4CA2DB4E14400F553D1 /* MOTTypes.swift in Sources */,
 				D0C1ECD829F2F071001D214D /* DepartureDisclosureSection.swift in Sources */,
 				D0C1ECD029F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
 				F1A7E7CB2AEA988C00E1910F /* TripSectionViewModel.swift in Sources */,
@@ -1002,6 +1016,7 @@
 				D0BD66C229EFEF0F004E574C /* DateParser.swift in Sources */,
 				D011F07F2C523D9D000BAB5C /* Trip.swift in Sources */,
 				D09A50432C4FA22C006CB5D6 /* ServiceCall.swift in Sources */,
+				F17FF4C52DB4D83B00F553D1 /* DateManager.swift in Sources */,
 				D0BD668829EFE0AA004E574C /* MonitorWidgetBundle.swift in Sources */,
 				D0BD669D29EFEA00004E574C /* StopData.swift in Sources */,
 				D011F0832C523DA5000BAB5C /* Route.swift in Sources */,
@@ -1014,6 +1029,7 @@
 				D0C1ECCD29F2B165001D214D /* ActivityRequest.swift in Sources */,
 				D0BD668A29EFE0AA004E574C /* MonitorWidgetLiveActivity.swift in Sources */,
 				D0BD66CF29EFFFC4004E574C /* FavoriteStop.swift in Sources */,
+				F17FF4CB2DB4E14400F553D1 /* MOTTypes.swift in Sources */,
 				D0C1ECD529F2EF9B001D214D /* DepartureFilter.swift in Sources */,
 				D0BD66B629EFECF8004E574C /* IntentHandler.swift in Sources */,
 				D011F08F2C523DC5000BAB5C /* DeparturePlatform.swift in Sources */,
@@ -1064,6 +1080,8 @@
 				D0BD66B929EFEEC0004E574C /* StopData.swift in Sources */,
 				D0C1ECB629F28032001D214D /* TripStop.swift in Sources */,
 				D0C1ECD229F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
+				F17FF4C72DB4D83B00F553D1 /* DateManager.swift in Sources */,
+				F17FF4C92DB4E14400F553D1 /* MOTTypes.swift in Sources */,
 				D0142C3C2A0F90AB00646C94 /* DepartureBinding.swift in Sources */,
 				F1B8C04B2D70DD5C00F77CE4 /* Location.swift in Sources */,
 				D0BD66FD29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */,
@@ -1105,6 +1123,7 @@
 				D09A50452C4FA22D006CB5D6 /* ServiceCall.swift in Sources */,
 				D0142C512A110F9F00646C94 /* GaussKrueger.swift in Sources */,
 				F1B8C04C2D70DD5C00F77CE4 /* Location.swift in Sources */,
+				F17FF4C42DB4D83B00F553D1 /* DateManager.swift in Sources */,
 				D0D1998229F40C4B00946D87 /* StopRow.swift in Sources */,
 				D0D1998929F412DF00946D87 /* DepartureView.swift in Sources */,
 				D0D1996C29F40B9C00946D87 /* FavoriteStop.swift in Sources */,
@@ -1122,6 +1141,7 @@
 				D0D1996829F40B8A00946D87 /* LocationManager.swift in Sources */,
 				D0D1997129F40B9C00946D87 /* Stop.swift in Sources */,
 				D0D1997229F40B9C00946D87 /* PushTokenHistory.swift in Sources */,
+				F17FF4CC2DB4E14400F553D1 /* MOTTypes.swift in Sources */,
 				D0D1997829F40B9C00946D87 /* ActivityRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
