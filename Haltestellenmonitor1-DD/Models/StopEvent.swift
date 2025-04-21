@@ -126,7 +126,8 @@ struct StopEvent: Hashable, Codable {
     
     
     func getName() -> String {
-        if self.transportation.properties.specialFares != nil {
+        // don't use for Cable Car
+        if self.transportation.properties.specialFares != nil  && self.transportation.product.iconId != 9 {
             return "\(self.transportation.properties.trainType ?? "") \(self.transportation.properties.trainNumber ?? "") \(self.transportation.destination.name)"
         }
         return "\(self.transportation.number) \(self.transportation.destination.name)"
