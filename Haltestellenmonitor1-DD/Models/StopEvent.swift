@@ -12,16 +12,16 @@ import SwiftUI
 
 // Transport Struct
 struct Product: Hashable, Codable {
-    var id: Int
-    var `class`: Int
+    //var id: Int
+    //var `class`: Int
     var name: String
     var iconId: Int
 }
-struct Operator: Hashable, Codable {
-    var code: String
-    var id: String
-    var name: String
-}
+//struct Operator: Hashable, Codable {
+//    var code: String
+//    var id: String
+//    var name: String
+//}
 
 struct Place: Hashable, Codable {
     var id: String
@@ -43,28 +43,28 @@ struct T_Properties: Hashable, Codable {
     var trainType: String?
     var trainNumber: String?
     var tripCode: Int?
-    var lineDisplay: String?
-    var isSTT: Bool?
+    //var lineDisplay: String?
+    //var isSTT: Bool?
     var globalId: String?
-    var operatorUrl: String?
-    var timetablePeriod: String?
+    //var operatorUrl: String?
+    //var timetablePeriod: String?
     var specialFares: String?
-    var validity: validity?
-    struct validity: Hashable, Codable {
-        var from: String
-        var to: String
-    }
+    //var validity: validity?
+//    struct validity: Hashable, Codable {
+//        var from: String
+//        var to: String
+//    }
     
 }
 
 struct Transportation: Hashable, Codable {
     var id: String
-    var name: String
-    var disassembledName: String?
+    //var name: String
+    //var disassembledName: String?
     var number: String
     var product: Product
-    var `operator`: Operator?
-    var origin: Place?
+    //var `operator`: Operator?
+    //var origin: Place?
     var properties: T_Properties
     var destination: Place
     
@@ -86,19 +86,19 @@ struct InfoLink: Hashable, Codable {
 }
 struct Info: Hashable, Codable {
     var priority: String
-    var id: String
-    var version: Int
-    var type: String
+    //var id: String
+    //var version: Int
+    //var type: String
     var infoLinks: [InfoLink]
 }
 
 // Hint Struct
-struct Hint: Hashable, Codable {
-    var content: String
-    var providerCode: String
-    var url: String?
-    var type: String
-}
+//struct Hint: Hashable, Codable {
+//    var content: String
+//    var providerCode: String
+//    var url: String?
+//    var type: String
+//}
 
 struct StopEvent: Hashable, Codable {
     
@@ -113,16 +113,16 @@ struct StopEvent: Hashable, Codable {
     var transportation: Transportation
    
     var infos: [Info]?
-    var hints: [Hint]?
+    //var hints: [Hint]?
     //var properties: Stop_Property
     
     func hasInfos() -> Bool {
         return self.infos != nil
     }
     
-    func hasHints() -> Bool {
-        return self.hints != nil
-    }
+    //func hasHints() -> Bool {
+    //    return self.hints != nil
+    //}
     
     
     func getName() -> String {

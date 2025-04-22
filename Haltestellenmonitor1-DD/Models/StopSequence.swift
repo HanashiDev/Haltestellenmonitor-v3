@@ -8,24 +8,24 @@ import Foundation
 
 
 struct StopSequenceItem: Hashable, Codable {
-    var isGlobalId: Bool?
+    //var isGlobalId: Bool?
     var id: String
     var name: String
-    var disassembledName: String?
-    var type: String
-    var pointType: String?
-    var coord: [Int]?
-    var niveau: Int
+    //var disassembledName: String?
+    //var type: String
+    //var pointType: String?
+    //var coord: [Int]?
+    //var niveau: Int
     //var parent
-    var productClasses: [Int]
+    //var productClasses: [Int]
     var properties: properties
     struct properties: Hashable, Codable {
-        var AREA_NIVEAU_DIVA: String
-        var DestinationText: String
-        var stoppingPointPlanned: String?
-        var areaGid: String?
-        var area: String
-        var platform: String?
+        //var AREA_NIVEAU_DIVA: String
+        //var DestinationText: String
+        //var stoppingPointPlanned: String?
+        //var areaGid: String?
+        //var area: String
+        //var platform: String?
         var platfromName: String?
         var plannedPlatformName: String?
     }
