@@ -5,7 +5,7 @@
 //  Created by Tom Braune on 20.04.25.
 //
 
-import SwiftUICore
+import SwiftUI
 
 enum MOTType {
     case Tram, Bus, Train, CableCar, Boat, Default, Walking, Up, Down
