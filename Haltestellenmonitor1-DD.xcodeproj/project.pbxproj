@@ -70,10 +70,6 @@
 		D040EC2729EEEB85002DFEBF /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2629EEEB85002DFEBF /* LocationManager.swift */; };
 		D040EC2B29EEFA3E002DFEBF /* FavoriteStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */; };
 		D040EC2E29EF0371002DFEBF /* StopManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040EC2D29EF0371002DFEBF /* StopManager.swift */; };
-		D068983A2C4AF2720085FD4D /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = D06898392C4AF2720085FD4D /* AEXML */; };
-		D068983C2C4AF66C0085FD4D /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = D068983B2C4AF66C0085FD4D /* AEXML */; };
-		D068983E2C4AF6BE0085FD4D /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = D068983D2C4AF6BE0085FD4D /* AEXML */; };
-		D06898402C4AF6C60085FD4D /* AEXML in Frameworks */ = {isa = PBXBuildFile; productRef = D068983F2C4AF6C60085FD4D /* AEXML */; };
 		D06898422C4AFE280085FD4D /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898412C4AFE280085FD4D /* Service.swift */; };
 		D06898432C4AFE470085FD4D /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898412C4AFE280085FD4D /* Service.swift */; };
 		D06898442C4AFE480085FD4D /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06898412C4AFE280085FD4D /* Service.swift */; };
@@ -394,7 +390,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D068983A2C4AF2720085FD4D /* AEXML in Frameworks */,
 				D0C1ECE429F333F9001D214D /* ActivityKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,7 +398,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D068983E2C4AF6BE0085FD4D /* AEXML in Frameworks */,
 				D0BD668529EFE0AA004E574C /* SwiftUI.framework in Frameworks */,
 				D0BD668429EFE0AA004E574C /* WidgetKit.framework in Frameworks */,
 			);
@@ -413,7 +407,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D068983C2C4AF66C0085FD4D /* AEXML in Frameworks */,
 				D0BD66AB29EFECF1004E574C /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,7 +415,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D06898402C4AF6C60085FD4D /* AEXML in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,7 +740,6 @@
 			);
 			name = "Haltestellenmonitor1-DD";
 			packageProductDependencies = (
-				D06898392C4AF2720085FD4D /* AEXML */,
 			);
 			productName = "Haltestellenmonitor1-DD";
 			productReference = D03A267F29EEB6C9005B0600 /* Haltestellenmonitor1-DD.app */;
@@ -768,7 +759,6 @@
 			);
 			name = MonitorWidgetExtension;
 			packageProductDependencies = (
-				D068983D2C4AF6BE0085FD4D /* AEXML */,
 			);
 			productName = MonitorWidgetExtension;
 			productReference = D0BD668329EFE0AA004E574C /* MonitorWidgetExtension.appex */;
@@ -788,7 +778,6 @@
 			);
 			name = MonitorIntents;
 			packageProductDependencies = (
-				D068983B2C4AF66C0085FD4D /* AEXML */,
 			);
 			productName = MonitorIntents;
 			productReference = D0BD66A929EFECF1004E574C /* MonitorIntents.appex */;
@@ -808,7 +797,6 @@
 			);
 			name = "WatchMonitor Watch App";
 			packageProductDependencies = (
-				D068983F2C4AF6C60085FD4D /* AEXML */,
 			);
 			productName = "WatchMonitor Watch App";
 			productReference = D0D1995229F40AA900946D87 /* Haltestellenmonitor Dresden.app */;
@@ -852,7 +840,6 @@
 			);
 			mainGroup = D03A267629EEB6C9005B0600;
 			packageReferences = (
-				D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */,
 			);
 			productRefGroup = D03A268029EEB6C9005B0600 /* Products */;
 			projectDirPath = "";
@@ -1649,40 +1636,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/tadija/AEXML.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.7.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		D06898392C4AF2720085FD4D /* AEXML */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */;
-			productName = AEXML;
-		};
-		D068983B2C4AF66C0085FD4D /* AEXML */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */;
-			productName = AEXML;
-		};
-		D068983D2C4AF6BE0085FD4D /* AEXML */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */;
-			productName = AEXML;
-		};
-		D068983F2C4AF6C60085FD4D /* AEXML */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D06898382C4AF2720085FD4D /* XCRemoteSwiftPackageReference "AEXML" */;
-			productName = AEXML;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D03A267729EEB6C9005B0600 /* Project object */;
 }
