@@ -16,7 +16,7 @@ struct StopSequenceItem: Hashable, Codable {
     //var pointType: String?
     //var coord: [Int]?
     //var niveau: Int
-    //var parent
+    var parent: Location
     //var productClasses: [Int]
     var properties: properties
     struct properties: Hashable, Codable {
@@ -128,7 +128,7 @@ struct StopSequenceItem: Hashable, Codable {
     
     func getStop() -> Stop? {
         return stops.first { stop in
-            return self.id.starts(with: stop.gid) // +":"
+            return String(stop.stopID) == self.parent.properties.stopId
         }
     }
 }
