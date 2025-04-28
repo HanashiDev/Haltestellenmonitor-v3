@@ -24,7 +24,7 @@ private extension NSAttributedString {
 }
 
 struct stringSection: Hashable, Codable {
-    let text: String
+    var text: String
     let headerLvl: Int8
     let isBold: Bool
     let isItalic: Bool
@@ -142,7 +142,12 @@ struct DepartureInfoViewRow: View {
     }
     func formattedText(from sections: [stringSection]) -> Text {
         return sections.enumerated().reduce(Text("")) { partialResult, item in
-            let (index, section) = item
+            var (_, section) = item
+            
+            // pre iOS 18.0 fix
+            if section.isListItem && section.text.contains("•") {
+                section.text = ""
+            }
 
             
             var sectionText: Text
