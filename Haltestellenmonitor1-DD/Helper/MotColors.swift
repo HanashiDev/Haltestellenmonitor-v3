@@ -36,7 +36,7 @@ extension String {
         case "MobilityStairsDown":
             return Color.purple.opacity(opacity)
         default:
-             return Color.purple.opacity(opacity)
+            return Color.purple.opacity(opacity)
         }
     }
 }

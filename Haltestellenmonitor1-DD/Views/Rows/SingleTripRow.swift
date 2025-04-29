@@ -8,31 +8,33 @@
 import SwiftUI
 
 struct SingleTripRow: View {
-    var callAtStop: CallAtStop
+    var stopSequenceItem: StopSequenceItem
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(callAtStop.StopPointName)
+                Text(stopSequenceItem.name)
                     .font(.headline)
                 .lineLimit(1)
                 Spacer()
-                if (callAtStop.EstimatedBay != nil || callAtStop.PlannedBay != nil) {
-                    Text(callAtStop.getPlatForm())
+                if (stopSequenceItem.properties.platfromName != nil || stopSequenceItem.properties.plannedPlatformName != nil) {
+                    Text(stopSequenceItem.getPlatform())
                         .font(.footnote)
+                        .foregroundStyle(.secondary)
+
                 }
             }
             HStack {
-                Text("\(callAtStop.getScheduledTime()) Uhr")
-                if (callAtStop.getTimeDifference() > 0) {
-                    Text("+\(callAtStop.getTimeDifference())")
+                Text("\(stopSequenceItem.getScheduledTime()) Uhr")
+                if (stopSequenceItem.getTimeDifference() > 0) {
+                    Text("+\(stopSequenceItem.getTimeDifference())")
                         .foregroundColor(Color.red)
-                } else if (callAtStop.getTimeDifference() < 0) {
-                    Text("\(callAtStop.getTimeDifference())")
+                } else if (stopSequenceItem.getTimeDifference() < 0) {
+                    Text("\(stopSequenceItem.getTimeDifference())")
                         .foregroundColor(Color.green)
                 }
                 Spacer()
-                Text("\(callAtStop.getRealTime()) Uhr")
+                Text("\(stopSequenceItem.getRealTime()) Uhr")
             }
             .font(.subheadline)
         }

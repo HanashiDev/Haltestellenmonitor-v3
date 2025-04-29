@@ -22,6 +22,7 @@ struct DepartureRow: View {
         VStack(alignment: .leading) {
             Text(stopEvent.getName())
                 .lineLimit(1)
+            Spacer() // prevent shifiting if delayed
             HStack {
                 Text(stopEvent.getScheduledTime())
                 if (stopEvent.getTimeDifference() > 0) {
@@ -32,16 +33,18 @@ struct DepartureRow: View {
                         .foregroundColor(Color.green)
                 }
                 Spacer()
-                Text(stopEvent.getRealTime())
+                Text(stopEvent.getEstimatedTime())
             }
             .font(.footnote)
             HStack {
-                if (stopEvent.ThisCall.PlannedBay != nil) {
-                    Text(stopEvent.getPlatForm())
+                if ( stopEvent.location.properties.platform != nil) {
+                    Text(stopEvent.getPlatform())
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
                 Spacer()
-                if stopEvent.Cancelled == "true" {
-                    Text("Halt fällt aus")
+                if stopEvent.isCancelled ?? false {
+                    Text("Fahrt fällt aus")
                         .foregroundColor(Color.red)
                 } else {
                     Text("in \(departureBinding.inMinute) min")

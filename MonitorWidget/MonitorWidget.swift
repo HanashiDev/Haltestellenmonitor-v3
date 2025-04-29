@@ -47,14 +47,14 @@ class Provider: IntentTimelineProvider {
             }
             
             if favStops.isEmpty {
-                print("No favorites found.")
+                print("Widget: No favorites found.")
                 
             } else {
                 var favStopsLoc : [Stop] = []
                 // Retrieving location data
                 Task() {
                     await widgetLocationManager.fetchLocation { llocation in
-                        print(">>>", llocation.coordinate)}
+                        print("Widget: >>>", llocation.coordinate)}
                 }
                 // Dresden town hall GPS coordinates as default
                 let location = widgetLocationManager.llocation ?? CLLocation(latitude: +51.04750, longitude: +13.74035)
@@ -75,32 +75,41 @@ class Provider: IntentTimelineProvider {
                 stop = stopTmp!
             }
         }
-        
-        let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_DM_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = DepartureRequest(stopPointRef: stop.gid, numberOfResults: 75).getXML()
-        request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
+        
+        request.httpBody = createDepartureRequest(stopId: stop.gid, itdDate: getDateStampURL(), itdTime: getTimeStampURL()).data(using: .utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        
+        
 
         let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
             var entries: [MonitorEntry] = []
             var stopEvents: [StopEvent] = []
             guard error == nil else {
-                print ("error: \(error!)")
+                print ("Widget error: \(error!)")
                 self.getTimeline(for: configuration, in: context, completion: completion)
                 return
             }
 
             guard let content = data else {
-                print("No data")
+                print("Widget: No data")
                 self.getTimeline(for: configuration, in: context, completion: completion)
                 return
             }
 
             DispatchQueue.main.async {
-                let stopEventParser = StopEventResponseParser(data: content)
-                stopEventParser.parse()
-                stopEvents = stopEventParser.stopEvents
+                do {
+                    let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
+                    stopEvents = stopEventContainer.stopEvents
+
+                } catch{
+                    print("Widget: JSON decoding failed")
+                    self.getTimeline(for: configuration, in: context, completion: completion)
+                    return
+                }
                 
                 let currentDate = Date()
                 for i in 0 ..< 72 {
@@ -111,6 +120,8 @@ class Provider: IntentTimelineProvider {
                 
                 let timeline = Timeline(entries: entries, policy: .atEnd)
                 completion(timeline)
+               
+                
             }
 
         }
