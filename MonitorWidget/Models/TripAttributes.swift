@@ -90,7 +90,7 @@ struct TripAttributes: ActivityAttributes {
 
     // Fixed non-changing properties about your activity go here!
     var name: String
-    var mode: String
+    var icon: String
     var stopID: String
     var lineRef: String
     var timetabledTime: String
@@ -100,27 +100,6 @@ struct TripAttributes: ActivityAttributes {
     var cancelled: String?
     
     func getIcon() -> String {
-        switch (self.mode) {
-        case "tram":
-            return "🚊"
-        case "bus":
-            return "🚍"
-        case "trolleybus":
-            return "🚍"
-        case "urbanRail":
-            return "🚈"
-        case "rail":
-            return "🚆"
-        case "intercityRail":
-            return "🚆"
-        case "cableway":
-            return "🚞"
-        case "water":
-            return "⛴️"
-        case "taxi":
-            return "🚖"
-        default:
-            return "🚊"
-        }
+        return self.icon
     }
 }

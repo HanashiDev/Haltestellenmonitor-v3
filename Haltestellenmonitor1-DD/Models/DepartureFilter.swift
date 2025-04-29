@@ -14,5 +14,4 @@ class DepartureFilter: ObservableObject {
     @Published var train = true
     @Published var cableway = true
     @Published var ferry = true
-    @Published var taxi = true
 }

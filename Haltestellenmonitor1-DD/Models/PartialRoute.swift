@@ -72,44 +72,11 @@ struct PartialRoute: Hashable, Codable {
     
     
     func getIcon() -> String {
-        switch (self.Mot.type) {
-        case "InsertedWaiting":
-            return "🕝"
-        case "Tram":
-            return "🚊"
-        case "CityBus":
-            return "🚍"
-        case "PlusBus":
-            return "🚍"
-        case "Bus":
-            return "🚍"
-        case "IntercityBus":
-            return "🚍"
-        case "SuburbanRailway":
-            return "🚈"
-        case "RapidTransit":
-            return "🚈"
-        case "Train":
-            return "🚆"
-        case "Cableway":
-            return "🚞"
-        case "Ferry":
-            return "⛴️"
-        case "HailedSharedTaxi":
-            return "🚖"
-        case "Footpath":
-            return "🚶"
-        case "MobilityStairsUp":
-            return "📈"
-        case "MobilityStairsDown":
-            return "📉"
-        default:
-            return "🚊"
-        }
+        getIconVVO(motType: self.Mot.type)
     }
     
     func getColor() -> Color {
-        return self.Mot.type.getColor()
+        getColorVVO(motType: self.Mot.type)
     }
     
     func getStartTime() -> Date? {

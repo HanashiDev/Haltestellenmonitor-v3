@@ -122,7 +122,7 @@ struct CallAtStop: Hashable {
         return inTime
     }
     
-    func getPlatForm() -> String {
+    func getPlatform() -> String {
         if self.PlannedBay == nil && self.EstimatedBay == nil {
             return ""
         }

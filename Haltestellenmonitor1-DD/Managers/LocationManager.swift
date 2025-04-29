@@ -86,7 +86,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         //Handle any errors here...
-        print (error)
+        print ("LocationManager Error: \(error)")
     }
     
     func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?)

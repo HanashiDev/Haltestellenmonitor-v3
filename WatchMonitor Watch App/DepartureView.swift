@@ -16,7 +16,7 @@ struct DepartureView: View {
     var body: some View {
         Group {
             if (isLoaded) {
-                List(searchResults, id: \.self) { stopEvent in
+                List(searchResults.sorted { ($0.departureTimeEstimated ?? $0.departureTimePlanned) < ($1.departureTimeEstimated ?? $1.departureTimePlanned) }, id: \.self) { stopEvent in
                     NavigationLink {
                         SingleTripView(stop: stop, stopEvent: stopEvent)
                     } label: {
@@ -47,20 +47,26 @@ struct DepartureView: View {
             }
         }
     }
+    func urlEncodedString(from parameters: [String: String]) -> String {
+        return parameters.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
+    }
+
     
     func getDeparture() async {
-        let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
+        
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_DM_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = DepartureRequest(stopPointRef: stop.gid).getXML()
-        request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
+        
+        request.httpBody = createDepartureRequest(stopId: stop.gid, itdDate: getDateStampURL(), itdTime: getTimeStampURL()).data(using: .utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            let serviceParser = StopEventResponseParser(data: content)
-            serviceParser.parse()
-            self.stopEvents = serviceParser.stopEvents
-            isLoaded = true
+            let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
+            self.stopEvents = stopEventContainer.stopEvents
+            self.isLoaded = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
                 Task {
@@ -68,20 +74,24 @@ struct DepartureView: View {
                 }
             }
         } catch {
-            print(error)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                Task {
-                    await getDeparture()
+            print ("Watch DepartureMonitor error: \(error)")
+            // stop infinite retries of -999 fails
+            if !error.localizedDescription.contains("Abgebrochen") {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    Task {
+                        await getDeparture()
+                    }
                 }
             }
+
         }
     }
 }
 
-struct DepartureView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            DepartureView(stop: stops[0])
-        }
-    }
-}
+//struct DepartureView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationStack {
+//            DepartureView(stop: stops[0])
+//        }
+//    }
+//}

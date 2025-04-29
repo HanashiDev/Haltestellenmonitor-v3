@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SingleTripView: View {
-    @State var callAtStops: [CallAtStop] = []
+    @State var stopSequence: [StopSequenceItem] = []
     @State private var isLoaded = false
     @State private var searchText = ""
     var stop: Stop
@@ -17,11 +17,11 @@ struct SingleTripView: View {
     var body: some View {
         Group {
             if (isLoaded) {
-                List(searchResults, id: \.self) { callAtStop in
+                List(searchResults, id: \.self) { stopSequenceItem in
                     NavigationLink {
-                        DepartureView(stop: callAtStop.getStop() ?? stop)
+                        DepartureView(stop: stopSequenceItem.getStop() ?? stop)
                     } label: {
-                        SingleTripRow(callAtStop: callAtStop)
+                        SingleTripRow(stopSequenceItem: stopSequenceItem)
                     }
                 }
                 .searchable(text: $searchText)
@@ -37,33 +37,44 @@ struct SingleTripView: View {
         }
     }
     
-    var searchResults: [CallAtStop] {
+    var searchResults: [StopSequenceItem] {
         if searchText.isEmpty {
-            return callAtStops
+            return stopSequence
         } else {
-            return callAtStops.filter { $0.StopPointName.lowercased().contains(searchText.lowercased()) }
+            return stopSequence.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
     
     func getSingleTrip() async {
-        let url = URL(string: "https://efa.vvo-online.de/std3/trias")!
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_TRIPSTOPTIMES_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = DepartureRequest(stopPointRef: stop.gid, time: self.stopEvent.ThisCall.ServiceArrival?.EstimatedTime ?? "", lineRef: self.stopEvent.LineRef, directionRef: self.stopEvent.DirectionRef, numberOfResults: 1, includeOnwardCalls: true).getXML()
-        request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
+        
+        let date = getISO8601Date(dateString: stopEvent.departureTimePlanned)
+        
+        request.httpBody = createDepartureRequestSingle(stopId: stop.gid, line: stopEvent.transportation.id, tripCode: stopEvent.transportation.properties.tripCode ?? 0 , date: getDateStampURL(date: date), time: getTimeStampURL(date: date)).data(using: .utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            let stopEventParser = StopEventResponseParser(data: content)
-            stopEventParser.parse()
-            if (stopEventParser.stopEvents.count > 0) {
-                callAtStops.append(stopEventParser.stopEvents[0].ThisCall)
-                callAtStops.append(contentsOf: stopEventParser.stopEvents[0].OnwardCalls ?? [])
-                isLoaded = true
+            let stopSequenceContainer = try JSONDecoder().decode(StopSequenceContainer.self, from: content)
+            let stopEvents = stopSequenceContainer.leg.stopSequence ?? []
+            if (stopEvents.count > 0) {
+                self.stopSequence = stopEvents
             }
+            self.isLoaded = true
         } catch {
-            print ("error: \(error)")
-            await getSingleTrip()
+            print ("Watch SingleTrip error: \(error)")
+            
+            // stop infinite retries of -999 fails
+            if !error.localizedDescription.contains("Abgebrochen") {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    Task {
+                        await getSingleTrip()
+                    }
+                }
+            }
         }
     }
 }
