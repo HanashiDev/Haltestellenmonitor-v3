@@ -29,156 +29,20 @@ struct ConnectionView: View {
 
     var body: some View {
         NavigationStack(path: $stopManager.presentedStops) {
-            VStack {
-                Form {
-                    Section {
-                        if favoriteConnections.favorites.count > 0 {
-                            DisclosureGroup("Favoriten") {
-                                List(favoriteConnections.favorites, id: \.id) { favoriteConnection in
-                                    HStack {
-                                        Text(favoriteConnection.name)
-                                            .swipeActions(edge: .trailing) {
-                                                Button {
-                                                    favoriteConnections.remove(trip: favoriteConnection)
-                                                } label: {
-                                                    Label("Löschen", systemImage: "trash")
-                                                }
-                                                .tint(.red)
-                                        }
-                                        Spacer()
-                                    }
-                                    .contentShape(Rectangle())
-                                    .onTapGesture {
-                                        showFavorite(favorite: favoriteConnection)
-                                    }
-                                }
-                            }
-                        }
-                        HStack {
-                            HStack {
-                                Text("Startpunkt")
-                                    .lineLimit(1)
-                                Spacer()
-                                Text(filter.startStop == nil ? "Keine Auswahl" : filter.startStop?.displayName ?? "Keine Auswahl")
-                                    .foregroundColor(Color.gray)
-                                    .lineLimit(1)
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                filter.start = true
-                                showingSheet = true
-                            }
-
-                            Button {
-                                locationManager.requestCurrentLocationComplete {
-                                    locationManager.lookUpCurrentLocation { placemark in
-                                        if placemark != nil {
-                                            filter.startStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
-                                        }
-                                    }
-                                }
-                            } label: {
-                                Image(systemName: "location")
-                            }
-                        }
-
-                        HStack {
-                            HStack {
-                                Text("Zielpunkt")
-                                    .lineLimit(1)
-                                Spacer()
-                                Text(filter.endStop == nil ? "Keine Auswahl" : filter.endStop?.displayName ?? "Keine Auswahl")
-                                    .foregroundColor(Color.gray)
-                                    .lineLimit(1)
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                filter.start = false
-                                showingSheet = true
-                            }
-
-                            Button {
-                                locationManager.requestCurrentLocationComplete {
-                                    locationManager.lookUpCurrentLocation { placemark in
-                                        if placemark != nil {
-                                            filter.endStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
-                                        }
-                                    }
-                                }
-                            } label: {
-                                Image(systemName: "location")
-                            }
-                        }
-                        
-                        DisclosureGroup("Verkehrsmittel") {
-                            DepartureDisclosureSection()
-                        }
-                        
-                        VStack {
-                            HStack {
-                                DatePicker("Zeit", selection: $dateTime)
-                                Button {
-                                    dateTime = Date.now
-                                } label: {
-                                    Text("Jetzt")
-                                }
-                            }
-                            Picker("", selection: $isArrivalTime) {
-                                Text("Abfahrt").tag(0)
-                                Text("Ankunft").tag(1)
-                            }.pickerStyle(.segmented)
-                        }
-                        
-                        Button {
-                            Task {
-                                if isLoading {
-                                    return
-                                }
-                                isLoading = true
-                                await createRequestData()
-                                await getTripData()
-                            }
-                        } label: {
-                            Text("Verbindungen anzeigen")
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                    
-                    if (trip?.Routes != nil) {
-                        Button {
-                            showingSaveAlert.toggle()
-                        } label: {
-                            Text("Als Favorit speichern")
-                        }
-                        .frame(maxWidth: .infinity)
-                        
-                        ForEach(trip?.Routes ?? [], id: \.self) { route in
-                            TripSection(vm: TripSectionViewModel(route: route))
-                        }
-                        
-                        Button {
-                            if isLoading || requestData == nil || self.trip == nil {
-                                return
-                            }
-                            isLoading = true
-                            numbernext = numbernext + 1
-                            
-                            requestData!.sessionId = self.trip!.SessionId
-                            requestData!.numberprev = 0
-                            requestData!.numbernext = numbernext
-                            
-                            Task {
-                                await getTripData(isNext: true)
-                            }
-                        } label: {
-                            Text("später")
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
+            VStack(spacing: 5) {
+                
+               // .contentMargins(.vertical, 0)
+                if #available(iOS 17.0, *) {
+                    listView()
+                        .listSectionSpacing(18)
+                        .sheet(isPresented: $showingSheet, content: {
+                            ConnectionStopSelectionView()
+                        })
+                } else {
+                    listView()    .sheet(isPresented: $showingSheet, content: {
+                        ConnectionStopSelectionView()
+                    })
                 }
-                .sheet(isPresented: $showingSheet, content: {
-                    ConnectionStopSelectionView()
-                })
             }
             .navigationTitle("🏘️ Verbindungen")
             .toolbar {
@@ -222,6 +86,187 @@ struct ConnectionView: View {
         }
         .environmentObject(filter)
         .environmentObject(departureFilter)
+    }
+    
+    func listView() -> some View {
+        Form {
+            Section {
+                if favoriteConnections.favorites.count > 0 {
+                    DisclosureGroup("Favoriten") {
+                        List(favoriteConnections.favorites, id: \.id) { favoriteConnection in
+                            HStack {
+                                Text(favoriteConnection.name)
+                                    .swipeActions(edge: .trailing) {
+                                        Button {
+                                            favoriteConnections.remove(trip: favoriteConnection)
+                                        } label: {
+                                            Label("Löschen", systemImage: "trash")
+                                        }
+                                        .tint(.red)
+                                }
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                showFavorite(favorite: favoriteConnection)
+                            }
+                        }
+                    }
+                }
+                HStack {
+                    HStack {
+                        Text("Startpunkt")
+                            .lineLimit(1)
+                        Spacer()
+                        Text(filter.startStop == nil ? "Keine Auswahl" : filter.startStop?.displayName ?? "Keine Auswahl")
+                            .foregroundColor(Color.gray)
+                            .lineLimit(1)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        filter.start = true
+                        showingSheet = true
+                    }
+
+                    Button {
+                        locationManager.requestCurrentLocationComplete {
+                            locationManager.lookUpCurrentLocation { placemark in
+                                if placemark != nil {
+                                    filter.startStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
+                                }
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "location")
+                    }
+                }
+
+                HStack {
+                    HStack {
+                        Text("Zielpunkt")
+                            .lineLimit(1)
+                        Spacer()
+                        Text(filter.endStop == nil ? "Keine Auswahl" : filter.endStop?.displayName ?? "Keine Auswahl")
+                            .foregroundColor(Color.gray)
+                            .lineLimit(1)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        filter.start = false
+                        showingSheet = true
+                    }
+
+                    Button {
+                        locationManager.requestCurrentLocationComplete {
+                            locationManager.lookUpCurrentLocation { placemark in
+                                if placemark != nil {
+                                    filter.endStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
+                                }
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "location")
+                    }
+                }
+                
+                DisclosureGroup("Verkehrsmittel") {
+                    DepartureDisclosureSection()
+                }
+                
+                VStack {
+                    HStack {
+                        DatePicker("Zeit", selection: $dateTime)
+                        Button {
+                            dateTime = Date.now
+                        } label: {
+                            Text("Jetzt")
+                        }
+                    }
+                    Picker("", selection: $isArrivalTime) {
+                        Text("Abfahrt").tag(0)
+                        Text("Ankunft").tag(1)
+                    }.pickerStyle(.segmented)
+                }
+            }
+            
+            Section {
+                HStack {
+                    Button {
+                        showingSaveAlert.toggle()
+                    } label: {
+                        Image(systemName: "heart")
+                    }.frame(width: 20)
+                    
+                    ZStack {
+                        Button {
+                            Task {
+                                if isLoading {
+                                    return
+                                }
+                                isLoading = true
+                                await createRequestData()
+                                await getTripData()
+                            }
+                        } label: {
+                            Text("Verbindungen anzeigen")
+                        }
+                        .frame(height: 30)
+                        .frame(maxWidth: .infinity)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                       
+                                .stroke(.accent, lineWidth: 1)
+                              
+                            )
+                    }
+                    
+                }
+            }.listRowBackground(Color.clear)
+            
+            if (trip?.Routes != nil) {
+                Button {
+                    if isLoading || requestData == nil || self.trip == nil {
+                        return
+                    }
+                    isLoading = true
+                    numbernext = numbernext + 1
+                    
+                    requestData!.sessionId = self.trip!.SessionId
+                    requestData!.numberprev = 0
+                    requestData!.numbernext = numbernext
+                    
+                    Task {
+                        await getTripData(isNext: true)
+                    }
+                } label: {
+                    Text("Frühere Verbindungen")
+                }
+                .frame(maxWidth: .infinity)
+                
+                ForEach(trip?.Routes ?? [], id: \.self) { route in
+                    TripSection(vm: TripSectionViewModel(route: route))
+                }
+                
+                Button {
+                    if isLoading || requestData == nil || self.trip == nil {
+                        return
+                    }
+                    isLoading = true
+                    numbernext = numbernext + 1
+                    
+                    requestData!.sessionId = self.trip!.SessionId
+                    requestData!.numberprev = 0
+                    requestData!.numbernext = numbernext
+                    
+                    Task {
+                        await getTripData(isNext: true)
+                    }
+                } label: {
+                    Text("Spätere Verbindungen")
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
     }
     
     func createRequestData() async {
