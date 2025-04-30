@@ -24,7 +24,9 @@ struct TripSection: View {
                     .foregroundColor(.gray)
                 
                 if vm.route.Interchanges > 0 {
-                    Text("| \(vm.getUmstiege())")
+                    Text("| \(vm.route.Interchanges)")
+                        .foregroundColor(.gray)
+                    Image(systemName: "shuffle")
                         .foregroundColor(.gray)
                 }
             }.font(.subheadline)
