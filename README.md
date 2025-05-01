@@ -4,11 +4,30 @@ Haltestellen Navigator für Dresden
 [<img src="images/appstoreImage.svg" height="50">](https://apps.apple.com/de/app/haltestellenmonitor-dresden/id1266844674)
 
 ### Showcase
+
+#### Hauptansicht
+<p align="center">
+  <img src="images/example0.PNG" width="350">
+</p>
+
+#### Checke Abfahrten und deren Meldungen
 <p align="center">
   <img src="images/example1.PNG" width="350">
+  <img src="images/example5.PNG" width="350">
+  <img src="images/example6.PNG" width="350">
+</p>
+
+#### Plane einen Trip
+<p align="center">
   <img src="images/example2.PNG" width="350">
   <img src="images/example3.PNG" width="350">
 </p>
+
+#### Finde Haltestellen in der Kartenansicht
+<p align="center">
+  <img src="images/example4.PNG" width="350">
+</p>
+
 
 ## Anforderungen
 * iOS: 16.4
@@ -23,9 +42,9 @@ Für mehr Infos siehe: https://developer.apple.com/support/xcode/
 3. Erstelle eine Pullrequest
 4. Warte bis ein Maintainer diese annimmt oder Feedback gibt
 
-Bitte achte darauf das neuer Code zum Codestyle des bisher vorhandenen Codes ähnlich ist und verständlich geschrieben ist. 
+Bitte achte darauf das neuer Code zum Codestyle des bisher vorhandenen Codes ähnlich ist und verständlich geschrieben ist.
 
-### Allgemeine Anmerkungen dazu 
+### Allgemeine Anmerkungen dazu
 * Keine Binary Files (wie z.B. .DS_Store) Datein oder so pushen
 * Keine Identifier vom z.B. dem Development Team des projektes in der Pullrequest ändern
 * Bei Fragen zum Codestyle: [siehe hier](https://google.github.io/swift/)
