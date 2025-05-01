@@ -10,32 +10,32 @@ import SwiftUI
 struct RegularStopRow: View {
     var regularStop: RegularStop
     var isFirst: Bool
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Text(regularStop.Name)
                 Spacer()
-                if (regularStop.getPlatform() != nil) {
+                if regularStop.getPlatform() != nil {
                     Text(regularStop.getPlatform() ?? "")
                         .font(.footnote)
                 }
             }
             HStack {
                 Text("\(isFirst ? regularStop.getDepartureTime() :  regularStop.getArrivalTime()) Uhr")
-                if (isFirst) {
-                    if (regularStop.getTimeDifferenceDeparture() > 0) {
+                if isFirst {
+                    if regularStop.getTimeDifferenceDeparture() > 0 {
                         Text("+\(regularStop.getTimeDifferenceDeparture())")
                             .foregroundColor(Color.red)
-                    } else if (regularStop.getTimeDifferenceDeparture() < 0) {
+                    } else if regularStop.getTimeDifferenceDeparture() < 0 {
                         Text("\(regularStop.getTimeDifferenceDeparture())")
                             .foregroundColor(Color.green)
                     }
                 } else {
-                    if (regularStop.getTimeDifference() > 0) {
+                    if regularStop.getTimeDifference() > 0 {
                         Text("+\(regularStop.getTimeDifference())")
                             .foregroundColor(Color.red)
-                    } else if (regularStop.getTimeDifference() < 0) {
+                    } else if regularStop.getTimeDifference() < 0 {
                         Text("\(regularStop.getTimeDifference())")
                             .foregroundColor(Color.green)
                     }

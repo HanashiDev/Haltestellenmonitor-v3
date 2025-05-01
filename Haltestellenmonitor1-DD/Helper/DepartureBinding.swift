@@ -9,7 +9,7 @@ import Foundation
 
 class DepartureBinding: ObservableObject {
     @Published var inMinute: Int
-    
+
     init(inMinute: Int) {
         self.inMinute = inMinute
     }

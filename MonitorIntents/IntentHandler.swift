@@ -9,7 +9,7 @@ import Intents
 
 class IntentHandler: INExtension, ConfigurationIntentHandling {
     func provideLineFilterOptionsCollection(for intent: ConfigurationIntent, with completion: @escaping (INObjectCollection<LineFilter>?, Error?) -> Void) {
-        
+
         let lineItems: [LineFilter] = [
             LineFilter(identifier: "1", display: "1"),
             LineFilter(identifier: "2", display: "2"),
@@ -53,22 +53,22 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
             LineFilter(identifier: "92", display: "92"),
             LineFilter(identifier: "93", display: "93")
         ]
-        
+
         let collection = INObjectCollection(items: lineItems)
-        
+
         completion(collection, nil)
     }
-    
+
     func provideStopTypeOptionsCollection(for intent: ConfigurationIntent, with completion: @escaping (INObjectCollection<StopType>?, Error?) -> Void) {
-        
+
         var stopItems: [StopType] = []
-        
+
         stops.forEach { stop in
             stopItems.append(StopType(identifier: String(stop.stopID), display: stop.getFullName()))
         }
-        
+
         let collection = INObjectCollection(items: stopItems)
-        
+
         completion(collection, nil)
     }
 }

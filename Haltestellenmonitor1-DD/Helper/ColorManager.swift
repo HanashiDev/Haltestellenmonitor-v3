@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 extension Color {
     static var customGray = Color(red: 107/255.0, green: 107/255.0, blue: 107/255.0)
 }

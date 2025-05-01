@@ -12,39 +12,39 @@ struct Properties: Hashable, Codable {
 
 class Location: Hashable, Codable {
     var id: String?
-    //var isGlobalId: Bool?
+    // var isGlobalId: Bool?
     var name: String
     var disassembledName: String?
     var type: String
     var coord: [Int]?
     var properties: Stop_Property
-    //var parent: Location?
-    
+    // var parent: Location?
+
 //    init(Id: String, IsGlobalId: Bool, Name: String, DisassembledName: String, type: String, Coord: [Int], Properties: Stop_Property, Parent: Location? = nil) {
     init(Id: String, IsGlobalId: Bool, Name: String, DisassembledName: String, type: String, Coord: [Int], Properties: Stop_Property) {
         self.id = Id
-        //self.isGlobalId = IsGlobalId
+        // self.isGlobalId = IsGlobalId
         self.name = Name
         self.type = type
         self.coord = Coord
         self.properties = Properties
-        //self.parent = Parent
+        // self.parent = Parent
     }
-    
+
     // make class conformant to hashable
     static func == (lhs: Location, rhs: Location) -> Bool {
         ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(ObjectIdentifier(self))
     }
-    
+
     // make class conformant to codeable
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
-        //try container.encode(isGlobalId, forKey: .isGlobalId)
+        // try container.encode(isGlobalId, forKey: .isGlobalId)
         try container.encode(name, forKey: .name)
         try container.encode(type, forKey: .type)
         try container.encode(coord, forKey: .coord)
@@ -53,4 +53,3 @@ class Location: Hashable, Codable {
     }
     }
 
-    

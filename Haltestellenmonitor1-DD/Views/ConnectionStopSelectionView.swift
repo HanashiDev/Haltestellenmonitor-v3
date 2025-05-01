@@ -19,7 +19,7 @@ struct ConnectionStopSelectionView: View {
     @State private var location: CLLocation?
     @State private var addressString = ""
     @State private var showPicker = false
-    
+
     @State private var showNoAddressAlert = false
     @State private var contactName = ""
     @State private var addresses: [CNLabeledValue<CNPostalAddress>] = []
@@ -36,7 +36,7 @@ struct ConnectionStopSelectionView: View {
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            if (filter.start) {
+                            if filter.start {
                                 filter.startStop = ConnectionStop(displayName: addressString, location: StopCoordinate(latitude: location?.coordinate.latitude ?? 0, longitude: location?.coordinate.longitude ?? 0))
                             } else {
                                 filter.endStop = ConnectionStop(displayName: addressString, location: StopCoordinate(latitude: location?.coordinate.latitude ?? 0, longitude: location?.coordinate.longitude ?? 0))
@@ -80,7 +80,7 @@ struct ConnectionStopSelectionView: View {
                         StopRow(stop: stop)
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                if (filter.start) {
+                                if filter.start {
                                     filter.startStop = ConnectionStop(displayName: stop.getFullName(), stop: stop)
                                 } else {
                                     filter.endStop = ConnectionStop(displayName: stop.getFullName(), stop: stop)
@@ -91,7 +91,7 @@ struct ConnectionStopSelectionView: View {
                 }
             }
             .navigationTitle(filter.start ? "🏠 Startpunkt" : "🏠 Zielpunkt")
-            .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.cancellationAction) {
                     Button("Schließen") {
@@ -131,49 +131,49 @@ struct ConnectionStopSelectionView: View {
                 .dynamicTypeSize(.medium ... .large)
         }
     }
-    
+
     var searchResults: [Stop] {
         stops = stops.sorted {
             $0.distance ?? 0 < $1.distance ?? 0
         }
-        
+
         var newStops: [Stop] = []
         stops.forEach { stop in
-            if (favoriteStops.isFavorite(stopID: stop.stopID)) {
+            if favoriteStops.isFavorite(stopID: stop.stopID) {
                 newStops.append(stop)
             }
         }
         stops.forEach { stop in
-            if (!favoriteStops.isFavorite(stopID: stop.stopID)) {
+            if !favoriteStops.isFavorite(stopID: stop.stopID) {
                 newStops.append(stop)
             }
         }
         stops = newStops
-        
+
         if searchText.isEmpty {
             return stops
         } else {
             return stops.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
-    
+
     func selectContactAddress(address: CNPostalAddress) {
         let addressStr = "\(address.street), \(address.postalCode) \(address.city)"
-        
+
         let geoCoder = CLGeocoder()
-        geoCoder.geocodeAddressString(addressStr) { (placemarks, error) in
+        geoCoder.geocodeAddressString(addressStr) { (placemarks, _) in
             guard
                 let placemarks = placemarks,
                 let location = placemarks.first?.location
             else {
                 return
             }
-            
-            if (filter.start) {
+
+            if filter.start {
                 filter.startStop = ConnectionStop(displayName: contactName, location: StopCoordinate(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude ))
             } else {
                 filter.endStop = ConnectionStop(displayName: contactName, location: StopCoordinate(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
-                
+
                 if filter.startStop == nil {
                     locationManager.requestCurrentLocationComplete {
                         locationManager.lookUpCurrentLocation { placemark in
@@ -187,20 +187,20 @@ struct ConnectionStopSelectionView: View {
             dismiss()
         }
     }
-    
+
     func changePlace() {
         let geoCoder = CLGeocoder()
-        geoCoder.geocodeAddressString(searchText) { (placemarks, error) in
+        geoCoder.geocodeAddressString(searchText) { (placemarks, _) in
             guard
                 let placemarks = placemarks,
                 let location = placemarks.first?.location
             else {
                 return
             }
-            
+
             self.placemarks = placemarks
             self.location = location
-            
+
             if placemarks.first != nil {
                 addressString = "\(placemarks.first?.name ?? ""), \(placemarks.first?.postalCode ?? "") \(placemarks.first?.locality ?? "")"
             } else {
@@ -208,20 +208,20 @@ struct ConnectionStopSelectionView: View {
             }
         }
     }
-    
+
     func selectContact(contact: CNContact) {
         if contact.givenName == "" && contact.familyName == "" && contact.organizationName != "" {
             contactName = contact.organizationName
         } else {
             contactName = "\(contact.givenName) \(contact.familyName)"
         }
-        
+
         if contact.postalAddresses.count <= 0 {
             addresses = []
             showNoAddressAlert.toggle()
             return
         }
-        
+
         if contact.postalAddresses.count == 1 {
             selectContactAddress(address: contact.postalAddresses.first!.value)
             return

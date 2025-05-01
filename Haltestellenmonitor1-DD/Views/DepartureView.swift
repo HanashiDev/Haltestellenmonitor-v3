@@ -21,10 +21,10 @@ struct DepartureView: View {
     @State private var showingErrorAlert = false
     @State private var alreadyStarted = false
     @StateObject var departureFilter = DepartureFilter()
-    
+
     var body: some View {
         Group {
-            if (isLoaded) {
+            if isLoaded {
                 VStack {
                     Form {
                         Section {
@@ -52,7 +52,7 @@ struct DepartureView: View {
                                         }
                                         .opacity(0.0)
                                         .buttonStyle(.plain)
-                                        
+
                                         DepartureRow(stopEvent: stopEvent)
                                     }
                                     .swipeActions(edge: .trailing) {
@@ -82,13 +82,13 @@ struct DepartureView: View {
         .navigationTitle("🚏 \(stop.name)")
         .toolbar {
             Button {
-                if (favoriteStops.isFavorite(stopID: stop.stopID)) {
+                if favoriteStops.isFavorite(stopID: stop.stopID) {
                     favoriteStops.remove(stopID: stop.stopID)
                 } else {
                     favoriteStops.add(stopID: stop.stopID)
                 }
             } label: {
-                if (favoriteStops.isFavorite(stopID: stop.stopID)) {
+                if favoriteStops.isFavorite(stopID: stop.stopID) {
                     Label("", systemImage: "star.fill")
                 } else {
                     Label("", systemImage: "star")
@@ -115,15 +115,15 @@ struct DepartureView: View {
             isLoaded = false*/
             await getDeparture()
         }
-        .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
-        .onChange(of: dateTime) { newValue in
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .onChange(of: dateTime) { _ in
             Task {
                 await getDeparture()
             }
         }
         .environmentObject(departureFilter)
     }
-    
+
     var searchResults: [StopEvent] {
         var stopEventsTmp = stopEvents
         stopEventsTmp = stopEventsTmp.filter {
@@ -134,7 +134,7 @@ struct DepartureView: View {
             (departureFilter.cableway && $0.transportation.product.iconId == 9) ||
             (departureFilter.ferry && $0.transportation.product.iconId == 10)
         }
-        
+
         if searchText.isEmpty {
             return stopEventsTmp
         } else {
@@ -149,29 +149,29 @@ struct DepartureView: View {
         if localDateTime < Date.now {
             localDateTime = Date.now
         }
-        
+
         let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_DM_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        
+
         request.httpBody = createDepartureRequest(stopId: stop.gid, itdDate: getDateStampURL(date: localDateTime), itdTime: getTimeStampURL(date: localDateTime)).data(using: .utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
+
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
             self.stopEvents = stopEventContainer.stopEvents
             self.isLoaded = true
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
                 Task {
                     await getDeparture()
                 }
             }
         } catch {
-            print ("DepartureMonitor error: \(error)")
-            
+            print("DepartureMonitor error: \(error)")
+
             // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -182,20 +182,20 @@ struct DepartureView: View {
             }
         }
     }
-    
+
     func startActivity(stopEvent: StopEvent) {
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(timetabledTime: stopEvent.departureTimePlanned, estimatedTime: stopEvent.departureTimeEstimated)
             let attributes = TripAttributes(name: stop.name, icon: stopEvent.getIcon(), stopID: String(stop.stopID), lineRef: stopEvent.transportation.getLineRef(), timetabledTime: stopEvent.departureTimePlanned, directionRef: "outward", publishedLineName: stopEvent.transportation.number, destinationText: stopEvent.transportation.destination.name)
-            
+
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
-            
+
             do {
                 let activity = try Activity.request(attributes: attributes, content: activityContent, pushType: .token)
                 print("Requested an activity \(String(activity.id)).")
-                
+
                 showingSuccessAlert = true
-                
+
                 Task {
                     for await data in activity.pushTokenUpdates {
                         let token = data.map {String(format: "%02x", $0)}.joined()
@@ -207,13 +207,13 @@ struct DepartureView: View {
             }
         }
     }
-    
+
     func saveAcitivityOnServer(stopEvent: StopEvent, token: String) {
-        if (pushTokenHistory.isInHistory(token: token)) {
+        if pushTokenHistory.isInHistory(token: token) {
             return
         }
         pushTokenHistory.add(token: token)
-        
+
         let url = URL(string: "https://dvb.hsrv.me/api/activity")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -221,9 +221,9 @@ struct DepartureView: View {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
-        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) {(data, _, error) in
             guard error == nil else {
-                print ("DepartureMonitor Live Activity Request error: \(error!)")
+                print("DepartureMonitor Live Activity Request error: \(error!)")
                 showingErrorAlert = true
                 return
             }
@@ -233,14 +233,14 @@ struct DepartureView: View {
                 showingErrorAlert = true
                 return
             }
-            
+
             print(content)
         }
         task.resume()
     }
 }
 //
-//struct DepartureView_Previews: PreviewProvider {
+// struct DepartureView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        NavigationStack {
 //            DepartureView(stop: stops[100])
@@ -248,4 +248,4 @@ struct DepartureView: View {
 //            .environmentObject(FavoriteStop())
 //            .environmentObject(PushTokenHistory())
 //    }
-//}
+// }

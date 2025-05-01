@@ -18,7 +18,7 @@ struct About: View {
                         Text("\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unbekannt") (\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unbekannt"))")
                     }
                 }
-                
+
                 Section(header: Text("Kontakt")) {
                     Link(destination: URL(string: "mailto:info@hanashi.dev?subject=Haltestellenmonitor%20Dresden%20Feedback")!) {
                         Text(verbatim: "📧 info@hanashi.dev")

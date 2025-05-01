@@ -11,8 +11,8 @@ struct Mot: Hashable, Codable {
     var type: String
     var Name: String?
     var Direction: String?
-    
-    private enum CodingKeys : String, CodingKey {
+
+    private enum CodingKeys: String, CodingKey {
         case type = "Type", Name, Direction
     }
 }

@@ -11,7 +11,7 @@ struct ContentView: View {
     @StateObject var locationManager: LocationManager = LocationManager()
     @StateObject var favoriteStops: FavoriteStop = FavoriteStop()
     @State private var searchText = ""
-    
+
     var body: some View {
         NavigationStack {
             List(searchResults, id: \.self) { stop in
@@ -19,7 +19,7 @@ struct ContentView: View {
                     StopRow(stop: stop)
                 }
                     .swipeActions(edge: .trailing) {
-                        if (favoriteStops.isFavorite(stopID: stop.stopID)) {
+                        if favoriteStops.isFavorite(stopID: stop.stopID) {
                             Button {
                                 favoriteStops.remove(stopID: stop.stopID)
                             } label: {
@@ -47,25 +47,25 @@ struct ContentView: View {
         }
         .environmentObject(favoriteStops)
     }
-    
+
     var searchResults: [Stop] {
         stops = stops.sorted {
             $0.distance ?? 0 < $1.distance ?? 0
         }
-        
+
         var newStops: [Stop] = []
         stops.forEach { stop in
-            if (favoriteStops.isFavorite(stopID: stop.stopID)) {
+            if favoriteStops.isFavorite(stopID: stop.stopID) {
                 newStops.append(stop)
             }
         }
         stops.forEach { stop in
-            if (!favoriteStops.isFavorite(stopID: stop.stopID)) {
+            if !favoriteStops.isFavorite(stopID: stop.stopID) {
                 newStops.append(stop)
             }
         }
         stops = newStops
-        
+
         if searchText.isEmpty {
             return stops
         } else {

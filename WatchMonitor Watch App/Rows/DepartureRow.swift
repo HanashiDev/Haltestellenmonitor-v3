@@ -9,15 +9,15 @@ import SwiftUI
 
 struct DepartureRow: View {
     var stopEvent: StopEvent
-    
+
     @ObservedObject private var departureBinding: DepartureBinding
-    
+
     init(stopEvent: StopEvent) {
         self.stopEvent = stopEvent
-        
+
         self.departureBinding = DepartureBinding(inMinute: stopEvent.getIn())
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(stopEvent.getName())
@@ -25,10 +25,10 @@ struct DepartureRow: View {
             Spacer() // prevent shifiting if delayed
             HStack {
                 Text(stopEvent.getScheduledTime())
-                if (stopEvent.getTimeDifference() > 0) {
+                if stopEvent.getTimeDifference() > 0 {
                     Text("+\(stopEvent.getTimeDifference())")
                         .foregroundColor(Color.red)
-                } else if (stopEvent.getTimeDifference() < 0) {
+                } else if stopEvent.getTimeDifference() < 0 {
                     Text("\(stopEvent.getTimeDifference())")
                         .foregroundColor(Color.green)
                 }
@@ -37,7 +37,7 @@ struct DepartureRow: View {
             }
             .font(.footnote)
             HStack {
-                if ( stopEvent.location.properties.platform != nil) {
+                if stopEvent.location.properties.platform != nil {
                     Text(stopEvent.getPlatform())
                         .font(.footnote)
                         .foregroundStyle(.secondary)

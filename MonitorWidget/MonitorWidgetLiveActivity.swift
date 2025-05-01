@@ -24,7 +24,7 @@ struct MonitorWidgetLiveActivity: Widget {
                             Text("\(context.attributes.publishedLineName) \(context.attributes.destinationText)")
                                 .lineLimit(1)
                             Spacer()
-                            if (context.state.done) {
+                            if context.state.done {
                                 Image(systemName: "checkmark.circle")
                                     .foregroundColor(Color.green)
                             } else {
@@ -33,11 +33,11 @@ struct MonitorWidgetLiveActivity: Widget {
                         }
                         HStack {
                             Text("\(context.state.getScheduledTime()) Uhr")
-                            if (context.state.getTimeDifference() > 0) {
+                            if context.state.getTimeDifference() > 0 {
                                 Text("+\(context.state.getTimeDifference())")
                                     .font(.subheadline)
                                     .foregroundColor(Color.red)
-                            } else if (context.state.getTimeDifference() < 0) {
+                            } else if context.state.getTimeDifference() < 0 {
                                 Text("\(context.state.getTimeDifference())")
                                     .font(.subheadline)
                                     .foregroundColor(Color.green)
@@ -63,11 +63,11 @@ struct MonitorWidgetLiveActivity: Widget {
                 DynamicIslandExpandedRegion(.leading) {
                     VStack(alignment: .leading) {
                         Text("\(context.state.getScheduledTime()) Uhr")
-                        if (context.state.getTimeDifference() > 0) {
+                        if context.state.getTimeDifference() > 0 {
                             Text("+\(context.state.getTimeDifference())")
                                 .font(.subheadline)
                                 .foregroundColor(Color.red)
-                        } else if (context.state.getTimeDifference() < 0) {
+                        } else if context.state.getTimeDifference() < 0 {
                             Text("\(context.state.getTimeDifference())")
                                 .font(.subheadline)
                                 .foregroundColor(Color.green)
@@ -117,7 +117,7 @@ struct MonitorWidgetLiveActivity: Widget {
                         .font(.subheadline)
                 }
             } minimal: {
-                if (context.state.done) {
+                if context.state.done {
                     Image(systemName: "checkmark.circle")
                         .foregroundColor(Color.green)
                 } else {
@@ -128,10 +128,10 @@ struct MonitorWidgetLiveActivity: Widget {
             .keylineTint(Color.red)
         }
     }
-    
+
     func getWidgetUrl(context: ActivityViewContext<TripAttributes>) -> URL? {
         let str = "widget://trip/\(context.attributes.stopID.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.lineRef.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.directionRef.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)/\(context.attributes.timetabledTime.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!))"
-        
+
         return URL(string: str)
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 class ConnectionFilter: ObservableObject {
-    @Published var startStop: ConnectionStop? = nil
-    @Published var endStop: ConnectionStop? = nil
+    @Published var startStop: ConnectionStop?
+    @Published var endStop: ConnectionStop?
     @Published var start = false
 }

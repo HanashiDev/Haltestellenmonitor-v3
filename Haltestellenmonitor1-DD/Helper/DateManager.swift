@@ -32,4 +32,3 @@ func getISO8601Date(dateString: String?) -> Date {
     }
     return Date.now
 }
-

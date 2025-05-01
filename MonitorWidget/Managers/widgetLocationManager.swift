@@ -11,9 +11,9 @@ import CoreLocation
 
 class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
-    
+
     private var handler: ((CLLocation) -> Void)?
-    private var completion: ((CLLocation) -> Void)? = nil
+    private var completion: ((CLLocation) -> Void)?
 
     @Published var llocation: CLLocation?
 
@@ -36,8 +36,8 @@ class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
         guard let location = locations.first else { return }
 
         self.llocation = location
-                
-        if (completion != nil) {
+
+        if completion != nil {
             completion!(location)
             completion = nil
         }

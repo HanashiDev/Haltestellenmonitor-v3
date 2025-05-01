@@ -15,7 +15,7 @@ struct DepartureView: View {
 
     var body: some View {
         Group {
-            if (isLoaded) {
+            if isLoaded {
                 List(searchResults.sorted { ($0.departureTimeEstimated ?? $0.departureTimePlanned) < ($1.departureTimeEstimated ?? $1.departureTimePlanned) }, id: \.self) { stopEvent in
                     NavigationLink {
                         SingleTripView(stop: stop, stopEvent: stopEvent)
@@ -35,7 +35,7 @@ struct DepartureView: View {
             }
         }
     }
-    
+
     var searchResults: [StopEvent] {
         let departures = stopEvents
 
@@ -51,30 +51,29 @@ struct DepartureView: View {
         return parameters.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
     }
 
-    
     func getDeparture() async {
-        
+
         let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_DM_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        
+
         request.httpBody = createDepartureRequest(stopId: stop.gid, itdDate: getDateStampURL(), itdTime: getTimeStampURL()).data(using: .utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
+
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
             self.stopEvents = stopEventContainer.stopEvents
             self.isLoaded = true
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
                 Task {
                     await getDeparture()
                 }
             }
         } catch {
-            print ("Watch DepartureMonitor error: \(error)")
+            print("Watch DepartureMonitor error: \(error)")
             // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -88,10 +87,10 @@ struct DepartureView: View {
     }
 }
 
-//struct DepartureView_Previews: PreviewProvider {
+// struct DepartureView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        NavigationStack {
 //            DepartureView(stop: stops[0])
 //        }
 //    }
-//}
+// }

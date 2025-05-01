@@ -9,17 +9,17 @@ import SwiftUI
 
 struct SingleTripRow: View {
     var stopSequenceItem: StopSequenceItem
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(stopSequenceItem.name)
                 .lineLimit(1)
             HStack {
                 Text(stopSequenceItem.getScheduledTime())
-                if (stopSequenceItem.getTimeDifference() > 0) {
+                if stopSequenceItem.getTimeDifference() > 0 {
                     Text("+\(stopSequenceItem.getTimeDifference())")
                         .foregroundColor(Color.red)
-                } else if (stopSequenceItem.getTimeDifference() < 0) {
+                } else if stopSequenceItem.getTimeDifference() < 0 {
                     Text("\(stopSequenceItem.getTimeDifference())")
                         .foregroundColor(Color.green)
                 }
@@ -27,7 +27,7 @@ struct SingleTripRow: View {
                 Text(stopSequenceItem.getRealTime())
             }
             .font(.footnote)
-            if (stopSequenceItem.properties.platfromName != nil || stopSequenceItem.properties.plannedPlatformName != nil) {
+            if stopSequenceItem.properties.platfromName != nil || stopSequenceItem.properties.plannedPlatformName != nil {
                 Text(stopSequenceItem.getPlatform())
                     .font(.footnote)
                     .foregroundStyle(.secondary)

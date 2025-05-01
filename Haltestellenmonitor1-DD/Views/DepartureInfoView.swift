@@ -33,28 +33,25 @@ struct stringSection: Hashable, Codable {
     let isListItem: Bool
 }
 
-    
-
-
 struct DepartureInfoViewRow: View {
     let infoLink: InfoLink
     @State private var convertedText: [[stringSection]] = []
     @State private var subtitleText: String = ""
     @State private var convertedTexts: [Text] = []
-    
-    func checkBold(_ attributes: [NSAttributedString.Key : Any]) -> Bool {
+
+    func checkBold(_ attributes: [NSAttributedString.Key: Any]) -> Bool {
         if let font = attributes[.font] as? UIFont, font.fontDescriptor.symbolicTraits.contains(.traitBold) {
             return true
         }
         return false
     }
-    func checkItalic(_ attributes: [NSAttributedString.Key : Any]) -> Bool {
+    func checkItalic(_ attributes: [NSAttributedString.Key: Any]) -> Bool {
         if let font = attributes[.font] as? UIFont, font.fontDescriptor.symbolicTraits.contains(.traitItalic) {
             return true
         }
         return false
     }
-    func getLink(_ attributes: [NSAttributedString.Key : Any]) -> String? {
+    func getLink(_ attributes: [NSAttributedString.Key: Any]) -> String? {
         if let url = attributes[.link] as? URL {
             return url.absoluteString
         } else if let urlString = attributes[.link] as? String {
@@ -63,7 +60,7 @@ struct DepartureInfoViewRow: View {
         return nil
     }
 
-    func getHeaderLevel(_ attributes: [NSAttributedString.Key : Any]) -> Int8 {
+    func getHeaderLevel(_ attributes: [NSAttributedString.Key: Any]) -> Int8 {
         if let paragraphStyle = attributes[.paragraphStyle] as? NSParagraphStyle {
             if let level = paragraphStyle.value(forKey: "headerLevel") as? Int8 {
                 return level
@@ -71,13 +68,13 @@ struct DepartureInfoViewRow: View {
         }
         return 0
     }
-    func checkUnderlined(_ attributes: [NSAttributedString.Key : Any]) -> Bool {
+    func checkUnderlined(_ attributes: [NSAttributedString.Key: Any]) -> Bool {
         if let _ = attributes[.underlineStyle] {
             return true
         }
         return false
     }
-    func checkList(_ attributes: [NSAttributedString.Key : Any]) -> Bool {
+    func checkList(_ attributes: [NSAttributedString.Key: Any]) -> Bool {
         if let paragraphStyle = attributes[.paragraphStyle] as? NSParagraphStyle {
             if let textLists = paragraphStyle.value(forKey: "textLists") as? NSArray {
                 if textLists.count > 0 {
@@ -87,15 +84,15 @@ struct DepartureInfoViewRow: View {
         }
         return false
     }
-    
+
     func getTitle(_ html: String) -> String {
         guard let data = html.data(using: .utf8) else { return "" }
-        
+
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
             .documentType: NSAttributedString.DocumentType.html,
-            .characterEncoding: String.Encoding.utf8.rawValue,
+            .characterEncoding: String.Encoding.utf8.rawValue
         ]
-        
+
         if let attributedString = try? NSAttributedString(
             data: data,
             options: options,
@@ -106,13 +103,12 @@ struct DepartureInfoViewRow: View {
         return ""
     }
 
-
     func convertHTML(_ html: String) -> [[stringSection]] {
         guard let data = html.data(using: .utf8) else { return [] }
-        
+
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
             .documentType: NSAttributedString.DocumentType.html,
-            .characterEncoding: String.Encoding.utf8.rawValue,
+            .characterEncoding: String.Encoding.utf8.rawValue
         ]
 
         if let attributedString = try? NSAttributedString(
@@ -143,15 +139,14 @@ struct DepartureInfoViewRow: View {
     func formattedText(from sections: [stringSection]) -> Text {
         return sections.enumerated().reduce(Text("")) { partialResult, item in
             var (_, section) = item
-            
+
             // pre iOS 18.0 fix
             if section.isListItem && section.text.contains("•") {
                 section.text = ""
             }
 
-            
             var sectionText: Text
-            
+
             // Apply link if present
             if let link = section.link {
                 let text = "[\(section.text)](\(link))"
@@ -159,20 +154,20 @@ struct DepartureInfoViewRow: View {
             } else {
                 sectionText = Text(section.text)
             }
-            
+
             // Apply formatting based on properties
             if section.isBold {
                 sectionText = sectionText.bold()
             }
-            
+
             if section.isItalic {
                 sectionText = sectionText.italic()
             }
-            
+
             if section.isUnderlined {
                 sectionText = sectionText.underline()
             }
-            
+
             // Apply font size based on header level
             switch section.headerLvl {
             case 1:
@@ -186,18 +181,17 @@ struct DepartureInfoViewRow: View {
             default: // 0
                 sectionText = sectionText.font(.body)
             }
-            
+
             return partialResult + sectionText
         }
     }
-
 
     var body: some View {
         DisclosureGroup(
             content: {
                 VStack {
                     ForEach(convertedText, id: \.self) {section in
-                        
+
                         // Add Space before headers & sections
                         if let item = section.first {
                             if item.headerLvl > 0 && convertedText.firstIndex(of: section) ?? 0 > 0 {
@@ -208,13 +202,13 @@ struct DepartureInfoViewRow: View {
                                     .frame(height: 8)
                             }
                         }
-                        
+
                         if section.first?.isListItem ?? false {
                             HStack(alignment: .top, spacing: 8) {
                                 Text("-")
                                     .frame(width: 10, alignment: .trailing)
                                     .fixedSize()
-                                
+
                                 formattedText(from: section)
                                     .multilineTextAlignment(.leading)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -231,10 +225,10 @@ struct DepartureInfoViewRow: View {
                 }
             },
             label: {
-                VStack (alignment: .leading){
-                    
+                VStack(alignment: .leading) {
+
                     Text(subtitleText)
-                    
+
                     if infoLink.title != nil && !infoLink.title!.isEmpty {
                         Text((infoLink.title!)
                             .replacingOccurrences(of: "oe", with: "ö")
@@ -276,7 +270,7 @@ struct DepartureInfoView: View {
     }
 }
 
-//struct DepartureInfoPreview: PreviewProvider {
+// struct DepartureInfoPreview: PreviewProvider {
 //    static var previews: some View {
 //        //        NavigationStack {
 //        DepartureInfoView(
@@ -345,4 +339,4 @@ struct DepartureInfoView: View {
 //
 //    }
 //    //    }
-//}
+// }
