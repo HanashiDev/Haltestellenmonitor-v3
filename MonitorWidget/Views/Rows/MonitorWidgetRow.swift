@@ -12,7 +12,7 @@ struct MonitorWidgetRow: View {
     @Environment(\.widgetFamily) var widgetFamily
     var entry: Provider.Entry
     var stopEvent: StopEvent
-    
+
     var body: some View {
         HStack {
             Text(getNumber())
@@ -26,7 +26,7 @@ struct MonitorWidgetRow: View {
                 .font(.subheadline)
                 .lineLimit(1)
             Spacer()
-            if (entry.configuration.displayFormat == DisplayFormat.time) {
+            if entry.configuration.displayFormat == DisplayFormat.time {
                 Text(widgetFamily == .systemSmall ? "\(stopEvent.getEstimatedTime())" : "\(stopEvent.getEstimatedTime()) Uhr")
                     .font(.subheadline)
                     .multilineTextAlignment(.trailing)
@@ -39,7 +39,7 @@ struct MonitorWidgetRow: View {
             }
         }
     }
-    
+
     // Get Correct Number for Trains like ICE, IC, EC
     func getNumber() -> String {
         if self.stopEvent.transportation.properties.specialFares != nil {

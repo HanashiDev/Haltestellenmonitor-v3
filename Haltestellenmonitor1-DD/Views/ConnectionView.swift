@@ -17,7 +17,7 @@ struct ConnectionView: View {
     @State var showingSaveAlert = false
     @State var dateTime = Date.now
     @State var isArrivalTime = 0 // false
-    @State var trip: Trip? = nil
+    @State var trip: Trip?
     @State var isLoading = false
     @State private var requestData: TripRequest?
     @State private var numberprev = 0
@@ -109,11 +109,11 @@ struct ConnectionView: View {
                                 Image(systemName: "location")
                             }
                         }
-                        
+
                         DisclosureGroup("Verkehrsmittel") {
                             DepartureDisclosureSection()
                         }
-                        
+
                         VStack {
                             HStack {
                                 DatePicker("Zeit", selection: $dateTime)
@@ -128,7 +128,7 @@ struct ConnectionView: View {
                                 Text("Ankunft").tag(1)
                             }.pickerStyle(.segmented)
                         }
-                        
+
                         Button {
                             Task {
                                 if isLoading {
@@ -143,30 +143,30 @@ struct ConnectionView: View {
                         }
                         .frame(maxWidth: .infinity)
                     }
-                    
-                    if (trip?.Routes != nil) {
+
+                    if trip?.Routes != nil {
                         Button {
                             showingSaveAlert.toggle()
                         } label: {
                             Text("Als Favorit speichern")
                         }
                         .frame(maxWidth: .infinity)
-                        
+
                         ForEach(trip?.Routes ?? [], id: \.self) { route in
                             TripSection(vm: TripSectionViewModel(route: route))
                         }
-                        
+
                         Button {
                             if isLoading || requestData == nil || self.trip == nil {
                                 return
                             }
                             isLoading = true
                             numbernext = numbernext + 1
-                            
+
                             requestData!.sessionId = self.trip!.SessionId
                             requestData!.numberprev = 0
                             requestData!.numbernext = numbernext
-                            
+
                             Task {
                                 await getTripData(isNext: true)
                             }
@@ -183,13 +183,13 @@ struct ConnectionView: View {
             .navigationTitle("🏘️ Verbindungen")
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.cancellationAction) {
-                    if (isLoading) {
+                    if isLoading {
                         ProgressView()
                     }
                 }
                 ToolbarItem(placement: ToolbarItemPlacement.confirmationAction) {
                     Button("Zurücksetzen") {
-                        if (isLoading) {
+                        if isLoading {
                             return
                         }
                         filter.startStop = nil
@@ -223,23 +223,23 @@ struct ConnectionView: View {
         .environmentObject(filter)
         .environmentObject(departureFilter)
     }
-    
+
     func createRequestData() async {
-        if (filter.startStop == nil || filter.endStop == nil) {
+        if filter.startStop == nil || filter.endStop == nil {
             showingAlert = true
             return
         }
         let standardSettings = getStandardSettings()
-        
+
         async let startStrPromise = filter.startStop!.getDestinationString()
         async let endStrPromise = filter.endStop!.getDestinationString()
-        
+
         let startStr = await startStrPromise
         let endStr = await endStrPromise
-        
-        requestData = TripRequest(time: dateTime.ISO8601Format(),isarrivaltime: isArrivalTime == 1 , origin: startStr, destination: endStr, standardSettings: standardSettings)
+
+        requestData = TripRequest(time: dateTime.ISO8601Format(), isarrivaltime: isArrivalTime == 1, origin: startStr, destination: endStr, standardSettings: standardSettings)
     }
-    
+
     func getTripData(isNext: Bool = false) async {
         if requestData == nil {
             return
@@ -264,7 +264,7 @@ struct ConnectionView: View {
 
             isLoading = false
         } catch {
-            print ("error: \(error)")
+            print("error: \(error)")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 Task {
                     await getTripData(isNext: isNext)
@@ -272,54 +272,54 @@ struct ConnectionView: View {
             }
         }
     }
-    
+
     func getStandardSettings() -> TripStandardSettings {
         var mot: [String] = []
-        if (departureFilter.tram) {
+        if departureFilter.tram {
             mot.append("Tram")
         }
-        if (departureFilter.bus) {
+        if departureFilter.bus {
             mot.append("CityBus")
             mot.append("IntercityBus")
             mot.append("PlusBus")
         }
-        if (departureFilter.suburbanRailway) {
+        if departureFilter.suburbanRailway {
             mot.append("SuburbanRailway")
         }
-        if (departureFilter.train) {
+        if departureFilter.train {
             mot.append("Train")
         }
-        if (departureFilter.cableway) {
+        if departureFilter.cableway {
             mot.append("Cableway")
         }
-        if (departureFilter.ferry) {
+        if departureFilter.ferry {
             mot.append("Ferry")
         }
 //        if (departureFilter.taxi) {
 //            mot.append("HailedSharedTaxi")
 //        }
-        
+
         return TripStandardSettings(mot: mot)
     }
-    
+
     func saveFavorite() {
         let standardSettings = getStandardSettings()
-        
+
         if favoriteName.isEmpty {
             favoriteName = "Standard"
         }
 
         let requestShort = TripRequestShort(name: favoriteName, origin: filter.startStop!, destination: filter.endStop!, standardSettings: standardSettings)
-        
+
         favoriteName = ""
-        
+
         favoriteConnections.add(trip: requestShort)
     }
-    
+
     func showFavorite(favorite: TripRequestShort) {
         filter.startStop = favorite.origin
         filter.endStop = favorite.destination
-        
+
         departureFilter.tram = false
         departureFilter.bus = false
         departureFilter.suburbanRailway = false
@@ -327,34 +327,26 @@ struct ConnectionView: View {
         departureFilter.cableway = false
         departureFilter.ferry = false
 //        departureFilter.taxi = false
-        
+
         let mots = favorite.standardSettings?.mot ?? []
         for mot in mots {
             switch mot {
             case "Tram":
                 departureFilter.tram = true
-                break
-            case "CityBus":
+                case "CityBus":
                 departureFilter.bus = true
-                break
-            case "IntercityBus":
+                case "IntercityBus":
                 departureFilter.bus = true
-                break
-            case "PlusBus":
+                case "PlusBus":
                 departureFilter.bus = true
-                break
-            case "SuburbanRailway":
+                case "SuburbanRailway":
                 departureFilter.suburbanRailway = true
-                break
-            case "Train":
+                case "Train":
                 departureFilter.train = true
-                break
-            case "Cableway":
+                case "Cableway":
                 departureFilter.cableway = true
-                break
-            case "Ferry":
+                case "Ferry":
                 departureFilter.ferry = true
-                break
 //            case "HailedSharedTaxi":
 //                departureFilter.taxi = true
 //                break
@@ -362,9 +354,9 @@ struct ConnectionView: View {
                 break
             }
         }
-        
+
         dateTime = Date.now
-        
+
         Task {
             if isLoading {
                 return

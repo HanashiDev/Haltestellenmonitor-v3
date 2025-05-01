@@ -12,7 +12,7 @@ import SwiftUI
 
 final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
-    
+
     var _region: MKCoordinateRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 51.050446, longitude: 13.737954),
         span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
@@ -24,14 +24,14 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
             set: { self._region = $0 }
         )
     }
-    
+
     @Published var flag = false
-    
+
     @Published var location: CLLocationCoordinate2D?
     @Published var llocation: CLLocation?
     @Published var locationUpdated: Bool = false
-    
-    private var completion: (() -> Void)? = nil
+
+    private var completion: (() -> Void)?
 
     override init() {
         super.init()
@@ -42,23 +42,23 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
     }
-    
+
     func requestCurrentLocation() {
         locationManager.startUpdatingLocation()
     }
-    
+
     func requestCurrentLocationComplete(completion: @escaping () -> Void) {
         self.completion = completion
         locationManager.startUpdatingLocation()
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.requestCurrentLocation()
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else { return }
-        
+
         var newStops: [Stop] = []
         stops.forEach { stop in
             var newStop = stop
@@ -66,7 +66,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
             newStops.append(newStop)
         }
         stops = newStops
-        
+
         DispatchQueue.main.async {
             self.location = location.coordinate
             self.region.wrappedValue = MKCoordinateRegion(
@@ -75,43 +75,40 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
             )
         }
         self.llocation = location
-        
-        if (completion != nil) {
+
+        if completion != nil {
             completion!()
             completion = nil
         }
-        
+
         locationManager.stopUpdatingLocation()
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        //Handle any errors here...
-        print ("LocationManager Error: \(error)")
+        // Handle any errors here...
+        print("LocationManager Error: \(error)")
     }
-    
+
     func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?)
                     -> Void ) {
         // Use the last reported location.
         if let lastLocation = self.llocation {
             let geocoder = CLGeocoder()
-                
+
             // Look up the location and pass it to the completion handler
             geocoder.reverseGeocodeLocation(lastLocation,
                         completionHandler: { (placemarks, error) in
                 if error == nil {
                     let firstLocation = placemarks?[0]
                     completionHandler(firstLocation)
-                }
-                else {
+                } else {
                  // An error occurred during geocoding.
                     completionHandler(nil)
                 }
             })
-        }
-        else {
+        } else {
             // No location was available.
             completionHandler(nil)
         }
     }
 }
-

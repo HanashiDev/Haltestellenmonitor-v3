@@ -16,7 +16,7 @@ struct SingleTripView: View {
 
     var body: some View {
         Group {
-            if (isLoaded) {
+            if isLoaded {
                 List(searchResults, id: \.self) { stopSequenceItem in
                     NavigationLink {
                         DepartureView(stop: stopSequenceItem.getStop() ?? stop)
@@ -36,7 +36,7 @@ struct SingleTripView: View {
             }
         }
     }
-    
+
     var searchResults: [StopSequenceItem] {
         if searchText.isEmpty {
             return stopSequence
@@ -44,29 +44,29 @@ struct SingleTripView: View {
             return stopSequence.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
-    
+
     func getSingleTrip() async {
         let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_TRIPSTOPTIMES_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        
+
         let date = getISO8601Date(dateString: stopEvent.departureTimePlanned)
-        
-        request.httpBody = createDepartureRequestSingle(stopId: stop.gid, line: stopEvent.transportation.id, tripCode: stopEvent.transportation.properties.tripCode ?? 0 , date: getDateStampURL(date: date), time: getTimeStampURL(date: date)).data(using: .utf8)
+
+        request.httpBody = createDepartureRequestSingle(stopId: stop.gid, line: stopEvent.transportation.id, tripCode: stopEvent.transportation.properties.tripCode ?? 0, date: getDateStampURL(date: date), time: getTimeStampURL(date: date)).data(using: .utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
+
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopSequenceContainer = try JSONDecoder().decode(StopSequenceContainer.self, from: content)
             let stopEvents = stopSequenceContainer.leg.stopSequence ?? []
-            if (stopEvents.count > 0) {
+            if stopEvents.count > 0 {
                 self.stopSequence = stopEvents
             }
             self.isLoaded = true
         } catch {
-            print ("Watch SingleTrip error: \(error)")
-            
+            print("Watch SingleTrip error: \(error)")
+
             // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

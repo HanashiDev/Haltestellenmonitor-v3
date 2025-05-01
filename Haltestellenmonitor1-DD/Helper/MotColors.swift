@@ -10,7 +10,7 @@ import SwiftUI
 extension String {
     func getColor() -> Color { // TODO: replace purple colors
         let opacity = 0.8
-        switch (self) {
+        switch self {
         case "tram":
             return Color.red.opacity(opacity)
         case "bus":

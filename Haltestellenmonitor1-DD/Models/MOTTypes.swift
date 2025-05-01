@@ -12,7 +12,7 @@ enum MOTType {
 }
 
 func getIcon(motType: MOTType) -> String {
-    switch (motType) {
+    switch motType {
     case .Tram:
         return "🚊"
     case .Bus:
@@ -52,7 +52,7 @@ func getIconEFA(iconId: Int) -> String {
 }
 
 func getIconVVO(motType: String) -> String {
-    switch (motType) {
+    switch motType {
     case "Tram":
         return  getIcon(motType: .Tram)
     case "CityBus", "PlusBus", "Bus", "IntercityBus":
@@ -78,7 +78,7 @@ func getIconVVO(motType: String) -> String {
 
 func getColor(motType: MOTType) -> Color {
     let opacity = 0.8
-    switch (motType) {
+    switch motType {
     case .Tram:
         return Color.red.opacity(opacity)
     case .Bus:
@@ -97,7 +97,7 @@ func getColor(motType: MOTType) -> Color {
 }
 
 func getColorEFA(iconId: Int) -> Color {
-    switch (iconId) {
+    switch iconId {
     case 4:
         return getColor(motType: .Tram)
     case 3:
@@ -113,9 +113,8 @@ func getColorEFA(iconId: Int) -> Color {
     }
 }
 
-
 func getColorVVO(motType: String) -> Color {
-    switch (motType) {
+    switch motType {
     case "Tram":
         return  getColor(motType: .Tram)
     case "CityBus", "PlusBus", "Bus", "IntercityBus":

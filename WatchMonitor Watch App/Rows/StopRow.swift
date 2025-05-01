@@ -10,14 +10,14 @@ import SwiftUI
 struct StopRow: View {
     @EnvironmentObject var favoriteStops: FavoriteStop
     var stop: Stop
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Text(stop.name)
                     .lineLimit(1)
                 Spacer()
-                if (favoriteStops.isFavorite(stopID: stop.stopID)) {
+                if favoriteStops.isFavorite(stopID: stop.stopID) {
                     Image(systemName: "star.fill")
                         .font(.footnote)
                         .foregroundColor(Color.yellow)
@@ -27,7 +27,7 @@ struct StopRow: View {
                 Text(stop.place)
                 .lineLimit(1)
                 Spacer()
-                if (stop.distance != nil) {
+                if stop.distance != nil {
                     Text("\(stop.getDistance()) m")
                         .lineLimit(1)
                 }

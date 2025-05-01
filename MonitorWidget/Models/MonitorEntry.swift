@@ -18,40 +18,40 @@ struct MonitorEntry: TimelineEntry {
     let stop: Stop?
     let stopEvents: [StopEvent]?
     let widgetLocationManager = WidgetLocationManager()
-    
+
     func getLineFilters() -> [String]? {
-        if (configuration.lineFilter == nil || configuration.lineFilter?.isEmpty == true) {
+        if configuration.lineFilter == nil || configuration.lineFilter?.isEmpty == true {
             return nil
         }
         var lines: [String] = []
         configuration.lineFilter?.forEach { line in
             lines.append(line.identifier!)
         }
-        if (lines.isEmpty) {
+        if lines.isEmpty {
             return nil
         }
-        
+
         return lines
     }
-    
+
     func filterStopEvents(stopEvents: [StopEvent]) -> [StopEvent] {
         let lineFilters = self.getLineFilters()
         var newStopEvents: [StopEvent] = []
-        
+
         stopEvents.forEach { stopEvent in
             var embed = true
-            if (lineFilters != nil || lineFilters?.isEmpty == false) {
+            if lineFilters != nil || lineFilters?.isEmpty == false {
                 embed = lineFilters?.contains(stopEvent.getName()) == true
             }
-            if (!embed) {
+            if !embed {
                 return
             }
-            
-            if (stopEvent.getIn(date: self.date, realInTime: true) >= 0) {
+
+            if stopEvent.getIn(date: self.date, realInTime: true) >= 0 {
                 newStopEvents.append(stopEvent)
             }
         }
-        
+
         return newStopEvents
     }
 }

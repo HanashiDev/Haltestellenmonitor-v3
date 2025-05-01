@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TripSection: View {
     var vm: TripSectionViewModel
-    
+
     var body: some View {
         // TODO: Steig bzw. Gleis überall einfügen
         Section {
@@ -17,12 +17,12 @@ struct TripSection: View {
                 Text("\(vm.route.getStartTimeString()) Uhr")
                 Image(systemName: "arrow.forward")
                 Text("\(vm.route.getEndTimeString()) Uhr")
-                
+
                 Spacer()
-                
+
                 Text("| \(vm.getTime())")
                     .foregroundColor(.gray)
-                
+
                 if vm.route.Interchanges > 0 {
                     Text("| \(vm.route.Interchanges)")
                         .foregroundColor(.gray)
@@ -30,11 +30,11 @@ struct TripSection: View {
                         .foregroundColor(.gray)
                 }
             }.font(.subheadline)
-            
+
             DisclosureGroup {
                 ForEach(vm.routesWithWaitingTimeUnder2Min, id: \.self) { partialRoute in
                     if partialRoute.Mot.type == "InsertedWaiting" && partialRoute.getDuration() > 0 {
-                        PartialRouteRowWaitingTime(time: partialRoute.getDuration(), text:partialRoute.getName())
+                        PartialRouteRowWaitingTime(time: partialRoute.getDuration(), text: partialRoute.getName())
                     }
                     if partialRoute.RegularStops == nil {
                         if partialRoute.getDuration() == 0 {
@@ -45,20 +45,18 @@ struct TripSection: View {
                         } else {
                             PartialRouteRow(partialRoute: partialRoute)
                         }
-                    }
-                    
-                    else {
+                    } else {
                         if partialRoute.Mot.type != "InsertedWaiting" {
                             // actual tram/bus etc parts
                             DisclosureGroup {
-                                ForEach (partialRoute.RegularStops ?? [], id: \.self) { regularStop in
+                                ForEach(partialRoute.RegularStops ?? [], id: \.self) { regularStop in
                                     ZStack {
                                         NavigationLink(value: regularStop.getStop() ?? stops[0]) {
                                             EmptyView()
                                         }
                                         .opacity(0.0)
                                         .buttonStyle(.plain)
-                                        
+
                                         RegularStopRow(regularStop: regularStop, isFirst: partialRoute.RegularStops?.first?.DataId == regularStop.DataId)
                                     }
                                 }
@@ -71,12 +69,12 @@ struct TripSection: View {
         label: { tripView() }
         }
     }
-    
+
     @ViewBuilder
     func tripView() -> some View {
         GeometryReader { geo in
-            HStack (spacing: 0) {
-                
+            HStack(spacing: 0) {
+
                 ForEach(vm.getRouteColoredBars(geo.size.width - 10), id: \.self.nr) { routeEntry in
                     VStack {
                         if routeEntry.name.isEmpty {

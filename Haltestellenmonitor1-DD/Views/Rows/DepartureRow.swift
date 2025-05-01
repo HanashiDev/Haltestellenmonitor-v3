@@ -9,15 +9,15 @@ import SwiftUI
 
 struct DepartureRow: View {
     var stopEvent: StopEvent
-    
+
     @ObservedObject private var departureBinding: DepartureBinding
-    
+
     init(stopEvent: StopEvent) {
         self.stopEvent = stopEvent
-        
+
         self.departureBinding = DepartureBinding(inMinute: stopEvent.getIn())
     }
-    
+
     var body: some View {
         HStack(alignment: .center) {
             Text(stopEvent.getIcon())
@@ -26,7 +26,7 @@ struct DepartureRow: View {
                 HStack {
                     Text(stopEvent.getName())
                         .font(.headline)
-                    
+
                         .lineLimit(1)
                     if stopEvent.hasInfos() {
                         Spacer()
@@ -35,10 +35,10 @@ struct DepartureRow: View {
                 }
                 HStack {
                     Text("\(stopEvent.getScheduledTime()) Uhr")
-                    if (stopEvent.getTimeDifference() > 0) {
+                    if stopEvent.getTimeDifference() > 0 {
                         Text("+\(stopEvent.getTimeDifference())")
                             .foregroundColor(Color.red)
-                    } else if (stopEvent.getTimeDifference() < 0) {
+                    } else if stopEvent.getTimeDifference() < 0 {
                         Text("\(stopEvent.getTimeDifference())")
                             .foregroundColor(Color.green)
                     }
@@ -46,9 +46,9 @@ struct DepartureRow: View {
                     Text("\(stopEvent.getEstimatedTime()) Uhr")
                 }
                 .font(.subheadline)
-                
+
                 HStack {
-                    if (stopEvent.location.properties.platformName != nil || stopEvent.location.properties.plannedPlatformName != nil) {
+                    if stopEvent.location.properties.platformName != nil || stopEvent.location.properties.plannedPlatformName != nil {
                         Text(stopEvent.getPlatform())
                             .font(.footnote)
                             .foregroundStyle(.secondary)

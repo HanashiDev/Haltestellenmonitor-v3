@@ -17,13 +17,13 @@ struct SingleTripView: View {
     @State private var showingErrorAlert = false
     var stop: Stop
     var stopEvent: StopEvent
-    
+
     var body: some View {
 
         Group {
-            if (isLoaded) {
+            if isLoaded {
                 List {
-                    if stopEvent.hasInfos(){
+                    if stopEvent.hasInfos() {
                         HStack {
                             ZStack {
                                 NavigationLink {
@@ -50,13 +50,13 @@ struct SingleTripView: View {
                                 }
                                 .opacity(0.0)
                                 .buttonStyle(.plain)
-                                
+
                                 SingleTripRow(stopSequenceItem: stopSequenceItem)
                             }
                         }
                     }
                 }
-                
+
             } else {
                 ProgressView()
             }
@@ -91,9 +91,9 @@ struct SingleTripView: View {
                 }
             }
         }
-        .searchable(text: $searchText, placement:.navigationBarDrawer(displayMode: .always))
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
     }
-    
+
     var searchResults: [StopSequenceItem] {
         if searchText.isEmpty {
             return stopSequence
@@ -101,15 +101,15 @@ struct SingleTripView: View {
             return stopSequence.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
-    
+
     func getSingleTrip() async {
         let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_TRIPSTOPTIMES_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        
+
         let date = getISO8601Date(dateString: stopEvent.departureTimePlanned)
-        
-        request.httpBody = createDepartureRequestSingle(stopId: stop.gid, line: stopEvent.transportation.id, tripCode: stopEvent.transportation.properties.tripCode ?? 0 , date: getDateStampURL(date: date), time: getTimeStampURL(date: date)).data(using: .utf8)
+
+        request.httpBody = createDepartureRequestSingle(stopId: stop.gid, line: stopEvent.transportation.id, tripCode: stopEvent.transportation.properties.tripCode ?? 0, date: getDateStampURL(date: date), time: getTimeStampURL(date: date)).data(using: .utf8)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
@@ -117,14 +117,14 @@ struct SingleTripView: View {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopSequenceContainer = try JSONDecoder().decode(StopSequenceContainer.self, from: content)
             let stopEvents = stopSequenceContainer.leg.stopSequence ?? []
-            if (stopEvents.count > 0) {
+            if stopEvents.count > 0 {
                 self.stopSequence = stopEvents
             }
             self.isLoaded = true
 
         } catch {
-            print ("SingleTrip error: \(error)")
-            
+            print("SingleTrip error: \(error)")
+
             // stop infinite retries of -999 fails
             if !error.localizedDescription.contains("Abgebrochen") {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -133,23 +133,23 @@ struct SingleTripView: View {
                     }
                 }
             }
-            
+
         }
     }
-    
+
     func startActivity() {
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(timetabledTime: stopEvent.departureTimePlanned, estimatedTime: stopEvent.departureTimeEstimated)
             let attributes = TripAttributes(name: stop.name, icon: stopEvent.getIcon(), stopID: String(stop.stopID), lineRef: stopEvent.transportation.getLineRef(), timetabledTime: stopEvent.departureTimePlanned, directionRef: "outward", publishedLineName: stopEvent.transportation.number, destinationText: stopEvent.transportation.destination.name)
-            
+
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
-            
+
             do {
                 let activity = try Activity.request(attributes: attributes, content: activityContent, pushType: .token)
                 print("Requested an activity \(String(activity.id)).")
-                
+
                 showingSuccessAlert = true
-                
+
                 Task {
                     for await data in activity.pushTokenUpdates {
                         let token = data.map {String(format: "%02x", $0)}.joined()
@@ -161,13 +161,13 @@ struct SingleTripView: View {
             }
         }
     }
-    
+
     func saveAcitivityOnServer(token: String) {
-        if (pushTokenHistory.isInHistory(token: token)) {
+        if pushTokenHistory.isInHistory(token: token) {
             return
         }
         pushTokenHistory.add(token: token)
-        
+
         let url = URL(string: "https://dvb.hsrv.me/api/activity")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -175,9 +175,9 @@ struct SingleTripView: View {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
-        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) {(data, _, error) in
             guard error == nil else {
-                print ("SingleTrip Live Activity Request Error: \(error!)")
+                print("SingleTrip Live Activity Request Error: \(error!)")
                 showingErrorAlert = true
                 return
             }
@@ -187,14 +187,14 @@ struct SingleTripView: View {
                 showingErrorAlert = true
                 return
             }
-            
+
             print(content)
         }
         task.resume()
     }
 }
 
-//struct SingleTripView_Previews: PreviewProvider {
+// struct SingleTripView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        NavigationStack {
 //            SingleTripView(stopSequence: [StopSequenceItem(id: "1", name: "HBF", type: "", niveau: 1, productClasses: [1, 4], properties: StopSequenceItem.properties(AREA_NIVEAU_DIVA: "", DestinationText: "Schwimmbad", area: "", platform: "1"))], stop: Stop.getByGID(gid: "de:14612:28")!,
@@ -213,4 +213,4 @@ struct SingleTripView: View {
 //            
 //        }.environmentObject(PushTokenHistory())
 //    }
-//}
+// }

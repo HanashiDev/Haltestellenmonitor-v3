@@ -12,7 +12,7 @@ struct MapView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var stopManager: StopManager
     @State var tracking: MapUserTrackingMode = .none
-    
+
     var body: some View {
         NavigationStack(path: $stopManager.presentedMapStops) {
             Map(coordinateRegion: locationManager.region, interactionModes: .all, showsUserLocation: true, userTrackingMode: $tracking, annotationItems: stops, annotationContent: { stop in

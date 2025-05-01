@@ -25,13 +25,10 @@ struct ContentView: View {
                 switch selection {
                 case 1:
                     stopManager.selectedStop = nil
-                    break
-                case 2:
+                    case 2:
                     stopManager.presentedStops.removeAll()
-                    break
-                case 3:
+                    case 3:
                     stopManager.presentedMapStops.removeAll()
-                    break
                 default:
                     break
                 }
@@ -64,16 +61,16 @@ struct ContentView: View {
             goToStop(url: url)
         }
     }
-    
+
     func goToStop(url: URL) {
-        if (url.host() == "stop") {
+        if url.host() == "stop" {
             selection = 1
-        } else if (url.host() == "trip") {
-            if (url.pathComponents.count != 6) {
+        } else if url.host() == "trip" {
+            if url.pathComponents.count != 6 {
                 return
             }
             selection = 1
-            
+
 //            openingStop = Stop(stopId: Int(url.pathComponents[1]) ?? 0, name: "", city: "", gpsX: "0", gpsY: "0")
 //            openingDeparture = Departure(Id: url.pathComponents[2], LineName: url.pathComponents[3], Direction: url.pathComponents[4], Mot: "", ScheduledTime: url.pathComponents[5])
 //
