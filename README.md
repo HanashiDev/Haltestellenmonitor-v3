@@ -23,6 +23,12 @@ Haltestellen Navigator für Dresden
   <img src="images/example3.PNG" width="350">
 </p>
 
+#### Nutze Widgets und Live Aktivitäten
+<p align="center">
+  <img src="images/example7.PNG" width="350">
+  <img src="images/example8.PNG" width="350">
+</p>
+
 #### Finde Haltestellen in der Kartenansicht
 <p align="center">
   <img src="images/example4.PNG" width="350">
