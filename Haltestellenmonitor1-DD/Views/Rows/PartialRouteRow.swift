@@ -54,9 +54,9 @@ struct PartialRouteRow: View {
 
             VStack(alignment: .trailing) {
                 Text(partialRoute.getFirstPlatform() ?? "")  .foregroundColor(.gray)
-                
-                Text("")
-                
+
+                Text("|").opacity(0)
+
                 Text(partialRoute.getLastPlatform() ?? "")  .foregroundColor(.gray)
             }
             .frame(width: 70)
