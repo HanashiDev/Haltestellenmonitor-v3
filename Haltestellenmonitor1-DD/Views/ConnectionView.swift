@@ -187,17 +187,36 @@ struct ConnectionView: View {
                         Text("Ankunft").tag(1)
                     }.pickerStyle(.segmented)
                 }
-            }
-            
-            Section {
+                
                 HStack {
                     Button {
                         showingSaveAlert.toggle()
                     } label: {
                         Image(systemName: "heart")
-                    }.frame(width: 20)
+                            .resizable()
+                    }.frame(width: 20, height: 20)
+                        /*.background(
+                            ZStack {
+                                RoundedRectangle(
+                                    cornerRadius: 8,
+                                    style: .continuous
+                                )
+                                .fill(Color(.systemBackground))
+                                .frame(width: 30, height: 30)
+                                
+                                RoundedRectangle(
+                                    cornerRadius: 8,
+                                    style: .continuous
+                                )
+                                .stroke(.accent, lineWidth: 1)
+                                .frame(width: 30, height: 30)
+                            }
+                        )*/
+                    Spacer()
+                        .frame(width: 10)
+                        
                     
-                    ZStack {
+           
                         Button {
                             Task {
                                 if isLoading {
@@ -210,17 +229,33 @@ struct ConnectionView: View {
                         } label: {
                             Text("Verbindungen anzeigen")
                         }
-                        .frame(height: 30)
+                        .buttonStyle(BorderedProminentButtonStyle())
                         .frame(maxWidth: .infinity)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                       
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                      /*  .background(
+                            ZStack {
+                                RoundedRectangle(
+                                    cornerRadius: 8,
+                                    style: .continuous
+                                )
+                                .fill(Color(.systemBackground))
+                                
+                                RoundedRectangle(
+                                    cornerRadius: 8,
+                                    style: .continuous
+                                )
                                 .stroke(.accent, lineWidth: 1)
-                              
-                            )
-                    }
+                            }
+                        )*/
+                        .frame(height: 30)
+                    
                     
                 }
+            }
+            
+            Section {
+           
             }.listRowBackground(Color.clear)
             
             if (trip?.Routes != nil) {
@@ -240,8 +275,24 @@ struct ConnectionView: View {
                     }
                 } label: {
                     Text("Frühere Verbindungen")
+                        .foregroundColor(Color(.label))
                 }
+                
                 .frame(maxWidth: .infinity)
+                .background(
+                    ZStack {
+                       
+           
+                        
+                        RoundedRectangle(
+                            cornerRadius: 8,
+                            style: .continuous
+                        )
+                        .stroke(.accent, lineWidth: 1)
+                    })
+                
+                .listRowBackground(Color.clear)
+                
                 
                 ForEach(trip?.Routes ?? [], id: \.self) { route in
                     TripSection(vm: TripSectionViewModel(route: route))
