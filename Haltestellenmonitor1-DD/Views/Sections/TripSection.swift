@@ -99,13 +99,14 @@ struct TripSection: View {
     }
 }
 
-/*struct TripSection_Previews: PreviewProvider {
- static var previews: some View {
- Form {
- TripSection(vm: TripSectionViewModel(route: tripTmp.Routes[0]))
- }
- }
- }*/
+struct TripSection_Previews: PreviewProvider {
+    static var previews: some View {
+        Form {
+            TripSection(vm: TripSectionViewModel(route: tripTmp.Routes[0]))
+        }
+    }
+}
+
 struct Line: Shape {
     var y2: CGFloat = 0.0
     func path(in rect: CGRect) -> Path {

@@ -53,15 +53,11 @@ struct PartialRouteRow: View {
             .font(.subheadline)
 
             VStack(alignment: .trailing) {
-                if partialRoute.getFirstPlatform() != nil {
-                    Text(partialRoute.getFirstPlatform() ?? "")  .foregroundColor(.gray)
-                }
-
+                Text(partialRoute.getFirstPlatform() ?? "")  .foregroundColor(.gray)
+                
                 Text("")
-
-                if partialRoute.getLastPlatform() != nil {
-                    Text(partialRoute.getLastPlatform() ?? "")  .foregroundColor(.gray)
-                }
+                
+                Text(partialRoute.getLastPlatform() ?? "")  .foregroundColor(.gray)
             }
             .frame(width: 70)
             .foregroundColor(.gray)
