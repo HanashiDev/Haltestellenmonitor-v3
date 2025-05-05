@@ -8,6 +8,8 @@
 import SwiftUI
 import CoreLocation
 
+private var buttonHeight: CGFloat = 38
+
 struct ConnectionView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var stopManager: StopManager
@@ -187,40 +189,39 @@ struct ConnectionView: View {
                         Text("Ankunft").tag(1)
                     }.pickerStyle(.segmented)
                 }
-                
-                HStack {
-                    Button {
-                        print("fav")
-                     //   showingSaveAlert.toggle()
-                    } label: {
-                        Image(systemName: "heart")
-                            .resizable()
-                    }.frame(width: 20, height: 20)
-                     
-                    Spacer()
-                        .frame(width: 5)
-                        
-                        Button {
-                            print("ver")
-                            /*Task {
-                                if isLoading {
-                                    return
-                                }
-                                isLoading = true
-                                await createRequestData()
-                                await getTripData()
-                            }*/
-                        } label: {
-                            Text("Verbindungen anzeigen")
-                        }
-                        .buttonStyle(BorderedProminentButtonStyle())
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 30)
-                }.buttonStyle(BorderlessButtonStyle()) // used so the hitbox of the buttons is correct
             }
             
             Section {
-           
+                HStack {
+                    Button {
+                        showingSaveAlert.toggle()
+                    } label: {
+                        Image(systemName: "heart")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                    }.frame(width: 50, height: buttonHeight)
+                        .background(RoundedRectangle(cornerRadius: 8).fill(Color(.systemBackground)))
+                        .shadow(color: Color(.systemGray).opacity(0.6),radius: 2)
+                    
+                    Spacer().frame(width: 5)
+                    
+                    Button {
+                        Task {
+                            if isLoading {
+                                return
+                            }
+                            isLoading = true
+                            await createRequestData()
+                            await getTripData()
+                        }
+                    } label: {
+                        Text("Verbindungen anzeigen")
+                    }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .frame(maxWidth: .infinity)
+                    .frame(height: buttonHeight)
+                }.buttonStyle(BorderlessButtonStyle()) // used so the hitbox of the buttons is correct
+                    .listRowInsets(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)) // remove padding
             }.listRowBackground(Color.clear)
             
             if (trip?.Routes != nil) {
