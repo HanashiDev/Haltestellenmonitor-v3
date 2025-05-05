@@ -101,7 +101,7 @@ class Provider: IntentTimelineProvider {
             DispatchQueue.main.async {
                 do {
                     let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
-                    stopEvents = stopEventContainer.stopEvents
+                    stopEvents = stopEventContainer.stopEvents ?? []
 
                 } catch {
                     print("Widget: JSON decoding failed")

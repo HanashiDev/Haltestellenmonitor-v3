@@ -11,7 +11,6 @@ struct TripSection: View {
     var vm: TripSectionViewModel
 
     var body: some View {
-        // TODO: Steig bzw. Gleis überall einfügen
         Section {
             HStack {
                 Text("\(vm.route.getStartTimeString()) Uhr")

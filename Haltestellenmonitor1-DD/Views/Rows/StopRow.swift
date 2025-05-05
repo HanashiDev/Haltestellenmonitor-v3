@@ -20,7 +20,7 @@ struct StopRow: View {
                 Text(stop.name)
                     .font(.headline)
                 HStack {
-                    Text(stop.name)
+                    Text(stop.place)
                         .font(.subheadline)
                     Spacer()
                     if stop.distance != nil {
