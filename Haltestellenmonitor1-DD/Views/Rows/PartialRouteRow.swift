@@ -13,26 +13,15 @@ struct PartialRouteRow: View {
     var partialRoute: PartialRoute
 
     var body: some View {
-        HStack(spacing: 0) {
-
-            VStack {
+        VStack(spacing: 0) {
+            HStack {
                 if partialRoute.getStartTimeString() != nil {
                     Text("\(partialRoute.getStartTimeString()!)")
+                        .frame(width: timeFrameWidth, alignment: .leading)
+                        .foregroundColor(.gray)
+                        .font(.subheadline.monospacedDigit())
                 }
-
-                if partialRoute.getStartTimeString() != nil || partialRoute.getEndTimeString() != nil {
-                    Text("|")
-                }
-
-                if partialRoute.getEndTimeString() != nil {
-                    Text("\(partialRoute.getEndTimeString()!)")
-                }
-            }.frame(width: timeFrameWidth)
-                .foregroundColor(.gray)
-                .font(.subheadline)
-
-            VStack(alignment: .leading) {
-                HStack(spacing: 5) {
+                HStack {
                     Text(partialRoute.getIcon())
                         .frame(width: 20.0, alignment: .center)
 
@@ -41,30 +30,46 @@ struct PartialRouteRow: View {
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                Spacer()
+                Text(partialRoute.getFirstPlatform() ?? "")
+                    .foregroundColor(.gray)
+                    .font(.footnote)
+                    .frame(width: 45, alignment: .trailing)
 
-                Text("")
+            }
+            HStack {
+                if partialRoute.getStartTimeString() != nil || partialRoute.getEndTimeString() != nil {
+                    Text("|")
+                        .frame(width: timeFrameWidth, alignment: .leading)
+                        .foregroundColor(.gray)
+                        .font(.subheadline)
+                        .padding(.leading, 18.5)
 
-                if partialRoute.getEndTimeString() != nil {
-                    Text(partialRoute.getLastStation() ?? "")
+                    Spacer()
+
                 }
             }
-            .frame(maxWidth: .infinity)
-            .lineLimit(1)
-            .font(.subheadline)
+            HStack {
+                if partialRoute.getEndTimeString() != nil {
+                    Text("\(partialRoute.getEndTimeString()!)")
+                        .frame(width: timeFrameWidth, alignment: .leading)
+                        .foregroundColor(.gray)
+                        .font(.subheadline.monospacedDigit())
 
-            VStack(alignment: .trailing) {
-                Text(partialRoute.getFirstPlatform() ?? "")  .foregroundColor(.gray)
+                }
+                if partialRoute.getEndTimeString() != nil {
+                    Text(partialRoute.getLastStation() ?? "")
+                        .font(.subheadline)
+                }
+                Spacer()
 
-                Text("|").opacity(0)
+                Text(partialRoute.getLastPlatform() ?? "")
+                    .foregroundColor(.gray)
+                    .font(.footnote)
+                    .frame(width: 45, alignment: .trailing)
 
-                Text(partialRoute.getLastPlatform() ?? "")  .foregroundColor(.gray)
             }
-            .frame(width: 70)
-            .foregroundColor(.gray)
-            .lineLimit(1)
-            .font(.footnote)
-        }
-        .padding(.leading, -35).padding(.trailing, -15)
+        }.padding(.leading, -25)
     }
 }
 
@@ -83,16 +88,18 @@ struct PartialRouteRowWaitingTime: View {
     var text: String = "Wartezeit"
 
     var body: some View {
-        HStack(spacing: 0) {
+        HStack {
             Text("︙")
                 .frame(width: timeFrameWidth)
+                .offset(CGSize(width: 13, height: 0))
 
             Text("\(time) min \(text)")
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .offset(CGSize(width: 22, height: 0))
 
         }
         .foregroundColor(.gray)
-        .font(.subheadline)
-        .padding(.leading, -35).padding(.trailing, -15)
+        .font(.subheadline.monospacedDigit())
+        .padding(.leading, -47.5) // fixes horizontal line below row
     }
 }
