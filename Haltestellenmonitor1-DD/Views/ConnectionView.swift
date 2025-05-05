@@ -190,68 +190,33 @@ struct ConnectionView: View {
                 
                 HStack {
                     Button {
-                        showingSaveAlert.toggle()
+                        print("fav")
+                     //   showingSaveAlert.toggle()
                     } label: {
                         Image(systemName: "heart")
                             .resizable()
                     }.frame(width: 20, height: 20)
-                        /*.background(
-                            ZStack {
-                                RoundedRectangle(
-                                    cornerRadius: 8,
-                                    style: .continuous
-                                )
-                                .fill(Color(.systemBackground))
-                                .frame(width: 30, height: 30)
-                                
-                                RoundedRectangle(
-                                    cornerRadius: 8,
-                                    style: .continuous
-                                )
-                                .stroke(.accent, lineWidth: 1)
-                                .frame(width: 30, height: 30)
-                            }
-                        )*/
+                     
                     Spacer()
-                        .frame(width: 10)
+                        .frame(width: 5)
                         
-                    
-           
                         Button {
-                            Task {
+                            print("ver")
+                            /*Task {
                                 if isLoading {
                                     return
                                 }
                                 isLoading = true
                                 await createRequestData()
                                 await getTripData()
-                            }
+                            }*/
                         } label: {
                             Text("Verbindungen anzeigen")
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
                         .frame(maxWidth: .infinity)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                      /*  .background(
-                            ZStack {
-                                RoundedRectangle(
-                                    cornerRadius: 8,
-                                    style: .continuous
-                                )
-                                .fill(Color(.systemBackground))
-                                
-                                RoundedRectangle(
-                                    cornerRadius: 8,
-                                    style: .continuous
-                                )
-                                .stroke(.accent, lineWidth: 1)
-                            }
-                        )*/
                         .frame(height: 30)
-                    
-                    
-                }
+                }.buttonStyle(BorderlessButtonStyle()) // used so the hitbox of the buttons is correct
             }
             
             Section {
@@ -275,24 +240,8 @@ struct ConnectionView: View {
                     }
                 } label: {
                     Text("Frühere Verbindungen")
-                        .foregroundColor(Color(.label))
                 }
-                
                 .frame(maxWidth: .infinity)
-                .background(
-                    ZStack {
-                       
-           
-                        
-                        RoundedRectangle(
-                            cornerRadius: 8,
-                            style: .continuous
-                        )
-                        .stroke(.accent, lineWidth: 1)
-                    })
-                
-                .listRowBackground(Color.clear)
-                
                 
                 ForEach(trip?.Routes ?? [], id: \.self) { route in
                     TripSection(vm: TripSectionViewModel(route: route))
