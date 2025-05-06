@@ -190,6 +190,9 @@
 		D0D1998229F40C4B00946D87 /* StopRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998129F40C4B00946D87 /* StopRow.swift */; };
 		D0D1998929F412DF00946D87 /* DepartureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998829F412DF00946D87 /* DepartureView.swift */; };
 		D0D1998B29F414BD00946D87 /* DepartureRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1998A29F414BD00946D87 /* DepartureRow.swift */; };
+		F13960512DCA6B16004AC9AA /* LoadingSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13960502DCA6B07004AC9AA /* LoadingSkeleton.swift */; };
+		F13960532DCA73E5004AC9AA /* DepartureRowSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13960522DCA73DC004AC9AA /* DepartureRowSkeleton.swift */; };
+		F13960572DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13960562DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift */; };
 		F1520EE32AE96E5A001E3E05 /* widgetLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */; };
 		F16B7FDC2D90861A00851DC4 /* DepartureInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B7FDB2D90861A00851DC4 /* DepartureInfoView.swift */; };
 		F16B7FDE2D9321CD00851DC4 /* StopSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B7FDD2D9321C700851DC4 /* StopSequence.swift */; };
@@ -366,6 +369,9 @@
 		D0D1998129F40C4B00946D87 /* StopRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopRow.swift; sourceTree = "<group>"; };
 		D0D1998829F412DF00946D87 /* DepartureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureView.swift; sourceTree = "<group>"; };
 		D0D1998A29F414BD00946D87 /* DepartureRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRow.swift; sourceTree = "<group>"; };
+		F13960502DCA6B07004AC9AA /* LoadingSkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSkeleton.swift; sourceTree = "<group>"; };
+		F13960522DCA73DC004AC9AA /* DepartureRowSkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRowSkeleton.swift; sourceTree = "<group>"; };
+		F13960562DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTripRowSkeleton.swift; sourceTree = "<group>"; };
 		F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = widgetLocationManager.swift; sourceTree = "<group>"; };
 		F16B7FDB2D90861A00851DC4 /* DepartureInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureInfoView.swift; sourceTree = "<group>"; };
 		F16B7FDD2D9321C700851DC4 /* StopSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSequence.swift; sourceTree = "<group>"; };
@@ -432,6 +438,7 @@
 		D0142C452A10E7C100646C94 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F13960502DCA6B07004AC9AA /* LoadingSkeleton.swift */,
 				D0142C462A10E7CC00646C94 /* ContactPicker.swift */,
 			);
 			path = Helper;
@@ -519,10 +526,12 @@
 		D03A269429EEB98E005B0600 /* Rows */ = {
 			isa = PBXGroup;
 			children = (
+				F13960522DCA73DC004AC9AA /* DepartureRowSkeleton.swift */,
 				D03A269F29EEC248005B0600 /* DepartureRow.swift */,
 				D0BD66F929F04593004E574C /* PartialRouteRow.swift */,
 				D0C1ECDD29F3008B001D214D /* RegularStopRow.swift */,
 				D0C1ECBF29F283DE001D214D /* SingleTripRow.swift */,
+				F13960562DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift */,
 				D03A269529EEB9A7005B0600 /* StopRow.swift */,
 			);
 			path = Rows;
@@ -961,6 +970,9 @@
 				D09A504E2C4FA249006CB5D6 /* StopEvent.swift in Sources */,
 				D0C1ECC029F283DE001D214D /* SingleTripRow.swift in Sources */,
 				D03A269629EEB9A7005B0600 /* StopRow.swift in Sources */,
+				F13960572DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift in Sources */,
+				F13960532DCA73E5004AC9AA /* DepartureRowSkeleton.swift in Sources */,
+				F13960512DCA6B16004AC9AA /* LoadingSkeleton.swift in Sources */,
 				D040EC2229EED774002DFEBF /* DateParser.swift in Sources */,
 				D0142C5F2A112CA900646C94 /* StopCoordinate.swift in Sources */,
 				F1B8C04E2D70DD5C00F77CE4 /* Location.swift in Sources */,

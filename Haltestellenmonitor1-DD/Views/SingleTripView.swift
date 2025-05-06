@@ -58,8 +58,15 @@ struct SingleTripView: View {
                 }
 
             } else {
-                ProgressView()
-            }
+                List {
+                    Section {
+                        ForEach(0..<12, id: \.self) { _ in
+                                SingleTripRowSkeleton()
+                            }
+                        }
+                    }
+                }
+            
         }
         .refreshable {
             await getSingleTrip()
