@@ -32,7 +32,7 @@ struct ConnectionView: View {
     var body: some View {
         NavigationStack(path: $stopManager.presentedStops) {
             VStack(spacing: 5) {
-                
+
                // .contentMargins(.vertical, 0)
                 if #available(iOS 17.0, *) {
                     listView()
@@ -89,7 +89,7 @@ struct ConnectionView: View {
         .environmentObject(filter)
         .environmentObject(departureFilter)
     }
-    
+
     func listView() -> some View {
         Form {
             Section {
@@ -170,11 +170,11 @@ struct ConnectionView: View {
                         Image(systemName: "location")
                     }
                 }
-                
+
                 DisclosureGroup("Verkehrsmittel") {
                     DepartureDisclosureSection()
                 }
-                
+
                 VStack {
                     HStack {
                         DatePicker("Zeit", selection: $dateTime)
@@ -190,7 +190,7 @@ struct ConnectionView: View {
                     }.pickerStyle(.segmented)
                 }
             }
-            
+
             Section {
                 HStack {
                     Button {
@@ -201,10 +201,11 @@ struct ConnectionView: View {
                             .frame(width: 20, height: 20)
                     }.frame(width: 50, height: buttonHeight)
                         .background(RoundedRectangle(cornerRadius: 8).fill(Color(.systemBackground)))
-                        .shadow(color: Color(.systemGray).opacity(0.6),radius: 2)
-                    
-                    Spacer().frame(width: 5)
-                    
+                        // .shadow(color: Color(.systemGray).opacity(0.6),radius: 2)
+                        .disabled(filter.startStop != nil && filter.endStop != nil ? false : true)
+
+                    Spacer()
+
                     Button {
                         Task {
                             if isLoading {
@@ -216,26 +217,27 @@ struct ConnectionView: View {
                         }
                     } label: {
                         Text("Verbindungen anzeigen")
+                            .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
-                    .frame(maxWidth: .infinity)
                     .frame(height: buttonHeight)
+                    // .disabled(filter.startStop != nil && filter.endStop != nil ? false : true)
                 }.buttonStyle(BorderlessButtonStyle()) // used so the hitbox of the buttons is correct
-                    .listRowInsets(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)) // remove padding
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)) // remove padding
             }.listRowBackground(Color.clear)
-            
-            if (trip?.Routes != nil) {
+
+            if trip?.Routes != nil {
                 Button {
                     if isLoading || requestData == nil || self.trip == nil {
                         return
                     }
                     isLoading = true
                     numbernext = numbernext + 1
-                    
+
                     requestData!.sessionId = self.trip!.SessionId
                     requestData!.numberprev = 0
                     requestData!.numbernext = numbernext
-                    
+
                     Task {
                         await getTripData(isNext: true)
                     }
@@ -243,22 +245,22 @@ struct ConnectionView: View {
                     Text("Frühere Verbindungen")
                 }
                 .frame(maxWidth: .infinity)
-                
+
                 ForEach(trip?.Routes ?? [], id: \.self) { route in
                     TripSection(vm: TripSectionViewModel(route: route))
                 }
-                
+
                 Button {
                     if isLoading || requestData == nil || self.trip == nil {
                         return
                     }
                     isLoading = true
                     numbernext = numbernext + 1
-                    
+
                     requestData!.sessionId = self.trip!.SessionId
                     requestData!.numberprev = 0
                     requestData!.numbernext = numbernext
-                    
+
                     Task {
                         await getTripData(isNext: true)
                     }
@@ -269,7 +271,7 @@ struct ConnectionView: View {
             }
         }
     }
-    
+
     func createRequestData() async {
         if filter.startStop == nil || filter.endStop == nil {
             showingAlert = true
@@ -350,6 +352,10 @@ struct ConnectionView: View {
 
     func saveFavorite() {
         let standardSettings = getStandardSettings()
+
+        if filter.startStop == nil || filter.endStop == nil {
+            return
+        }
 
         if favoriteName.isEmpty {
             favoriteName = "Standard"
