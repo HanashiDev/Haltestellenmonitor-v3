@@ -29,6 +29,7 @@ struct ConnectionView: View {
     @StateObject var filter: ConnectionFilter = ConnectionFilter()
     @StateObject var departureFilter = DepartureFilter()
     @StateObject var favoriteConnections = FavoriteConnection()
+    @State private var minDate = Date().addingTimeInterval(TimeInterval(-20.0 * 60.0)) // 20 minutes in past
 
     var body: some View {
         NavigationStack(path: $stopManager.presentedStops) {
@@ -184,7 +185,7 @@ struct ConnectionView: View {
 
                 VStack {
                     HStack {
-                        DatePicker("Zeit", selection: $dateTime, in: .now...)
+                        DatePicker("Zeit", selection: $dateTime, in: minDate...)
                         Button {
                             dateTime = Date.now
                         } label: {
