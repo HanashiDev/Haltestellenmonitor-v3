@@ -63,7 +63,7 @@ struct ShimmeringModifer: ViewModifier {
 }
 
 public extension View {
-    func skeleton<S>(_ shape: S? = nil as Rectangle?, isLoading: Bool = true) -> some View where S: Shape {
+    func skeleton<S>(_ shape: S? = RoundedRectangle(cornerRadius: 8), isLoading: Bool = true) -> some View where S: Shape {
         guard isLoading else {
             return AnyView(self)
         }
