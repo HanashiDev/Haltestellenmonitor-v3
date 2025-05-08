@@ -33,8 +33,7 @@ struct ConnectionView: View {
     var body: some View {
         NavigationStack(path: $stopManager.presentedStops) {
             VStack(spacing: 5) {
-
-               // .contentMargins(.vertical, 0)
+                // .contentMargins(.vertical, 0)
                 if #available(iOS 17.0, *) {
                     listView()
                         .listSectionSpacing(18)
@@ -209,7 +208,6 @@ struct ConnectionView: View {
                             .frame(width: 20, height: 20)
                     }.frame(width: 50, height: buttonHeight)
                         .background(RoundedRectangle(cornerRadius: 8).fill(Color(.systemBackground)))
-                        // .shadow(color: Color(.systemGray).opacity(0.6),radius: 2)
                         .disabled(filter.startStop != nil && filter.endStop != nil ? false : true)
 
                     Spacer()
@@ -235,7 +233,7 @@ struct ConnectionView: View {
             }.listRowBackground(Color.clear)
 
             if trip?.Routes != nil {
-                Button {
+                /*Button {
                     if isLoading || requestData == nil || self.trip == nil {
                         return
                     }
@@ -252,7 +250,7 @@ struct ConnectionView: View {
                 } label: {
                     Text("Frühere Verbindungen")
                 }
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity)*/
 
                 ForEach(trip?.Routes ?? [], id: \.self) { route in
                     TripSection(vm: TripSectionViewModel(route: route))
