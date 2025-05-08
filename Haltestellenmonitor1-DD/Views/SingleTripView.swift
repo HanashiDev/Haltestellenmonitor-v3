@@ -66,7 +66,7 @@ struct SingleTripView: View {
                         }
                     }
                 }
-            
+
         }
         .refreshable {
             await getSingleTrip()
