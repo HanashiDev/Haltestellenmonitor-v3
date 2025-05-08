@@ -52,6 +52,9 @@ struct DepartureView: View {
     }
 
     func getDeparture() async {
+        if Task.isCancelled {
+            return
+        }
 
         let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_DM_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
@@ -64,7 +67,7 @@ struct DepartureView: View {
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
-            self.stopEvents = stopEventContainer.stopEvents
+            self.stopEvents = stopEventContainer.stopEvents ?? []
             self.isLoaded = true
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
@@ -73,16 +76,14 @@ struct DepartureView: View {
                 }
             }
         } catch {
-            print("Watch DepartureMonitor error: \(error)")
-            // stop infinite retries of -999 fails
-            if !error.localizedDescription.contains("Abgebrochen") {
+            if !Task.isCancelled {
+                print("Watch DepartureMonitor error: \(error)")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     Task {
                         await getDeparture()
                     }
                 }
             }
-
         }
     }
 }
