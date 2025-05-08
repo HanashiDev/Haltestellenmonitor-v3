@@ -185,7 +185,7 @@ struct ConnectionView: View {
 
                 VStack {
                     HStack {
-                        DatePicker("Zeit", selection: $dateTime)
+                        DatePicker("Zeit", selection: $dateTime, in: .now...)
                         Button {
                             dateTime = Date.now
                         } label: {
