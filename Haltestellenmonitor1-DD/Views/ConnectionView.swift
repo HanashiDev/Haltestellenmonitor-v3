@@ -14,6 +14,7 @@ struct ConnectionView: View {
     @State var day = ""
     @State var showingSheet = false
     @State var showingAlert = false
+    @State var showingAlertEqual = false
     @State var showingSaveAlert = false
     @State var dateTime = Date.now
     @State var isArrivalTime = 0 // false
@@ -208,6 +209,13 @@ struct ConnectionView: View {
                     Text("OK")
                 }
             }
+            .alert("Start- und Endziel darf nicht gleich sein", isPresented: $showingAlertEqual) {
+                Button {
+                    isLoading = false
+                } label: {
+                    Text("OK")
+                }
+            }
             .alert("Wie soll der Favorit gespeichert werden?", isPresented: $showingSaveAlert) {
                 TextField("Name", text: $favoriteName)
                 Button {
@@ -242,6 +250,11 @@ struct ConnectionView: View {
 
     func getTripData(isNext: Bool = false) async {
         if requestData == nil {
+            return
+        }
+        // prevent errors
+        if requestData!.origin == requestData!.destination {
+            showingAlertEqual = true
             return
         }
 

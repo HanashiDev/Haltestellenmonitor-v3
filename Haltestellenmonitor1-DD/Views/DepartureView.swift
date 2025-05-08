@@ -145,6 +145,10 @@ struct DepartureView: View {
     }
 
     func getDeparture() async {
+        if Task.isCancelled {
+            return
+        }
+
         var localDateTime = dateTime
         if localDateTime < Date.now {
             localDateTime = Date.now
@@ -161,7 +165,7 @@ struct DepartureView: View {
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
-            self.stopEvents = stopEventContainer.stopEvents
+            self.stopEvents = stopEventContainer.stopEvents ?? []
             self.isLoaded = true
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
@@ -170,10 +174,8 @@ struct DepartureView: View {
                 }
             }
         } catch {
-            print("DepartureMonitor error: \(error)")
-
-            // stop infinite retries of -999 fails
-            if !error.localizedDescription.contains("Abgebrochen") {
+            if !Task.isCancelled {
+                print("DepartureMonitor error: \(error)")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     Task {
                         await getDeparture()

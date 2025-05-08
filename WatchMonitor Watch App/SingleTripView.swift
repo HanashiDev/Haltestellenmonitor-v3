@@ -46,6 +46,10 @@ struct SingleTripView: View {
     }
 
     func getSingleTrip() async {
+        if Task.isCancelled {
+            return
+        }
+
         let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_TRIPSTOPTIMES_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
@@ -65,10 +69,8 @@ struct SingleTripView: View {
             }
             self.isLoaded = true
         } catch {
-            print("Watch SingleTrip error: \(error)")
-
-            // stop infinite retries of -999 fails
-            if !error.localizedDescription.contains("Abgebrochen") {
+            if !Task.isCancelled {
+                print("Watch SingleTrip error: \(error)")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     Task {
                         await getSingleTrip()

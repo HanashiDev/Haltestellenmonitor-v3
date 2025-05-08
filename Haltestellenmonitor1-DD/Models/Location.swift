@@ -52,4 +52,3 @@ class Location: Hashable, Codable {
 //        try container.encode(parent, forKey: .parent)
     }
     }
-

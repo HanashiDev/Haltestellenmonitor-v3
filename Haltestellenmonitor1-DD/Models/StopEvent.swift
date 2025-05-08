@@ -203,5 +203,5 @@ struct StopEvent: Hashable, Codable {
 struct StopEventContainer: Hashable, Codable {
 //    var version: String
     // var locations: [Location]
-    var stopEvents: [StopEvent]
+    var stopEvents: [StopEvent]?
 }
