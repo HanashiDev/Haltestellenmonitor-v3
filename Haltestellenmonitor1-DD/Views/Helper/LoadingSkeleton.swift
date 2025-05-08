@@ -53,6 +53,7 @@ struct ShimmeringModifer: ViewModifier {
 
     public func body(content: Content) -> some View {
         content
+            .accessibilityHidden(true)
             .modifier(AnimatedMask(phase: phase))
             .onAppear {
                 withAnimation(Animation.linear(duration: 2).repeatForever(autoreverses: false)) {
