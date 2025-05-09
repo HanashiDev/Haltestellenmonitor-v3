@@ -181,7 +181,7 @@ struct SingleTripView: View {
         let url = URL(string: "https://dvb.hsrv.me/api/activity")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopGID: stop.gid, lineRef: stopEvent.transportation.getLineRef(), directionRef: "outward", timetabledTime: stopEvent.getScheduledTime(), estimatedTime: stopEvent.getEstimatedTime()))
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopGID: stop.gid, lineRef: stopEvent.transportation.getLineRef(), directionRef: "outward", timetabledTime: stopEvent.departureTimePlanned, estimatedTime: stopEvent.departureTimeEstimated ?? stopEvent.departureTimePlanned))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
@@ -192,13 +192,11 @@ struct SingleTripView: View {
                 return
             }
 
-            guard let content = data else {
+            guard data != nil else {
                 print("SingleTrip Live Activity: No Data")
                 showingErrorAlert = true
                 return
             }
-
-            print(content)
         }
         task.resume()
     }
