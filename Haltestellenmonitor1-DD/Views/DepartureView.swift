@@ -70,7 +70,30 @@ struct DepartureView: View {
                     }
                 }
             } else {
-                ProgressView()
+                Form {
+                    Section {
+                        DisclosureGroup("Verkehrsmittel") {
+                            DepartureDisclosureSection()
+                        }
+
+                        HStack {
+                            DatePicker("Zeit", selection: $dateTime)
+
+                            Button {
+                                dateTime = Date.now
+                            } label: {
+                                Text("Jetzt")
+                            }
+
+                        }
+                    }
+                    .disabled(true)
+                    Section {
+                        List(0..<9, id: \.self) { _ in
+                            DepartureRowSkeleton()
+                        }
+                    }
+                }
             }
         }
         .refreshable {
@@ -241,13 +264,13 @@ struct DepartureView: View {
         task.resume()
     }
 }
-//
-// struct DepartureView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationStack {
-//            DepartureView(stop: stops[100])
-//        }
-//            .environmentObject(FavoriteStop())
-//            .environmentObject(PushTokenHistory())
-//    }
-// }
+
+ struct DepartureView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            DepartureView(stop: stops[100])
+        }
+            .environmentObject(FavoriteStop())
+            .environmentObject(PushTokenHistory())
+    }
+ }
