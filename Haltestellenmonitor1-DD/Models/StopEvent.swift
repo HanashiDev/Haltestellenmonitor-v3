@@ -68,7 +68,7 @@ struct Transportation: Hashable, Codable {
     var destination: Place
 
     func getLineRef() -> String {
-        return properties.globalId ?? ""
+        return String(properties.tripCode ?? 0)
     }
 }
 
