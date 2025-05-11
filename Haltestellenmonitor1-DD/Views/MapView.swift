@@ -20,6 +20,7 @@ struct MapView: View {
                     NavigationLink(value: stop) {
                         Image(systemName: "h.circle.fill")
                             .foregroundColor(Color("MapColor"))
+                            .background(Circle().fill(Color(.systemBackground)) .shadow(radius: 1))
                     }
                 })
             })
