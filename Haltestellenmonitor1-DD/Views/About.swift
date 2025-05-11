@@ -26,6 +26,18 @@ struct About: View {
                     Link(destination: URL(string: "https://hanashi.dev")!) {
                         Text(verbatim: "🌍 Homepage")
                     }
+                    Link(destination: URL(string: "https://github.com/HanashiDev/Haltestellenmonitor-v3")!) {
+                        HStack {
+                            Image("GitHubIcon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .offset(x: 1)
+                            Text(verbatim: "GitHub")
+                                .offset(x: -1)
+
+                        }
+                    }
                 }
             }
             .navigationTitle("Über")
