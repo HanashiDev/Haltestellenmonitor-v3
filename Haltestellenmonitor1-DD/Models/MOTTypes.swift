@@ -11,6 +11,53 @@ enum MOTType {
     case Tram, Bus, Train, CableCar, Boat, Default, Walking, Up, Down
 }
 
+// accessabiity Lables
+
+func getAccessibilityLabel(motType: MOTType) -> String {
+    switch motType {
+    case .Tram:
+        return "Straßenbahn"
+    case .Bus:
+        return "Bus"
+    case .Train:
+        return "Zug"
+    case .CableCar:
+        return "Standseilbahn/Schwebebahn"
+    case .Boat:
+        return "Fähre"
+    case .Default:
+        return "Straßenbahn"
+    case .Up:
+        return "Treppe aufwärts"
+    case .Down:
+        return "Treppe abwärts"
+    case .Walking:
+        return "Zu Fuß"
+    }
+}
+
+func getAccessibilityLabelEFA(iconId: Int) -> String {
+    switch iconId {
+    case 4:
+        return getAccessibilityLabel(motType: .Tram)
+    case 3:
+        return getAccessibilityLabel(motType: .Bus)
+    case 2, 6:
+        return getAccessibilityLabel(motType: .Train)
+    case 9:
+        return getAccessibilityLabel(motType: .CableCar)
+    case 10:
+        return getAccessibilityLabel(motType: .Boat)
+    default:
+        return getAccessibilityLabel(motType: .Default)
+    }
+}
+
+
+
+
+// icons
+
 func getIcon(motType: MOTType) -> String {
     switch motType {
     case .Tram:

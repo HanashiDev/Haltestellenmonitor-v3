@@ -65,6 +65,9 @@ struct DepartureView: View {
                                             .tint(.yellow)
                                         }
                                     }
+                                    .accessibilityElement(children: .combine)
+                                    .accessibilityAddTraits(.isButton)
+                                    .accessibilityHint("Zeig Details")
                             }
                         }
                     }
@@ -112,9 +115,9 @@ struct DepartureView: View {
                 }
             } label: {
                 if favoriteStops.isFavorite(stopID: stop.stopID) {
-                    Label("", systemImage: "star.fill")
+                    Label("Als Favorit entfernen", systemImage: "star.fill")
                 } else {
-                    Label("", systemImage: "star")
+                    Label("Als Favorit hinzufügen", systemImage: "star")
                 }
             }
         }
