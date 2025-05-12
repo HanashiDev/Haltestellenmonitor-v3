@@ -8,24 +8,15 @@
 import SwiftUI
 import MapKit
 
-
 struct MapView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var stopManager: StopManager
     @State var tracking: MapUserTrackingMode = .none
     
-    @State private var pos = (MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 51.050446, longitude: 13.737954),
-        span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-    ))
- 
     var body: some View {
         NavigationStack(path: $stopManager.presentedMapStops) {
-            
             if #available(iOS 17.0, *) {
                 MapViewNew()
-                //    .environment(locationManager)
-                 //   .environment(stopManager)
             } else {
                 Map(coordinateRegion: locationManager.region, interactionModes: .all, showsUserLocation: true, userTrackingMode: $tracking, annotationItems: stops, annotationContent: { stop in
                     MapAnnotation(coordinate: stop.coordinates, content: {
@@ -49,20 +40,15 @@ struct MapView: View {
 struct MapViewNew: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var stopManager: StopManager
-    @State var tracking: MapUserTrackingMode = .none
+    //@State var tracking: MapUserTrackingMode = .none
     
-    @State private var pos = (MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 51.050446, longitude: 13.737954),
-        span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-    ))
-
     @State var mapStyle: MapStyle = .standard
     
     var body: some View {
-        Map(initialPosition: .region(pos)) {
+        Map(initialPosition: .region(locationManager._region)) {
             ForEach(stops) { stop in
                 Annotation(stop.name, coordinate: stop.coordinates) {
-                    NavigationLink(value: stop) { // TODO: not working somehow
+                    NavigationLink(destination: DepartureView(stop: stop)) {
                         Image(systemName: "h.circle.fill")
                             .foregroundColor(Color("MapColor"))
                             .background(Circle().fill(Color(.systemBackground)) .shadow(radius: 1))
@@ -70,22 +56,22 @@ struct MapViewNew: View {
                 }
             }
         }.mapStyle(mapStyle)
-        .safeAreaInset(edge: .bottom) {
-            HStack {
-                Button(action: {
-                    mapStyle = .standard
-                }, label: {
-                    Text("A")
-                })
-                .buttonStyle(BorderedProminentButtonStyle())
-                Button(action: {
-                    mapStyle = .imagery
-                }, label: {
-                    Text("B")
-                })
-                .buttonStyle(BorderedProminentButtonStyle())
+            .safeAreaInset(edge: .bottom) {
+                HStack {
+                    Button(action: {
+                        mapStyle = .standard
+                    }, label: {
+                        Text("A")
+                    })
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    Button(action: {
+                        mapStyle = .imagery
+                    }, label: {
+                        Text("B")
+                    })
+                    .buttonStyle(BorderedProminentButtonStyle())
+                }
             }
-        }
     }
 }
 
