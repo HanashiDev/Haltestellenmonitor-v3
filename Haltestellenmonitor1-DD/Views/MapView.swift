@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import CoreLocation
 
 struct MapView: View {
     @EnvironmentObject var locationManager: LocationManager
@@ -40,13 +41,22 @@ struct MapView: View {
 struct MapViewNew: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var stopManager: StopManager
-    //@State var tracking: MapUserTrackingMode = .none
     
     @State var mapStyle: MapStyle = .standard
+    @State var visibleStops: [Stop] = []
+    
+    @State private var mapPosition: MapCameraPosition = MapCameraPosition.region(MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 51.050446, longitude: 13.737954),
+        span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+    ))
+    
+    func updateStops(_ reg: MKCoordinateRegion) {
+        visibleStops = stops.filter { isCoordinateInRegion($0.coordinates, region: reg) }
+    }
     
     var body: some View {
-        Map(initialPosition: .region(locationManager._region)) {
-            ForEach(stops) { stop in
+        Map(position: $mapPosition) {
+            ForEach(visibleStops) { stop in
                 Annotation(stop.name, coordinate: stop.coordinates) {
                     NavigationLink(destination: DepartureView(stop: stop)) {
                         Image(systemName: "h.circle.fill")
@@ -55,23 +65,57 @@ struct MapViewNew: View {
                     }
                 }
             }
-        }.mapStyle(mapStyle)
-            .safeAreaInset(edge: .bottom) {
+        }
+        .onMapCameraChange { mapCameraUpdateContext in
+            updateStops(mapCameraUpdateContext.region)
+        }
+        .mapStyle(mapStyle)
+        .overlay {
+            ZStack(alignment: .trailing) {
                 HStack {
-                    Button(action: {
-                        mapStyle = .standard
-                    }, label: {
-                        Text("A")
-                    })
-                    .buttonStyle(BorderedProminentButtonStyle())
-                    Button(action: {
-                        mapStyle = .imagery
-                    }, label: {
-                        Text("B")
-                    })
-                    .buttonStyle(BorderedProminentButtonStyle())
+                    Spacer()
+                    VStack {
+                        Menu {
+                            Button(action: {
+                                mapStyle = .standard
+                            }, label: {
+                                Text("Standard")
+                            })
+                            Button(action: {
+                                mapStyle = .imagery
+                            }, label: {
+                                Text("Satelite")
+                            })
+                        } label: {
+                            Image(systemName: "globe.europe.africa")
+                                .resizable()
+                                .background(Circle().fill(Color(.systemBackground)).shadow(radius: 1))
+                                .frame(width: 30, height: 30)
+                                .padding(10)
+                        }
+                    }
                 }
             }
+        }.onAppear{
+            if let loc = locationManager.location { // TODO: check if works
+                mapPosition = MapCameraPosition.region(MKCoordinateRegion(
+                    center: loc,
+                    span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+                ))
+            } else {
+                mapPosition = MapCameraPosition.region(locationManager._region)
+            }
+        }
+    }
+    
+    func isCoordinateInRegion(_ coordinate: CLLocationCoordinate2D, region: MKCoordinateRegion) -> Bool {
+        let latMin = region.center.latitude - (region.span.latitudeDelta / 2)
+        let latMax = region.center.latitude + (region.span.latitudeDelta / 2)
+        let lonMin = region.center.longitude - (region.span.longitudeDelta / 2)
+        let lonMax = region.center.longitude + (region.span.longitudeDelta / 2)
+        
+        return coordinate.latitude >= latMin && coordinate.latitude <= latMax &&
+        coordinate.longitude >= lonMin && coordinate.longitude <= lonMax
     }
 }
 
