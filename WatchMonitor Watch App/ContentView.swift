@@ -53,7 +53,7 @@ struct ContentView: View {
                         } label: {
                             Image(systemName: "location.fill")
                                 .foregroundStyle(.primary)
-                            
+
                         }
                     }
                 } else {
@@ -62,7 +62,7 @@ struct ContentView: View {
                             locationManager.requestCurrentLocation()
                         } label: {
                             Image(systemName: "location.fill")
-                            
+
                         }
                     }
                 }

@@ -48,7 +48,7 @@ struct DepartureRow: View {
                 .font(.subheadline)
 
                 HStack {
-                    if stopEvent.location.properties.platformName != nil || stopEvent.location.properties.plannedPlatformName != nil {
+                    if stopEvent.location.properties?.platformName != nil || stopEvent.location.properties?.plannedPlatformName != nil {
                         Text(stopEvent.getPlatform())
                             .font(.footnote)
                             .foregroundStyle(.secondary)

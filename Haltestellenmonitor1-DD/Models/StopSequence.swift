@@ -127,7 +127,7 @@ struct StopSequenceItem: Hashable, Codable {
 
     func getStop() -> Stop? {
         return stops.first { stop in
-            return String(stop.stopID) == self.parent.properties.stopId
+            return String(stop.stopID) == self.parent.properties?.stopId
         }
     }
 }

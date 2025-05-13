@@ -37,7 +37,7 @@ struct DepartureRow: View {
             }
             .font(.footnote)
             HStack {
-                if stopEvent.location.properties.platform != nil {
+                if stopEvent.location.properties?.platform != nil {
                     Text(stopEvent.getPlatform())
                         .font(.footnote)
                         .foregroundStyle(.secondary)

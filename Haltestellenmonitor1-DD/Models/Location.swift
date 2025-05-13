@@ -17,7 +17,7 @@ class Location: Hashable, Codable {
     var disassembledName: String?
     var type: String
     var coord: [Int]?
-    var properties: Stop_Property
+    var properties: Stop_Property?
     // var parent: Location?
 
 //    init(Id: String, IsGlobalId: Bool, Name: String, DisassembledName: String, type: String, Coord: [Int], Properties: Stop_Property, Parent: Location? = nil) {
