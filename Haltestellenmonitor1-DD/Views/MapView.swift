@@ -92,15 +92,28 @@ struct MapViewNew: View {
                             Button(action: {
                                 mapStyle = .imagery
                             }, label: {
-                                Text("Satelite")
+                                Text("Satellit")
                             })
                         } label: {
-                            Image(systemName: "globe.europe.africa")
+                            Image(systemName: "map")
                                 .resizable()
-                                .background(Circle().fill(Color(.systemBackground)).shadow(radius: 1))
-                                .frame(width: 30, height: 30)
-                                .padding(10)
-                        }
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .padding(12)
+                                .background(RoundedRectangle(cornerRadius: 8.0)
+                                    .fill(Color(UIColor { traitCollection in
+                                             return traitCollection.userInterfaceStyle == .dark ?
+                                            .systemGray5 :
+                                        UIColor(_colorLiteralRed: 0.941, green: 0.976, blue: 0.965, alpha: 1)
+                                         }))
+                                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 0)
+                                )
+                                .frame(width: 40, height: 40)
+                                .padding(.trailing, 8)
+                                .padding(.top, 7)
+
+                        }.padding(.trailing, 50)
+                        Spacer()
                     }
                 }
             }
