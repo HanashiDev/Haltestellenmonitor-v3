@@ -18,6 +18,7 @@ struct MapView: View {
         NavigationStack(path: $stopManager.presentedMapStops) {
             if #available(iOS 17.0, *) {
                 MapViewNew()
+                    .toolbar(.hidden, for: .navigationBar)
             } else {
                 Map(coordinateRegion: locationManager.region, interactionModes: .all, showsUserLocation: true, userTrackingMode: $tracking, annotationItems: stops, annotationContent: { stop in
                     MapAnnotation(coordinate: stop.coordinates, content: {
@@ -35,6 +36,7 @@ struct MapView: View {
             }
         }
     }
+
 }
 
 @available(iOS 17.0, *)
@@ -70,6 +72,12 @@ struct MapViewNew: View {
             updateStops(mapCameraUpdateContext.region)
         }
         .mapStyle(mapStyle)
+        .mapControls {
+            MapScaleView()
+            MapUserLocationButton()
+            MapCompass()
+        }
+
         .overlay {
             ZStack(alignment: .trailing) {
                 HStack {
