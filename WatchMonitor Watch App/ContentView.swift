@@ -44,6 +44,29 @@ struct ContentView: View {
             .onAppear {
                 locationManager.requestLocation()
             }
+            .toolbar {
+                if #available(watchOS 10.5, *) {
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        Spacer()
+                        Button {
+                            locationManager.requestCurrentLocation()
+                        } label: {
+                            Image(systemName: "location.fill")
+                                .foregroundStyle(.primary)
+                            
+                        }
+                    }
+                } else {
+                    ToolbarItemGroup(placement: .primaryAction) {
+                        Button {
+                            locationManager.requestCurrentLocation()
+                        } label: {
+                            Image(systemName: "location.fill")
+                            
+                        }
+                    }
+                }
+            }
         }
         .environmentObject(favoriteStops)
     }
