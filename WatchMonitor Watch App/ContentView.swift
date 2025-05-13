@@ -46,23 +46,20 @@ struct ContentView: View {
             }
             .toolbar {
                 if #available(watchOS 10.5, *) {
-                    ToolbarItemGroup(placement: .topBarTrailing) {
-                        Spacer()
+                    ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             locationManager.requestCurrentLocation()
                         } label: {
                             Image(systemName: "location.fill")
                                 .foregroundStyle(.primary)
-
                         }
                     }
                 } else {
-                    ToolbarItemGroup(placement: .primaryAction) {
+                    ToolbarItem(placement: .primaryAction) {
                         Button {
                             locationManager.requestCurrentLocation()
                         } label: {
                             Image(systemName: "location.fill")
-
                         }
                     }
                 }
