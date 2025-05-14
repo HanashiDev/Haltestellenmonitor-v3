@@ -70,8 +70,20 @@ struct PartialRoute: Hashable, Codable {
         return "\(self.Mot.Name!)"
     }
 
-    func getIcon() -> String {
-        getIconVVO(motType: self.Mot.type)
+    /// Shows improved icon for walking
+    func getNameShortConverted() -> Text {
+        if getNameShort() == "🚶" {
+            return Text(Image(systemName: "figure.walk"))
+        }
+        return Text(getNameShort())
+    }
+
+    func getIconText() -> Text {
+        let icon = getIconVVO(motType: self.Mot.type)
+        if icon == getIconStandard(motType: .Walking) {
+            return Text(Image(systemName: "figure.walk"))
+        }
+        return Text(icon)
     }
 
     func getColor() -> Color {

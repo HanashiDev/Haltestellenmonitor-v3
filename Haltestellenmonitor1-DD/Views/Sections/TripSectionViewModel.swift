@@ -30,6 +30,13 @@ struct TripSectionViewData {
         self.difference = difference
         self.nr = orig.nr
     }
+
+    func getNameText() -> Text {
+        if name == getIconStandard(motType: .Walking) {
+            return Text(Image(systemName: "figure.walk"))
+        }
+        return Text(name)
+    }
 }
 
 class TripSectionViewModel: ObservableObject {

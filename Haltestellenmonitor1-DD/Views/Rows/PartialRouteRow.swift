@@ -24,7 +24,7 @@ struct PartialRouteRow: View {
                         .accessibilitySortPriority(4)
                 }
                 HStack {
-                    Text(partialRoute.getIcon())
+                    partialRoute.getIconText()
                         .frame(width: 20.0, alignment: .center)
                         .accessibilityLabel(partialRoute.getAccessibilityLabel())
                         .accessibilitySortPriority(5)

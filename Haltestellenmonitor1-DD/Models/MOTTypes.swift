@@ -78,7 +78,7 @@ func getAccessibilityLabelVVO(motType: String) -> String {
 
 // icons
 
-func getIcon(motType: MOTType) -> String {
+func getIconStandard(motType: MOTType) -> String {
     switch motType {
     case .Tram:
         return "🚊"
@@ -104,40 +104,40 @@ func getIcon(motType: MOTType) -> String {
 func getIconEFA(iconId: Int) -> String {
     switch iconId {
     case 4:
-        return getIcon(motType: .Tram)
+        return getIconStandard(motType: .Tram)
     case 3:
-        return getIcon(motType: .Bus)
+        return getIconStandard(motType: .Bus)
     case 2, 6:
-        return getIcon(motType: .Train)
+        return getIconStandard(motType: .Train)
     case 9:
-        return getIcon(motType: .CableCar)
+        return getIconStandard(motType: .CableCar)
     case 10:
-        return getIcon(motType: .Boat)
+        return getIconStandard(motType: .Boat)
     default:
-        return getIcon(motType: .Default)
+        return getIconStandard(motType: .Default)
     }
 }
 
 func getIconVVO(motType: String) -> String {
     switch motType {
     case "Tram":
-        return  getIcon(motType: .Tram)
+        return  getIconStandard(motType: .Tram)
     case "CityBus", "PlusBus", "Bus", "IntercityBus":
-        return getIcon(motType: .Bus)
+        return getIconStandard(motType: .Bus)
     case "Train", "RapidTransit", "SuburbanRailway":
-        return getIcon(motType: .Train)
+        return getIconStandard(motType: .Train)
     case "Cableway":
-        return getIcon(motType: .CableCar)
+        return getIconStandard(motType: .CableCar)
     case "Ferry":
-        return getIcon(motType: .Boat)
+        return getIconStandard(motType: .Boat)
     case "Footpath":
-        return getIcon(motType: .Walking)
+        return getIconStandard(motType: .Walking)
     case "MobilityStairsUp":
-        return getIcon(motType: .Up)
+        return getIconStandard(motType: .Up)
     case "MobilityStairsDown":
-        return getIcon(motType: .Down)
+        return getIconStandard(motType: .Down)
     default:
-        return getIcon(motType: .Default)
+        return getIconStandard(motType: .Default)
     }
 }
 

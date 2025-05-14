@@ -98,11 +98,11 @@ struct TripSection: View {
                                 .frame(width: routeEntry.width, height: 5)
                                 .accessibilityHidden(true)
                         }
-                        Text(routeEntry.name)
+                        routeEntry.getNameText()
                             .foregroundColor(.customGray)
                             .font(.footnote)
                             .frame(width: routeEntry.width, height: 15)
-                            .accessibilityLabel(routeEntry.name != getIcon(motType: .Walking) ? "Linie \(routeEntry.name)" : "Fußweg")
+                            .accessibilityLabel(routeEntry.name != getIconStandard(motType: .Walking) ? "Linie \(routeEntry.name)" : "Fußweg")
                     }.padding(0)
                 }
             }.frame(width: geo.size.width)
