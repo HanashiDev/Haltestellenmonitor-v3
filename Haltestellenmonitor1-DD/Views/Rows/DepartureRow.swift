@@ -70,6 +70,7 @@ struct DepartureRow: View {
                             .foregroundColor(Color.red)
                     } else {
                     Text("in \(departureBinding.inMinute) min")
+                            .accessibilityLabel("Abfahrt in \(departureBinding.inMinute) min")
                             .accessibilitySortPriority(1)
                     }
                 }

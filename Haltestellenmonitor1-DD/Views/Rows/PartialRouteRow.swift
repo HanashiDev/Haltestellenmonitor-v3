@@ -20,7 +20,7 @@ struct PartialRouteRow: View {
                         .frame(width: timeFrameWidth, alignment: .leading)
                         .foregroundColor(.gray)
                         .font(.subheadline.monospacedDigit())
-                        .accessibilityHint("Abfahrt")
+                        .accessibilityLabel("Abfahrt \(partialRoute.getStartTimeString()!)")
                         .accessibilitySortPriority(4)
                 }
                 HStack {
@@ -63,7 +63,7 @@ struct PartialRouteRow: View {
                         .foregroundColor(.gray)
                         .font(.subheadline.monospacedDigit())
                         .accessibilitySortPriority(2)
-                        .accessibilityHint("Austieg")
+                        .accessibilityLabel("Ankunft \(partialRoute.getEndTimeString()!)")
 
                 }
                 if partialRoute.getEndTimeString() != nil {
