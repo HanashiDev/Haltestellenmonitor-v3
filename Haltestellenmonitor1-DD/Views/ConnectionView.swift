@@ -113,15 +113,17 @@ struct ConnectionView: View {
                                             Label("Löschen", systemImage: "trash")
                                         }
                                         .tint(.red)
-                                }
+                                    }
+                                    .accessibilityLabel("Gespeicherte Verbindung:  \(favoriteConnection.name)")
                                 Spacer()
                             }
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 showFavorite(favorite: favoriteConnection)
                             }
+                            .accessibilityAddTraits(.isButton)
                         }
-                    }
+                    }.accessibilityHint("Gespeicherte Verbindungen")
                 }
                 HStack {
                     HStack {
@@ -137,6 +139,8 @@ struct ConnectionView: View {
                         filter.start = true
                         showingSheet = true
                     }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityAddTraits(.isButton)
 
                     Button {
                         locationManager.requestCurrentLocationComplete {
@@ -149,6 +153,7 @@ struct ConnectionView: View {
                     } label: {
                         Image(systemName: "location")
                     }
+                    .accessibilityLabel("Aktuellen Standort als Startpunkt setzen")
                 }
 
                 HStack {
@@ -165,6 +170,8 @@ struct ConnectionView: View {
                         filter.start = false
                         showingSheet = true
                     }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityAddTraits(.isButton)
 
                     Button {
                         locationManager.requestCurrentLocationComplete {
@@ -177,6 +184,7 @@ struct ConnectionView: View {
                     } label: {
                         Image(systemName: "location")
                     }
+                    .accessibilityLabel("Aktuellen Standort als Zielpunkt setzen")
                 }
 
                 DisclosureGroup("Verkehrsmittel") {
@@ -190,12 +198,17 @@ struct ConnectionView: View {
                             dateTime = Date.now
                         } label: {
                             Text("Jetzt")
+                                .accessibilityHint("Auf aktuellen Zeitpunkt zurücksetzen")
                         }
                     }
                     Picker("", selection: $isArrivalTime) {
                         Text("Abfahrt").tag(0)
+                            .accessibilityHint("Die gewählte Zeit ist der Abfahrtszeitpunkt")
                         Text("Ankunft").tag(1)
-                    }.pickerStyle(.segmented)
+                            .accessibilityHint("Die gewählte Zeit ist der Ankunftszeitpunkt")
+                    }
+                    .pickerStyle(.segmented)
+                    
                 }
             }
 
@@ -208,8 +221,13 @@ struct ConnectionView: View {
                             .resizable()
                             .frame(width: 20, height: 20)
                     }.frame(width: 50, height: buttonHeight)
-                        .background(RoundedRectangle(cornerRadius: 8).fill(Color(.systemBackground)))
+                        .background(RoundedRectangle(cornerRadius: 8).fill(Color(UIColor { traitCollection in
+                            return traitCollection.userInterfaceStyle == .dark ?
+                                .systemGray5 :
+                                .systemBackground
+                        })))
                         .disabled(filter.startStop != nil && filter.endStop != nil ? false : true)
+                        .accessibilityLabel("Verbindung als Favorit speichern")
 
                     Spacer()
 

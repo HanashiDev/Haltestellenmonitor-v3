@@ -49,7 +49,7 @@ struct StopsView: View {
                 Button {
                     locationManager.requestCurrentLocation()
                 } label: {
-                    Label("", systemImage: "location")
+                    Label("Position aktualisieren", systemImage: "location")
                 }
             }
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))

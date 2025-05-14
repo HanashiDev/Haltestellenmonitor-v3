@@ -15,6 +15,7 @@ struct StopRow: View {
         HStack(alignment: .center) {
             if favoriteStops.isFavorite(stopID: stop.stopID) {
                 Image(systemName: "star.fill")
+                    .accessibilityValue("Favorit")
             }
             VStack(alignment: .leading) {
                 Text(stop.name)
@@ -26,10 +27,12 @@ struct StopRow: View {
                     if stop.distance != nil {
                         Text("\(stop.getDistance()) m")
                             .font(.subheadline)
+                            .accessibilityLabel("Entfernung \(stop.getDistance()) m")
                     }
                 }
             }
         }
+        .accessibilityElement(children: .combine)
     }
 }
 

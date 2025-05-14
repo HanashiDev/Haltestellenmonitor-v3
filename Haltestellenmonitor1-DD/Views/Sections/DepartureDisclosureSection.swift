@@ -13,37 +13,37 @@ struct DepartureDisclosureSection: View {
     var body: some View {
         Toggle(isOn: $departureFilter.tram) {
             HStack {
-                Text(getIcon(motType: .Tram))
+                Text(getIconStandard(motType: .Tram))
                 Text("Straßenbahn")
             }
         }
         Toggle(isOn: $departureFilter.bus) {
             HStack {
-                Text(getIcon(motType: .Bus))
+                Text(getIconStandard(motType: .Bus))
                 Text("Bus")
             }
         }
         Toggle(isOn: $departureFilter.suburbanRailway) {
             HStack {
-                Text(getIcon(motType: .Train))
+                Text(getIconStandard(motType: .Train))
                 Text("S-Bahn")
             }
         }
         Toggle(isOn: $departureFilter.train) {
             HStack {
-                Text(getIcon(motType: .Train))
+                Text(getIconStandard(motType: .Train))
                 Text("Zug")
             }
         }
         Toggle(isOn: $departureFilter.cableway) {
             HStack {
-                Text(getIcon(motType: .CableCar))
+                Text(getIconStandard(motType: .CableCar))
                 Text("Standseilbahn")
             }
         }
         Toggle(isOn: $departureFilter.ferry) {
             HStack {
-                Text(getIcon(motType: .Boat))
+                Text(getIconStandard(motType: .Boat))
                 Text("Fähre")
             }
         }
