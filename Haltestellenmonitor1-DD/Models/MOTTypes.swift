@@ -76,7 +76,6 @@ func getAccessibilityLabelVVO(motType: String) -> String {
     }
 }
 
-
 // icons
 
 func getIcon(motType: MOTType) -> String {

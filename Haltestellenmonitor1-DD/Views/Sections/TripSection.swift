@@ -26,7 +26,6 @@ struct TripSection: View {
                     .foregroundColor(.gray)
                     .accessibilityLabel("Dauer: \(vm.getTime())")
 
-
                 if vm.route.Interchanges > 0 {
                     Text("| \(vm.route.Interchanges)")
                         .foregroundColor(.gray)

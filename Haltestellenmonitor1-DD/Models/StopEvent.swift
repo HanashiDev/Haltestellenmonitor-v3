@@ -130,7 +130,7 @@ struct StopEvent: Hashable, Codable {
         }
         return "\(self.transportation.number) \(self.transportation.destination.name)"
     }
-    
+
     func getIconAccessabilityLabel() -> String {
         return getAccessibilityLabelEFA(iconId: self.transportation.product.iconId)
     }

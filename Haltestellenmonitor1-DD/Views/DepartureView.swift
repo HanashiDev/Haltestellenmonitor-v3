@@ -35,7 +35,7 @@ struct DepartureView: View {
                                 DatePicker(selection: $dateTime, in: Date()...) {
                                     Text("Zeit").accessibilityHint("Bei Bedarf hier gewünschten Zeitpunkt einstellen")
                                 }
-                                    
+
                                 Button {
                                     dateTime = Date.now
                                 } label: {
