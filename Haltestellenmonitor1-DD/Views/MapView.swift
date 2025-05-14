@@ -52,76 +52,74 @@ struct MapViewNew: View {
     @State var mapStyle: MapStyle = .standard
     @State var visibleStops: [Stop] = []
     @State var clusteredStops: [ClusterAnnonation] = []
-    @State var mapSize: CGSize = .zero
     
     @State private var mapPosition: MapCameraPosition = MapCameraPosition.region(MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 51.050446, longitude: 13.737954),
         span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
     ))
 
-    func updateStops(_ reg: MKCoordinateRegion) {
-        visibleStops = stops.filter { isCoordinateInRegion($0.coordinates, region: reg) }
+    func updateStops(_ region: MKCoordinateRegion) {
+        visibleStops = stops.filter { isCoordinateInRegion($0.coordinates, region: region) }
         
         // Apply Clustering
-        if reg.span.latitudeDelta >=  2.4724687281629016 { // 6
+        if region.span.latitudeDelta >=  2.472 { // 6
             applyCluster(visibleStops, 100*100)
         }
-        else if reg.span.latitudeDelta >=  0.8938580628807316 { // 5
+        else if region.span.latitudeDelta >=  0.893 { // 5
             applyCluster(visibleStops, 100*60)
         }
-        else if reg.span.latitudeDelta >=  0.15647030638189818 { // 4
+        else if region.span.latitudeDelta >=  0.456 { // 4
             applyCluster(visibleStops, 100*35)
         }
-        else  if reg.span.latitudeDelta >=  0.15647030638189818 { // 3
+        else  if region.span.latitudeDelta >=  0.156 { // 3
             applyCluster(visibleStops, 100*15)
         }
-        else if reg.span.latitudeDelta >=  0.08432030587699302 { // 2
+        else if region.span.latitudeDelta >=  0.084 { // 2
             applyCluster(visibleStops, 100*8)
         }
-        else if reg.span.latitudeDelta >= 0.07075199248486541 { // 1
-            applyCluster(visibleStops, 100*2)
+        else if region.span.latitudeDelta >= 0.0707 { // 1
+            applyCluster(visibleStops, 100*3)
         }
-        else if reg.span.latitudeDelta < 0.08432030587699302 { // none
+        else if region.span.latitudeDelta < 0.084 { // none
             clusteredStops = []
         }
     }
     
     func applyCluster(_ data: [Stop], _ stepSize: CLLocationDistance) {
         var coordinatesMapping: Dictionary<String, CLLocationCoordinate2D> = [:]
-        var arr: Dictionary<String, Int> = [:]
+        var stopClusterMap: Dictionary<String, Int> = [:]
         
-        data.forEach { s in
-            let x = coordinatesToKey(s.coordinates)
-            if arr.isEmpty {
-                coordinatesMapping[x] = s.coordinates
-                arr[x] = 1
+        data.forEach { element in
+            let elementKey = coordinatesToKey(element.coordinates)
+            if stopClusterMap.isEmpty {
+                coordinatesMapping[elementKey] = element.coordinates
+                stopClusterMap[elementKey] = 1
                 return
             }
             
-            let newAnnotation = CLLocation(latitude: s.coordinates.latitude, longitude: s.coordinates.longitude)
-            var alreadyInThere = false
+            let currentPin = CLLocation(latitude: element.coordinates.latitude, longitude: element.coordinates.longitude)
+            var isAlreadyClustered = false
             
-            arr.forEach { arrE in
-                let loc = coordinatesMapping[arrE.key]!
+            stopClusterMap.forEach { existingClusterPin in
+                let loc = coordinatesMapping[existingClusterPin.key]!
                 let existingAnnotation = CLLocation(latitude: loc.latitude, longitude: loc.longitude)
                 
-                if existingAnnotation.distance(from: newAnnotation) <= stepSize {
-                    arr[arrE.key] = (arr[arrE.key] ?? 1) + 1
-                    alreadyInThere = true
+                if existingAnnotation.distance(from: currentPin) <= stepSize {
+                    stopClusterMap[existingClusterPin.key] = (stopClusterMap[existingClusterPin.key] ?? 1) + 1
+                    isAlreadyClustered = true
                     return
                 }
             }
-            if alreadyInThere { return }
+            if isAlreadyClustered { return }
             // add new element
-            coordinatesMapping[x] = s.coordinates
-            arr[x] = 1
+            coordinatesMapping[elementKey] = element.coordinates
+            stopClusterMap[elementKey] = 1
         }
-        clusteredStops = arr.map({ (key,value) in
+        clusteredStops = stopClusterMap.map({ (key,value) in
             ClusterAnnonation(coordinates: coordinatesMapping[key]!, count: value)
         })
     }
     
-    // TODO: remove force unwrap
     func coordinatesToKey(_ coords: CLLocationCoordinate2D) -> String {
         return "\(coords.latitude)x\(coords.longitude)"
     }
@@ -148,14 +146,13 @@ struct MapViewNew: View {
                     }
                 }
             } else {
-                ForEach(clusteredStops) { e in
-                    Annotation(coordinate: e.coordinates) {
+                ForEach(clusteredStops) { clusterStop in
+                    Annotation(coordinate: clusterStop.coordinates) {
                         Image(systemName: "h.circle.fill")
-                            .foregroundColor(.red)
                             .foregroundColor(Color("MapColor"))
                             .background(Circle().fill(Color(.systemBackground)) .shadow(radius: 1))
                     } label: {
-                        Text("\(e.count)")
+                        Text("\(clusterStop.count)")
                     }
                 }
             }
