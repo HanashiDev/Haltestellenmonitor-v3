@@ -71,7 +71,7 @@ struct DepartureView: View {
                                     }
                                     .accessibilityElement(children: .combine)
                                     .accessibilityAddTraits(.isButton)
-                                    .accessibilityHint("Zeige Details")
+                                    .accessibilityHint("Zeige \(stopEvent.hasInfos() ? "Meldungen & " : "")nächste Haltestellen dieser Linie")
                             }
                         }
                     }
