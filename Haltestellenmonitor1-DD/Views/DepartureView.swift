@@ -32,11 +32,15 @@ struct DepartureView: View {
                                 DepartureDisclosureSection()
                             }
                             HStack {
-                                DatePicker("Zeit", selection: $dateTime)
+                                DatePicker(selection: $dateTime, in: Date()...) {
+                                    Text("Zeit").accessibilityHint("Bei Bedarf hier gewünschten Zeitpunkt einstellen")
+                                }
+                                    
                                 Button {
                                     dateTime = Date.now
                                 } label: {
                                     Text("Jetzt")
+                                        .accessibilityHint("Auf aktuellen Zeitpunkt zurücksetzen")
                                 }
                             }
                         }
@@ -67,12 +71,13 @@ struct DepartureView: View {
                                     }
                                     .accessibilityElement(children: .combine)
                                     .accessibilityAddTraits(.isButton)
-                                    .accessibilityHint("Zeig Details")
+                                    .accessibilityHint("Zeige Details")
                             }
                         }
                     }
                 }
             } else {
+                // Skeleton
                 Form {
                     Section {
                         DisclosureGroup("Verkehrsmittel") {
@@ -87,10 +92,10 @@ struct DepartureView: View {
                             } label: {
                                 Text("Jetzt")
                             }
-
                         }
                     }
                     .disabled(true)
+                    .accessibilityHint("Warte auf Daten")
                     Section {
                         List(0..<9, id: \.self) { _ in
                             DepartureRowSkeleton()
@@ -105,7 +110,7 @@ struct DepartureView: View {
             }
             await getDeparture()
         }
-        .navigationTitle("🚏 \(stop.name)")
+        .navigationTitle(Text("🚏 \(stop.name)").accessibilityLabel("Haltestelle \(stop.name)"))
         .toolbar {
             Button {
                 if favoriteStops.isFavorite(stopID: stop.stopID) {

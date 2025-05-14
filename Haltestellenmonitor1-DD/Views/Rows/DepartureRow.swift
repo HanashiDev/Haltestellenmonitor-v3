@@ -44,9 +44,12 @@ struct DepartureRow: View {
                     if stopEvent.getTimeDifference() > 0 {
                         Text("+\(stopEvent.getTimeDifference())")
                             .foregroundColor(Color.red)
+                            .accessibilityLabel("+\(stopEvent.getTimeDifference()) Minuten")
                     } else if stopEvent.getTimeDifference() < 0 {
                         Text("\(stopEvent.getTimeDifference())")
                             .foregroundColor(Color.green)
+                            .accessibilityLabel("\(stopEvent.getTimeDifference()) Minuten")
+
                     }
                     Spacer()
                     Text("\(stopEvent.getEstimatedTime()) Uhr")
