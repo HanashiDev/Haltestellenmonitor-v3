@@ -9,6 +9,12 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
+struct ClusterAnnonation: Identifiable{
+    let id = UUID()
+    var coordinates: CLLocationCoordinate2D
+    var count: Int
+}
+
 struct MapView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var stopManager: StopManager
@@ -36,7 +42,6 @@ struct MapView: View {
             }
         }
     }
-
 }
 
 @available(iOS 17.0, *)
@@ -46,7 +51,9 @@ struct MapViewNew: View {
 
     @State var mapStyle: MapStyle = .standard
     @State var visibleStops: [Stop] = []
-
+    @State var clusteredStops: [ClusterAnnonation] = []
+    @State var mapSize: CGSize = .zero
+    
     @State private var mapPosition: MapCameraPosition = MapCameraPosition.region(MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 51.050446, longitude: 13.737954),
         span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
@@ -54,16 +61,101 @@ struct MapViewNew: View {
 
     func updateStops(_ reg: MKCoordinateRegion) {
         visibleStops = stops.filter { isCoordinateInRegion($0.coordinates, region: reg) }
+        
+        // Apply Clustering
+        if reg.span.latitudeDelta >=  2.4724687281629016 { // 6
+            applyCluster(visibleStops, 100*100)
+        }
+        else if reg.span.latitudeDelta >=  0.8938580628807316 { // 5
+            applyCluster(visibleStops, 100*60)
+        }
+        else if reg.span.latitudeDelta >=  0.15647030638189818 { // 4
+            applyCluster(visibleStops, 100*35)
+        }
+        else  if reg.span.latitudeDelta >=  0.15647030638189818 { // 3
+            applyCluster(visibleStops, 100*15)
+        }
+        else if reg.span.latitudeDelta >=  0.08432030587699302 { // 2
+            applyCluster(visibleStops, 100*8)
+        }
+        else if reg.span.latitudeDelta >= 0.07075199248486541 { // 1
+            applyCluster(visibleStops, 100*2)
+        }
+        else if reg.span.latitudeDelta < 0.08432030587699302 { // none
+            clusteredStops = []
+        }
     }
-
+    
+    func applyCluster(_ data: [Stop], _ stepSize: CLLocationDistance) {
+        var coordinatesMapping: Dictionary<String, CLLocationCoordinate2D> = [:]
+        var arr: Dictionary<String, Int> = [:]
+        
+        data.forEach { s in
+            let x = coordinatesToKey(s.coordinates)
+            if arr.isEmpty {
+                coordinatesMapping[x] = s.coordinates
+                arr[x] = 1
+                return
+            }
+            
+            let newAnnotation = CLLocation(latitude: s.coordinates.latitude, longitude: s.coordinates.longitude)
+            var alreadyInThere = false
+            
+            arr.forEach { arrE in
+                let loc = coordinatesMapping[arrE.key]!
+                let existingAnnotation = CLLocation(latitude: loc.latitude, longitude: loc.longitude)
+                
+                if existingAnnotation.distance(from: newAnnotation) <= stepSize {
+                    arr[arrE.key] = (arr[arrE.key] ?? 1) + 1
+                    alreadyInThere = true
+                    return
+                }
+            }
+            if alreadyInThere { return }
+            // add new element
+            coordinatesMapping[x] = s.coordinates
+            arr[x] = 1
+        }
+        clusteredStops = arr.map({ (key,value) in
+            ClusterAnnonation(coordinates: coordinatesMapping[key]!, count: value)
+        })
+    }
+    
+    // TODO: remove force unwrap
+    func coordinatesToKey(_ coords: CLLocationCoordinate2D) -> String {
+        return "\(coords.latitude)x\(coords.longitude)"
+    }
+    func keyToCoordinates(_ key: String) -> CLLocationCoordinate2D {
+        let str = key.split(separator: "x")
+        if let str1 = Double(str.first ?? "0") {
+            if let str2 = Double(str.last ?? "0")  {
+                return CLLocationCoordinate2D(latitude: CLLocationDegrees(str1), longitude: CLLocationDegrees(str2))
+            }
+        }
+        return CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    }
+    
     var body: some View {
         Map(position: $mapPosition) {
-            ForEach(visibleStops) { stop in
-                Annotation(stop.name, coordinate: stop.coordinates) {
-                    NavigationLink(destination: DepartureView(stop: stop)) {
+            if clusteredStops.isEmpty {
+                ForEach(visibleStops) { stop in
+                    Annotation(stop.name, coordinate: stop.coordinates) {
+                        NavigationLink(destination: DepartureView(stop: stop)) {
+                            Image(systemName: "h.circle.fill")
+                                .foregroundColor(Color("MapColor"))
+                                .background(Circle().fill(Color(.systemBackground)) .shadow(radius: 1))
+                        }
+                    }
+                }
+            } else {
+                ForEach(clusteredStops) { e in
+                    Annotation(coordinate: e.coordinates) {
                         Image(systemName: "h.circle.fill")
+                            .foregroundColor(.red)
                             .foregroundColor(Color("MapColor"))
                             .background(Circle().fill(Color(.systemBackground)) .shadow(radius: 1))
+                    } label: {
+                        Text("\(e.count)")
                     }
                 }
             }
@@ -77,7 +169,6 @@ struct MapViewNew: View {
             MapUserLocationButton()
             MapCompass()
         }
-
         .overlay {
             ZStack(alignment: .trailing) {
                 HStack {
@@ -102,29 +193,20 @@ struct MapViewNew: View {
                                 .padding(12)
                                 .background(RoundedRectangle(cornerRadius: 8.0)
                                     .fill(Color(UIColor { traitCollection in
-                                             return traitCollection.userInterfaceStyle == .dark ?
+                                        return traitCollection.userInterfaceStyle == .dark ?
                                             .systemGray5 :
                                         UIColor(_colorLiteralRed: 0.941, green: 0.976, blue: 0.965, alpha: 1)
-                                         }))
-                                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 0)
+                                    }))
+                                        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 0)
                                 )
                                 .frame(width: 40, height: 40)
                                 .padding(.trailing, 8)
                                 .padding(.top, 7)
-
+                            
                         }.padding(.trailing, 50)
                         Spacer()
                     }
                 }
-            }
-        }.onAppear {
-            if let loc = locationManager.location { // TODO: check if works
-                mapPosition = MapCameraPosition.region(MKCoordinateRegion(
-                    center: loc,
-                    span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-                ))
-            } else {
-                mapPosition = MapCameraPosition.region(locationManager._region)
             }
         }
     }
