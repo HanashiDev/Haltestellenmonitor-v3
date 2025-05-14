@@ -14,21 +14,31 @@ struct TripSection: View {
         Section {
             HStack {
                 Text("\(vm.route.getStartTimeString()) Uhr")
+                    .accessibilityLabel("Abfahrt \(vm.route.getStartTimeString()) Uhr")
                 Image(systemName: "arrow.forward")
+                    .accessibilityHidden(true)
                 Text("\(vm.route.getEndTimeString()) Uhr")
+                    .accessibilityLabel(Text("Ankunft \(vm.route.getEndTimeString()) Uhr"))
 
                 Spacer()
 
                 Text("| \(vm.getTime())")
                     .foregroundColor(.gray)
+                    .accessibilityLabel("Dauer: \(vm.getTime())")
+
 
                 if vm.route.Interchanges > 0 {
                     Text("| \(vm.route.Interchanges)")
                         .foregroundColor(.gray)
+                        .accessibilityLabel("\(vm.route.Interchanges) \(vm.route.Interchanges == 1 ? "Umstieg" : "Umstiege")")
                     Image(systemName: "shuffle")
                         .foregroundColor(.gray)
+                        .accessibilityHidden(true)
+
                 }
-            }.font(.subheadline)
+            }
+            .font(.subheadline)
+            .accessibilityElement(children: .combine)
 
             DisclosureGroup {
                 ForEach(vm.routesWithWaitingTimeUnder2Min, id: \.self) { partialRoute in
@@ -66,7 +76,7 @@ struct TripSection: View {
                 }
             }
         label: { tripView() }
-        }
+        }.accessibilityHint("Abschnitte der Route")
     }
 
     @ViewBuilder
@@ -82,15 +92,18 @@ struct TripSection: View {
                                 .foregroundColor(.customGray.opacity(0.7))
                                 .frame(width: routeEntry.width, height: 5)
                                 .offset(y: 2.5)
+                                .accessibilityHidden(true)
                         } else {
                             RoundedRectangle(cornerRadius: 8)
                                 .fill(routeEntry.color)
                                 .frame(width: routeEntry.width, height: 5)
+                                .accessibilityHidden(true)
                         }
                         Text(routeEntry.name)
                             .foregroundColor(.customGray)
                             .font(.footnote)
                             .frame(width: routeEntry.width, height: 15)
+                            .accessibilityLabel(routeEntry.name != getIcon(motType: .Walking) ? "Linie \(routeEntry.name)" : "Fußweg")
                     }.padding(0)
                 }
             }.frame(width: geo.size.width)

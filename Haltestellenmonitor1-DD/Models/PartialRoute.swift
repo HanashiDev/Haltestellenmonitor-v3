@@ -77,6 +77,10 @@ struct PartialRoute: Hashable, Codable {
     func getColor() -> Color {
         getColorVVO(motType: self.Mot.type)
     }
+    
+    func getAccessibilityLabel() -> String {
+        getAccessibilityLabelVVO(motType: self.Mot.type)
+    }
 
     func getStartTime() -> Date? {
         let regularStop = self.RegularStops?.first

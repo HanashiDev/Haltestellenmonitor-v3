@@ -208,7 +208,11 @@ struct ConnectionView: View {
                             .resizable()
                             .frame(width: 20, height: 20)
                     }.frame(width: 50, height: buttonHeight)
-                        .background(RoundedRectangle(cornerRadius: 8).fill(Color(.systemBackground)))
+                        .background(RoundedRectangle(cornerRadius: 8).fill(Color(UIColor { traitCollection in
+                            return traitCollection.userInterfaceStyle == .dark ?
+                                .systemGray5 :
+                                .systemBackground
+                        })))
                         .disabled(filter.startStop != nil && filter.endStop != nil ? false : true)
 
                     Spacer()

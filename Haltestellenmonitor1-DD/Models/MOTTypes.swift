@@ -26,7 +26,7 @@ func getAccessibilityLabel(motType: MOTType) -> String {
     case .Boat:
         return "Fähre"
     case .Default:
-        return "Straßenbahn"
+        return ""
     case .Up:
         return "Treppe aufwärts"
     case .Down:
@@ -53,7 +53,28 @@ func getAccessibilityLabelEFA(iconId: Int) -> String {
     }
 }
 
-
+func getAccessibilityLabelVVO(motType: String) -> String {
+    switch motType {
+    case "Tram":
+        return getAccessibilityLabel(motType: .Tram)
+    case "CityBus", "PlusBus", "Bus", "IntercityBus":
+        return getAccessibilityLabel(motType: .Bus)
+    case "Train", "RapidTransit", "SuburbanRailway":
+        return getAccessibilityLabel(motType: .Train)
+    case "Cableway":
+        return getAccessibilityLabel(motType: .CableCar)
+    case "Ferry":
+        return getAccessibilityLabel(motType: .Boat)
+    case "Footpath":
+        return getAccessibilityLabel(motType: .Walking)
+    case "MobilityStairsUp":
+        return getAccessibilityLabel(motType: .Up)
+    case "MobilityStairsDown":
+        return getAccessibilityLabel(motType: .Down)
+    default:
+        return getAccessibilityLabel(motType: .Default)
+    }
+}
 
 
 // icons
@@ -77,7 +98,7 @@ func getIcon(motType: MOTType) -> String {
     case .Down:
         return "📉"
     case .Walking:
-        return "🚶‍♂️"
+        return "🚶"
     }
 }
 
