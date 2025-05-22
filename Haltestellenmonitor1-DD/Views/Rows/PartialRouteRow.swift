@@ -20,21 +20,27 @@ struct PartialRouteRow: View {
                         .frame(width: timeFrameWidth, alignment: .leading)
                         .foregroundColor(.gray)
                         .font(.subheadline.monospacedDigit())
+                        .accessibilityLabel("Abfahrt \(partialRoute.getStartTimeString()!)")
+                        .accessibilitySortPriority(4)
                 }
                 HStack {
-                    Text(partialRoute.getIcon())
+                    partialRoute.getIconText()
                         .frame(width: 20.0, alignment: .center)
+                        .accessibilityLabel(partialRoute.getAccessibilityLabel())
+                        .accessibilitySortPriority(5)
 
                     Text(partialRoute.getName())
                         .font(.headline)
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilitySortPriority(5)
                 }
                 Spacer()
                 Text(partialRoute.getFirstPlatform() ?? "")
                     .foregroundColor(.gray)
                     .font(.footnote)
                     .frame(width: 45, alignment: .trailing)
+                    .accessibilitySortPriority(4)
 
             }
             HStack {
@@ -44,6 +50,7 @@ struct PartialRouteRow: View {
                         .foregroundColor(.gray)
                         .font(.subheadline)
                         .padding(.leading, 18.5)
+                        .accessibilityHidden(true)
 
                     Spacer()
 
@@ -55,11 +62,16 @@ struct PartialRouteRow: View {
                         .frame(width: timeFrameWidth, alignment: .leading)
                         .foregroundColor(.gray)
                         .font(.subheadline.monospacedDigit())
+                        .accessibilitySortPriority(2)
+                        .accessibilityLabel("Ankunft \(partialRoute.getEndTimeString()!)")
 
                 }
                 if partialRoute.getEndTimeString() != nil {
                     Text(partialRoute.getLastStation() ?? "")
                         .font(.subheadline)
+                        .accessibilityLabel("Bis \(partialRoute.getLastStation() ?? "")")
+                        .accessibilityHint("Ausstieg")
+                        .accessibilitySortPriority(3)
                 }
                 Spacer()
 
@@ -67,6 +79,7 @@ struct PartialRouteRow: View {
                     .foregroundColor(.gray)
                     .font(.footnote)
                     .frame(width: 45, alignment: .trailing)
+                    .accessibilitySortPriority(2)
 
             }
         }.padding(.leading, -25)
@@ -92,6 +105,7 @@ struct PartialRouteRowWaitingTime: View {
             Text("︙")
                 .frame(width: timeFrameWidth)
                 .offset(CGSize(width: 13, height: 0))
+                .accessibilityHidden(true)
 
             Text("\(time) min \(text)")
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -101,5 +115,6 @@ struct PartialRouteRowWaitingTime: View {
         .foregroundColor(.gray)
         .font(.subheadline.monospacedDigit())
         .padding(.leading, -47.5) // fixes horizontal line below row
+        .accessibilityElement(children: .combine)
     }
 }

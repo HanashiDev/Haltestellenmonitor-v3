@@ -10,7 +10,7 @@ import SwiftUI
 struct DepartureRowSkeleton: View {
     var body: some View {
         HStack(alignment: .center) {
-            Text(getIcon(motType: .Default))
+            Text(getIconStandard(motType: .Default))
                 .skeleton(Circle())
 
             Spacer() // prevent shifiting if delayed

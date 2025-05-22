@@ -208,6 +208,7 @@ struct DepartureInfoViewRow: View {
                                 Text("-")
                                     .frame(width: 10, alignment: .trailing)
                                     .fixedSize()
+                                    .accessibilityHidden(true)
 
                                 formattedText(from: section)
                                     .multilineTextAlignment(.leading)

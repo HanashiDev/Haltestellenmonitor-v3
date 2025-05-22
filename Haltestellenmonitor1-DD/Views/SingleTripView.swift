@@ -37,6 +37,9 @@ struct SingleTripView: View {
                                     Text("Aktuelle Meldungen")
                                 }
                             }
+                            .accessibilityElement(children: .combine)
+                            .accessibilityHint("Zeigt eine Liste der aktuellen Meldungen zu dieser Linie an")
+                            .accessibilityAddTraits(.isButton)
                         }
                         .listRowBackground(Color.orange)
                     }
@@ -53,6 +56,9 @@ struct SingleTripView: View {
 
                                 SingleTripRow(stopSequenceItem: stopSequenceItem)
                             }
+                            .accessibilityElement(children: .combine)
+                            .accessibilityHint("Zeige Haltestelle \(stopSequenceItem.getStop()?.name ?? "")")
+                            .accessibilityAddTraits(.isButton)
                         }
                     }
                 }

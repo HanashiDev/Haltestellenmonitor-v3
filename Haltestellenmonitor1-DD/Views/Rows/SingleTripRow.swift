@@ -26,6 +26,7 @@ struct SingleTripRow: View {
             }
             HStack {
                 Text("\(stopSequenceItem.getScheduledTime()) Uhr")
+                    .accessibilityLabel("Geplante Abfahrt: \(stopSequenceItem.getScheduledTime()) Uhr")
                 if stopSequenceItem.getTimeDifference() > 0 {
                     Text("+\(stopSequenceItem.getTimeDifference())")
                         .foregroundColor(Color.red)
@@ -35,9 +36,11 @@ struct SingleTripRow: View {
                 }
                 Spacer()
                 Text("\(stopSequenceItem.getRealTime()) Uhr")
+                    .accessibilityLabel("Erwartete Abfahrt: \(stopSequenceItem.getRealTime()) Uhr")
             }
             .font(.subheadline)
         }
+        .accessibilityElement(children: .combine)
     }
 }
 

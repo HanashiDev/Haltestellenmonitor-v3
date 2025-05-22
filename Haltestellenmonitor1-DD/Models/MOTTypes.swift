@@ -11,7 +11,74 @@ enum MOTType {
     case Tram, Bus, Train, CableCar, Boat, Default, Walking, Up, Down
 }
 
-func getIcon(motType: MOTType) -> String {
+// accessabiity Lables
+
+func getAccessibilityLabelStandard(motType: MOTType) -> String {
+    switch motType {
+    case .Tram:
+        return "Straßenbahn"
+    case .Bus:
+        return "Bus"
+    case .Train:
+        return "Zug"
+    case .CableCar:
+        return "Standseilbahn/Schwebebahn"
+    case .Boat:
+        return "Fähre"
+    case .Default:
+        return ""
+    case .Up:
+        return "Treppe aufwärts"
+    case .Down:
+        return "Treppe abwärts"
+    case .Walking:
+        return "Zu Fuß"
+    }
+}
+
+func getAccessibilityLabelEFA(iconId: Int) -> String {
+    switch iconId {
+    case 4:
+        return getAccessibilityLabelStandard(motType: .Tram)
+    case 3:
+        return getAccessibilityLabelStandard(motType: .Bus)
+    case 2, 6:
+        return getAccessibilityLabelStandard(motType: .Train)
+    case 9:
+        return getAccessibilityLabelStandard(motType: .CableCar)
+    case 10:
+        return getAccessibilityLabelStandard(motType: .Boat)
+    default:
+        return getAccessibilityLabelStandard(motType: .Default)
+    }
+}
+
+func getAccessibilityLabelVVO(motType: String) -> String {
+    switch motType {
+    case "Tram":
+        return getAccessibilityLabelStandard(motType: .Tram)
+    case "CityBus", "PlusBus", "Bus", "IntercityBus":
+        return getAccessibilityLabelStandard(motType: .Bus)
+    case "Train", "RapidTransit", "SuburbanRailway":
+        return getAccessibilityLabelStandard(motType: .Train)
+    case "Cableway":
+        return getAccessibilityLabelStandard(motType: .CableCar)
+    case "Ferry":
+        return getAccessibilityLabelStandard(motType: .Boat)
+    case "Footpath":
+        return getAccessibilityLabelStandard(motType: .Walking)
+    case "MobilityStairsUp":
+        return getAccessibilityLabelStandard(motType: .Up)
+    case "MobilityStairsDown":
+        return getAccessibilityLabelStandard(motType: .Down)
+    default:
+        return getAccessibilityLabelStandard(motType: .Default)
+    }
+}
+
+// icons
+
+func getIconStandard(motType: MOTType) -> String {
     switch motType {
     case .Tram:
         return "🚊"
@@ -30,53 +97,53 @@ func getIcon(motType: MOTType) -> String {
     case .Down:
         return "📉"
     case .Walking:
-        return "🚶‍♂️"
+        return "🚶"
     }
 }
 
 func getIconEFA(iconId: Int) -> String {
     switch iconId {
     case 4:
-        return getIcon(motType: .Tram)
+        return getIconStandard(motType: .Tram)
     case 3:
-        return getIcon(motType: .Bus)
+        return getIconStandard(motType: .Bus)
     case 2, 6:
-        return getIcon(motType: .Train)
+        return getIconStandard(motType: .Train)
     case 9:
-        return getIcon(motType: .CableCar)
+        return getIconStandard(motType: .CableCar)
     case 10:
-        return getIcon(motType: .Boat)
+        return getIconStandard(motType: .Boat)
     default:
-        return getIcon(motType: .Default)
+        return getIconStandard(motType: .Default)
     }
 }
 
 func getIconVVO(motType: String) -> String {
     switch motType {
     case "Tram":
-        return  getIcon(motType: .Tram)
+        return  getIconStandard(motType: .Tram)
     case "CityBus", "PlusBus", "Bus", "IntercityBus":
-        return getIcon(motType: .Bus)
+        return getIconStandard(motType: .Bus)
     case "Train", "RapidTransit", "SuburbanRailway":
-        return getIcon(motType: .Train)
+        return getIconStandard(motType: .Train)
     case "Cableway":
-        return getIcon(motType: .CableCar)
+        return getIconStandard(motType: .CableCar)
     case "Ferry":
-        return getIcon(motType: .Boat)
+        return getIconStandard(motType: .Boat)
     case "Footpath":
-        return getIcon(motType: .Walking)
+        return getIconStandard(motType: .Walking)
     case "MobilityStairsUp":
-        return getIcon(motType: .Up)
+        return getIconStandard(motType: .Up)
     case "MobilityStairsDown":
-        return getIcon(motType: .Down)
+        return getIconStandard(motType: .Down)
     default:
-        return getIcon(motType: .Default)
+        return getIconStandard(motType: .Default)
     }
 }
 
 // Colors
 
-func getColor(motType: MOTType) -> Color {
+func getColorStandard(motType: MOTType) -> Color {
     let opacity = 0.8
     switch motType {
     case .Tram:
@@ -99,39 +166,39 @@ func getColor(motType: MOTType) -> Color {
 func getColorEFA(iconId: Int) -> Color {
     switch iconId {
     case 4:
-        return getColor(motType: .Tram)
+        return getColorStandard(motType: .Tram)
     case 3:
-        return getColor(motType: .Bus)
+        return getColorStandard(motType: .Bus)
     case 2, 6:
-        return getColor(motType: .Train)
+        return getColorStandard(motType: .Train)
     case 9:
-        return getColor(motType: .CableCar)
+        return getColorStandard(motType: .CableCar)
     case 10:
-        return getColor(motType: .Boat)
+        return getColorStandard(motType: .Boat)
     default:
-        return getColor(motType: .Default)
+        return getColorStandard(motType: .Default)
     }
 }
 
 func getColorVVO(motType: String) -> Color {
     switch motType {
     case "Tram":
-        return  getColor(motType: .Tram)
+        return  getColorStandard(motType: .Tram)
     case "CityBus", "PlusBus", "Bus", "IntercityBus":
-        return getColor(motType: .Bus)
+        return getColorStandard(motType: .Bus)
     case "Train", "RapidTransit", "SuburbanRailway":
-        return getColor(motType: .Train)
+        return getColorStandard(motType: .Train)
     case "Cableway":
-        return getColor(motType: .CableCar)
+        return getColorStandard(motType: .CableCar)
     case "Ferry":
-        return getColor(motType: .Boat)
+        return getColorStandard(motType: .Boat)
     case "Footpath":
-        return getColor(motType: .Walking)
+        return getColorStandard(motType: .Walking)
     case "MobilityStairsUp":
-        return getColor(motType: .Up)
+        return getColorStandard(motType: .Up)
     case "MobilityStairsDown":
-        return getColor(motType: .Down)
+        return getColorStandard(motType: .Down)
     default:
-        return getColor(motType: .Default)
+        return getColorStandard(motType: .Default)
     }
 }
