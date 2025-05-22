@@ -38,7 +38,7 @@ struct SingleTripView: View {
                                 }
                             }
                             .accessibilityElement(children: .combine)
-                            .accessibilityHint("Click für eine Liste an akutellen Meldungen zu dieser Linie")
+                            .accessibilityHint("Zeigt eine Liste der aktuellen Meldungen zu dieser Linie an")
                             .accessibilityAddTraits(.isButton)
                         }
                         .listRowBackground(Color.orange)
