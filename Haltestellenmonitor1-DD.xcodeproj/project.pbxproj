@@ -189,7 +189,7 @@
 		F17FF4CA2DB4E14400F553D1 /* MOTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */; };
 		F17FF4CB2DB4E14400F553D1 /* MOTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */; };
 		F17FF4CC2DB4E14400F553D1 /* MOTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */; };
-		F19FC6EE2AE9974C00F65316 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FC6ED2AE9974C00F65316 /* ColorManager.swift */; };
+		F19FC6EE2AE9974C00F65316 /* CustomGray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FC6ED2AE9974C00F65316 /* CustomGray.swift */; };
 		F1A7E7CB2AEA988C00E1910F /* TripSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */; };
 		F1B8C03C2D6BC03B00F77CE4 /* DepartureRequestSingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8C03B2D6BC02500F77CE4 /* DepartureRequestSingle.swift */; };
 		F1B8C03D2D6BC03B00F77CE4 /* DepartureRequestSingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8C03B2D6BC02500F77CE4 /* DepartureRequestSingle.swift */; };
@@ -350,7 +350,7 @@
 		F16B7FDD2D9321C700851DC4 /* StopSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSequence.swift; sourceTree = "<group>"; };
 		F17FF4C32DB4D82E00F553D1 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOTTypes.swift; sourceTree = "<group>"; };
-		F19FC6ED2AE9974C00F65316 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		F19FC6ED2AE9974C00F65316 /* CustomGray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGray.swift; sourceTree = "<group>"; };
 		F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSectionViewModel.swift; sourceTree = "<group>"; };
 		F1B8C03B2D6BC02500F77CE4 /* DepartureRequestSingle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRequestSingle.swift; sourceTree = "<group>"; };
 		F1B8C04A2D70DD5900F77CE4 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
@@ -473,10 +473,7 @@
 		D040EC2029EED766002DFEBF /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				F19FC6ED2AE9974C00F65316 /* ColorManager.swift */,
-				D0142C462A10E7CC00646C94 /* ContactPicker.swift */,
 				F17FF4C32DB4D82E00F553D1 /* DateManager.swift */,
-				D040EC2129EED774002DFEBF /* DateParser.swift */,
 				D0142C4D2A11039600646C94 /* GaussKrueger.swift */,
 				F13960502DCA6B07004AC9AA /* LoadingSkeleton.swift */,
 			);
@@ -598,38 +595,31 @@
 		F15FE0DA2DE0E89B0096C79E /* DepartureMonitor */ = {
 			isa = PBXGroup;
 			children = (
-				F15FE0DF2DE0E9410096C79E /* Models */,
-				F15FE0E02DE0E9440096C79E /* Views */,
+				F15FE0DF2DE0E9410096C79E /* Shared Models */,
+				F15FE0F12DE0F74C0096C79E /* DepartureView */,
+				F15FE0F22DE0F7590096C79E /* SingleTripView */,
+				F15FE0F72DE0F7D00096C79E /* DepartureInfoView */,
 			);
 			path = DepartureMonitor;
 			sourceTree = "<group>";
 		};
-		F15FE0DF2DE0E9410096C79E /* Models */ = {
+		F15FE0DF2DE0E9410096C79E /* Shared Models */ = {
 			isa = PBXGroup;
 			children = (
-				D0142C392A0F909E00646C94 /* DepartureBinding.swift */,
-				D0C1ECD329F2EF9B001D214D /* DepartureFilter.swift */,
 				F1B8C04A2D70DD5900F77CE4 /* Location.swift */,
 				D0C1ECCF29F2B6C0001D214D /* PushTokenHistory.swift */,
 				D09A504D2C4FA249006CB5D6 /* StopEvent.swift */,
-				F16B7FDD2D9321C700851DC4 /* StopSequence.swift */,
-				D09A505A2C4FBF43006CB5D6 /* DepartureRequest.swift */,
-				F1B8C03B2D6BC02500F77CE4 /* DepartureRequestSingle.swift */,
 			);
-			path = Models;
+			path = "Shared Models";
 			sourceTree = "<group>";
 		};
 		F15FE0E02DE0E9440096C79E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D0C1ECD729F2F071001D214D /* DepartureDisclosureSection.swift */,
 				D040EC2329EEDE3C002DFEBF /* DepartureView.swift */,
 				F13960522DCA73DC004AC9AA /* DepartureRowSkeleton.swift */,
 				D03A269F29EEC248005B0600 /* DepartureRow.swift */,
-				D0C1ECD729F2F071001D214D /* DepartureDisclosureSection.swift */,
-				F16B7FDB2D90861A00851DC4 /* DepartureInfoView.swift */,
-				D0C1ECBB29F2823E001D214D /* SingleTripView.swift */,
-				D0C1ECBF29F283DE001D214D /* SingleTripRow.swift */,
-				F13960562DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -700,6 +690,7 @@
 		F15FE0E82DE0ECA90096C79E /* TripFinder */ = {
 			isa = PBXGroup;
 			children = (
+				F15FE0F92DE0F8E50096C79E /* Helpers */,
 				F15FE0EA2DE0ECC30096C79E /* Models */,
 				F15FE0E92DE0ECBD0096C79E /* Views */,
 			);
@@ -723,6 +714,7 @@
 			children = (
 				D0BD66D329F02576004E574C /* ConnectionFilter.swift */,
 				D0142C482A10F73900646C94 /* ConnectionStop.swift */,
+				F19FC6ED2AE9974C00F65316 /* CustomGray.swift */,
 				D011F07D2C523C97000BAB5C /* DeparturePlatform.swift */,
 				D0142C592A11285700646C94 /* FavoriteConnection.swift */,
 				D0BD66E129F03949004E574C /* Mot.swift */,
@@ -738,6 +730,78 @@
 				F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		F15FE0F12DE0F74C0096C79E /* DepartureView */ = {
+			isa = PBXGroup;
+			children = (
+				F15FE0F42DE0F7770096C79E /* Models */,
+				F15FE0E02DE0E9440096C79E /* Views */,
+			);
+			path = DepartureView;
+			sourceTree = "<group>";
+		};
+		F15FE0F22DE0F7590096C79E /* SingleTripView */ = {
+			isa = PBXGroup;
+			children = (
+				F15FE0F62DE0F7AD0096C79E /* Models */,
+				F15FE0F32DE0F76F0096C79E /* Views */,
+			);
+			path = SingleTripView;
+			sourceTree = "<group>";
+		};
+		F15FE0F32DE0F76F0096C79E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D0C1ECBB29F2823E001D214D /* SingleTripView.swift */,
+				D0C1ECBF29F283DE001D214D /* SingleTripRow.swift */,
+				F13960562DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F15FE0F42DE0F7770096C79E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D0142C392A0F909E00646C94 /* DepartureBinding.swift */,
+				D0C1ECD329F2EF9B001D214D /* DepartureFilter.swift */,
+				D09A505A2C4FBF43006CB5D6 /* DepartureRequest.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F15FE0F62DE0F7AD0096C79E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F16B7FDD2D9321C700851DC4 /* StopSequence.swift */,
+				F1B8C03B2D6BC02500F77CE4 /* DepartureRequestSingle.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F15FE0F72DE0F7D00096C79E /* DepartureInfoView */ = {
+			isa = PBXGroup;
+			children = (
+				F15FE0F82DE0F8510096C79E /* Views */,
+			);
+			path = DepartureInfoView;
+			sourceTree = "<group>";
+		};
+		F15FE0F82DE0F8510096C79E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F16B7FDB2D90861A00851DC4 /* DepartureInfoView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F15FE0F92DE0F8E50096C79E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D040EC2129EED774002DFEBF /* DateParser.swift */,
+				D0142C462A10E7CC00646C94 /* ContactPicker.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -973,7 +1037,7 @@
 				D011F07C2C523C73000BAB5C /* RegularStop.swift in Sources */,
 				D0142C492A10F73900646C94 /* ConnectionStop.swift in Sources */,
 				D0BD66DA29F03056004E574C /* Trip.swift in Sources */,
-				F19FC6EE2AE9974C00F65316 /* ColorManager.swift in Sources */,
+				F19FC6EE2AE9974C00F65316 /* CustomGray.swift in Sources */,
 				D0142C3A2A0F909E00646C94 /* DepartureBinding.swift in Sources */,
 				D09A505B2C4FBF43006CB5D6 /* DepartureRequest.swift in Sources */,
 				D040EC2729EEEB85002DFEBF /* LocationManager.swift in Sources */,
