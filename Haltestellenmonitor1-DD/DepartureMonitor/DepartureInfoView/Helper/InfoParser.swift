@@ -29,12 +29,14 @@ func checkBold(_ attributes: [NSAttributedString.Key: Any]) -> Bool {
     }
     return false
 }
+
 func checkItalic(_ attributes: [NSAttributedString.Key: Any]) -> Bool {
     if let font = attributes[.font] as? UIFont, font.fontDescriptor.symbolicTraits.contains(.traitItalic) {
         return true
     }
     return false
 }
+
 func getLink(_ attributes: [NSAttributedString.Key: Any]) -> String? {
     if let url = attributes[.link] as? URL {
         return url.absoluteString
@@ -52,12 +54,14 @@ func getHeaderLevel(_ attributes: [NSAttributedString.Key: Any]) -> Int8 {
     }
     return 0
 }
+
 func checkUnderlined(_ attributes: [NSAttributedString.Key: Any]) -> Bool {
     if let _ = attributes[.underlineStyle] {
         return true
     }
     return false
 }
+
 func checkList(_ attributes: [NSAttributedString.Key: Any]) -> Bool {
     if let paragraphStyle = attributes[.paragraphStyle] as? NSParagraphStyle {
         if let textLists = paragraphStyle.value(forKey: "textLists") as? NSArray {
@@ -85,7 +89,7 @@ func getTitle(_ html: String) -> String {
         return attributedString.string
     }
     return ""
-    }
+}
 
 func convertHTML(_ html: String) -> [[stringSection]] {
     guard let data = html.data(using: .utf8) else { return [] }
