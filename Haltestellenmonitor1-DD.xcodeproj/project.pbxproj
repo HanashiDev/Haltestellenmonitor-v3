@@ -176,6 +176,9 @@
 		F15FE0EE2DE0F01C0096C79E /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FE0EB2DE0F01C0096C79E /* Point.swift */; };
 		F15FE0EF2DE0F01C0096C79E /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FE0EB2DE0F01C0096C79E /* Point.swift */; };
 		F15FE0F02DE0F01C0096C79E /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FE0EB2DE0F01C0096C79E /* Point.swift */; };
+		F15FE1002DE0FAFE0096C79E /* InfoParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FE0FF2DE0FAFE0096C79E /* InfoParser.swift */; };
+		F15FE1022DE0FB1F0096C79E /* StringSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FE1012DE0FB160096C79E /* StringSection.swift */; };
+		F15FE1042DE0FB720096C79E /* DepartureInfoViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FE1032DE0FB690096C79E /* DepartureInfoViewRow.swift */; };
 		F16B7FDC2D90861A00851DC4 /* DepartureInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B7FDB2D90861A00851DC4 /* DepartureInfoView.swift */; };
 		F16B7FDE2D9321CD00851DC4 /* StopSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B7FDD2D9321C700851DC4 /* StopSequence.swift */; };
 		F16B7FDF2D9321CD00851DC4 /* StopSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16B7FDD2D9321C700851DC4 /* StopSequence.swift */; };
@@ -346,6 +349,9 @@
 		F13960562DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTripRowSkeleton.swift; sourceTree = "<group>"; };
 		F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = widgetLocationManager.swift; sourceTree = "<group>"; };
 		F15FE0EB2DE0F01C0096C79E /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		F15FE0FF2DE0FAFE0096C79E /* InfoParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoParser.swift; sourceTree = "<group>"; };
+		F15FE1012DE0FB160096C79E /* StringSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSection.swift; sourceTree = "<group>"; };
+		F15FE1032DE0FB690096C79E /* DepartureInfoViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureInfoViewRow.swift; sourceTree = "<group>"; };
 		F16B7FDB2D90861A00851DC4 /* DepartureInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureInfoView.swift; sourceTree = "<group>"; };
 		F16B7FDD2D9321C700851DC4 /* StopSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSequence.swift; sourceTree = "<group>"; };
 		F17FF4C32DB4D82E00F553D1 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -770,6 +776,8 @@
 		F15FE0F72DE0F7D00096C79E /* DepartureInfoView */ = {
 			isa = PBXGroup;
 			children = (
+				F15FE1052DE0FC2B0096C79E /* Helper */,
+				F15FE0FE2DE0FAE30096C79E /* Models */,
 				F15FE0F82DE0F8510096C79E /* Views */,
 			);
 			path = DepartureInfoView;
@@ -779,6 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				F16B7FDB2D90861A00851DC4 /* DepartureInfoView.swift */,
+				F15FE1032DE0FB690096C79E /* DepartureInfoViewRow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -826,6 +835,22 @@
 				D0D1998129F40C4B00946D87 /* StopRow.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F15FE0FE2DE0FAE30096C79E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F15FE1012DE0FB160096C79E /* StringSection.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F15FE1052DE0FC2B0096C79E /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				F15FE0FF2DE0FAFE0096C79E /* InfoParser.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1059,6 +1084,7 @@
 				D0BD66D829F02C39004E574C /* TripRequest.swift in Sources */,
 				D040EC2E29EF0371002DFEBF /* StopManager.swift in Sources */,
 				D011F07C2C523C73000BAB5C /* RegularStop.swift in Sources */,
+				F15FE1042DE0FB720096C79E /* DepartureInfoViewRow.swift in Sources */,
 				D0142C492A10F73900646C94 /* ConnectionStop.swift in Sources */,
 				D0BD66DA29F03056004E574C /* Trip.swift in Sources */,
 				F19FC6EE2AE9974C00F65316 /* CustomGray.swift in Sources */,
@@ -1087,6 +1113,7 @@
 				F13960532DCA73E5004AC9AA /* DepartureRowSkeleton.swift in Sources */,
 				F13960512DCA6B16004AC9AA /* LoadingSkeleton.swift in Sources */,
 				D040EC2229EED774002DFEBF /* DateParser.swift in Sources */,
+				F15FE1022DE0FB1F0096C79E /* StringSection.swift in Sources */,
 				D0142C5F2A112CA900646C94 /* StopCoordinate.swift in Sources */,
 				F1B8C04E2D70DD5C00F77CE4 /* Location.swift in Sources */,
 				D0C1ECDE29F3008B001D214D /* RegularStopRow.swift in Sources */,
@@ -1094,6 +1121,7 @@
 				D0142C5A2A11285700646C94 /* FavoriteConnection.swift in Sources */,
 				F17FF4C62DB4D83B00F553D1 /* DateManager.swift in Sources */,
 				D0BD66D229F01B99004E574C /* ConnectionView.swift in Sources */,
+				F15FE1002DE0FAFE0096C79E /* InfoParser.swift in Sources */,
 				D0142C472A10E7CC00646C94 /* ContactPicker.swift in Sources */,
 				D0BD66E229F03949004E574C /* Mot.swift in Sources */,
 				F17FF4CA2DB4E14400F553D1 /* MOTTypes.swift in Sources */,
