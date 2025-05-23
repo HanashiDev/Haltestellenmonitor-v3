@@ -606,6 +606,7 @@
 		F15FE0DF2DE0E9410096C79E /* Shared Models */ = {
 			isa = PBXGroup;
 			children = (
+				D0C1ECCB29F2B165001D214D /* ActivityRequest.swift */,
 				F1B8C04A2D70DD5900F77CE4 /* Location.swift */,
 				D0C1ECCF29F2B6C0001D214D /* PushTokenHistory.swift */,
 				D09A504D2C4FA249006CB5D6 /* StopEvent.swift */,
@@ -639,7 +640,6 @@
 			children = (
 				D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */,
 				F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */,
-				D0C1ECCB29F2B165001D214D /* ActivityRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
