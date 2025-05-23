@@ -1,0 +1,4 @@
+project: Haltestellenmonitor1-DD.xcodeproj
+retain_assign_only_properties: true
+schemes:
+- Haltestellenmonitor1-DD
