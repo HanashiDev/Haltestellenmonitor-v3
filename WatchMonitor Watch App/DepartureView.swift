@@ -47,9 +47,6 @@ struct DepartureView: View {
             }
         }
     }
-    func urlEncodedString(from parameters: [String: String]) -> String {
-        return parameters.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
-    }
 
     func getDeparture() async {
         if Task.isCancelled {

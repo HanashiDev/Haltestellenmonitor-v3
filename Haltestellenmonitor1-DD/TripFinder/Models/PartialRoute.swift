@@ -37,10 +37,6 @@ struct PartialRoute: Hashable, Codable {
         return "\(self.Mot.Name!) \(self.Mot.Direction!)"
     }
 
-    func shouldBeBold() -> Bool {
-        !(self.Mot.type == "Footpath" || self.Mot.type == "MobilityStairsUp" ||  self.Mot.type == "MobilityStairsDown")
-    }
-
     func hasNoTime() -> Bool {
         return getStartTimeString() == nil || getEndTimeString() == nil
     }
@@ -68,14 +64,6 @@ struct PartialRoute: Hashable, Codable {
             return "Unbekannt"
         }
         return "\(self.Mot.Name!)"
-    }
-
-    /// Shows improved icon for walking
-    func getNameShortConverted() -> Text {
-        if getNameShort() == "🚶" {
-            return Text(Image(systemName: "figure.walk"))
-        }
-        return Text(getNameShort())
     }
 
     func getIconText() -> Text {
@@ -149,10 +137,6 @@ struct PartialRoute: Hashable, Codable {
         let dFormatter = DateFormatter()
         dFormatter.dateFormat = "HH:mm"
         return dFormatter.string(for: date) ?? nil
-    }
-
-    func getFirstStation() -> String? {
-        return self.RegularStops?.first?.Name
     }
 
     func getLastStation() -> String? {

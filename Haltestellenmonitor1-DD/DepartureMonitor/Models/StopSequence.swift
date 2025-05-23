@@ -53,14 +53,6 @@ struct StopSequenceItem: Hashable, Codable {
         return ""
     }
 
-    func getTime() -> String {
-        if self.getEstimatedTime() != "" {
-            return self.getEstimatedTime()
-        }
-
-        return self.getTimetabledTime()
-    }
-
     func getScheduledTime() -> String {
         let date = getISO8601Date(dateString: self.getTimetabledTime())
 
@@ -90,27 +82,6 @@ struct StopSequenceItem: Hashable, Codable {
         let scheduledTimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: scheduledTimeDate)
 
         return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
-    }
-
-    func getIn(date: Date = Date(), realInTime: Bool = false) -> Int {
-        var time = self.getTimetabledTime()
-        if self.getEstimatedTime() != "" {
-            time = self.getEstimatedTime()
-        }
-        let timeDate = getISO8601Date(dateString: time)
-
-        let calendar = Calendar.current
-
-        let timeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: timeDate)
-        let currentComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
-
-        var inTime = calendar.dateComponents([.minute], from: currentComponents, to: timeComponents).minute!
-
-        if !realInTime && inTime < 0 {
-            inTime = 0
-        }
-
-        return inTime
     }
 
     func getPlatform() -> String {

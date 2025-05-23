@@ -17,7 +17,6 @@ struct MonitorEntry: TimelineEntry {
     let configuration: ConfigurationIntent
     let stop: Stop?
     let stopEvents: [StopEvent]?
-    let widgetLocationManager = WidgetLocationManager()
 
     func getLineFilters() -> [String]? {
         if configuration.lineFilter == nil || configuration.lineFilter?.isEmpty == true {

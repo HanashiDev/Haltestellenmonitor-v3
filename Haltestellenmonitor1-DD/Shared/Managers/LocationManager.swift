@@ -25,11 +25,8 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         )
     }
 
-    @Published var flag = false
-
     @Published var location: CLLocationCoordinate2D?
     @Published var llocation: CLLocation?
-    @Published var locationUpdated: Bool = false
 
     private var completion: (() -> Void)?
 
