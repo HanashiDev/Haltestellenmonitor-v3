@@ -555,13 +555,11 @@
 		D0D1995329F40AAA00946D87 /* WatchMonitor Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				D0D1998029F40C3D00946D87 /* Rows */,
+				F15FE0FC2DE0FA3B0096C79E /* StopsView */,
+				F15FE0FA2DE0FA150096C79E /* DepartureMonitor */,
 				D0D1995429F40AAA00946D87 /* WatchMonitorApp.swift */,
-				D0D1995629F40AAA00946D87 /* ContentView.swift */,
 				D0D1995829F40AAA00946D87 /* Assets.xcassets */,
 				D0D1995A29F40AAA00946D87 /* Preview Content */,
-				D0D1998829F412DF00946D87 /* DepartureView.swift */,
-				D0C21F4429F426A8001770F1 /* SingleTripView.swift */,
 			);
 			path = "WatchMonitor Watch App";
 			sourceTree = "<group>";
@@ -572,16 +570,6 @@
 				D0D1995B29F40AAA00946D87 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		D0D1998029F40C3D00946D87 /* Rows */ = {
-			isa = PBXGroup;
-			children = (
-				D0D1998129F40C4B00946D87 /* StopRow.swift */,
-				D0D1998A29F414BD00946D87 /* DepartureRow.swift */,
-				D0C21F4629F429EB001770F1 /* SingleTripRow.swift */,
-			);
-			path = Rows;
 			sourceTree = "<group>";
 		};
 		F1520EE02AE96E2C001E3E05 /* Managers */ = {
@@ -802,6 +790,42 @@
 				D0142C462A10E7CC00646C94 /* ContactPicker.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		F15FE0FA2DE0FA150096C79E /* DepartureMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				F15FE0FB2DE0FA220096C79E /* Views */,
+			);
+			path = DepartureMonitor;
+			sourceTree = "<group>";
+		};
+		F15FE0FB2DE0FA220096C79E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D0D1998829F412DF00946D87 /* DepartureView.swift */,
+				D0D1998A29F414BD00946D87 /* DepartureRow.swift */,
+				D0C21F4429F426A8001770F1 /* SingleTripView.swift */,
+				D0C21F4629F429EB001770F1 /* SingleTripRow.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F15FE0FC2DE0FA3B0096C79E /* StopsView */ = {
+			isa = PBXGroup;
+			children = (
+				F15FE0FD2DE0FA480096C79E /* Views */,
+			);
+			path = StopsView;
+			sourceTree = "<group>";
+		};
+		F15FE0FD2DE0FA480096C79E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D0D1995629F40AAA00946D87 /* ContentView.swift */,
+				D0D1998129F40C4B00946D87 /* StopRow.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
