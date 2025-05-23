@@ -15,22 +15,6 @@ struct TripSectionViewData {
     var difference: Int
     var nr: Int
 
-    init(width: CGFloat, name: String, color: Color, difference: Int, nr: Int) {
-        self.width = width
-        self.name = name
-        self.color = color
-        self.difference = difference
-        self.nr = nr
-    }
-
-    init(orig: TripSectionViewData, _ difference: Int) {
-        self.width = orig.width
-        self.name = orig.name
-        self.color = orig.color
-        self.difference = difference
-        self.nr = orig.nr
-    }
-
     func getNameText() -> Text {
         if name == getIconStandard(motType: .Walking) {
             return Text(Image(systemName: "figure.walk"))
@@ -50,10 +34,6 @@ class TripSectionViewModel: ObservableObject {
 
     func getTime() -> String {
         "\(route.getTimeDifference()) Min"
-    }
-
-    func getUmstiege() -> String {
-        route.Interchanges == 1 ? "1 Umstieg" : "\(route.Interchanges) Umstiege"
     }
 
     func getDuration(_ partialRoute: PartialRoute) -> (Int, String) {

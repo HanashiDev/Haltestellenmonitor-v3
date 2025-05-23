@@ -23,7 +23,6 @@ struct ConnectionView: View {
     @State var trip: Trip?
     @State var isLoading = false
     @State private var requestData: TripRequest?
-    @State private var numberprev = 0
     @State private var numbernext = 0
     @State private var favoriteName = ""
     @StateObject var filter: ConnectionFilter = ConnectionFilter()
@@ -208,7 +207,7 @@ struct ConnectionView: View {
                             .accessibilityHint("Die gewählte Zeit ist der Ankunftszeitpunkt")
                     }
                     .pickerStyle(.segmented)
-                    
+
                 }
             }
 

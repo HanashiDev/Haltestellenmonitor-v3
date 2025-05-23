@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StopCoordinate: Hashable, Codable {
+struct StopCoordinate: Hashable, Codable {
     var latitude: Double
     var longitude: Double
 }

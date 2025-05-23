@@ -16,10 +16,8 @@ struct DepartureView: View {
     @State private var searchText = ""
     @State private var isLoaded = false
     @State private var dateTime = Date.now
-    @State private var topExpanded: Bool = true
     @State private var showingSuccessAlert = false
     @State private var showingErrorAlert = false
-    @State private var alreadyStarted = false
     @StateObject var departureFilter = DepartureFilter()
 
     var body: some View {

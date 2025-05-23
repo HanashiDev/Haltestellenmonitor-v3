@@ -37,7 +37,6 @@ struct DepartureInfoViewRow: View {
     let infoLink: InfoLink
     @State private var convertedText: [[stringSection]] = []
     @State private var subtitleText: String = ""
-    @State private var convertedTexts: [Text] = []
 
     func checkBold(_ attributes: [NSAttributedString.Key: Any]) -> Bool {
         if let font = attributes[.font] as? UIFont, font.fontDescriptor.symbolicTraits.contains(.traitBold) {

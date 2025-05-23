@@ -8,17 +8,12 @@
 import Foundation
 import CoreLocation
 
-public struct GKCoordinate {
-    public let x: Double
-    public let y: Double
-
-    public init(x: Double, y: Double) {
-        self.x = x
-        self.y = y
-    }
+struct GKCoordinate {
+    let x: Double
+    let y: Double
 }
 
-public func wgs2gk(wgs: StopCoordinate) -> GKCoordinate? {
+func wgs2gk(wgs: StopCoordinate) -> GKCoordinate? {
     guard let pot = wgs2pot(wgs: wgs) else { return nil }
     return pot2gk(pot: pot)
 }
