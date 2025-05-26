@@ -43,6 +43,10 @@ class TripSectionViewModel: ObservableObject {
         return (partialRoute.getDuration(), "")
     }
 
+    func getAccessibilityInterchangesString() -> String {
+        route.Interchanges == 1 ? "1 Umstieg" : "\(route.Interchanges) Umstiege"
+    }
+
     func getWaitingTime(_ e: PartialRoute, routes: [PartialRoute]) -> (Int, String) {
         var value = 0
         var str = "Wartezeit"
