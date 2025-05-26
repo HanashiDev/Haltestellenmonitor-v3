@@ -29,7 +29,7 @@ struct TripSection: View {
                 if vm.route.Interchanges > 0 {
                     Text("| \(vm.route.Interchanges)")
                         .foregroundColor(.gray)
-                        .accessibilityLabel("\(vm.route.Interchanges) \(vm.route.Interchanges == 1 ? "Umstieg" : "Umstiege")")
+                        .accessibilityLabel(vm.getAccessibilityInterchangesString())
                     Image(systemName: "shuffle")
                         .foregroundColor(.gray)
                         .accessibilityHidden(true)
