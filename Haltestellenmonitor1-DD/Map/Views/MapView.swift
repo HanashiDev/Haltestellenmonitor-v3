@@ -52,7 +52,7 @@ struct MapViewNew: View {
     @State var mapStyle: MapStyle = .standard
     @State var visibleStops: [Stop] = []
     @State var clusteredStops: [ClusterAnnonation] = []
-    
+
     @State private var mapPosition: MapCameraPosition = MapCameraPosition.region(MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 51.050446, longitude: 13.737954),
         span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
@@ -60,7 +60,7 @@ struct MapViewNew: View {
 
     func updateStops(_ region: MKCoordinateRegion) {
         visibleStops = stops.filter { isCoordinateInRegion($0.coordinates, region: region) }
-        
+
         // Apply Clustering
         if region.span.latitudeDelta >=  2.472 { // 6
             applyCluster(visibleStops, 100*100)
@@ -84,11 +84,11 @@ struct MapViewNew: View {
             clusteredStops = []
         }
     }
-    
+
     func applyCluster(_ data: [Stop], _ stepSize: CLLocationDistance) {
         var coordinatesMapping: Dictionary<String, CLLocationCoordinate2D> = [:]
         var stopClusterMap: Dictionary<String, Int> = [:]
-        
+
         data.forEach { element in
             let elementKey = coordinatesToKey(element.coordinates)
             if stopClusterMap.isEmpty {
@@ -96,14 +96,14 @@ struct MapViewNew: View {
                 stopClusterMap[elementKey] = 1
                 return
             }
-            
+
             let currentPin = CLLocation(latitude: element.coordinates.latitude, longitude: element.coordinates.longitude)
             var isAlreadyClustered = false
-            
+
             stopClusterMap.forEach { existingClusterPin in
                 let loc = coordinatesMapping[existingClusterPin.key]!
                 let existingAnnotation = CLLocation(latitude: loc.latitude, longitude: loc.longitude)
-                
+
                 if existingAnnotation.distance(from: currentPin) <= stepSize {
                     stopClusterMap[existingClusterPin.key] = (stopClusterMap[existingClusterPin.key] ?? 1) + 1
                     isAlreadyClustered = true
@@ -119,7 +119,7 @@ struct MapViewNew: View {
             ClusterAnnonation(coordinates: coordinatesMapping[key]!, count: value)
         })
     }
-    
+
     func coordinatesToKey(_ coords: CLLocationCoordinate2D) -> String {
         return "\(coords.latitude)x\(coords.longitude)"
     }
@@ -132,7 +132,7 @@ struct MapViewNew: View {
         }
         return CLLocationCoordinate2D(latitude: 0, longitude: 0)
     }
-    
+
     var body: some View {
         Map(position: $mapPosition) {
             if clusteredStops.isEmpty {
@@ -199,7 +199,7 @@ struct MapViewNew: View {
                                 .frame(width: 40, height: 40)
                                 .padding(.trailing, 8)
                                 .padding(.top, 7)
-                            
+
                         }.padding(.trailing, 50)
                         Spacer()
                     }
