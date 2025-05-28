@@ -25,9 +25,9 @@ struct ContentView: View {
                 switch selection {
                 case 1:
                     stopManager.selectedStop = nil
-                    case 2:
+                case 2:
                     stopManager.presentedStops.removeAll()
-                    case 3:
+                case 3:
                     stopManager.presentedMapStops.removeAll()
                 default:
                     break
