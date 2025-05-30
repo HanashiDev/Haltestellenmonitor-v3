@@ -151,11 +151,12 @@ struct ConnectionView: View {
                             .accessibilityElement(children: .combine)
                             .accessibilityAddTraits(.isButton)
                             
-                            Image(systemName: "arrow.up.arrow.down").onTapGesture {
-                                switchStops()
-                            }
-                            .foregroundStyle(Color.accentColor)
-                            .accessibilityLabel("Starpunkt und Zielpunkt vertauschen")
+                            Image(systemName: "arrow.up.arrow.down")
+                                .onTapGesture {
+                                    switchStops()
+                                }
+                                .foregroundStyle(Color.accentColor)
+                                .accessibilityLabel("Starpunkt und Zielpunkt vertauschen")
                         }
                     }
                 }
@@ -309,10 +310,9 @@ struct ConnectionView: View {
     }
     
     func switchStops() {
-        var stop1 = filter.endStop
+        let stop1 = filter.endStop
         filter.endStop = filter.startStop
         filter.startStop = stop1
-        
     }
 
     func createRequestData() async {
