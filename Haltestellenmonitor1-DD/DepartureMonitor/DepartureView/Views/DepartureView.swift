@@ -18,6 +18,7 @@ struct DepartureView: View {
     @State private var dateTime = Date.now
     @State private var showingSuccessAlert = false
     @State private var showingErrorAlert = false
+    @State private var backgroundTask: Task<Void, Never>?
     @StateObject var departureFilter = DepartureFilter()
 
     var body: some View {
@@ -139,10 +140,16 @@ struct DepartureView: View {
             }
         }
 
-        .task(id: stop.id) {
-            /*stopEvents = []
-            isLoaded = false*/
-            await getDeparture()
+        .task(id: stop.id, priority: .userInitiated) {
+            // Cancel any existing background task
+            backgroundTask?.cancel()
+
+            backgroundTask = Task {
+                await startContinuousFetching()
+            }
+        }
+        .onDisappear {
+            backgroundTask?.cancel()
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .onChange(of: dateTime) { _ in
@@ -173,6 +180,22 @@ struct DepartureView: View {
         }
     }
 
+    func startContinuousFetching() async {
+        await getDeparture()
+
+        while !Task.isCancelled {
+            do {
+                try await Task.sleep(for: .seconds(30))
+                if !Task.isCancelled {
+                    await getDeparture()
+                }
+            } catch {
+                // Task was cancelled
+                break
+            }
+        }
+    }
+
     func getDeparture() async {
         if Task.isCancelled {
             return
@@ -194,21 +217,22 @@ struct DepartureView: View {
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
-            self.stopEvents = stopEventContainer.stopEvents ?? []
-            self.isLoaded = true
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
-                Task {
-                    await getDeparture()
-                }
+            await MainActor.run {
+                self.stopEvents = stopEventContainer.stopEvents ?? []
+                self.isLoaded = true
             }
+
         } catch {
             if !Task.isCancelled {
                 print("DepartureMonitor error: \(error)")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    Task {
+                do {
+                    try await Task.sleep(for: .seconds(1))
+                    if !Task.isCancelled {
                         await getDeparture()
                     }
+                } catch {
+                    // Task was cancelled during sleep
+                    return
                 }
             }
         }

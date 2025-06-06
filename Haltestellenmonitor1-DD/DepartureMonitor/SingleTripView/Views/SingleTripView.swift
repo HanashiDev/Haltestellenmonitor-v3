@@ -15,6 +15,7 @@ struct SingleTripView: View {
     @State private var searchText = ""
     @State private var showingSuccessAlert = false
     @State private var showingErrorAlert = false
+    @State private var backgroundTask: Task<Void, Never>?
     var stop: Stop
     var stopEvent: StopEvent
 
@@ -79,7 +80,15 @@ struct SingleTripView: View {
         }
         .navigationTitle("\(stopEvent.getIcon()) \(stopEvent.getName())")
         .task(id: stopEvent.transportation.properties.globalId, priority: .userInitiated) {
-            await getSingleTrip()
+            // Cancel any existing background task
+            backgroundTask?.cancel()
+
+            backgroundTask = Task {
+                await startContinuousFetching()
+            }
+        }
+        .onDisappear {
+            backgroundTask?.cancel()
         }
         .alert("Diese Abfahrt wird nun als Live-Aktivität angezeigt.", isPresented: $showingSuccessAlert) {
             Button {
@@ -115,6 +124,22 @@ struct SingleTripView: View {
         }
     }
 
+    func startContinuousFetching() async {
+        await getSingleTrip()
+
+        while !Task.isCancelled {
+            do {
+                try await Task.sleep(for: .seconds(30))
+                if !Task.isCancelled {
+                    await getSingleTrip()
+                }
+            } catch {
+                // Task was cancelled
+                break
+            }
+        }
+    }
+
     func getSingleTrip() async {
         if Task.isCancelled {
             return
@@ -134,22 +159,26 @@ struct SingleTripView: View {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopSequenceContainer = try JSONDecoder().decode(StopSequenceContainer.self, from: content)
             let stopEvents = stopSequenceContainer.leg.stopSequence ?? []
-            if stopEvents.count > 0 {
-                self.stopSequence = stopEvents
-            }
-            self.isLoaded = true
 
+            await MainActor.run {
+                if stopEvents.count > 0 {
+                    self.stopSequence = stopEvents
+                }
+                self.isLoaded = true
+            }
         } catch {
             if !Task.isCancelled {
-
                 print("SingleTrip error: \(error)")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    Task {
+                do {
+                    try await Task.sleep(for: .seconds(1))
+                    if !Task.isCancelled {
                         await getSingleTrip()
                     }
+                } catch {
+                    // Task was cancelled during sleep
+                    return
                 }
             }
-
         }
     }
 
