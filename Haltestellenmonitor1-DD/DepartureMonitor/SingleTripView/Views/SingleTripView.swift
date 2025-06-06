@@ -80,6 +80,18 @@ struct SingleTripView: View {
         .navigationTitle("\(stopEvent.getIcon()) \(stopEvent.getName())")
         .task(id: stopEvent.transportation.properties.globalId, priority: .userInitiated) {
             await getSingleTrip()
+
+            while !Task.isCancelled {
+                do {
+                    try await Task.sleep(for: .seconds(30))
+                    if !Task.isCancelled {
+                        await getSingleTrip()
+                    }
+                } catch {
+                    // Task was cancelled
+                    break
+                }
+            }
         }
         .alert("Diese Abfahrt wird nun als Live-Aktivität angezeigt.", isPresented: $showingSuccessAlert) {
             Button {
@@ -116,10 +128,6 @@ struct SingleTripView: View {
     }
 
     func getSingleTrip() async {
-        if Task.isCancelled {
-            return
-        }
-
         let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_TRIPSTOPTIMES_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
@@ -134,22 +142,26 @@ struct SingleTripView: View {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopSequenceContainer = try JSONDecoder().decode(StopSequenceContainer.self, from: content)
             let stopEvents = stopSequenceContainer.leg.stopSequence ?? []
-            if stopEvents.count > 0 {
-                self.stopSequence = stopEvents
-            }
-            self.isLoaded = true
 
+            await MainActor.run {
+                if stopEvents.count > 0 {
+                    self.stopSequence = stopEvents
+                }
+                self.isLoaded = true
+            }
         } catch {
             if !Task.isCancelled {
-
                 print("SingleTrip error: \(error)")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    Task {
+                do {
+                    try await Task.sleep(for: .seconds(1))
+                    if !Task.isCancelled {
                         await getSingleTrip()
                     }
+                } catch {
+                    // Task was cancelled during sleep
+                    return
                 }
             }
-
         }
     }
 
