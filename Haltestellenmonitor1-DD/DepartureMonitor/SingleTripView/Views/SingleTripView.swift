@@ -15,7 +15,6 @@ struct SingleTripView: View {
     @State private var searchText = ""
     @State private var showingSuccessAlert = false
     @State private var showingErrorAlert = false
-    @State private var backgroundTask: Task<Void, Never>?
     var stop: Stop
     var stopEvent: StopEvent
 
@@ -80,15 +79,19 @@ struct SingleTripView: View {
         }
         .navigationTitle("\(stopEvent.getIcon()) \(stopEvent.getName())")
         .task(id: stopEvent.transportation.properties.globalId, priority: .userInitiated) {
-            // Cancel any existing background task
-            backgroundTask?.cancel()
+            await getSingleTrip()
 
-            backgroundTask = Task {
-                await startContinuousFetching()
+            while !Task.isCancelled {
+                do {
+                    try await Task.sleep(for: .seconds(30))
+                    if !Task.isCancelled {
+                        await getSingleTrip()
+                    }
+                } catch {
+                    // Task was cancelled
+                    break
+                }
             }
-        }
-        .onDisappear {
-            backgroundTask?.cancel()
         }
         .alert("Diese Abfahrt wird nun als Live-Aktivität angezeigt.", isPresented: $showingSuccessAlert) {
             Button {
@@ -124,27 +127,7 @@ struct SingleTripView: View {
         }
     }
 
-    func startContinuousFetching() async {
-        await getSingleTrip()
-
-        while !Task.isCancelled {
-            do {
-                try await Task.sleep(for: .seconds(30))
-                if !Task.isCancelled {
-                    await getSingleTrip()
-                }
-            } catch {
-                // Task was cancelled
-                break
-            }
-        }
-    }
-
     func getSingleTrip() async {
-        if Task.isCancelled {
-            return
-        }
-
         let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_TRIPSTOPTIMES_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"

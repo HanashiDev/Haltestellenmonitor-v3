@@ -12,7 +12,6 @@ struct DepartureView: View {
     @State private var searchText = ""
     @State private var stopEvents: [StopEvent] = []
     @State private var isLoaded = false
-    @State private var backgroundTask: Task<Void, Never>?
 
     var body: some View {
         Group {
@@ -31,15 +30,19 @@ struct DepartureView: View {
         }
         .navigationTitle(stop.name)
         .task(id: stop.id, priority: .userInitiated) {
-            // Cancel any existing background task
-            backgroundTask?.cancel()
+            await getDeparture()
 
-            backgroundTask = Task {
-                await startContinuousFetching()
+            while !Task.isCancelled {
+                do {
+                    try await Task.sleep(for: .seconds(30))
+                    if !Task.isCancelled {
+                        await getDeparture()
+                    }
+                } catch {
+                    // Task was cancelled
+                    break
+                }
             }
-        }
-        .onDisappear {
-            backgroundTask?.cancel()
         }
     }
 
@@ -55,27 +58,7 @@ struct DepartureView: View {
         }
     }
 
-    func startContinuousFetching() async {
-        await getDeparture()
-
-        while !Task.isCancelled {
-            do {
-                try await Task.sleep(for: .seconds(30))
-                if !Task.isCancelled {
-                    await getDeparture()
-                }
-            } catch {
-                // Task was cancelled
-                break
-            }
-        }
-    }
-
     func getDeparture() async {
-        if Task.isCancelled {
-            return
-        }
-
         let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_DM_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"

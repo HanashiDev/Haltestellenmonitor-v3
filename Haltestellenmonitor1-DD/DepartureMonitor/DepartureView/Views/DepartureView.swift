@@ -18,7 +18,6 @@ struct DepartureView: View {
     @State private var dateTime = Date.now
     @State private var showingSuccessAlert = false
     @State private var showingErrorAlert = false
-    @State private var backgroundTask: Task<Void, Never>?
     @StateObject var departureFilter = DepartureFilter()
 
     var body: some View {
@@ -141,15 +140,19 @@ struct DepartureView: View {
         }
 
         .task(id: stop.id, priority: .userInitiated) {
-            // Cancel any existing background task
-            backgroundTask?.cancel()
+            await getDeparture()
 
-            backgroundTask = Task {
-                await startContinuousFetching()
+            while !Task.isCancelled {
+                do {
+                    try await Task.sleep(for: .seconds(30))
+                    if !Task.isCancelled {
+                        await getDeparture()
+                    }
+                } catch {
+                    // Task was cancelled
+                    break
+                }
             }
-        }
-        .onDisappear {
-            backgroundTask?.cancel()
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .onChange(of: dateTime) { _ in
@@ -180,27 +183,7 @@ struct DepartureView: View {
         }
     }
 
-    func startContinuousFetching() async {
-        await getDeparture()
-
-        while !Task.isCancelled {
-            do {
-                try await Task.sleep(for: .seconds(30))
-                if !Task.isCancelled {
-                    await getDeparture()
-                }
-            } catch {
-                // Task was cancelled
-                break
-            }
-        }
-    }
-
     func getDeparture() async {
-        if Task.isCancelled {
-            return
-        }
-
         var localDateTime = dateTime
         if localDateTime < Date.now {
             localDateTime = Date.now
