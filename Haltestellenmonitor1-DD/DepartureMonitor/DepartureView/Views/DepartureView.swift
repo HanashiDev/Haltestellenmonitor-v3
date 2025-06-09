@@ -245,10 +245,11 @@ struct DepartureView: View {
         }
         pushTokenHistory.add(token: token)
 
-        let url = URL(string: "https://dvb.hsrv.me/api/activity")!
+        let url = URL(string: "https://dvb.hsrv.me/api/activity_v2")!
+        let date = getISO8601Date(dateString: stopEvent.departureTimePlanned)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopGID: stop.gid, lineRef: stopEvent.transportation.id, directionRef: "outward", timetabledTime: stopEvent.departureTimePlanned, estimatedTime: stopEvent.departureTimeEstimated ?? stopEvent.departureTimePlanned))
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: stop.gid, line: stopEvent.transportation.id, tripCode: String(stopEvent.transportation.properties.tripCode ?? 0), date: getDateStampURL(date: date), time: getTimeStampURL(date: date)))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
