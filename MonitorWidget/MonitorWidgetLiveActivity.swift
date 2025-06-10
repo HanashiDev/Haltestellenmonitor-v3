@@ -24,7 +24,7 @@ struct MonitorWidgetLiveActivity: Widget {
 
     var oldBody: some WidgetConfiguration {
         ActivityConfiguration(for: TripAttributes.self) { context in
-            // Lock screen/banner UI goes here
+            // Lock screen/banner UI
             LiveActivityBanner(context: context)
             .widgetURL(getWidgetUrl(context: context))
             .foregroundColor(Color.black)
@@ -181,8 +181,7 @@ struct MonitorWidgetLiveActivity: Widget {
             .widgetURL(getWidgetUrl(context: context))
             .keylineTint(Color.red)
         }
-        // .supplementalActivityFamilies([.small, .medium])
-        .supplementalActivityFamilies([.small])
+        .supplementalActivityFamilies([.small, .medium])
     }
 
     func getWidgetUrl(context: ActivityViewContext<TripAttributes>) -> URL? {
@@ -211,7 +210,7 @@ struct SupplementalMonitorWidgetLiveActivity: View {
                 .activitySystemActionForegroundColor(Color.black)
 
         case .medium:
-            // Lock screen/banner UI goes here
+            // Lock screen/Banner
             LiveActivityBanner(context: context)
                 .widgetURL(getWidgetUrl(context: context))
                 .foregroundColor(Color.black)
@@ -231,84 +230,27 @@ struct SupplementalMonitorWidgetLiveActivity: View {
     }
 }
 
-//
-// struct LinearRoundedEndpointProgressViewStyle: ProgressViewStyle {
-//    var lineHeight: CGFloat = 8
-//    var color: Color = .accentColor
-//    var trackColor: Color = Color.gray.opacity(0.3)
-//    
-//    func makeBody(configuration: Configuration) -> some View {
-//        GeometryReader { geo in
-//            let width = geo.size.width
-//            let progress = CGFloat(configuration.fractionCompleted ?? 0)
-//            let filledWidth = width * progress
-//            
-//            ZStack(alignment: .leading) {
-//                // Track
-//                Capsule()
-//                    .fill(trackColor)
-//                    .frame(height: lineHeight)
-//                // Progress
-//                Capsule()
-//                    .fill(color)
-//                    .frame(width: max(filledWidth, lineHeight), height: lineHeight)
-//                // Endpoint Dot
-//                if progress > 0 {
-//                    Circle()
-//                        .fill(color)
-//                        .frame(width: lineHeight, height: lineHeight)
-//                        .offset(x: min(filledWidth, width - lineHeight))
-//                        .shadow(radius: 1)
-//                }
-//            }
-//        }
-//        .frame(height: lineHeight)
-//    }
-// }
-
-// for the previews, set your non-changing properties
+// for the previews, set non-changing properties
 extension TripAttributes {
     static var preview: TripAttributes {
         TripAttributes(name: "Pirnaischer Platz", icon: "🚊", stopID: "300001", lineRef: "10000", timetabledTime: "2025-03-10T17:54:00Z", directionRef: "1", publishedLineName: "4", destinationText: "Laubegast", startTime: getISO8601Date(dateString: "2025-03-10T17:50:00Z"))
     }
 }
 
-// for the previews add some ContentStates
+// add some ContentStates for previews
 extension TripAttributes.ContentState {
     static var initial: TripAttributes.ContentState {
-        TripAttributes.ContentState(timetabledTime: "2025-03-10T17:54:00Z", estimatedTime: "2025-03-10T17:53:00Z", done: false) // start
+        TripAttributes.ContentState(timetabledTime: "2025-03-10T17:54:00Z", estimatedTime: "2025-03-10T17:53:00Z", done: false)
     }
 
     static var in_progress: TripAttributes.ContentState {
-        TripAttributes.ContentState(timetabledTime: "2025-03-10T17:54:00Z", estimatedTime: "2025-03-10T17:58:00Z", done: false) // In Progress
+        TripAttributes.ContentState(timetabledTime: "2025-03-10T17:54:00Z", estimatedTime: "2025-03-10T17:58:00Z", done: false)
     }
 
     static var complete: TripAttributes.ContentState {
-        TripAttributes.ContentState(timetabledTime: "2025-03-10T17:54:00Z", estimatedTime: "2025-03-10T17:54:00Z", done: true) //  completed
+        TripAttributes.ContentState(timetabledTime: "2025-03-10T17:54:00Z", estimatedTime: "2025-03-10T17:54:00Z", done: true)
     }
 }
-
-//
-// struct MonitorWidgetLiveActivity_Previews: PreviewProvider {
-//    static let attributes = TripAttributes(name: "Pirnaischer Platz", icon: "Tram", stopID: "300001", lineRef: "10000", timetabledTime: "/Date(1681824120000-0000)/", directionRef: "1", publishedLineName: "4", destinationText: "Laubegast", startTime: Date.now)
-//    static let contentState = TripAttributes.ContentState(timetabledTime: "/Date(1681824120000-0000)/", estimatedTime: "/Date(1681825120000-0000)/", done: true)
-//
-//    static var previews: some View {
-//        attributes
-//            .previewContext(contentState, viewKind: .dynamicIsland(.compact))
-//            .previewDisplayName("Island Compact")
-//        attributes
-//            .previewContext(contentState, viewKind: .dynamicIsland(.expanded))
-//            .previewDisplayName("Island Expanded")
-//        attributes
-//            .previewContext(contentState, viewKind: .dynamicIsland(.minimal))
-//            .previewDisplayName("Minimal")
-//        attributes
-//            .previewContext(contentState, viewKind: .content)
-//            .preferredColorScheme(.dark)
-//            .previewDisplayName("Notification")
-//    }
-// }
 
 @available(iOS 18.0, *)
 #Preview("Island minimal", as: .dynamicIsland(.minimal), using: TripAttributes.preview) {
@@ -346,6 +288,27 @@ extension TripAttributes.ContentState {
     TripAttributes.ContentState.complete
 }
 
+//
+// struct MonitorWidgetLiveActivity_Previews: PreviewProvider {
+//    static let attributes = TripAttributes(name: "Pirnaischer Platz", icon: "Tram", stopID: "300001", lineRef: "10000", timetabledTime: "/Date(1681824120000-0000)/", directionRef: "1", publishedLineName: "4", destinationText: "Laubegast", startTime: Date.now)
+//    static let contentState = TripAttributes.ContentState(timetabledTime: "/Date(1681824120000-0000)/", estimatedTime: "/Date(1681825120000-0000)/", done: true)
+//
+//    static var previews: some View {
+//        attributes
+//            .previewContext(contentState, viewKind: .dynamicIsland(.compact))
+//            .previewDisplayName("Island Compact")
+//        attributes
+//            .previewContext(contentState, viewKind: .dynamicIsland(.expanded))
+//            .previewDisplayName("Island Expanded")
+//        attributes
+//            .previewContext(contentState, viewKind: .dynamicIsland(.minimal))
+//            .previewDisplayName("Minimal")
+//        attributes
+//            .previewContext(contentState, viewKind: .content)
+//            .preferredColorScheme(.dark)
+//            .previewDisplayName("Notification")
+//    }
+// }
 //
 // struct MonitorWidgetLiveActivity_Previews: PreviewProvider {
 //    static let attributes = TripAttributes(name: "Pirnaischer Platz", icon: "🚊", stopID: "300001", lineRef: "10000", timetabledTime: "/Date(1681824120000-0000)/", directionRef: "1", publishedLineName: "4", destinationText: "Laubegast", startTime: Date.now)
