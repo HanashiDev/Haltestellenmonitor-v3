@@ -86,6 +86,10 @@ struct TripAttributes: ActivityAttributes {
 
             return inTime
         }
+
+        func getProgress() -> Double {
+            return 0.0
+        }
     }
 
     // Fixed non-changing properties about your activity go here!
@@ -98,6 +102,8 @@ struct TripAttributes: ActivityAttributes {
     var publishedLineName: String
     var destinationText: String
     var cancelled: String?
+
+    var startTime: Date
 
     func getIcon() -> String {
         return self.icon
