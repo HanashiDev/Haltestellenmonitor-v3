@@ -13,45 +13,86 @@ struct LiveActivityBanner: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(context.attributes.name)
-                .font(.headline)
-                .lineLimit(1)
             HStack {
                 Text(context.attributes.getIcon())
-                VStack {
-                    HStack {
-                        Text("\(context.attributes.publishedLineName) \(context.attributes.destinationText)")
-                            .lineLimit(1)
-                        Spacer()
-                        if context.state.done {
-                            Image(systemName: "checkmark.circle")
-                                .foregroundColor(Color.green)
-                        } else {
-                            Text("in \(context.state.getIn()) min")
-                        }
+                Text("\(context.attributes.publishedLineName) \(context.attributes.destinationText)")
+                    .font(.headline)
+                    .lineLimit(1)
+                Spacer()
+                Text("\(context.state.getScheduledTime()) Uhr")
+                    .font(.footnote)
+                    .foregroundStyle(.gray)
+                if context.state.getTimeDifference() > 0 {
+                    if #available(iOS 17.0, *) {
+                        Text("+\(context.state.getTimeDifference())")
+                            .font(.footnote)
+                            .foregroundColor(Color.red)
+                            .opacity(0.8)
+                            .contentTransition(.numericText(value: Double(context.state.getTimeDifference())))
+                    } else {
+                        Text("+\(context.state.getTimeDifference())")
+                            .font(.footnote)
+                            .foregroundColor(Color.red)
+                            .opacity(0.8)
+                            .contentTransition(.numericText())
                     }
-                    HStack {
-                        Text("\(context.state.getScheduledTime()) Uhr")
-                        if context.state.getTimeDifference() > 0 {
-                            Text("+\(context.state.getTimeDifference())")
-                                .font(.subheadline)
-                                .foregroundColor(Color.red)
-                        } else if context.state.getTimeDifference() < 0 {
-                            Text("\(context.state.getTimeDifference())")
-                                .font(.subheadline)
-                                .foregroundColor(Color.green)
-                        }
-                        Spacer()
-                        Text("\(context.state.getRealTime()) Uhr")
+                } else if context.state.getTimeDifference() < 0 {
+                    if #available(iOS 17.0, *) {
+                        Text("\(context.state.getTimeDifference())")
+                            .font(.footnote)
+                            .foregroundColor(Color.green)
+                            .opacity(0.8)
+                            .contentTransition(.numericText(value: Double(context.state.getTimeDifference())))
+                    } else {
+                        Text("\(context.state.getTimeDifference())")
+                            .font(.footnote)
+                            .foregroundColor(Color.green)
+                            .opacity(0.8)
+                            .contentTransition(.numericText())
                     }
                 }
             }
+            Spacer()
+
+            HStack {
+                Text(context.attributes.name)
+                    .lineLimit(1)
+                Spacer()
+                    Text("\(context.state.getRealTime()) Uhr")
+                        .contentTransition(.numericText())
+            }
             .font(.subheadline)
-//            ProgressView(value: context.state.getProgress(), total: 100)
-//                .progressViewStyle(.linear)
-//                .tint(.yellow)
-//                .background(.white)
+            ProgressView(value: context.attributes.getProgress(context.state))
+                .progressViewStyle(.linear)
+                .tint(.yellow)
+                .background(.white)
+
+            HStack {
+                Spacer()
+                if context.state.done {
+                    Image(systemName: "checkmark.circle")
+                        .foregroundColor(Color.green)
+                } else {
+                    if #available(iOS 17.0, *) {
+                        Text("in \(context.state.getIn()) min")
+                            .contentTransition(.numericText(value: Double(context.state.getIn())))
+                    } else {
+                        Text("in \(context.state.getIn()) min")
+                            .contentTransition(.numericText(countsDown: true))
+                    }
+                }
+                Spacer()
+            }
+            .frame(height: 15) // prevent shifting when done
         }
     }
+}
 
+@available(iOS 18.0, *)
+#Preview("Banner & Watch", as: .content, using: TripAttributes.preview) {
+    MonitorWidgetLiveActivity()
+} contentStates: {
+    TripAttributes.ContentState.initial
+    TripAttributes.ContentState.in_progress
+    TripAttributes.ContentState.complete
 }

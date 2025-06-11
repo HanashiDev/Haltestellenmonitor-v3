@@ -233,22 +233,22 @@ struct SupplementalMonitorWidgetLiveActivity: View {
 // for the previews, set non-changing properties
 extension TripAttributes {
     static var preview: TripAttributes {
-        TripAttributes(name: "Pirnaischer Platz", icon: "🚊", stopID: "300001", lineRef: "10000", timetabledTime: "2025-03-10T17:54:00Z", directionRef: "1", publishedLineName: "4", destinationText: "Laubegast", startTime: getISO8601Date(dateString: "2025-03-10T17:50:00Z"))
+        TripAttributes(name: "Pirnaischer Platz", icon: "🚊", stopID: "300001", lineRef: "10000", timetabledTime: "2025-03-10T17:54:00Z", directionRef: "1", publishedLineName: "4", destinationText: "Laubegast", startTime: Date().addingTimeInterval(-600))
     }
 }
 
 // add some ContentStates for previews
 extension TripAttributes.ContentState {
     static var initial: TripAttributes.ContentState {
-        TripAttributes.ContentState(timetabledTime: "2025-03-10T17:54:00Z", estimatedTime: "2025-03-10T17:53:00Z", done: false)
+        TripAttributes.ContentState(timetabledTime: getISO8601DateString(date: Date().addingTimeInterval(180)), estimatedTime: getISO8601DateString(date: Date().addingTimeInterval(600)), done: false)
     }
 
     static var in_progress: TripAttributes.ContentState {
-        TripAttributes.ContentState(timetabledTime: "2025-03-10T17:54:00Z", estimatedTime: "2025-03-10T17:58:00Z", done: false)
+        TripAttributes.ContentState(timetabledTime: getISO8601DateString(date: Date().addingTimeInterval(180)), estimatedTime: getISO8601DateString(date: Date().addingTimeInterval(540)), done: false)
     }
 
     static var complete: TripAttributes.ContentState {
-        TripAttributes.ContentState(timetabledTime: "2025-03-10T17:54:00Z", estimatedTime: "2025-03-10T17:54:00Z", done: true)
+        TripAttributes.ContentState(timetabledTime: getISO8601DateString(), estimatedTime: getISO8601DateString(), done: true)
     }
 }
 

@@ -32,3 +32,8 @@ func getISO8601Date(dateString: String?) -> Date {
     }
     return Date.now
 }
+
+func getISO8601DateString(date: Date = Date()) -> String {
+    let formatter = ISO8601DateFormatter()
+    return formatter.string(from: date)
+}
