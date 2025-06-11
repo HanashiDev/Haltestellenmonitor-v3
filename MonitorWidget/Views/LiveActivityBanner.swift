@@ -21,7 +21,7 @@ struct LiveActivityBanner: View {
                 Spacer()
                 Text("\(context.state.getScheduledTime()) Uhr")
                     .font(.footnote)
-                    .foregroundStyle(.gray)
+                    .opacity(0.6)
                 if context.state.getTimeDifference() > 0 {
                     if #available(iOS 17.0, *) {
                         Text("+\(context.state.getTimeDifference())")
