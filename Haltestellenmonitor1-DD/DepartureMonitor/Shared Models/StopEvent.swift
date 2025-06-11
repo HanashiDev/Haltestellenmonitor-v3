@@ -66,10 +66,6 @@ struct Transportation: Hashable, Codable {
     // var origin: Place?
     var properties: T_Properties
     var destination: Place
-
-    func getLineRef() -> String {
-        return properties.globalId ?? ""
-    }
 }
 
 // Info Struct

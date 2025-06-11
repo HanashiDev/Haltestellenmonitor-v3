@@ -9,9 +9,9 @@ import Foundation
 
 struct ActivityRequest: Hashable, Codable {
     var token: String
-    var stopGID: String
-    var lineRef: String
-    var directionRef: String
-    var timetabledTime: String
-    var estimatedTime: String
+    var stopID: String
+    var line: String
+    var tripCode: String
+    var date: String
+    var time: String
 }

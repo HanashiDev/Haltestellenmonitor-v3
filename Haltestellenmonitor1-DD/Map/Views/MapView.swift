@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-struct ClusterAnnonation: Identifiable{
+struct ClusterAnnonation: Identifiable {
     let id = UUID()
     var coordinates: CLLocationCoordinate2D
     var count: Int
@@ -64,30 +64,24 @@ struct MapViewNew: View {
         // Apply Clustering
         if region.span.latitudeDelta >=  2.472 { // 6
             applyCluster(visibleStops, 100*100)
-        }
-        else if region.span.latitudeDelta >=  0.893 { // 5
+        } else if region.span.latitudeDelta >=  0.893 { // 5
             applyCluster(visibleStops, 100*60)
-        }
-        else if region.span.latitudeDelta >=  0.456 { // 4
+        } else if region.span.latitudeDelta >=  0.456 { // 4
             applyCluster(visibleStops, 100*35)
-        }
-        else  if region.span.latitudeDelta >=  0.156 { // 3
+        } else  if region.span.latitudeDelta >=  0.156 { // 3
             applyCluster(visibleStops, 100*15)
-        }
-        else if region.span.latitudeDelta >=  0.084 { // 2
+        } else if region.span.latitudeDelta >=  0.084 { // 2
             applyCluster(visibleStops, 100*8)
-        }
-        else if region.span.latitudeDelta >= 0.0707 { // 1
+        } else if region.span.latitudeDelta >= 0.0707 { // 1
             applyCluster(visibleStops, 100*3)
-        }
-        else if region.span.latitudeDelta < 0.084 { // none
+        } else if region.span.latitudeDelta < 0.084 { // none
             clusteredStops = []
         }
     }
 
     func applyCluster(_ data: [Stop], _ stepSize: CLLocationDistance) {
-        var coordinatesMapping: Dictionary<String, CLLocationCoordinate2D> = [:]
-        var stopClusterMap: Dictionary<String, Int> = [:]
+        var coordinatesMapping: [String: CLLocationCoordinate2D] = [:]
+        var stopClusterMap: [String: Int] = [:]
 
         data.forEach { element in
             let elementKey = coordinatesToKey(element.coordinates)
@@ -115,7 +109,7 @@ struct MapViewNew: View {
             coordinatesMapping[elementKey] = element.coordinates
             stopClusterMap[elementKey] = 1
         }
-        clusteredStops = stopClusterMap.map({ (key,value) in
+        clusteredStops = stopClusterMap.map({ (key, value) in
             ClusterAnnonation(coordinates: coordinatesMapping[key]!, count: value)
         })
     }
@@ -126,7 +120,7 @@ struct MapViewNew: View {
     func keyToCoordinates(_ key: String) -> CLLocationCoordinate2D {
         let str = key.split(separator: "x")
         if let str1 = Double(str.first ?? "0") {
-            if let str2 = Double(str.last ?? "0")  {
+            if let str2 = Double(str.last ?? "0") {
                 return CLLocationCoordinate2D(latitude: CLLocationDegrees(str1), longitude: CLLocationDegrees(str2))
             }
         }

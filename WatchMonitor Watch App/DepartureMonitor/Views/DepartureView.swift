@@ -29,9 +29,19 @@ struct DepartureView: View {
             }
         }
         .navigationTitle(stop.name)
-        .onAppear {
-            Task {
-                await getDeparture()
+        .task(id: stop.id, priority: .userInitiated) {
+            await getDeparture()
+
+            while !Task.isCancelled {
+                do {
+                    try await Task.sleep(for: .seconds(30))
+                    if !Task.isCancelled {
+                        await getDeparture()
+                    }
+                } catch {
+                    // Task was cancelled
+                    break
+                }
             }
         }
     }
@@ -49,10 +59,6 @@ struct DepartureView: View {
     }
 
     func getDeparture() async {
-        if Task.isCancelled {
-            return
-        }
-
         let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_DM_REQUEST")!
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
@@ -64,22 +70,23 @@ struct DepartureView: View {
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
-            self.stopEvents = stopEventContainer.stopEvents ?? []
-            self.isLoaded = true
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
-                Task {
-                    await getDeparture()
-                }
+            await MainActor.run {
+                self.stopEvents = stopEventContainer.stopEvents ?? []
+                self.isLoaded = true
             }
         } catch {
             if !Task.isCancelled {
                 print("Watch DepartureMonitor error: \(error)")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    Task {
+                do {
+                    try await Task.sleep(for: .seconds(1))
+                    if !Task.isCancelled {
                         await getDeparture()
                     }
+                } catch {
+                    // Task was cancelled during sleep
+                    return
                 }
+
             }
         }
     }

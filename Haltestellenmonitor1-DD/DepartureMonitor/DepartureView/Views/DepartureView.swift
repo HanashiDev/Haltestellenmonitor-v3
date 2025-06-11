@@ -139,10 +139,20 @@ struct DepartureView: View {
             }
         }
 
-        .task(id: stop.id) {
-            /*stopEvents = []
-            isLoaded = false*/
+        .task(id: stop.id, priority: .userInitiated) {
             await getDeparture()
+
+            while !Task.isCancelled {
+                do {
+                    try await Task.sleep(for: .seconds(30))
+                    if !Task.isCancelled {
+                        await getDeparture()
+                    }
+                } catch {
+                    // Task was cancelled
+                    break
+                }
+            }
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .onChange(of: dateTime) { _ in
@@ -174,10 +184,6 @@ struct DepartureView: View {
     }
 
     func getDeparture() async {
-        if Task.isCancelled {
-            return
-        }
-
         var localDateTime = dateTime
         if localDateTime < Date.now {
             localDateTime = Date.now
@@ -194,21 +200,22 @@ struct DepartureView: View {
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
             let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
-            self.stopEvents = stopEventContainer.stopEvents ?? []
-            self.isLoaded = true
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
-                Task {
-                    await getDeparture()
-                }
+            await MainActor.run {
+                self.stopEvents = stopEventContainer.stopEvents ?? []
+                self.isLoaded = true
             }
+
         } catch {
             if !Task.isCancelled {
                 print("DepartureMonitor error: \(error)")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    Task {
+                do {
+                    try await Task.sleep(for: .seconds(1))
+                    if !Task.isCancelled {
                         await getDeparture()
                     }
+                } catch {
+                    // Task was cancelled during sleep
+                    return
                 }
             }
         }
@@ -217,7 +224,7 @@ struct DepartureView: View {
     func startActivity(stopEvent: StopEvent) {
         if ActivityAuthorizationInfo().areActivitiesEnabled {
             let state = TripAttributes.ContentState(timetabledTime: stopEvent.departureTimePlanned, estimatedTime: stopEvent.departureTimeEstimated)
-            let attributes = TripAttributes(name: stop.name, icon: stopEvent.getIcon(), stopID: String(stop.stopID), lineRef: stopEvent.transportation.getLineRef(), timetabledTime: stopEvent.departureTimePlanned, directionRef: "outward", publishedLineName: stopEvent.transportation.number, destinationText: stopEvent.transportation.destination.name)
+            let attributes = TripAttributes(name: stop.name, icon: stopEvent.getIcon(), stopID: String(stop.stopID), lineRef: stopEvent.transportation.id, timetabledTime: stopEvent.departureTimePlanned, directionRef: "outward", publishedLineName: stopEvent.transportation.number, destinationText: stopEvent.transportation.destination.name)
 
             let activityContent = ActivityContent(state: state, staleDate: Calendar.current.date(byAdding: .minute, value: 30, to: Date())!)
 
@@ -245,10 +252,11 @@ struct DepartureView: View {
         }
         pushTokenHistory.add(token: token)
 
-        let url = URL(string: "https://dvb.hsrv.me/api/activity")!
+        let url = URL(string: "https://dvb.hsrv.me/api/activity_v2")!
+        let date = getISO8601Date(dateString: stopEvent.departureTimePlanned)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopGID: stop.gid, lineRef: stopEvent.transportation.getLineRef(), directionRef: "outward", timetabledTime: stopEvent.getScheduledTime(), estimatedTime: stopEvent.getEstimatedTime()))
+        request.httpBody = try? JSONEncoder().encode(ActivityRequest(token: token, stopID: stop.gid, line: stopEvent.transportation.id, tripCode: String(stopEvent.transportation.properties.tripCode ?? 0), date: getDateStampURL(date: date), time: getTimeStampURL(date: date)))
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
@@ -259,13 +267,11 @@ struct DepartureView: View {
                 return
             }
 
-            guard let content = data else {
+            guard data != nil else {
                 print("DepartureMonitor Live Activity Request: No data")
                 showingErrorAlert = true
                 return
             }
-
-            print(content)
         }
         task.resume()
     }

@@ -255,9 +255,18 @@ struct ConnectionView: View {
                     } label: {
                         Text("Verbindungen anzeigen")
                             .frame(maxWidth: .infinity)
+                            .foregroundStyle(Color(UIColor { traitCollection in
+                                if traitCollection.userInterfaceStyle == .dark {
+                                    return .systemGray6
+                                } else {
+                                    return .white
+                                }
+                            }
+                        ))
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .frame(height: buttonHeight)
+
                     // .disabled(filter.startStop != nil && filter.endStop != nil ? false : true)
                 }.buttonStyle(BorderlessButtonStyle()) // used so the hitbox of the buttons is correct
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)) // remove padding
