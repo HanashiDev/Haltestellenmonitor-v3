@@ -25,11 +25,13 @@ struct LiveActivityBannerSmall: View {
                     if context.state.done {
                         Image(systemName: "checkmark.circle")
                             .foregroundColor(Color.green)
+                            .frame(height: 15) // prevent shifting when done
                     } else {
                         HStack {
                             Text("in \(context.state.getIn()) min")
                             Text("(\(context.state.getRealTime()))")
                         }
+                        .frame(height: 15) // prevent shifting when done
                     }
                 }
             }
