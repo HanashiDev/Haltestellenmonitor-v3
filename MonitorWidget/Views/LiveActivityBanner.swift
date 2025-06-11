@@ -64,7 +64,7 @@ struct LiveActivityBanner: View {
             .font(.subheadline)
             ProgressView(value: context.attributes.getProgress(context.state))
                 .progressViewStyle(.linear)
-                .tint(.yellow)
+                .tint(.blue)
                 .background(.white)
 
             HStack {

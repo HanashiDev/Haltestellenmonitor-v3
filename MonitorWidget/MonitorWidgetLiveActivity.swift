@@ -215,6 +215,7 @@ struct SupplementalMonitorWidgetLiveActivity: View {
                 .widgetURL(getWidgetUrl(context: context))
                 .foregroundColor(Color.black)
                 .padding()
+                .background(Color("NotificationBackground")) // helps for Preview
                 .activityBackgroundTint(Color("NotificationBackground"))
                 .activitySystemActionForegroundColor(Color.black)
                 .dynamicTypeSize(.medium ... .large)
@@ -244,7 +245,7 @@ extension TripAttributes.ContentState {
     }
 
     static var in_progress: TripAttributes.ContentState {
-        TripAttributes.ContentState(timetabledTime: getISO8601DateString(date: Date().addingTimeInterval(180)), estimatedTime: getISO8601DateString(date: Date().addingTimeInterval(540)), done: false)
+        TripAttributes.ContentState(timetabledTime: getISO8601DateString(date: Date().addingTimeInterval(180)), estimatedTime: getISO8601DateString(date: Date().addingTimeInterval(300)), done: false)
     }
 
     static var complete: TripAttributes.ContentState {
