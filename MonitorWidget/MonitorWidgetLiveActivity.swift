@@ -151,11 +151,11 @@ struct MonitorWidgetLiveActivity: Widget {
                                 .lineLimit(1)
                                 .font(.title)
                         }
+                        .padding(.bottom, 1.0)
                         HStack {
                             Image(systemName: "location")
                             Text(context.attributes.name)
                         }
-                        .padding(.bottom, 1.0)
                         // maybe insert progress bar here
                     }
                     .font(.subheadline)
