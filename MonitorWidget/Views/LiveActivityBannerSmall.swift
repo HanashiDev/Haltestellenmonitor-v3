@@ -13,30 +13,39 @@ struct LiveActivityBannerSmall: View {
     let context: ActivityViewContext<TripAttributes>
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(context.attributes.name)
+        HStack {
+            Text(context.attributes.getIcon())
+                .frame(width: 20)
+            VStack(alignment: .leading) {
+                Text(
+                    "\(context.attributes.publishedLineName) \(context.attributes.destinationText)"
+                )
                 .font(.headline)
                 .lineLimit(1)
-            HStack {
-                Text(context.attributes.getIcon())
-                VStack(alignment: .leading) {
-                    Text("\(context.attributes.publishedLineName) \(context.attributes.destinationText)")
-                        .lineLimit(1)
-                    if context.state.done {
-                        Image(systemName: "checkmark.circle")
-                            .foregroundColor(Color.green)
-                            .frame(height: 15) // prevent shifting when done
-                    } else {
-                        HStack {
-                            Text("in \(context.state.getIn()) min")
-                            Text("(\(context.state.getRealTime()))")
-                        }
-                        .frame(height: 15) // prevent shifting when done
+                if context.state.done {
+                    Image(systemName: "checkmark.circle")
+                        .foregroundColor(Color.green)
+                } else {
+                    HStack {
+                        Text("in \(context.state.getIn()) min")
+                        Text("(\(context.state.getRealTime()))")
                     }
+                    Text(context.attributes.name)
+                        .font(.footnote)
+                        .lineLimit(1)
                 }
-            }
-            .font(.subheadline)
+            }.frame(maxWidth: .infinity, alignment: .leading)
         }
+        .font(.subheadline)
     }
 
+}
+
+@available(iOS 18.0, *)
+#Preview("Banner & Watch", as: .content, using: TripAttributes.preview) {
+    MonitorWidgetLiveActivity()
+} contentStates: {
+    TripAttributes.ContentState.initial
+    TripAttributes.ContentState.in_progress
+    TripAttributes.ContentState.complete
 }
