@@ -144,17 +144,19 @@ struct MonitorWidgetLiveActivity: Widget {
                     .font(.subheadline)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .center) {
+                        HStack {
+                            Text(context.attributes.getIcon())
+                            Text("\(context.attributes.publishedLineName) \(context.attributes.destinationText)")
+                                .lineLimit(1)
+                                .font(.title)
+                        }
                         HStack {
                             Image(systemName: "location")
                             Text(context.attributes.name)
                         }
                         .padding(.bottom, 1.0)
-                        HStack {
-                            Text(context.attributes.getIcon())
-                            Text("\(context.attributes.publishedLineName) \(context.attributes.destinationText)")
-                                .lineLimit(1)
-                        }
+                        // maybe insert progress bar here
                     }
                     .font(.subheadline)
                 }
