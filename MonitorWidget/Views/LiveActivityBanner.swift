@@ -8,6 +8,15 @@
 import SwiftUI
 import WidgetKit
 
+struct Line: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: 0, y: rect.midY))
+        path.addLine(to: CGPoint(x: rect.width, y: rect.midY))
+        return path
+    }
+}
+
 struct LiveActivityBanner: View {
     let context: ActivityViewContext<TripAttributes>
 
@@ -63,9 +72,7 @@ struct LiveActivityBanner: View {
             }
             .font(.subheadline)
             ProgressView(value: context.attributes.getProgress(context.state))
-                .progressViewStyle(.linear)
-                .tint(.blue)
-                .background(.white)
+                .progressViewStyle(CustomProgressBar())
 
             HStack {
                 Spacer()
@@ -84,6 +91,50 @@ struct LiveActivityBanner: View {
                 Spacer()
             }
             .frame(height: 15) // prevent shifting when done
+        }
+    }
+}
+
+
+struct CustomProgressBar: ProgressViewStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        GeometryReader { geometry in
+            let width = geometry.size.width
+            let progress = configuration.fractionCompleted ?? 0.0
+            let lineHeight: CGFloat = 4
+            let dotSize: CGFloat = 15
+
+            ZStack(alignment: .leading) {
+                // Background dashed line for remaining progress
+                Line()
+                    .stroke(Color.white, style: StrokeStyle(lineWidth: lineHeight - 1, lineCap: .round, dash: [8, 12]))
+                    .frame(width: width, height: dotSize)
+
+                // Completed progress
+                Line()
+                    .stroke(style: StrokeStyle(lineWidth: lineHeight + 2, lineCap: .round))
+                    .fill(Color.blue)
+                    .frame(width: width * CGFloat(progress), height: lineHeight)
+                    .animation(.none, value: progress)
+
+                if progress == 1 {
+                    Circle()
+                        .fill(Color.blue)
+                        .frame(width: dotSize, height: dotSize)
+                        .offset(x: width - (dotSize / 2))
+                    Image(systemName: "checkmark")
+                        .resizable()
+                        .foregroundColor(Color.white)
+                        .frame(width: dotSize / 2, height: dotSize / 2)
+                        .offset(x: width - (dotSize / 4))
+                } else {
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: dotSize, height: dotSize)
+                        .offset(x: width - (dotSize / 2))
+                }
+            }
+            .frame(width: width)
         }
     }
 }
