@@ -80,6 +80,12 @@ struct SingleTripView: View {
             if !Task.isCancelled {
                 print("SingleTrip error: \(error)")
                 do {
+                    let (content, _) = try await URLSession.shared.data(for: request)
+                    print(content.base64EncodedString())
+                } catch {
+
+                }
+                do {
                     try await Task.sleep(for: .seconds(1))
                     if !Task.isCancelled {
                         await getSingleTrip()
