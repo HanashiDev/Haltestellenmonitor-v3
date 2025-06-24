@@ -99,6 +99,80 @@ struct ConnectionView: View {
 
     func listView() -> some View {
         Form {
+            HStack {
+                Section {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            HStack {
+                                Text("Startpunkt")
+                                    .lineLimit(1)
+                                Spacer()
+                                Text(filter.startStop == nil ? "Keine Auswahl" : filter.startStop?.displayName ?? "Keine Auswahl")
+                                    .foregroundColor(Color.gray)
+                                    .lineLimit(1)
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                filter.start = true
+                                showingSheet = true
+                            }
+                            .accessibilityElement(children: .combine)
+                            .accessibilityAddTraits(.isButton)
+                            
+                            Image(systemName: "location").onTapGesture {
+                                locationManager.requestCurrentLocationComplete {
+                                    locationManager.lookUpCurrentLocation { placemark in
+                                        if placemark != nil {
+                                            filter.startStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
+                                        }
+                                    }
+                                }
+                            }
+                            .foregroundStyle(Color.accentColor)
+                            .accessibilityLabel("Aktuellen Standort als Startpunkt setzen")
+                        }
+                        
+                        Divider()
+                        
+                        HStack {
+                            HStack {
+                                Text("Zielpunkt")
+                                    .lineLimit(1)
+                                Spacer()
+                                Text(filter.endStop == nil ? "Keine Auswahl" : filter.endStop?.displayName ?? "Keine Auswahl")
+                                    .foregroundColor(Color.gray)
+                                    .lineLimit(1)
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                filter.start = false
+                                showingSheet = true
+                            }
+                            .accessibilityElement(children: .combine)
+                            .accessibilityAddTraits(.isButton)
+                            
+                            Image(systemName: "arrow.up.arrow.down")
+                                .onTapGesture {
+                                    switchStops()
+                                }
+                                .foregroundStyle(Color.accentColor)
+                                .accessibilityLabel("Starpunkt und Zielpunkt vertauschen")
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity) // Make the section take available space
+                
+                /* // TODO: uncomment when in-between stops implemented
+                Image(systemName: "plus.circle")
+                    .onTapGesture {
+                        // TODO: implement add in-between-stop
+                        print("add stop")
+                    }
+                    .foregroundStyle(Color.accentColor)
+                    .accessibilityLabel("Zischenstop hinzufügen")
+                 */
+            }
+            
             Section {
                 if favoriteConnections.favorites.count > 0 {
                     DisclosureGroup("Favoriten") {
@@ -123,67 +197,6 @@ struct ConnectionView: View {
                             .accessibilityAddTraits(.isButton)
                         }
                     }.accessibilityHint("Gespeicherte Verbindungen")
-                }
-                HStack {
-                    HStack {
-                        Text("Startpunkt")
-                            .lineLimit(1)
-                        Spacer()
-                        Text(filter.startStop == nil ? "Keine Auswahl" : filter.startStop?.displayName ?? "Keine Auswahl")
-                            .foregroundColor(Color.gray)
-                            .lineLimit(1)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        filter.start = true
-                        showingSheet = true
-                    }
-                    .accessibilityElement(children: .combine)
-                    .accessibilityAddTraits(.isButton)
-
-                    Button {
-                        locationManager.requestCurrentLocationComplete {
-                            locationManager.lookUpCurrentLocation { placemark in
-                                if placemark != nil {
-                                    filter.startStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
-                                }
-                            }
-                        }
-                    } label: {
-                        Image(systemName: "location")
-                    }
-                    .accessibilityLabel("Aktuellen Standort als Startpunkt setzen")
-                }
-
-                HStack {
-                    HStack {
-                        Text("Zielpunkt")
-                            .lineLimit(1)
-                        Spacer()
-                        Text(filter.endStop == nil ? "Keine Auswahl" : filter.endStop?.displayName ?? "Keine Auswahl")
-                            .foregroundColor(Color.gray)
-                            .lineLimit(1)
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        filter.start = false
-                        showingSheet = true
-                    }
-                    .accessibilityElement(children: .combine)
-                    .accessibilityAddTraits(.isButton)
-
-                    Button {
-                        locationManager.requestCurrentLocationComplete {
-                            locationManager.lookUpCurrentLocation { placemark in
-                                if placemark != nil {
-                                    filter.endStop = ConnectionStop(displayName: "\(placemark?.name ?? ""), \(placemark?.postalCode ?? "") \(placemark?.locality ?? "")", location: StopCoordinate(latitude: locationManager.location?.latitude ?? 0, longitude: locationManager.location?.longitude ?? 0))
-                                }
-                            }
-                        }
-                    } label: {
-                        Image(systemName: "location")
-                    }
-                    .accessibilityLabel("Aktuellen Standort als Zielpunkt setzen")
                 }
 
                 DisclosureGroup("Verkehrsmittel") {
@@ -303,6 +316,12 @@ struct ConnectionView: View {
                 .frame(maxWidth: .infinity)
             }
         }
+    }
+    
+    func switchStops() {
+        let stop1 = filter.endStop
+        filter.endStop = filter.startStop
+        filter.startStop = stop1
     }
 
     func createRequestData() async {
