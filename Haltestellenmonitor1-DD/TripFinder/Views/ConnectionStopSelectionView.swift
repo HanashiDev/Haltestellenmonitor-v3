@@ -153,7 +153,7 @@ struct ConnectionStopSelectionView: View {
         if searchText.isEmpty {
             return stops
         } else {
-            return stops.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return stops.filter { $0.getFullName().lowercased().contains(searchText.lowercased()) }
         }
     }
 
