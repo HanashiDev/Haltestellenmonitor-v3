@@ -84,7 +84,15 @@ struct SingleTripView: View {
                 selectedDetent = .fraction(0.1 * Double(stopEvent.infos?.count ?? 0))
             }
         }
-        .sheet(isPresented: $showingAlertSheet) {
+        .sheet(
+            isPresented: $showingAlertSheet,
+            onDismiss: {
+                if #available(iOS 17.0, *) {
+                    // reset to small state
+                    selectedDetent = .fraction(0.1 * Double(stopEvent.infos?.count ?? 0))
+                }
+            }
+        ) {
             DepartureInfoView(stopEvent: stopEvent, selectedDetent: $selectedDetent)
                 .presentationDetents([.fraction(0.1 * Double(stopEvent.infos?.count ?? 0)), .large], selection: $selectedDetent)
         }
