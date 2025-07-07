@@ -15,6 +15,9 @@ struct SingleTripView: View {
     @State private var searchText = ""
     @State private var showingSuccessAlert = false
     @State private var showingErrorAlert = false
+    @State private var showingAlertSheet = false
+    @State var selectedDetent: PresentationDetent = .large
+
     var stop: Stop
     var stopEvent: StopEvent
 
@@ -26,10 +29,9 @@ struct SingleTripView: View {
                     if stopEvent.hasInfos() {
                         HStack {
                             ZStack {
-                                NavigationLink {
-                                    DepartureInfoView(stopEvent: stopEvent)
+                                Button {
+                                    showingAlertSheet.toggle()
                                 } label: {
-                                    EmptyView()
                                 }
                                 .opacity(0.0)
                                 HStack {
@@ -76,6 +78,15 @@ struct SingleTripView: View {
         }
         .refreshable {
             await getSingleTrip()
+        }
+        .onAppear {
+            if #available(iOS 17.0, *) {
+                selectedDetent = .fraction(0.1 * Double(stopEvent.infos?.count ?? 0))
+            }
+        }
+        .sheet(isPresented: $showingAlertSheet) {
+            DepartureInfoView(stopEvent: stopEvent, selectedDetent: $selectedDetent)
+                .presentationDetents([.fraction(0.1 * Double(stopEvent.infos?.count ?? 0)), .large], selection: $selectedDetent)
         }
         .navigationTitle("\(stopEvent.getIcon()) \(stopEvent.getName())")
         .task(id: stopEvent.transportation.properties.globalId, priority: .userInitiated) {
@@ -229,7 +240,7 @@ struct SingleTripView: View {
                                                  name: "HBF",
                                                  parent: Location(id: "de:14612:28", name: "HBF DD", disassembledName: "", type: "stop", coord: [], properties: Stop_Property(stopId: "de:14612:28")),
                                                  properties: StopSequenceItem.properties(platfromName: "", plannedPlatformName: ""))],
-                stop: Stop.getByGID(gid: "de:14612:28")!,
+                selectedDetent: PresentationDetent.large, stop: Stop.getByGID(gid: "de:14612:28")!,
                 stopEvent: StopEvent(
                     location: Location(id: "de:14612:28", name: "HBF DD", disassembledName: "", type: "stop", coord: [], properties: Stop_Property(stopId: "de:14612:28")),
                     departureTimePlanned: "2025-03-26T06:00:00Z",

@@ -10,14 +10,58 @@ import SwiftUI
 
 struct DepartureInfoView: View {
     let stopEvent: StopEvent
+    @Binding var selectedDetent: PresentationDetent
+    @State var expandedRows: Set<Int> = []
+
+    private var anyRowExpanded: Bool {
+        !expandedRows.isEmpty
+    }
 
     var body: some View {
         // only use after check for stopEvent.infos exists
         Group {
             VStack {
-                List(stopEvent.infos!, id: \.self) { info in
-                    ForEach(info.infoLinks, id: \.self) { link in
-                        DepartureInfoViewRow(infoLink: link)
+                Spacer(minLength: 20)
+                List(Array(stopEvent.infos!.enumerated()), id: \.offset) { bigIndex, info in
+                    if #available(iOS 17.0, *) {
+                        ForEach(Array(info.infoLinks.enumerated()), id: \.offset) { index, link in
+                            DepartureInfoViewRow(
+                                infoLink: link,
+                                isExpanded: Binding(
+                                    get: { expandedRows.contains(100 * bigIndex + index) },
+                                    set: { isExpanded in
+                                        if isExpanded {
+                                            expandedRows.insert(100 * bigIndex + index)
+                                        } else {
+                                            expandedRows.remove(100 * bigIndex + index)
+                                        }
+                                    }
+                                )
+                            )
+                        }
+                        .onChange(of: anyRowExpanded) { _, expanded in
+                            withAnimation(.spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)) {
+                                selectedDetent = expanded ?
+                                PresentationDetent.large :
+                                PresentationDetent.fraction(min(1.0, 0.1 * Double(stopEvent.infos?.count ?? 0)))
+                            }
+                        }
+                    } else {
+                        ForEach(Array(info.infoLinks.enumerated()), id: \.offset) { index, link in
+                            DepartureInfoViewRow(
+                                infoLink: link,
+                                isExpanded: Binding(
+                                    get: { expandedRows.contains(index) },
+                                    set: { isExpanded in
+                                        if isExpanded {
+                                            expandedRows.insert(index)
+                                        } else {
+                                            expandedRows.remove(index)
+                                        }
+                                    }
+                                )
+                            )
+                        }
                     }
                 }
                 .listStyle(PlainListStyle())
@@ -26,7 +70,7 @@ struct DepartureInfoView: View {
         .navigationTitle("Meldungen für \(stopEvent.getName())")
     }
 }
-
+//
 // struct DepartureInfoPreview: PreviewProvider {
 //    static var previews: some View {
 //        //        NavigationStack {

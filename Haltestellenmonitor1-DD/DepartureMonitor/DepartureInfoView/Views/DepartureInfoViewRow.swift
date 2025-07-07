@@ -9,11 +9,13 @@ import SwiftUI
 
 struct DepartureInfoViewRow: View {
     let infoLink: InfoLink
+    @Binding var isExpanded: Bool
     @State private var convertedText: [[stringSection]] = []
     @State private var subtitleText: String = ""
 
     var body: some View {
         DisclosureGroup(
+            isExpanded: $isExpanded,
             content: {
                 VStack {
                     ForEach(convertedText, id: \.self) {section in
