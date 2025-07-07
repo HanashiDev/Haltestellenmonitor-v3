@@ -62,24 +62,22 @@ struct LiveActivityBanner: View {
                 }
             }
             Spacer()
-
+            
             HStack {
                 Text(context.attributes.name)
                     .lineLimit(1)
                 Spacer()
-                    Text("\(context.state.getRealTime()) Uhr")
-                        .contentTransition(.numericText())
+                Text("\(context.state.getRealTime()) Uhr")
+                    .contentTransition(.numericText())
             }
             .font(.subheadline)
             ProgressView(value: context.attributes.getProgress(context.state))
                 .progressViewStyle(CustomProgressBar())
-
-            HStack {
-                Spacer()
-                if context.state.done {
-                    Image(systemName: "checkmark.circle")
-                        .foregroundColor(Color.green)
-                } else {
+                .padding(.horizontal, 5)
+            
+            if !context.state.done {
+                HStack {
+                    Spacer()
                     if #available(iOS 17.0, *) {
                         Text("in \(context.state.getIn()) min")
                             .contentTransition(.numericText(value: Double(context.state.getIn())))
@@ -87,11 +85,11 @@ struct LiveActivityBanner: View {
                         Text("in \(context.state.getIn()) min")
                             .contentTransition(.numericText(countsDown: true))
                     }
+                    
+                    Spacer()
                 }
-                Spacer()
-            }
-            .frame(height: 15) // prevent shifting when done
-        }
+                .frame(height: 15) // prevent shifting when done
+            }}
     }
 }
 
@@ -113,13 +111,13 @@ struct CustomProgressBar: ProgressViewStyle {
                 // Completed progress
                 Line()
                     .stroke(style: StrokeStyle(lineWidth: lineHeight + 2, lineCap: .round))
-                    .fill(Color.blue)
+                    .fill((progress == 1 ? Color.green : Color.blue))
                     .frame(width: width * CGFloat(progress), height: lineHeight)
                     .animation(.none, value: progress)
 
                 if progress == 1 {
                     Circle()
-                        .fill(Color.blue)
+                        .fill(Color.green)
                         .frame(width: dotSize, height: dotSize)
                         .offset(x: width - (dotSize / 2))
                     Image(systemName: "checkmark")
