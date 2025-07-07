@@ -118,7 +118,7 @@ struct ConnectionView: View {
                             }
                             .accessibilityElement(children: .combine)
                             .accessibilityAddTraits(.isButton)
-                            
+
                             Image(systemName: "location").onTapGesture {
                                 locationManager.requestCurrentLocationComplete {
                                     locationManager.lookUpCurrentLocation { placemark in
@@ -131,9 +131,9 @@ struct ConnectionView: View {
                             .foregroundStyle(Color.accentColor)
                             .accessibilityLabel("Aktuellen Standort als Startpunkt setzen")
                         }
-                        
+
                         Divider()
-                        
+
                         HStack {
                             HStack {
                                 Text("Zielpunkt")
@@ -150,7 +150,7 @@ struct ConnectionView: View {
                             }
                             .accessibilityElement(children: .combine)
                             .accessibilityAddTraits(.isButton)
-                            
+
                             Image(systemName: "arrow.up.arrow.down")
                                 .onTapGesture {
                                     switchStops()
@@ -161,7 +161,7 @@ struct ConnectionView: View {
                     }
                 }
                 .frame(maxWidth: .infinity) // Make the section take available space
-                
+
                 /* // TODO: uncomment when in-between stops implemented
                 Image(systemName: "plus.circle")
                     .onTapGesture {
@@ -172,7 +172,7 @@ struct ConnectionView: View {
                     .accessibilityLabel("Zischenstop hinzufügen")
                  */
             }
-            
+
             Section {
                 if favoriteConnections.favorites.count > 0 {
                     DisclosureGroup("Favoriten") {
@@ -317,7 +317,7 @@ struct ConnectionView: View {
             }
         }
     }
-    
+
     func switchStops() {
         let stop1 = filter.endStop
         filter.endStop = filter.startStop
