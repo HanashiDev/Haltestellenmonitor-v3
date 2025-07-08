@@ -248,21 +248,21 @@ struct SingleTripView: View {
                 stopSequence: [ StopSequenceItem(id: "1",
                                                  name: "HBF",
                                                  parent: Location(id: "de:14612:28", name: "HBF DD", disassembledName: "", type: "stop", coord: [], properties: Stop_Property(stopId: "de:14612:28")),
-                                                 properties: StopSequenceItem.properties(platfromName: "", plannedPlatformName: ""))],
+                                                 properties: StopSequenceItem.properties(platfromName: "1", plannedPlatformName: ""))],
                 selectedDetent: PresentationDetent.large, stop: Stop.getByGID(gid: "de:14612:28")!,
                 stopEvent: StopEvent(
                     location: Location(id: "de:14612:28", name: "HBF DD", disassembledName: "", type: "stop", coord: [], properties: Stop_Property(stopId: "de:14612:28")),
                     departureTimePlanned: "2025-03-26T06:00:00Z",
                     departureTimeBaseTimetable: "2025-03-26T06:00:00Z",
-                    transportation: Transportation(id: "ddb:98X27: :R:j25", number: "870",
-                                                   product: Product(name: "Zug", iconId: 6),
+                    transportation: Transportation(id: "ddb:92D01: :H:j25",
+                                                   number: "S1",
+                                                   product: Product(name: "S-Bahn", iconId: 2),
                                                    properties: T_Properties(),
-                                                   destination: Place(id: "", name: "", type: "")),
+                                                   destination: Place(id: "33003598", name: "Schöna Bahnhof", type: "stop")),
                     infos: [Info(priority: "Medium",
-                                infoLinks: [ InfoLink(urlText: "", url: "", content: "Hallo Welt", subtitle: "hi")]),
-                           Info(priority: "Medium",
-                                infoLinks: [ InfoLink(urlText: "", url: "", content: "Hallo Welt wie geht es dir heute mir geht es gut und dir auch? das hier ist jetzt ganz viel Text um die expansion weiter zu testen, wenn der Text länger ist soll nämlich die View weiter nach unten expandiert werden", subtitle: "hi", title: "Test"), InfoLink(urlText: "", url: "", content: "<h1>Hallö Welt</h1><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>", subtitle: "hi", title: "Test2")])]))
-
+                                 infoLinks: [ InfoLink(urlText: "", url: "", content: "Hallo Welt", subtitle: "hi")]),
+                            Info(priority: "Medium",
+                                 infoLinks: [ InfoLink(urlText: "", url: "", content: "Hallo Welt wie geht es dir heute mir geht es gut und dir auch? das hier ist jetzt ganz viel Text um die expansion weiter zu testen, wenn der Text länger ist soll nämlich die View weiter nach unten expandiert werden", subtitle: "hi", title: "Test"), InfoLink(urlText: "", url: "", content: "<h1>Hallö Welt</h1><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>", subtitle: "hi", title: "Test2")])]))
         }.environmentObject(PushTokenHistory())
-    }
+        }
  }

@@ -121,7 +121,7 @@ struct StopEvent: Hashable, Codable {
             return 0
         }
         for info in self.infos! {
-            for link in info.infoLinks {
+            for _ in info.infoLinks {
                 amount += 1
             }
         }

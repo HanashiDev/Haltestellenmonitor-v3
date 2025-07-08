@@ -91,7 +91,7 @@ struct DepartureInfoView: View {
                     departureTimeBaseTimetable: "2025-03-26T06:00:00Z",
                     transportation: Transportation(
                         id: "ddb:98X27: :R:j25",
-                        number: "870",
+                        number: "ICE 870",
                         product: Product(name: "Zug", iconId: 6),
                         properties: T_Properties(),
                         destination: Place(id: "", name: "", type: "")
