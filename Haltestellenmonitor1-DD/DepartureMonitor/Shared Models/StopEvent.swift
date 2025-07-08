@@ -115,6 +115,19 @@ struct StopEvent: Hashable, Codable {
         return self.infos != nil
     }
 
+    func getInfosAmount() -> Int {
+        var amount: Int = 0
+        if self.infos == nil {
+            return 0
+        }
+        for info in self.infos! {
+            for link in info.infoLinks {
+                amount += 1
+            }
+        }
+        return amount
+    }
+
     // func hasHints() -> Bool {
     //    return self.hints != nil
     // }
