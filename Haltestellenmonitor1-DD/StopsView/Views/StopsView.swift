@@ -16,43 +16,50 @@ struct StopsView: View {
 
     var body: some View {
         NavigationSplitView(columnVisibility: $visible) {
-            List(searchResults, id: \.self, selection: $stopManager.selectedStop) { stop in
-                ZStack {
-                    NavigationLink(value: stop) {
-                        EmptyView()
-                    }
-                    .opacity(0.0)
-                    .buttonStyle(.plain)
+            ScrollViewReader { scrollPosition in
+                List(Array(searchResults.enumerated()), id: \.offset, selection: $stopManager.selectedStop) { _, stop in
+                    ZStack {
+                        NavigationLink(value: stop) {
+                            EmptyView()
+                        }
+                        .opacity(0.0)
+                        .buttonStyle(.plain)
 
-                    StopRow(stop: stop)
-                }
-                .swipeActions(edge: .trailing) {
-                    if favoriteStops.isFavorite(stopID: stop.stopID) {
-                        Button {
-                            favoriteStops.remove(stopID: stop.stopID)
-                        } label: {
-                            Label("Unstar", systemImage: "star.fill")
+                        StopRow(stop: stop)
+                    }
+                    .swipeActions(edge: .trailing) {
+                        if favoriteStops.isFavorite(stopID: stop.stopID) {
+                            Button {
+                                favoriteStops.remove(stopID: stop.stopID)
+                            } label: {
+                                Label("Unstar", systemImage: "star.fill")
+                            }
+                            .tint(.red)
+                        } else {
+                            Button {
+                                favoriteStops.add(stopID: stop.stopID)
+                            } label: {
+                                Label("Star", systemImage: "star")
+                            }
+                            .tint(.yellow)
                         }
-                        .tint(.red)
-                    } else {
-                        Button {
-                            favoriteStops.add(stopID: stop.stopID)
-                        } label: {
-                            Label("Star", systemImage: "star")
-                        }
-                        .tint(.yellow)
                     }
                 }
-            }
-            .navigationTitle("🚏 Haltestellen")
-            .toolbar {
-                Button {
-                    locationManager.requestCurrentLocation()
-                } label: {
-                    Label("Position aktualisieren", systemImage: "location")
+                .navigationTitle("🚏 Haltestellen")
+                .toolbar {
+                    Button {
+                        locationManager.requestCurrentLocation()
+                        DispatchQueue.main.async {
+                            withAnimation(.easeInOut(duration: 1)) {
+                                scrollPosition.scrollTo(0, anchor: .top)
+                            }
+                        }
+                    } label: {
+                        Label("Position aktualisieren", systemImage: "location")
+                    }
                 }
+                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             }
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         } detail: {
             if stopManager.selectedStop == nil {
                 EmptyView()

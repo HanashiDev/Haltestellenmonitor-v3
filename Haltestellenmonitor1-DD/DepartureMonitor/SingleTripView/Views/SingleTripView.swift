@@ -15,6 +15,9 @@ struct SingleTripView: View {
     @State private var searchText = ""
     @State private var showingSuccessAlert = false
     @State private var showingErrorAlert = false
+    @State private var showingAlertSheet = false
+    @State var selectedDetent: PresentationDetent = .large
+
     var stop: Stop
     var stopEvent: StopEvent
 
@@ -26,10 +29,9 @@ struct SingleTripView: View {
                     if stopEvent.hasInfos() {
                         HStack {
                             ZStack {
-                                NavigationLink {
-                                    DepartureInfoView(stopEvent: stopEvent)
+                                Button {
+                                    showingAlertSheet.toggle()
                                 } label: {
-                                    EmptyView()
                                 }
                                 .opacity(0.0)
                                 HStack {
@@ -76,6 +78,24 @@ struct SingleTripView: View {
         }
         .refreshable {
             await getSingleTrip()
+        }
+        .onAppear {
+            if #available(iOS 17.0, *) {
+                selectedDetent = .fraction(min(1.0, 0.1 * Double(stopEvent.getInfosAmount())))
+            }
+        }
+        .sheet(
+            isPresented: $showingAlertSheet,
+            onDismiss: {
+                if #available(iOS 17.0, *) {
+                    // reset to small state
+                    selectedDetent = .fraction(min(1.0, 0.1 * Double(stopEvent.getInfosAmount())))
+                }
+            }
+        ) {
+            DepartureInfoView(stopEvent: stopEvent, selectedDetent: $selectedDetent)
+                .presentationDetents([.fraction(min(1.0, 0.1 * Double(stopEvent.getInfosAmount()))), .large], selection: $selectedDetent)
+                .presentationCornerRadius(30)
         }
         .navigationTitle("\(stopEvent.getIcon()) \(stopEvent.getName())")
         .task(id: stopEvent.transportation.properties.globalId, priority: .userInitiated) {
@@ -221,23 +241,28 @@ struct SingleTripView: View {
     }
 }
 
-// struct SingleTripView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationStack {
-//            SingleTripView(stopSequence: [StopSequenceItem(id: "1", name: "HBF", type: "", niveau: 1, productClasses: [1, 4], properties: StopSequenceItem.properties(AREA_NIVEAU_DIVA: "", DestinationText: "Schwimmbad", area: "", platform: "1"))], stop: Stop.getByGID(gid: "de:14612:28")!,
-//                           stopEvent: StopEvent(
-//                            location: Location(Id: "de:14612:28", IsGlobalId: true, Name: "HBF DD", DisassembledName: "", type: "stop", Coord: [], Properties: Stop_Property(stopId: "de:14612:28")),
-//                            departureTimePlanned: "2025-03-26T06:00:00Z",
-//                            departureTimeBaseTimetable: "2025-03-26T06:00:00Z",
-//                            transportation: Transportation(id: "ddb:98X27: :R:j25", name: "ICE 870 InterCityExpress", number: "870",
-//                                                           product: Product(id: 0, class: 0, name: "Zug", iconId: 6),
-//                                                           properties: T_Properties(),
-//                                                           destination: Place(id: "", name: "", type: "")),
-//                            infos: [Info(priority: "Medium", id: "", version: 1, type: "Linienänderung",
-//                                         infoLinks: [ InfoLink(urlText: "", url: "", content: "Hallo Welt", subtitle: "hi")]),
-//                                    Info(priority: "Medium", id: "", version: 1, type: "Linienänderung2",
-//                                         infoLinks: [ InfoLink(urlText: "", url: "", content: "Hallo Welt wie geht es dir heute mir geht es gut und dir auch? das hier ist jetzt ganz viel Text um die expansion weiter zu testen, wenn der Text länger ist soll nämlich die View weiter nach unten expandiert werden", subtitle: "hi", title: "Test"), InfoLink(urlText: "", url: "", content: "<h1>Hallö Welt</h1><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>", subtitle: "hi", title: "Test2")])]))
-//            
-//        }.environmentObject(PushTokenHistory())
-//    }
-// }
+ struct SingleTripView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            SingleTripView(
+                stopSequence: [ StopSequenceItem(id: "1",
+                                                 name: "HBF",
+                                                 parent: Location(id: "de:14612:28", name: "HBF DD", disassembledName: "", type: "stop", coord: [], properties: Stop_Property(stopId: "de:14612:28")),
+                                                 properties: StopSequenceItem.properties(platfromName: "1", plannedPlatformName: ""))],
+                selectedDetent: PresentationDetent.large, stop: Stop.getByGID(gid: "de:14612:28")!,
+                stopEvent: StopEvent(
+                    location: Location(id: "de:14612:28", name: "HBF DD", disassembledName: "", type: "stop", coord: [], properties: Stop_Property(stopId: "de:14612:28")),
+                    departureTimePlanned: "2025-03-26T06:00:00Z",
+                    departureTimeBaseTimetable: "2025-03-26T06:00:00Z",
+                    transportation: Transportation(id: "ddb:92D01: :H:j25",
+                                                   number: "S1",
+                                                   product: Product(name: "S-Bahn", iconId: 2),
+                                                   properties: T_Properties(),
+                                                   destination: Place(id: "33003598", name: "Schöna Bahnhof", type: "stop")),
+                    infos: [Info(priority: "Medium",
+                                 infoLinks: [ InfoLink(urlText: "", url: "", content: "Hallo Welt", subtitle: "hi")]),
+                            Info(priority: "Medium",
+                                 infoLinks: [ InfoLink(urlText: "", url: "", content: "Hallo Welt wie geht es dir heute mir geht es gut und dir auch? das hier ist jetzt ganz viel Text um die expansion weiter zu testen, wenn der Text länger ist soll nämlich die View weiter nach unten expandiert werden", subtitle: "hi", title: "Test"), InfoLink(urlText: "", url: "", content: "<h1>Hallö Welt</h1><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>", subtitle: "hi", title: "Test2")])]))
+        }.environmentObject(PushTokenHistory())
+        }
+ }
