@@ -46,6 +46,12 @@ struct DepartureInfoView: View {
                                 PresentationDetent.fraction(min(1.0, stopEvent.getInfosSize()))
                             }
                         }
+                        .onChange(of: selectedDetent) {
+                            /// minimize all expanded rows on sheet minimization
+                            if selectedDetent != .large {
+                                expandedRows.removeAll()
+                            }
+                        }
                     } else {
                         ForEach(Array(info.infoLinks.enumerated()), id: \.offset) { index, link in
                             DepartureInfoViewRow(
