@@ -192,6 +192,8 @@
 		F17FF4CA2DB4E14400F553D1 /* MOTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */; };
 		F17FF4CB2DB4E14400F553D1 /* MOTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */; };
 		F17FF4CC2DB4E14400F553D1 /* MOTTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */; };
+		F18557F32DF8A32A0082EDB5 /* LiveActivityBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18557F22DF8A31F0082EDB5 /* LiveActivityBanner.swift */; };
+		F18557FB2DF8BD9D0082EDB5 /* LiveActivityBannerSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18557FA2DF8BD9D0082EDB5 /* LiveActivityBannerSmall.swift */; };
 		F19FC6EE2AE9974C00F65316 /* CustomGray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19FC6ED2AE9974C00F65316 /* CustomGray.swift */; };
 		F1A7E7CB2AEA988C00E1910F /* TripSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */; };
 		F1B8C03C2D6BC03B00F77CE4 /* DepartureRequestSingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8C03B2D6BC02500F77CE4 /* DepartureRequestSingle.swift */; };
@@ -232,6 +234,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = D0D1995129F40AA900946D87;
 			remoteInfo = "WatchMonitor Watch App";
+		};
+		F18557F82DF8AD770082EDB5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D03A267729EEB6C9005B0600 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0BD668229EFE0AA004E574C;
+			remoteInfo = MonitorWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -356,6 +365,8 @@
 		F16B7FDD2D9321C700851DC4 /* StopSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSequence.swift; sourceTree = "<group>"; };
 		F17FF4C32DB4D82E00F553D1 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOTTypes.swift; sourceTree = "<group>"; };
+		F18557F22DF8A31F0082EDB5 /* LiveActivityBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityBanner.swift; sourceTree = "<group>"; };
+		F18557FA2DF8BD9D0082EDB5 /* LiveActivityBannerSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityBannerSmall.swift; sourceTree = "<group>"; };
 		F19FC6ED2AE9974C00F65316 /* CustomGray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGray.swift; sourceTree = "<group>"; };
 		F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSectionViewModel.swift; sourceTree = "<group>"; };
 		F1B8C03B2D6BC02500F77CE4 /* DepartureRequestSingle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRequestSingle.swift; sourceTree = "<group>"; };
@@ -525,6 +536,8 @@
 		D0BD669929EFE169004E574C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F18557F22DF8A31F0082EDB5 /* LiveActivityBanner.swift */,
+				F18557FA2DF8BD9D0082EDB5 /* LiveActivityBannerSmall.swift */,
 				D0BD66CC29EFFAEB004E574C /* Rows */,
 				D0BD669A29EFE18C004E574C /* MonitorWidgetEntryView.swift */,
 			);
@@ -947,6 +960,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F18557F92DF8AD770082EDB5 /* PBXTargetDependency */,
 			);
 			name = "WatchMonitor Watch App";
 			packageProductDependencies = (
@@ -1150,6 +1164,7 @@
 				D0C1ECC929F28C2F001D214D /* TripAttributes.swift in Sources */,
 				D0142C3B2A0F90AA00646C94 /* DepartureBinding.swift in Sources */,
 				F1520EE32AE96E5A001E3E05 /* widgetLocationManager.swift in Sources */,
+				F18557F32DF8A32A0082EDB5 /* LiveActivityBanner.swift in Sources */,
 				D0BD669E29EFEA03004E574C /* Stop.swift in Sources */,
 				D0BD66C229EFEF0F004E574C /* DateParser.swift in Sources */,
 				D011F07F2C523D9D000BAB5C /* Trip.swift in Sources */,
@@ -1180,6 +1195,7 @@
 				D0BD668C29EFE0AA004E574C /* MonitorWidget.swift in Sources */,
 				D0C1ECD129F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
 				D0142C4A2A10FB1000646C94 /* ConnectionStop.swift in Sources */,
+				F18557FB2DF8BD9D0082EDB5 /* LiveActivityBannerSmall.swift in Sources */,
 				D09A505C2C4FBF43006CB5D6 /* DepartureRequest.swift in Sources */,
 				F1B8C04D2D70DD5C00F77CE4 /* Location.swift in Sources */,
 				F16B7FE12D9321CD00851DC4 /* StopSequence.swift in Sources */,
@@ -1291,6 +1307,11 @@
 			isa = PBXTargetDependency;
 			target = D0D1995129F40AA900946D87 /* WatchMonitor Watch App */;
 			targetProxy = D0D1995D29F40AAA00946D87 /* PBXContainerItemProxy */;
+		};
+		F18557F92DF8AD770082EDB5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0BD668229EFE0AA004E574C /* MonitorWidgetExtension */;
+			targetProxy = F18557F82DF8AD770082EDB5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1484,7 +1505,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1521,7 +1542,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
