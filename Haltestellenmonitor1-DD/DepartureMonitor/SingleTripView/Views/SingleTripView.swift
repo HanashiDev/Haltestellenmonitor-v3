@@ -81,7 +81,7 @@ struct SingleTripView: View {
         }
         .onAppear {
             if #available(iOS 17.0, *) {
-                selectedDetent = .fraction(min(1.0, 0.1 * Double(stopEvent.getInfosAmount())))
+                selectedDetent = .fraction(min(1.0, stopEvent.getInfosSize()))
             }
         }
         .sheet(
@@ -89,12 +89,12 @@ struct SingleTripView: View {
             onDismiss: {
                 if #available(iOS 17.0, *) {
                     // reset to small state
-                    selectedDetent = .fraction(min(1.0, 0.1 * Double(stopEvent.getInfosAmount())))
+                    selectedDetent = .fraction(min(1.0, stopEvent.getInfosSize()))
                 }
             }
         ) {
             DepartureInfoView(stopEvent: stopEvent, selectedDetent: $selectedDetent)
-                .presentationDetents([.fraction(min(1.0, 0.1 * Double(stopEvent.getInfosAmount()))), .large], selection: $selectedDetent)
+                .presentationDetents([.fraction(min(1.0, stopEvent.getInfosSize())), .large], selection: $selectedDetent)
                 .presentationCornerRadius(30)
         }
         .navigationTitle("\(stopEvent.getIcon()) \(stopEvent.getName())")

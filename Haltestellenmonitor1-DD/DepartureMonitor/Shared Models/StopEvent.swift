@@ -116,6 +116,7 @@ struct StopEvent: Hashable, Codable {
     }
 
     func getInfosAmount() -> Int {
+        /// get the amount of info rows that will be displayed
         var amount: Int = 0
         if self.infos == nil {
             return 0
@@ -124,6 +125,11 @@ struct StopEvent: Hashable, Codable {
             amount += info.infoLinks.count
         }
         return amount
+    }
+
+    func getInfosSize() -> Double {
+        /// get required sheet fraction for departure monitor info sheet
+        return 0.05 + 0.1 * Double(getInfosAmount())
     }
 
     // func hasHints() -> Bool {

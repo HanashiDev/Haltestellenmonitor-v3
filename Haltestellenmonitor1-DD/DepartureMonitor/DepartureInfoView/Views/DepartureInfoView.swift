@@ -43,7 +43,7 @@ struct DepartureInfoView: View {
                             withAnimation(.spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0)) {
                                 selectedDetent = expanded ?
                                 PresentationDetent.large :
-                                PresentationDetent.fraction(min(1.0, 0.1 * Double(stopEvent.getInfosAmount())))
+                                PresentationDetent.fraction(min(1.0, stopEvent.getInfosSize()))
                             }
                         }
                     } else {
