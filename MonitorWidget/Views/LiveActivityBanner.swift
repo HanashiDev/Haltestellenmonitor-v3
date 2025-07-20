@@ -62,7 +62,7 @@ struct LiveActivityBanner: View {
                 }
             }
             Spacer()
-            
+
             HStack {
                 Text(context.attributes.name)
                     .lineLimit(1)
@@ -74,7 +74,7 @@ struct LiveActivityBanner: View {
             ProgressView(value: context.attributes.getProgress(context.state))
                 .progressViewStyle(CustomProgressBar())
                 .padding(.horizontal, 5)
-            
+
             if !context.state.done {
                 HStack {
                     Spacer()
@@ -85,14 +85,13 @@ struct LiveActivityBanner: View {
                         Text("in \(context.state.getIn()) min")
                             .contentTransition(.numericText(countsDown: true))
                     }
-                    
+
                     Spacer()
                 }
                 .frame(height: 15) // prevent shifting when done
             }}
     }
 }
-
 
 struct CustomProgressBar: ProgressViewStyle {
     func makeBody(configuration: Configuration) -> some View {

@@ -37,6 +37,7 @@ struct LiveActivityBannerSmall: View {
             }.frame(maxWidth: .infinity, alignment: .leading)
         }
         .font(.subheadline)
+        .dynamicTypeSize(.large) // prevent overflow on larger dynamic text sizes
     }
 
 }
