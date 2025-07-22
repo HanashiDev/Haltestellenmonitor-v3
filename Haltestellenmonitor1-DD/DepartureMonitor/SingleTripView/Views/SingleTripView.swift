@@ -160,14 +160,22 @@ struct SingleTripView: View {
 
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            let stopSequenceContainer = try JSONDecoder().decode(StopSequenceContainer.self, from: content)
-            let stopEvents = stopSequenceContainer.leg.stopSequence ?? []
-
-            await MainActor.run {
-                if stopEvents.count > 0 {
-                    self.stopSequence = stopEvents
+            do {
+                let stopSequenceContainer = try JSONDecoder().decode(StopSequenceContainer.self, from: content)
+                let stopEvents = stopSequenceContainer.leg.stopSequence ?? []
+                
+                await MainActor.run {
+                    if stopEvents.count > 0 {
+                        self.stopSequence = stopEvents
+                    }
+                    self.isLoaded = true
                 }
-                self.isLoaded = true
+            }
+            catch {
+                if let jsonString = String(data: content, encoding: .utf8) {
+                    print("SingleTrip JSON DECODE error: \(error)\n\n\(jsonString)")
+
+                }
             }
         } catch {
             if !Task.isCancelled {

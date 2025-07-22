@@ -199,10 +199,17 @@ struct DepartureView: View {
 
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
-            let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
-            await MainActor.run {
-                self.stopEvents = stopEventContainer.stopEvents ?? []
-                self.isLoaded = true
+            do {
+                let stopEventContainer = try JSONDecoder().decode(StopEventContainer.self, from: content)
+                await MainActor.run {
+                    self.stopEvents = stopEventContainer.stopEvents ?? []
+                    self.isLoaded = true
+                }
+            }
+            catch {
+                if let jsonString = String(data: content, encoding: .utf8) {
+                    print("DepartureMonitor JSON DECODE error: \(error)\n\n\(jsonString)")
+                }
             }
 
         } catch {
