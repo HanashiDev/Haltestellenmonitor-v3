@@ -204,6 +204,16 @@
 		F1B8C04C2D70DD5C00F77CE4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8C04A2D70DD5900F77CE4 /* Location.swift */; };
 		F1B8C04D2D70DD5C00F77CE4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8C04A2D70DD5900F77CE4 /* Location.swift */; };
 		F1B8C04E2D70DD5C00F77CE4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8C04A2D70DD5900F77CE4 /* Location.swift */; };
+		F1C036F52E33F543000E49BE /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C036F42E33F53A000E49BE /* Journey.swift */; };
+		F1C036F62E33F543000E49BE /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C036F42E33F53A000E49BE /* Journey.swift */; };
+		F1C036F72E33F543000E49BE /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C036F42E33F53A000E49BE /* Journey.swift */; };
+		F1C036F82E33F543000E49BE /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C036F42E33F53A000E49BE /* Journey.swift */; };
+		F1C036F92E33F543000E49BE /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C036F42E33F53A000E49BE /* Journey.swift */; };
+		F1C036FB2E33F649000E49BE /* TripLeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C036FA2E33F641000E49BE /* TripLeg.swift */; };
+		F1C036FC2E33F649000E49BE /* TripLeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C036FA2E33F641000E49BE /* TripLeg.swift */; };
+		F1C036FD2E33F649000E49BE /* TripLeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C036FA2E33F641000E49BE /* TripLeg.swift */; };
+		F1C036FE2E33F649000E49BE /* TripLeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C036FA2E33F641000E49BE /* TripLeg.swift */; };
+		F1C036FF2E33F649000E49BE /* TripLeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C036FA2E33F641000E49BE /* TripLeg.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -371,6 +381,8 @@
 		F1A7E7CA2AEA988C00E1910F /* TripSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSectionViewModel.swift; sourceTree = "<group>"; };
 		F1B8C03B2D6BC02500F77CE4 /* DepartureRequestSingle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRequestSingle.swift; sourceTree = "<group>"; };
 		F1B8C04A2D70DD5900F77CE4 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		F1C036F42E33F53A000E49BE /* Journey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journey.swift; sourceTree = "<group>"; };
+		F1C036FA2E33F641000E49BE /* TripLeg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripLeg.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -719,6 +731,8 @@
 		F15FE0EA2DE0ECC30096C79E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F1C036F42E33F53A000E49BE /* Journey.swift */,
+				F1C036FA2E33F641000E49BE /* TripLeg.swift */,
 				D0BD66D329F02576004E574C /* ConnectionFilter.swift */,
 				D0142C482A10F73900646C94 /* ConnectionStop.swift */,
 				F19FC6ED2AE9974C00F65316 /* CustomGray.swift */,
@@ -1078,7 +1092,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D011F0932C523DE4000BAB5C /* Mot.swift in Sources */,
+				F1C036F52E33F543000E49BE /* Journey.swift in Sources */,
 				D011F08E2C523DC0000BAB5C /* RegularStop.swift in Sources */,
+				F1C036FB2E33F649000E49BE /* TripLeg.swift in Sources */,
 				D011F08A2C523DB6000BAB5C /* PartialRoute.swift in Sources */,
 				F15FE0EC2DE0F01C0096C79E /* Point.swift in Sources */,
 				D011F0862C523DA7000BAB5C /* Route.swift in Sources */,
@@ -1111,6 +1127,7 @@
 				D0C1ECE029F325CC001D214D /* MapView.swift in Sources */,
 				D0C1ECCC29F2B165001D214D /* ActivityRequest.swift in Sources */,
 				D040EC2B29EEFA3E002DFEBF /* FavoriteStop.swift in Sources */,
+				F1C036FF2E33F649000E49BE /* TripLeg.swift in Sources */,
 				D0C1ECD429F2EF9B001D214D /* DepartureFilter.swift in Sources */,
 				D0BD66FB29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */,
 				D011F07E2C523C97000BAB5C /* DeparturePlatform.swift in Sources */,
@@ -1125,6 +1142,7 @@
 				D03A269629EEB9A7005B0600 /* StopRow.swift in Sources */,
 				F13960572DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift in Sources */,
 				F13960532DCA73E5004AC9AA /* DepartureRowSkeleton.swift in Sources */,
+				F1C036F72E33F543000E49BE /* Journey.swift in Sources */,
 				F13960512DCA6B16004AC9AA /* LoadingSkeleton.swift in Sources */,
 				D040EC2229EED774002DFEBF /* DateParser.swift in Sources */,
 				F15FE1022DE0FB1F0096C79E /* StringSection.swift in Sources */,
@@ -1176,6 +1194,7 @@
 				D0BD66CE29EFFAFF004E574C /* MonitorWidgetRow.swift in Sources */,
 				D0142C602A112CBC00646C94 /* StopCoordinate.swift in Sources */,
 				D011F0872C523DB4000BAB5C /* PartialRoute.swift in Sources */,
+				F1C036FD2E33F649000E49BE /* TripLeg.swift in Sources */,
 				D011F08B2C523DBF000BAB5C /* RegularStop.swift in Sources */,
 				D0C1ECCD29F2B165001D214D /* ActivityRequest.swift in Sources */,
 				D0BD668A29EFE0AA004E574C /* MonitorWidgetLiveActivity.swift in Sources */,
@@ -1194,6 +1213,7 @@
 				D0BD66CA29EFF64D004E574C /* MonitorEntry.swift in Sources */,
 				D0BD668C29EFE0AA004E574C /* MonitorWidget.swift in Sources */,
 				D0C1ECD129F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
+				F1C036F62E33F543000E49BE /* Journey.swift in Sources */,
 				D0142C4A2A10FB1000646C94 /* ConnectionStop.swift in Sources */,
 				F18557FB2DF8BD9D0082EDB5 /* LiveActivityBannerSmall.swift in Sources */,
 				D09A505C2C4FBF43006CB5D6 /* DepartureRequest.swift in Sources */,
@@ -1214,6 +1234,7 @@
 				D0BD66F429F03C15004E574C /* Mot.swift in Sources */,
 				F1B8C03F2D6BC03B00F77CE4 /* DepartureRequestSingle.swift in Sources */,
 				D011F0842C523DA6000BAB5C /* Route.swift in Sources */,
+				F1C036FE2E33F649000E49BE /* TripLeg.swift in Sources */,
 				D0142C612A112CBD00646C94 /* StopCoordinate.swift in Sources */,
 				D0BD66D029EFFFC5004E574C /* FavoriteStop.swift in Sources */,
 				D09A505D2C4FBF43006CB5D6 /* DepartureRequest.swift in Sources */,
@@ -1228,6 +1249,7 @@
 				D0C1ECD229F2B6C0001D214D /* PushTokenHistory.swift in Sources */,
 				F17FF4C72DB4D83B00F553D1 /* DateManager.swift in Sources */,
 				F17FF4C92DB4E14400F553D1 /* MOTTypes.swift in Sources */,
+				F1C036F92E33F543000E49BE /* Journey.swift in Sources */,
 				D0142C3C2A0F90AB00646C94 /* DepartureBinding.swift in Sources */,
 				F1B8C04B2D70DD5C00F77CE4 /* Location.swift in Sources */,
 				D0BD66FD29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */,
@@ -1259,11 +1281,13 @@
 				D09A50512C4FA249006CB5D6 /* StopEvent.swift in Sources */,
 				D011F0852C523DA6000BAB5C /* Route.swift in Sources */,
 				D0D1997B29F40B9C00946D87 /* TripStandardSettings.swift in Sources */,
+				F1C036F82E33F543000E49BE /* Journey.swift in Sources */,
 				D0142C622A112CBF00646C94 /* StopCoordinate.swift in Sources */,
 				D011F0912C523DC6000BAB5C /* DeparturePlatform.swift in Sources */,
 				D0D1996F29F40B9C00946D87 /* Mot.swift in Sources */,
 				D0142C4C2A10FB1100646C94 /* ConnectionStop.swift in Sources */,
 				F15FE0ED2DE0F01C0096C79E /* Point.swift in Sources */,
+				F1C036FC2E33F649000E49BE /* TripLeg.swift in Sources */,
 				D0142C512A110F9F00646C94 /* GaussKrueger.swift in Sources */,
 				F1B8C04C2D70DD5C00F77CE4 /* Location.swift in Sources */,
 				F17FF4C42DB4D83B00F553D1 /* DateManager.swift in Sources */,

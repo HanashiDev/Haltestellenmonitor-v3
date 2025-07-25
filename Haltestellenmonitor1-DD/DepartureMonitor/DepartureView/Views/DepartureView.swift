@@ -205,8 +205,7 @@ struct DepartureView: View {
                     self.stopEvents = stopEventContainer.stopEvents ?? []
                     self.isLoaded = true
                 }
-            }
-            catch {
+            } catch {
                 if let jsonString = String(data: content, encoding: .utf8) {
                     print("DepartureMonitor JSON DECODE error: \(error)\n\n\(jsonString)")
                 }

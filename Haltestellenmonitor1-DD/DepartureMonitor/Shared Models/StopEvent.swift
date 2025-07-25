@@ -66,23 +66,22 @@ struct Transportation: Hashable, Codable {
     // var origin: Place?
     var properties: T_Properties
     var destination: Place
-    
-    
+
     // prevent optional
     enum CodingKeys: String, CodingKey {
         case id, number, product, properties, destination
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         id = try container.decode(String.self, forKey: .id)
         number = try container.decodeIfPresent(String.self, forKey: .number) ?? "N/A"
         product = try container.decode(Product.self, forKey: .product)
         properties = try container.decode(T_Properties.self, forKey: .properties)
         destination = try container.decode(Place.self, forKey: .destination)
     }
-    
+
     // Manual initializer for previews and manual creation
     init(id: String,
          number: String = "N/A",
