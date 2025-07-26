@@ -26,6 +26,7 @@ struct ConnectionStop: Hashable, Codable {
             return "0"
         }
 
+        // TODO EFA?
         let url = URL(string: "https://webapi.vvo-online.de/tr/pointfinder?limit=0&assignedstops=false&stopsOnly=false&provider=dvb&showlines=false&query=coord%3A\(Int(coordinate!.x))%3A\(Int(coordinate!.y))&format=json")!
         let request = URLRequest(url: url, timeoutInterval: 20)
 

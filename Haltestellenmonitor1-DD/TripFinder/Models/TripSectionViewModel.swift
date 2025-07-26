@@ -24,37 +24,41 @@ struct TripSectionViewData {
 }
 
 class TripSectionViewModel: ObservableObject {
-    @Published var route: Route
-    @Published var routesWithWaitingTimeUnder2Min: [PartialRoute] = []
+    @Published var journey: Journey
+    @Published var routesWithWaitingTimeUnder2Min: [TripLeg] = []
 
-    init(route: Route) {
-        self.route = route
+    init(journey: Journey) {
+        self.journey = journey
         insertWaitingTimePartialRoute()
     }
 
     func getTime() -> String {
-        "\(route.getTimeDifference()) Min"
+        var totalDuration: Int = 0
+        journey.legs.forEach {
+            totalDuration += $0.duration
+        }
+        return "\(totalDuration / 60) Min"
     }
 
-    func getDuration(_ partialRoute: PartialRoute) -> (Int, String) {
-        if partialRoute.Mot.type == "Footpath" && partialRoute.hasNoTime() {
-            return  getWaitingTime(partialRoute, routes: route.PartialRoutes)
-        }
-        return (partialRoute.getDuration(), "")
+    func getDuration(_ leg: TripLeg) -> (Int, String) {
+//        if partialRoute.Mot.type == "Footpath" && partialRoute.hasNoTime() {
+//            return getWaitingTime(partialRoute, routes: route.PartialRoutes)
+//        } // TODO Debug Later!
+        return (leg.duration / 60, "")
     }
 
     func getAccessibilityInterchangesString() -> String {
-        route.Interchanges == 1 ? "1 Umstieg" : "\(route.Interchanges) Umstiege"
+        journey.interchanges == 1 ? "1 Umstieg" : "\(journey.interchanges) Umstiege"
     }
 
-    func getWaitingTime(_ e: PartialRoute, routes: [PartialRoute]) -> (Int, String) {
+    func getWaitingTime(_ e: TripLeg, legs: [TripLeg]) -> (Int, String) {
         var value = 0
         var str = "Wartezeit"
 
-        routes.forEach { f in
+        legs.forEach { f in
             if e == f {
-                guard let index = routes.firstIndex(of: e) else { return }
-                if index - 1 < 0 || index + 1 >= routes.count {
+                guard let index = legs.firstIndex(of: e) else { return }
+                if index - 1 < 0 || index + 1 >= legs.count {
                     return
                 }
 
@@ -64,28 +68,28 @@ class TripSectionViewModel: ObservableObject {
                 var beforeIndex = index - 1
                 var afterIndex = index + 1
 
-                while routes[beforeIndex].getDuration() == 0 && beforeIndex > 0 {
-                    let item =  routes[beforeIndex]
-                    if item.Mot.type == "MobilityStairsUp" {
-                        str += " | Treppe ↑"
-                    } else if item.Mot.type == "MobilityStairsDown" {
-                        str += " | Treppe ↓"
-                    }
-                    beforeIndex -= 1
-                }
+//                while legs[beforeIndex].duration == 0 && beforeIndex > 0 {
+//                    let item = legs[beforeIndex]
+//                    if item.Mot.type == "MobilityStairsUp" {
+//                        str += " | Treppe ↑"
+//                    } else if item.Mot.type == "MobilityStairsDown" {
+//                        str += " | Treppe ↓"
+//                    }
+//                    beforeIndex -= 1
+//                }
+//
+//                while legs[afterIndex].getDuration() == 0 && afterIndex <=  legs.count {
+//                    let item =  legs[afterIndex]
+//                    if item.Mot.type == "MobilityStairsUp" {
+//                        str += " | Treppe ↑"
+//                    } else if item.Mot.type == "MobilityStairsDown" {
+//                        str += " | Treppe ↓"
+//                    }
+//                    afterIndex += 1
+//                }
 
-                while routes[afterIndex].getDuration() == 0 && afterIndex <=  routes.count {
-                    let item =  routes[afterIndex]
-                    if item.Mot.type == "MobilityStairsUp" {
-                        str += " | Treppe ↑"
-                    } else if item.Mot.type == "MobilityStairsDown" {
-                        str += " | Treppe ↓"
-                    }
-                    afterIndex += 1
-                }
-
-                date1 = routes[beforeIndex].getEndTime() ?? defaultDate
-                date2 = routes[afterIndex].getStartTime() ?? defaultDate
+                date1 = legs[beforeIndex].getEndTimeWithInterchange() ?? defaultDate
+                date2 = legs[afterIndex].getStartTime() ?? defaultDate
 
                 let difference = Calendar.current.dateComponents([.minute], from: date1, to: date2).minute
 
@@ -103,42 +107,39 @@ class TripSectionViewModel: ObservableObject {
     func insertWaitingTimePartialRoute() {
         routesWithWaitingTimeUnder2Min = []
 
-        var arr: [PartialRoute] = []
+        var arr: [TripLeg] = []
 
-        for i in 0..<route.PartialRoutes.count {
-            let partialRoute = route.PartialRoutes[i]
-            let before: PartialRoute? = arr.count >= 1 ? arr.last : nil
+        for leg in journey.legs { // TODO maybe replace for if not working
+            let before: TripLeg? = arr.count >= 1 ? arr.last : nil
 
-            // Wartezeit 1
-            if partialRoute.getStartTime() == nil || partialRoute.getEndTime() == nil {
+            let start = leg.getStartTime()
+            let end = leg.getEndTime()
+
+            if start == nil || end == nil {
+                // Wartezeit 1
                 continue
             }
-
-            let start = partialRoute.getStartTime() ?? Date()
-            let end = partialRoute.getEndTime() ?? Date()
 
             // Insert Wartezeit
             if before != nil {
                 if before!.getEndTime() != start {
-                    guard let insertedStart = before?.getEndTime() else {
+                    guard let insertedStart = before?.getEndTimeWithInterchange() else {
                         continue
                     }
-                    guard let  insertedEnd = partialRoute.getStartTime() else {
+                    guard let insertedEnd = leg.getStartTime() else {
                         continue
                     }
                     let startTime = "/Date(\(Int(insertedStart.timeIntervalSince1970)*1000)-0000)/"
-                    let endime = "/Date(\(Int(insertedEnd.timeIntervalSince1970)*1000)-0000)/"
+                    let endTime = "/Date(\(Int(insertedEnd.timeIntervalSince1970)*1000)-0000)/"
 
-                    let x =  PartialRoute(Mot: Mot(type: "InsertedWaiting"), RegularStops: [
-                        RegularStop(ArrivalTime: startTime, DepartureTime: startTime, Place: "", Name: "x", type: "", Latitude: -1, Longitude: -1, DataId: "-1"),
-                        RegularStop(ArrivalTime: endime, DepartureTime: endime, Place: "", Name: "x", type: "", Latitude: -1, Longitude: -1, DataId: "-1")
-                    ])
-                    arr.append(x)
+                    let duration = getMinuteDifference(insertedStart, insertedEnd) * 60
+
+                    arr.append(createWaitingLeg(duration: duration, startTime: startTime, endTime: endTime))
                 }
             }
             // Add current element
             if start != end {
-                arr.append(partialRoute)
+                arr.append(leg)
             }
         }
         routesWithWaitingTimeUnder2Min =  arr
@@ -157,13 +158,13 @@ class TripSectionViewModel: ObservableObject {
         var arr2: [TripSectionViewData] = []
         var index = 0
 
-        for i in 0..<route.PartialRoutes.count {
-            let partialRoute = route.PartialRoutes[i]
+        for i in 0..<journey.legs.count {
+            let leg = journey.legs[i]
             let before: Date? = endDates.count >= 1 ? endDates.last : nil
 
             // Wartezeit
-            if partialRoute.getStartTime() == nil || partialRoute.getEndTime() == nil {
-                if getDuration(partialRoute).0 == 0 {
+            if leg.getStartTime() == nil || leg.getEndTime() == nil {
+                if getDuration(leg).0 == 0 {
                     continue
                 }
 
@@ -171,7 +172,7 @@ class TripSectionViewModel: ObservableObject {
                     continue
                 }
 
-                let date = before.addingTimeInterval(TimeInterval(Double(getDuration(partialRoute).0) * 60.0))
+                let date = before.addingTimeInterval(TimeInterval(Double(getDuration(leg).0) * 60.0))
 
                 let difference = getMinuteDifference(before, date)
 
@@ -183,8 +184,8 @@ class TripSectionViewModel: ObservableObject {
                 continue
             }
 
-            let start = partialRoute.getStartTime() ?? Date()
-            let end = partialRoute.getEndTime() ?? Date()
+            let start = leg.getStartTime() ?? Date()
+            let end = leg.getEndTime() ?? Date()
 
             index = index + 1 // index for current element
             let newElementIndex = index
@@ -206,11 +207,11 @@ class TripSectionViewModel: ObservableObject {
             if start != end {
                 let difference = getMinuteDifference(start, end)
                 if difference > 0 {
-                    arr2.append(TripSectionViewData(width: 0.0, name: partialRoute.getNameShort(), color: partialRoute.getColor(), difference: difference, nr: newElementIndex))
+                    arr2.append(TripSectionViewData(width: 0.0, name: leg.getNameShort(), color: leg.getColor(), difference: difference, nr: newElementIndex))
                     endDates.append(end) }
             }
         }
-        let maxTime: CGFloat = CGFloat(route.getTimeDifference())
+        let maxTime: CGFloat = CGFloat(journey.duration)
         return adjustToMinWidth(maxWidth, arr2, maxTime)
     }
 

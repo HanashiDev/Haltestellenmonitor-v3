@@ -10,33 +10,31 @@ import SwiftUI
 private var timeFrameWidth: CGFloat = 60
 
 struct PartialRouteRow: View {
-    var partialRoute: PartialRoute
+    var tripLeg: TripLeg
 
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                if partialRoute.getStartTimeString() != nil {
-                    Text("\(partialRoute.getStartTimeString()!)")
-                        .frame(width: timeFrameWidth, alignment: .leading)
-                        .foregroundColor(.gray)
-                        .font(.subheadline.monospacedDigit())
-                        .accessibilityLabel("Abfahrt \(partialRoute.getStartTimeString()!)")
-                        .accessibilitySortPriority(4)
-                }
+                Text("\(tripLeg.getStartTimeString())")
+                    .frame(width: timeFrameWidth, alignment: .leading)
+                    .foregroundColor(.gray)
+                    .font(.subheadline.monospacedDigit())
+                    .accessibilityLabel("Abfahrt \(tripLeg.getStartTimeString())")
+                    .accessibilitySortPriority(4)
                 HStack {
-                    partialRoute.getIconText()
+                    tripLeg.getIconText()
                         .frame(width: 20.0, alignment: .center)
-                        .accessibilityLabel(partialRoute.getAccessibilityLabel())
+                        .accessibilityLabel(tripLeg.getAccessibilityLabel())
                         .accessibilitySortPriority(5)
 
-                    Text(partialRoute.getName())
+                    Text(tripLeg.getName())
                         .font(.headline)
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilitySortPriority(5)
                 }
                 Spacer()
-                Text(partialRoute.getFirstPlatform() ?? "")
+                Text(tripLeg.getFirstPlatform())
                     .foregroundColor(.gray)
                     .font(.footnote)
                     .frame(width: 45, alignment: .trailing)
@@ -44,38 +42,31 @@ struct PartialRouteRow: View {
 
             }
             HStack {
-                if partialRoute.getStartTimeString() != nil || partialRoute.getEndTimeString() != nil {
-                    Text("|")
-                        .frame(width: timeFrameWidth, alignment: .leading)
-                        .foregroundColor(.gray)
-                        .font(.subheadline)
-                        .padding(.leading, 18.5)
-                        .accessibilityHidden(true)
+                Text("|")
+                    .frame(width: timeFrameWidth, alignment: .leading)
+                    .foregroundColor(.gray)
+                    .font(.subheadline)
+                    .padding(.leading, 18.5)
+                    .accessibilityHidden(true)
 
-                    Spacer()
-
-                }
+                Spacer()
             }
             HStack {
-                if partialRoute.getEndTimeString() != nil {
-                    Text("\(partialRoute.getEndTimeString()!)")
-                        .frame(width: timeFrameWidth, alignment: .leading)
-                        .foregroundColor(.gray)
-                        .font(.subheadline.monospacedDigit())
-                        .accessibilitySortPriority(2)
-                        .accessibilityLabel("Ankunft \(partialRoute.getEndTimeString()!)")
+                Text("\(tripLeg.getEndTimeString())")
+                    .frame(width: timeFrameWidth, alignment: .leading)
+                    .foregroundColor(.gray)
+                    .font(.subheadline.monospacedDigit())
+                    .accessibilitySortPriority(2)
+                    .accessibilityLabel("Ankunft \(tripLeg.getEndTimeString())")
 
-                }
-                if partialRoute.getEndTimeString() != nil {
-                    Text(partialRoute.getLastStation() ?? "")
-                        .font(.subheadline)
-                        .accessibilityLabel("Bis \(partialRoute.getLastStation() ?? "")")
-                        .accessibilityHint("Ausstieg")
-                        .accessibilitySortPriority(3)
-                }
+                Text(tripLeg.getLastStopName())
+                    .font(.subheadline)
+                    .accessibilityLabel("Bis \(tripLeg.getLastStopName())")
+                    .accessibilityHint("Ausstieg")
+                    .accessibilitySortPriority(3)
                 Spacer()
 
-                Text(partialRoute.getLastPlatform() ?? "")
+                Text(tripLeg.getLastPlatform() ?? "")
                     .foregroundColor(.gray)
                     .font(.footnote)
                     .frame(width: 45, alignment: .trailing)
@@ -85,16 +76,16 @@ struct PartialRouteRow: View {
         }.padding(.leading, -25)
     }
 }
-
-struct PartialRouteRow_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            PartialRouteRow(partialRoute: tripTmp.Routes[0].PartialRoutes[0])
-                .previewLayout(.fixed(width: 500, height: 100))
-                .padding()
-        }  .padding()
-    }
-}
+//
+// struct PartialRouteRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VStack {
+//            PartialRouteRow(partialRoute: tripTmp.Routes[0].PartialRoutes[0])
+//                .previewLayout(.fixed(width: 500, height: 100))
+//                .padding()
+//        }  .padding()
+//    }
+// }
 
 struct PartialRouteRowWaitingTime: View {
     var time: Int
