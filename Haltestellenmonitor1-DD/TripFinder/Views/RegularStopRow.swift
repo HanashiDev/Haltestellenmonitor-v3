@@ -59,8 +59,11 @@ struct RegularStopRow: View {
     }
 }
 
-/*struct RegularStopRow_Previews: PreviewProvider {
+struct RegularStopRow_Previews: PreviewProvider {
     static var previews: some View {
-        RegularStopRow(regularStop: tripTmp.Routes[0].PartialRoutes[0].RegularStops![0], isFirst: true)
+        RegularStopRow(stop: StopSequenceItem(id: "1",
+                              name: "HBF",
+                              parent: Location(id: "de:14612:28", name: "HBF DD", disassembledName: "", type: "stop", coord: [], properties: Stop_Property(stopId: "de:14612:28")),
+                              properties: StopSequenceItem.properties(platfromName: "1", plannedPlatformName: "")), isFirst: true)
     }
-}*/
+}
