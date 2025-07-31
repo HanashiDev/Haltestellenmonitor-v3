@@ -89,7 +89,7 @@ class TripSectionViewModel: ObservableObject {
 //                }
 
                 date1 = legs[beforeIndex].getEndTimeWithInterchange() ?? defaultDate
-                date2 = legs[afterIndex].getStartTime() ?? defaultDate
+                date2 = legs[afterIndex].getStartTime()
 
                 let difference = Calendar.current.dateComponents([.minute], from: date1, to: date2).minute
 
@@ -115,7 +115,7 @@ class TripSectionViewModel: ObservableObject {
             let start = leg.getStartTime()
             let end = leg.getEndTime()
 
-            if start == nil || end == nil {
+            if start == Date() || end == Date() {
                 // Wartezeit 1
                 continue
             }
@@ -126,7 +126,8 @@ class TripSectionViewModel: ObservableObject {
                     guard let insertedStart = before?.getEndTimeWithInterchange() else {
                         continue
                     }
-                    guard let insertedEnd = leg.getStartTime() else {
+                    let insertedEnd = leg.getStartTime()
+                    if insertedEnd == Date() {
                         continue
                     }
                     let startTime = "/Date(\(Int(insertedStart.timeIntervalSince1970)*1000)-0000)/"
@@ -163,7 +164,7 @@ class TripSectionViewModel: ObservableObject {
             let before: Date? = endDates.count >= 1 ? endDates.last : nil
 
             // Wartezeit
-            if leg.getStartTime() == nil || leg.getEndTime() == nil {
+            if leg.getStartTime() == Date() || leg.getEndTime() == Date() {
                 if getDuration(leg).0 == 0 {
                     continue
                 }
@@ -184,8 +185,8 @@ class TripSectionViewModel: ObservableObject {
                 continue
             }
 
-            let start = leg.getStartTime() ?? Date()
-            let end = leg.getEndTime() ?? Date()
+            let start = leg.getStartTime()
+            let end = leg.getEndTime()
 
             index = index + 1 // index for current element
             let newElementIndex = index

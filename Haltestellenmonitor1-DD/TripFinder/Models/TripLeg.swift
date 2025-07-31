@@ -73,19 +73,19 @@ struct TripLeg: Hashable, Codable {
     let footPathInfo: [FootPathInfo]?
     let footPathInfoRedundant: Bool?
 
-    func getStartTime() -> Date? {
-        DateParser.extractTimestamp(time: origin.departureTimeEstimated ?? origin.departureTimePlanned)
+    func getStartTime() -> Date {
+        getISO8601Date(dateString: origin.departureTimeEstimated ?? origin.departureTimePlanned)
     }
-    func getEndTime() -> Date? {
-        DateParser.extractTimestamp(time: destination.arrivalTimeEstimated ?? destination.arrivalTimePlanned)
+    func getEndTime() -> Date {
+        getISO8601Date(dateString: destination.arrivalTimeEstimated ?? destination.arrivalTimePlanned)
     }
 
     func getStartTimeString() -> String {
-        getTimeStamp(date: getStartTime()!)
+        getTimeStamp(date: getStartTime())
     }
 
     func getEndTimeString() -> String {
-        getTimeStamp(date: getEndTime()!)
+        getTimeStamp(date: getEndTime())
     }
 
     func getIconText() -> Text {
@@ -97,12 +97,10 @@ struct TripLeg: Hashable, Codable {
 
     func getEndTimeWithInterchange() -> Date? {
         let endTimeWithoutInterchange = getEndTime()
-        if endTimeWithoutInterchange == nil {
-            return nil
-        }
-
         if let footPathInfo = footPathInfo {
-            return Calendar.current.date(byAdding: .second, value: footPathInfo.first!.duration, to: endTimeWithoutInterchange!)
+            if let footPathInformation = footPathInfo.first {
+                return Calendar.current.date(byAdding: .second, value: footPathInformation.duration, to: endTimeWithoutInterchange)
+            }
         }
         return endTimeWithoutInterchange
     }

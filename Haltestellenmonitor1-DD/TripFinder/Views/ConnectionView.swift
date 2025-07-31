@@ -477,11 +477,11 @@ struct ConnectionView: View {
         }
     }
 }
-
-struct ConnectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        ConnectionView(trip: tripTmp)
-            .environmentObject(LocationManager())
-            .environmentObject(StopManager())
-    }
-}
+//
+// struct ConnectionView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ConnectionView(trip: tripTmp)
+//            .environmentObject(LocationManager())
+//            .environmentObject(StopManager())
+//    }
+// }
