@@ -11,7 +11,7 @@ struct Location: Hashable, Codable {
     var name: String
     var disassembledName: String?
     var type: String
-    var coord: [Int]?
+    var coord: [Coordinate]?
     var properties: Stop_Property?
     // var parent: Location?
 }

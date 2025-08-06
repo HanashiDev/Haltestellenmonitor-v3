@@ -171,6 +171,10 @@
 		F13960532DCA73E5004AC9AA /* DepartureRowSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13960522DCA73DC004AC9AA /* DepartureRowSkeleton.swift */; };
 		F13960572DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13960562DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift */; };
 		F1520EE32AE96E5A001E3E05 /* widgetLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */; };
+		F15272212E43A8D700CEB1AB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15272202E43A8CF00CEB1AB /* Coordinate.swift */; };
+		F15272222E43A8D700CEB1AB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15272202E43A8CF00CEB1AB /* Coordinate.swift */; };
+		F15272232E43A8D700CEB1AB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15272202E43A8CF00CEB1AB /* Coordinate.swift */; };
+		F15272242E43A8D700CEB1AB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15272202E43A8CF00CEB1AB /* Coordinate.swift */; };
 		F15FE0EC2DE0F01C0096C79E /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FE0EB2DE0F01C0096C79E /* Point.swift */; };
 		F15FE0ED2DE0F01C0096C79E /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FE0EB2DE0F01C0096C79E /* Point.swift */; };
 		F15FE0EE2DE0F01C0096C79E /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FE0EB2DE0F01C0096C79E /* Point.swift */; };
@@ -367,6 +371,7 @@
 		F13960522DCA73DC004AC9AA /* DepartureRowSkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureRowSkeleton.swift; sourceTree = "<group>"; };
 		F13960562DCA7F1F004AC9AA /* SingleTripRowSkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTripRowSkeleton.swift; sourceTree = "<group>"; };
 		F1520EE12AE96E5A001E3E05 /* widgetLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = widgetLocationManager.swift; sourceTree = "<group>"; };
+		F15272202E43A8CF00CEB1AB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		F15FE0EB2DE0F01C0096C79E /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		F15FE0FF2DE0FAFE0096C79E /* InfoParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoParser.swift; sourceTree = "<group>"; };
 		F15FE1012DE0FB160096C79E /* StringSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSection.swift; sourceTree = "<group>"; };
@@ -657,6 +662,7 @@
 		F15FE0E22DE0E9C50096C79E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F15272202E43A8CF00CEB1AB /* Coordinate.swift */,
 				D040EC2A29EEFA3E002DFEBF /* FavoriteStop.swift */,
 				F17FF4C82DB4E13100F553D1 /* MOTTypes.swift */,
 			);
@@ -1124,6 +1130,7 @@
 				D0C1ECDA29F2FA50001D214D /* TripStandardSettings.swift in Sources */,
 				D0142C4E2A11039600646C94 /* GaussKrueger.swift in Sources */,
 				D0142C5C2A1128E900646C94 /* TripRequestShort.swift in Sources */,
+				F15272242E43A8D700CEB1AB /* Coordinate.swift in Sources */,
 				D0C1ECE029F325CC001D214D /* MapView.swift in Sources */,
 				D0C1ECCC29F2B165001D214D /* ActivityRequest.swift in Sources */,
 				D040EC2B29EEFA3E002DFEBF /* FavoriteStop.swift in Sources */,
@@ -1182,6 +1189,7 @@
 				D0C1ECC929F28C2F001D214D /* TripAttributes.swift in Sources */,
 				D0142C3B2A0F90AA00646C94 /* DepartureBinding.swift in Sources */,
 				F1520EE32AE96E5A001E3E05 /* widgetLocationManager.swift in Sources */,
+				F15272212E43A8D700CEB1AB /* Coordinate.swift in Sources */,
 				F18557F32DF8A32A0082EDB5 /* LiveActivityBanner.swift in Sources */,
 				D0BD669E29EFEA03004E574C /* Stop.swift in Sources */,
 				D0BD66C229EFEF0F004E574C /* DateParser.swift in Sources */,
@@ -1243,6 +1251,7 @@
 				D0BD66AE29EFECF1004E574C /* IntentHandler.swift in Sources */,
 				D0142C4B2A10FB1000646C94 /* ConnectionStop.swift in Sources */,
 				D011F08C2C523DBF000BAB5C /* RegularStop.swift in Sources */,
+				F15272232E43A8D700CEB1AB /* Coordinate.swift in Sources */,
 				D011F0802C523D9D000BAB5C /* Trip.swift in Sources */,
 				D0C1ECD629F2EF9B001D214D /* DepartureFilter.swift in Sources */,
 				D0BD66B929EFEEC0004E574C /* StopData.swift in Sources */,
@@ -1303,6 +1312,7 @@
 				D0D1997F29F40B9C00946D87 /* TripRequest.swift in Sources */,
 				D0D1996829F40B8A00946D87 /* LocationManager.swift in Sources */,
 				D0D1997129F40B9C00946D87 /* Stop.swift in Sources */,
+				F15272222E43A8D700CEB1AB /* Coordinate.swift in Sources */,
 				D0D1997229F40B9C00946D87 /* PushTokenHistory.swift in Sources */,
 				F17FF4CC2DB4E14400F553D1 /* MOTTypes.swift in Sources */,
 				D0D1997829F40B9C00946D87 /* ActivityRequest.swift in Sources */,

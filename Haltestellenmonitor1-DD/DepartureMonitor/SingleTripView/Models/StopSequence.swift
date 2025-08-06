@@ -13,7 +13,7 @@ struct StopSequenceItem: Hashable, Codable {
     // var disassembledName: String?
     // var type: String
     // var pointType: String?
-    // var coord: [Int]?
+    // var coord: [Coordinate]?
     // var niveau: Int
     var parent: Location
     // var productClasses: [Int]

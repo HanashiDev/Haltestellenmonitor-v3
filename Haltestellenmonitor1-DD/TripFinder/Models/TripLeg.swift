@@ -11,7 +11,7 @@ struct TripLeg: Hashable, Codable {
     struct TripOrigin: Hashable, Codable {
         let id: String
         let name: String
-        let coord: [Double]
+        let coord: [Coordinate]
         let niveau: Int?
         let departureTimePlanned: String
         let departureTimeEstimated: String?
@@ -20,7 +20,7 @@ struct TripLeg: Hashable, Codable {
     struct TripDestination: Hashable, Codable {
         let id: String
         let name: String
-        let coord: [Double]
+        let coord: [Coordinate]
         let niveau: Int?
         let arrivalTimePlanned: String
         let arrivalTimeEstimated: String?
@@ -47,7 +47,7 @@ struct TripLeg: Hashable, Codable {
     let stopSequence: [StopSequenceItem]?
     let infos: [Info]?
 
-    let coords: [[Double]] // [(x,y)]
+    let coords: [[Coordinate]] // [(x,y)]
     struct PathDescription: Hashable, Codable {
         let name: String
         let coord: [Double] // x, y
@@ -68,7 +68,7 @@ struct TripLeg: Hashable, Codable {
             let type: String
             let level: String
         }
-        let footPathElem: [FootPathElement]
+        let footPathElem: [FootPathElement]?
     }
     let footPathInfo: [FootPathInfo]?
     let footPathInfoRedundant: Bool?
@@ -127,7 +127,10 @@ struct TripLeg: Hashable, Codable {
 //        if self.Mot.Name == nil && self.Mot.Direction == nil {
 //            return "Unbekannt"
 //        }
-    return getAccessibilityLabelEFA(iconId: transportation.product.iconId)
+        if self.transportation.number != nil {
+            return "\(self.transportation.number ?? "")"
+        }
+        return getAccessibilityLabelEFA(iconId: transportation.product.iconId)
     }
 
     func getColor() -> Color {
@@ -135,7 +138,11 @@ struct TripLeg: Hashable, Codable {
     }
 
     func getName() -> String {
-        getAccessibilityLabelEFA(iconId: transportation.product.iconId)
+        // don't use for Cable Car
+        if self.transportation.properties.specialFares != nil  && self.transportation.product.iconId != 9 {
+            return "\(self.transportation.properties.trainType ?? "") \(self.transportation.properties.trainNumber ?? "") \(self.destination.name)"
+        }
+        return "\(self.transportation.number ?? "") \(self.destination.name)"
     }
 
     func getAccessibilityLabel() -> String {
@@ -147,21 +154,21 @@ struct TripLeg: Hashable, Codable {
     }
 
     func getFirstPlatform() -> String {
-        if stopSequence != nil {
+        if stopSequence == nil {
             return ""
         }
         return stopSequence!.first!.getPlatform()
     }
 
     func getLastPlatform() -> String? {
-        if stopSequence != nil {
+        if stopSequence == nil {
             return ""
         }
         return stopSequence!.last!.getPlatform()
     }
 
     func getLastStopName() -> String {
-        if stopSequence != nil {
+        if stopSequence == nil {
             return ""
         }
         return stopSequence!.last!.name

@@ -80,12 +80,7 @@ struct PartialRouteRow: View {
  struct PartialRouteRow_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            PartialRouteRow(tripLeg: TripLeg(duration: 60,
-                                             origin: TripLeg.TripOrigin(id: "123", name: "Hauptbahnhof", coord: [1.0, 2.0], niveau: 0, departureTimePlanned: "2025-03-26T06:00:00Z", departureTimeEstimated: "2025-03-26T06:00:00Z", disassebledName: ""),
-                                             destination: TripLeg.TripDestination(id: "456", name: "Postplatz", coord: [3.0, 4.0], niveau: 0, arrivalTimePlanned: "2025-03-26T06:05:00Z", arrivalTimeEstimated: "2025-03-26T06:06:00Z", disassebledName: ""),
-                                             transportation: TripLeg.TripTransportation(id: "", number: "7", product: Product(name: "Tram", iconId: 4), properties: T_Properties(trainName: "", trainType: "", trainNumber: "7", tripCode: 0, globalId: "", specialFares: "")),
-                                    stopSequence: [StopSequenceItem(id: "xyz", name: "Hauptbahnhof", parent: Location(name: "Hauptbahnhof", type: ""), properties: StopSequenceItem.properties(platfromName: "1"))],
-                                             infos: [], coords: [], pathDescription: TripLeg.PathDescription(name: "TODO", coord: []), interchange: TripLeg.Interchange(desc: "TODO", coords: []), footPathInfo: [], footPathInfoRedundant: true))
+            PartialRouteRow(tripLeg: tripTmp.journeys.first!.legs.first!)
                 .previewLayout(.fixed(width: 500, height: 100))
                 .padding()
         }  .padding()

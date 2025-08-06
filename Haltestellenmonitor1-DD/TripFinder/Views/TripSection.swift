@@ -113,13 +113,10 @@ struct TripSection: View {
 
  struct TripSection_Previews: PreviewProvider {
      static var previews: some View {
-         TripSection(vm: TripSectionViewModel(journey: Journey(interchanges: 1,
-                                                               legs: [TripLeg(duration: 60, origin: TripLeg.TripOrigin(id: "123", name: "Hauptbahnhof", coord: [1.0, 2.0], niveau: 0, departureTimePlanned: "2025-03-26T06:00:00Z", departureTimeEstimated: "2025-03-26T06:00:00Z", disassebledName: ""), destination: TripLeg.TripDestination(id: "456", name: "Postplatz", coord: [3.0, 4.0], niveau: 0, arrivalTimePlanned: "2025-03-26T06:05:00Z", arrivalTimeEstimated: "2025-03-26T06:06:00Z", disassebledName: ""),
-                                                                              transportation: TripLeg.TripTransportation(product: Product(name: "Tram", iconId: 4), properties: T_Properties()),
-                                                                              stopSequence: [StopSequenceItem(id: "xyz", name: "Hauptbahnhof", parent: Location(name: "Hauptbahnhof", type: ""), properties: StopSequenceItem.properties(platfromName: "1"))],
-                                                                              infos: [], coords: [], pathDescription: nil, interchange: nil, footPathInfo: [], footPathInfoRedundant: true)],
-                                                               fare: Journey.TripFare(tickets: [Journey.TripFare.Ticket(name: "Einzelfahrt", currency: "EUR", priceBrutto: 4.1, priceLevel: "1", priceLevelUnit: "Preisstufe", fromLeg: 0, toLeg: 1, person: "Adult")]))))
-        }
+         VStack {
+             TripSection(vm: TripSectionViewModel(journey: tripTmp.journeys[0]))
+         }.padding(.top, 20)
+     }
  }
 
 struct Line: Shape {
