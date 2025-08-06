@@ -6,6 +6,10 @@
 //
 
 struct Location: Hashable, Codable {
+    struct LocationParent: Hashable, Codable {
+        var name: String
+    }
+
     var id: String?
     // var isGlobalId: Bool?
     var name: String
@@ -13,5 +17,5 @@ struct Location: Hashable, Codable {
     var type: String
     var coord: [Coordinate]?
     var properties: Stop_Property?
-    // var parent: Location?
+    var parent: LocationParent?
 }

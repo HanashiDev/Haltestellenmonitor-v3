@@ -8,6 +8,15 @@ import Foundation
 import SwiftUI
 
 struct TripLeg: Hashable, Codable {
+    struct TripLocationParent: Hashable, Codable {
+        struct TripLocationParent2: Hashable, Codable {
+            let name: String
+        }
+        let name: String
+        let disassembledName: String?
+        let parent: TripLocationParent2?
+    }
+    
     struct TripOrigin: Hashable, Codable {
         let id: String
         let name: String
@@ -16,6 +25,7 @@ struct TripLeg: Hashable, Codable {
         let departureTimePlanned: String
         let departureTimeEstimated: String?
         let disassebledName: String? // Platform
+        let parent: TripLocationParent
     }
     struct TripDestination: Hashable, Codable {
         let id: String
@@ -25,6 +35,7 @@ struct TripLeg: Hashable, Codable {
         let arrivalTimePlanned: String
         let arrivalTimeEstimated: String?
         let disassebledName: String? // Platform
+        let parent: TripLocationParent
     }
 
     struct TripTransportation: Hashable, Codable {
@@ -36,7 +47,7 @@ struct TripLeg: Hashable, Codable {
         // var `operator`: Operator?
         // var origin: Place?
         var properties: T_Properties
-        // var destination: Place?
+        var destination: Place?
     }
 
     let duration: Int
@@ -89,7 +100,7 @@ struct TripLeg: Hashable, Codable {
     }
 
     func getIconText() -> Text {
-        if transportation.product.iconId == -1 {
+        if transportation.product.iconId == 100 {
             return Text(Image(systemName: "figure.walk"))
         }
         return Text(getIconEFA(iconId: transportation.product.iconId))
@@ -108,6 +119,9 @@ struct TripLeg: Hashable, Codable {
     func getNameShort() -> String {
         if transportation.product.name == "InsertedWaiting" {
             return "🕝"
+        }
+        if transportation.product.iconId == 100 {
+            return "🚶"
         }
 //        if self.Mot.type == "Footpath" {
 //            return hasNoTime() ? "🕝" : "🚶"
@@ -136,13 +150,17 @@ struct TripLeg: Hashable, Codable {
     func getColor() -> Color {
         getColorEFA(iconId: transportation.product.iconId)
     }
+    
 
     func getName() -> String {
         // don't use for Cable Car
         if self.transportation.properties.specialFares != nil  && self.transportation.product.iconId != 9 {
             return "\(self.transportation.properties.trainType ?? "") \(self.transportation.properties.trainNumber ?? "") \(self.destination.name)"
         }
-        return "\(self.transportation.number ?? "") \(self.destination.name)"
+        if self.transportation.product.iconId == 100 {
+            return getAccessibilityLabelStandard(motType: .Walking)
+        }
+        return "\(self.transportation.number ?? "") \(self.transportation.destination?.name ?? "")"
     }
 
     func getAccessibilityLabel() -> String {
@@ -171,13 +189,13 @@ struct TripLeg: Hashable, Codable {
         if stopSequence == nil {
             return ""
         }
-        return stopSequence!.last!.name
+        return stopSequence!.last!.getName()
     }
 }
 
 func createWaitingLeg(duration: Int, startTime: String, endTime: String) -> TripLeg {
-    let startEvent = StopSequenceItem(id: "", name: "Wait", parent: Location(name: "", type: ""), properties: StopSequenceItem.properties(), departureTimePlanned: startTime, departureTimeEstimated: startTime)
-    let endEvent = StopSequenceItem(id: "", name: "Wait", parent: Location(name: "", type: ""), properties: StopSequenceItem.properties(), arrivalTimePlanned: endTime, arrivalTimeEstimated: endTime)
+    let startEvent = StopSequenceItem(id: "", name: "Wait", parent: Location(name: "", disassembledName: "", type: ""), properties: StopSequenceItem.properties(), departureTimePlanned: startTime, departureTimeEstimated: startTime)
+    let endEvent = StopSequenceItem(id: "", name: "Wait", parent: Location(name: "", disassembledName: "", type: ""), properties: StopSequenceItem.properties(), arrivalTimePlanned: endTime, arrivalTimeEstimated: endTime)
 
-    return TripLeg(duration: duration, origin: TripLeg.TripOrigin(id: "", name: "", coord: [], niveau: 0, departureTimePlanned: startTime, departureTimeEstimated: startTime, disassebledName: ""), destination: TripLeg.TripDestination(id: "", name: "", coord: [], niveau: 0, arrivalTimePlanned: endTime, arrivalTimeEstimated: endTime, disassebledName: ""), transportation: TripLeg.TripTransportation(id: "", product: Product(name: "InsertedWaiting", iconId: -1), properties: T_Properties()), stopSequence: [startEvent, endEvent], infos: [], coords: [], pathDescription: TripLeg.PathDescription(name: "", coord: []), interchange: TripLeg.Interchange(desc: "", coords: []), footPathInfo: [], footPathInfoRedundant: false)
+    return TripLeg(duration: duration, origin: TripLeg.TripOrigin(id: "", name: "", coord: [], niveau: 0, departureTimePlanned: startTime, departureTimeEstimated: startTime, disassebledName: "", parent: TripLeg.TripLocationParent(name: "", disassembledName: "", parent: TripLeg.TripLocationParent.TripLocationParent2(name: ""))), destination: TripLeg.TripDestination(id: "", name: "", coord: [], niveau: 0, arrivalTimePlanned: endTime, arrivalTimeEstimated: endTime, disassebledName: "", parent: TripLeg.TripLocationParent(name: "", disassembledName: "", parent: TripLeg.TripLocationParent.TripLocationParent2(name: ""))), transportation: TripLeg.TripTransportation(id: "", product: Product(name: "InsertedWaiting", iconId: -1), properties: T_Properties()), stopSequence: [startEvent, endEvent], infos: [], coords: [], pathDescription: TripLeg.PathDescription(name: "", coord: []), interchange: TripLeg.Interchange(desc: "", coords: []), footPathInfo: [], footPathInfoRedundant: false)
 }

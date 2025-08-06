@@ -115,7 +115,7 @@ struct TripSection: View {
      static var previews: some View {
          VStack {
              TripSection(vm: TripSectionViewModel(journey: tripTmp.journeys[0]))
-         }.padding(.top, 20)
+         }
      }
  }
 

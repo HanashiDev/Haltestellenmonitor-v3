@@ -14,8 +14,8 @@ struct RegularStopRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(stop.name)
-                    .accessibilityLabel("Haltestelle \(stop.name)")
+                Text(stop.getName())
+                    .accessibilityLabel("Haltestelle \(stop.getName())")
                 Spacer()
                 if stop.getPlatform() != "" {
                     Text(stop.getPlatform())
