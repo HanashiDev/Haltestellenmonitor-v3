@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RegularStopRow: View {
+struct StopSequenceRow: View {
     var stop: StopSequenceItem
     var isFirst: Bool
 
@@ -61,6 +61,6 @@ struct RegularStopRow: View {
 
 struct RegularStopRow_Previews: PreviewProvider {
     static var previews: some View {
-        RegularStopRow(stop: tripTmp.journeys.first!.legs.first!.stopSequence!.first!, isFirst: true)
+        StopSequenceRow(stop: tripTmp.journeys.first!.legs.first!.stopSequence!.first!, isFirst: true)
     }
 }

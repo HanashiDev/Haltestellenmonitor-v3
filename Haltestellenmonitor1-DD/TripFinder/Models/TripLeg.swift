@@ -160,6 +160,9 @@ struct TripLeg: Hashable, Codable {
         if self.transportation.product.iconId == 100 {
             return getAccessibilityLabelStandard(motType: .Walking)
         }
+        if isInsertedWaiting() {
+            return "Wartezeit"
+        }
         return "\(self.transportation.number ?? "") \(self.transportation.destination?.name ?? "")"
     }
 

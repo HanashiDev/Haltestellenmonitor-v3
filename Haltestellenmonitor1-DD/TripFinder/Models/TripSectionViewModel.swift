@@ -33,11 +33,11 @@ class TripSectionViewModel: ObservableObject {
     }
 
     func getTime() -> String {
-        var totalDuration: Int = 0
-        journey.legs.forEach {
-            totalDuration += $0.duration
+        let totalDuration = journey.duration
+        if totalDuration > 60 {
+            return "\(totalDuration / 60):\(totalDuration % 60 == 0 ? "00" : "\(totalDuration % 60)")h"
         }
-        return "\(totalDuration / 60) Min"
+        return "\(journey.duration) Min"
     }
 
     func getDuration(_ leg: TripLeg) -> (Int, String) {

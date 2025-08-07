@@ -118,7 +118,7 @@
 		D0BD66F329F03C14004E574C /* Mot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66E129F03949004E574C /* Mot.swift */; };
 		D0BD66F429F03C15004E574C /* Mot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66E129F03949004E574C /* Mot.swift */; };
 		D0BD66F729F03ED2004E574C /* TripSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66F629F03ED2004E574C /* TripSection.swift */; };
-		D0BD66FA29F04593004E574C /* PartialRouteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66F929F04593004E574C /* PartialRouteRow.swift */; };
+		D0BD66FA29F04593004E574C /* TripLegRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66F929F04593004E574C /* TripLegRow.swift */; };
 		D0BD66FB29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66FF29F04D28004E574C /* MonitorWidget.intentdefinition */; };
 		D0BD66FC29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66FF29F04D28004E574C /* MonitorWidget.intentdefinition */; };
 		D0BD66FD29F04D28004E574C /* MonitorWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D0BD66FF29F04D28004E574C /* MonitorWidget.intentdefinition */; };
@@ -140,7 +140,7 @@
 		D0C1ECDA29F2FA50001D214D /* TripStandardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECD929F2FA50001D214D /* TripStandardSettings.swift */; };
 		D0C1ECDB29F2FB3C001D214D /* TripStandardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECD929F2FA50001D214D /* TripStandardSettings.swift */; };
 		D0C1ECDC29F2FB3C001D214D /* TripStandardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECD929F2FA50001D214D /* TripStandardSettings.swift */; };
-		D0C1ECDE29F3008B001D214D /* RegularStopRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECDD29F3008B001D214D /* RegularStopRow.swift */; };
+		D0C1ECDE29F3008B001D214D /* StopSequenceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECDD29F3008B001D214D /* StopSequenceRow.swift */; };
 		D0C1ECE029F325CC001D214D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C1ECDF29F325CC001D214D /* MapView.swift */; };
 		D0C1ECE429F333F9001D214D /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C1ECE329F333F9001D214D /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D0C21F4529F426A8001770F1 /* SingleTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C21F4429F426A8001770F1 /* SingleTripView.swift */; };
@@ -344,7 +344,7 @@
 		D0BD66E129F03949004E574C /* Mot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mot.swift; sourceTree = "<group>"; };
 		D0BD66E329F03BE5004E574C /* trip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trip.json; sourceTree = "<group>"; };
 		D0BD66F629F03ED2004E574C /* TripSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSection.swift; sourceTree = "<group>"; };
-		D0BD66F929F04593004E574C /* PartialRouteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialRouteRow.swift; sourceTree = "<group>"; };
+		D0BD66F929F04593004E574C /* TripLegRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripLegRow.swift; sourceTree = "<group>"; };
 		D0BD66FE29F04D28004E574C /* de */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = de; path = de.lproj/MonitorWidget.intentdefinition; sourceTree = "<group>"; };
 		D0C1ECBB29F2823E001D214D /* SingleTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTripView.swift; sourceTree = "<group>"; };
 		D0C1ECBF29F283DE001D214D /* SingleTripRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTripRow.swift; sourceTree = "<group>"; };
@@ -354,7 +354,7 @@
 		D0C1ECD329F2EF9B001D214D /* DepartureFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureFilter.swift; sourceTree = "<group>"; };
 		D0C1ECD729F2F071001D214D /* DepartureDisclosureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureDisclosureSection.swift; sourceTree = "<group>"; };
 		D0C1ECD929F2FA50001D214D /* TripStandardSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripStandardSettings.swift; sourceTree = "<group>"; };
-		D0C1ECDD29F3008B001D214D /* RegularStopRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularStopRow.swift; sourceTree = "<group>"; };
+		D0C1ECDD29F3008B001D214D /* StopSequenceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSequenceRow.swift; sourceTree = "<group>"; };
 		D0C1ECDF29F325CC001D214D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D0C1ECE329F333F9001D214D /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
 		D0C21F4429F426A8001770F1 /* SingleTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTripView.swift; sourceTree = "<group>"; };
@@ -727,8 +727,8 @@
 			children = (
 				D0BD66D129F01B99004E574C /* ConnectionView.swift */,
 				D0BD66D529F026D7004E574C /* ConnectionStopSelectionView.swift */,
-				D0BD66F929F04593004E574C /* PartialRouteRow.swift */,
-				D0C1ECDD29F3008B001D214D /* RegularStopRow.swift */,
+				D0BD66F929F04593004E574C /* TripLegRow.swift */,
+				D0C1ECDD29F3008B001D214D /* StopSequenceRow.swift */,
 				D0BD66F629F03ED2004E574C /* TripSection.swift */,
 			);
 			path = Views;
@@ -1155,7 +1155,7 @@
 				F15FE1022DE0FB1F0096C79E /* StringSection.swift in Sources */,
 				D0142C5F2A112CA900646C94 /* StopCoordinate.swift in Sources */,
 				F1B8C04E2D70DD5C00F77CE4 /* Location.swift in Sources */,
-				D0C1ECDE29F3008B001D214D /* RegularStopRow.swift in Sources */,
+				D0C1ECDE29F3008B001D214D /* StopSequenceRow.swift in Sources */,
 				D0BD66D629F026D7004E574C /* ConnectionStopSelectionView.swift in Sources */,
 				D0142C5A2A11285700646C94 /* FavoriteConnection.swift in Sources */,
 				F17FF4C62DB4D83B00F553D1 /* DateManager.swift in Sources */,
@@ -1170,7 +1170,7 @@
 				D0142C582A1119D500646C94 /* About.swift in Sources */,
 				D03A26A029EEC248005B0600 /* DepartureRow.swift in Sources */,
 				F16B7FDE2D9321CD00851DC4 /* StopSequence.swift in Sources */,
-				D0BD66FA29F04593004E574C /* PartialRouteRow.swift in Sources */,
+				D0BD66FA29F04593004E574C /* TripLegRow.swift in Sources */,
 				D03A268329EEB6C9005B0600 /* Haltestellenmonitor1_DDApp.swift in Sources */,
 				F16B7FDC2D90861A00851DC4 /* DepartureInfoView.swift in Sources */,
 				D03A269929EEBA9B005B0600 /* Stop.swift in Sources */,

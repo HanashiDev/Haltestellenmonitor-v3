@@ -9,7 +9,7 @@ import SwiftUI
 
 private var timeFrameWidth: CGFloat = 60
 
-struct PartialRouteRow: View {
+struct TripLegRow: View {
     var tripLeg: TripLeg
 
     var body: some View {
@@ -80,14 +80,14 @@ struct PartialRouteRow: View {
  struct PartialRouteRow_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            PartialRouteRow(tripLeg: tripTmp.journeys.first!.legs.first!)
+            TripLegRow(tripLeg: tripTmp.journeys.first!.legs.first!)
                 .previewLayout(.fixed(width: 500, height: 100))
                 .padding()
         }  .padding()
     }
  }
 
-struct PartialRouteRowWaitingTime: View {
+struct InterTripLegWaitingRow: View {
     var time: Int
     var text: String = "Wartezeit"
 

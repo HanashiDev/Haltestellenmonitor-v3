@@ -23,6 +23,7 @@ struct TripSection: View {
                 Spacer()
 
                 Text("| \(vm.getTime())")
+                    .monospacedDigit()
                     .foregroundColor(.gray)
                     .accessibilityLabel("Dauer: \(vm.getTime())")
 
@@ -42,16 +43,16 @@ struct TripSection: View {
             DisclosureGroup {
                 ForEach(vm.routesWithWaitingTimeUnder2Min, id: \.self) { tripLeg in
                     if tripLeg.isInsertedWaiting() && tripLeg.duration > 0 {
-                        PartialRouteRowWaitingTime(time: tripLeg.duration / 60, text: tripLeg.getName())
+                        InterTripLegWaitingRow(time: tripLeg.duration / 60, text: tripLeg.getName())
                     }
                     if tripLeg.stopSequence == nil {
                         if tripLeg.duration == 0 {
                             let tup = vm.getDuration(tripLeg)
                             if tup.0 > 0 {
-                                PartialRouteRowWaitingTime(time: tup.0, text: tup.1)
+                                InterTripLegWaitingRow(time: tup.0, text: tup.1)
                             }
                         } else {
-                            PartialRouteRow(tripLeg: tripLeg)
+                            TripLegRow(tripLeg: tripLeg)
                         }
                     } else {
                         if !tripLeg.isInsertedWaiting() {
@@ -65,11 +66,11 @@ struct TripSection: View {
                                         .opacity(0.0)
                                         .buttonStyle(.plain)
 
-                                        RegularStopRow(stop: stopSequenceItem, isFirst: tripLeg.stopSequence?.first?.id == stopSequenceItem.id)
+                                        StopSequenceRow(stop: stopSequenceItem, isFirst: tripLeg.stopSequence?.first?.id == stopSequenceItem.id)
                                     }
                                 }
                             } label: {
-                                PartialRouteRow(tripLeg: tripLeg)
+                                TripLegRow(tripLeg: tripLeg)
                             }
                         }
                     }
@@ -79,6 +80,7 @@ struct TripSection: View {
         }.accessibilityHint("Abschnitte der Route")
     }
 
+    /// Horizontal Bar displaying trip legs
     @ViewBuilder
     func tripView() -> some View {
         GeometryReader { geo in
