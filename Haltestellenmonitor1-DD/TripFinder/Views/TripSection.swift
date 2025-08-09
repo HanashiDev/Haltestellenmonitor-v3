@@ -73,6 +73,9 @@ struct TripSection: View {
                                 TripLegRow(tripLeg: tripLeg)
                             }
                         }
+                        if tripLeg.getFootpathDuration() > 0 {
+                            AfterTripLegFootpathRow(duration: tripLeg.getFootpathDuration())
+                        }
                     }
                 }
             }

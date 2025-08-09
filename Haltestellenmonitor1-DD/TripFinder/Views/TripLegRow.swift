@@ -109,3 +109,26 @@ struct InterTripLegWaitingRow: View {
         .accessibilityElement(children: .combine)
     }
 }
+
+struct AfterTripLegFootpathRow: View {
+    var duration: Int
+    let text: String = "Fußweg"
+
+    var body: some View {
+        HStack {
+            Text(Image(systemName: "figure.walk"))
+                .frame(width: timeFrameWidth)
+                .offset(CGSize(width: 13, height: 0))
+                .accessibilityHidden(true)
+
+            Text("\(duration) min \(text)")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .offset(CGSize(width: 22, height: 0))
+
+        }
+        .foregroundColor(.gray)
+        .font(.subheadline.monospacedDigit())
+        .padding(.leading, -47.5) // fixes horizontal line below row
+        .accessibilityElement(children: .combine)
+    }
+}

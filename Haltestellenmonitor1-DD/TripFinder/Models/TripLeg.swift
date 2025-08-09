@@ -16,7 +16,7 @@ struct TripLeg: Hashable, Codable {
         let disassembledName: String?
         let parent: TripLocationParent2?
     }
-    
+
     struct TripOrigin: Hashable, Codable {
         let id: String
         let name: String
@@ -150,7 +150,6 @@ struct TripLeg: Hashable, Codable {
     func getColor() -> Color {
         getColorEFA(iconId: transportation.product.iconId)
     }
-    
 
     func getName() -> String {
         // don't use for Cable Car
@@ -193,6 +192,17 @@ struct TripLeg: Hashable, Codable {
             return ""
         }
         return stopSequence!.last!.getName()
+    }
+
+    func hasInterchangeFootpath() -> Bool {
+        footPathInfo != nil && !(footPathInfo?.isEmpty ?? true)
+    }
+
+    func getFootpathDuration() -> Int {
+        if !hasInterchangeFootpath() {
+            return 0
+        }
+        return footPathInfo!.first!.duration / 60
     }
 }
 

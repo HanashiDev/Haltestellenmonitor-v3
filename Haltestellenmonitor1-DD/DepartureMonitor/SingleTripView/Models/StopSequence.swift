@@ -115,7 +115,7 @@ struct StopSequenceItem: Hashable, Codable {
 
         return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
     }
-    
+
     func getName() -> String {
         let location = parent.parent?.name ?? parent.name
         return "\(self.parent.disassembledName ?? self.parent.name)\(location == "Dresden" || location.isEmpty ? "" : ", \(location)")"
