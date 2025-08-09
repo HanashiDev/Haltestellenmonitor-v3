@@ -40,7 +40,7 @@ struct MonitorEntry: TimelineEntry {
         stopEvents.forEach { stopEvent in
             var embed = true
             if lineFilters != nil || lineFilters?.isEmpty == false {
-                embed = lineFilters?.contains(stopEvent.getName()) == true
+                embed = lineFilters?.contains(stopEvent.transportation.number) == true
             }
             if !embed {
                 return
