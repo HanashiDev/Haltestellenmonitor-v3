@@ -55,7 +55,7 @@ struct ConnectionView: View {
                     }
                 }
                 ToolbarItem(placement: ToolbarItemPlacement.confirmationAction) {
-                    Button("Zurücksetzen") {
+                    Button {
                         if isLoading {
                             return
                         }
@@ -65,6 +65,15 @@ struct ConnectionView: View {
                         requestData = nil
                         numbernext = 0
                         dateTime = Date.now
+                    } label: {
+                        Text(Image(systemName: "arrow.counterclockwise"))
+                    }
+                }
+                ToolbarItem(placement: ToolbarItemPlacement.confirmationAction) {
+                    NavigationLink {
+                        TripSettingsView()
+                    } label: {
+                        Text(Image(systemName: "gearshape"))
                     }
                 }
             }

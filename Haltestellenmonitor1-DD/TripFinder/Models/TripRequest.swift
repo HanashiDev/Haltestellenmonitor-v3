@@ -21,7 +21,7 @@ struct TripRequest: Hashable, Codable {
     var format: String = "json"
 }
 
-enum IndividualTransportType: String, Codable {
+enum IndividualTransportType: String, Hashable, Codable, CaseIterable {
     case walking = "100"
     case bike_and_ride = "101"
     case bike_takealong = "102"
