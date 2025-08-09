@@ -17,6 +17,7 @@ struct MonitorWidgetRow: View {
         HStack {
             Text(getNumber())
                 .font(.subheadline)
+                .monospacedDigit()
                 .lineLimit(1)
                 .padding(.horizontal, 3)
                 .background {
@@ -31,11 +32,13 @@ struct MonitorWidgetRow: View {
                     .font(.subheadline)
                     .multilineTextAlignment(.trailing)
                     .lineLimit(1)
+                    .monospacedDigit()
             } else {
                 Text(widgetFamily == .systemSmall ? "\(stopEvent.getIn(date: entry.date))" : "in \(stopEvent.getIn(date: entry.date)) min")
                     .font(.subheadline)
                     .multilineTextAlignment(.trailing)
                     .lineLimit(1)
+                    .monospacedDigit()
             }
         }
     }
