@@ -25,6 +25,13 @@ enum IndividualTransportType: String, Hashable, Codable, CaseIterable {
     case walking = "100"
     case bike_and_ride = "101"
     case bike_takealong = "102"
+    case park_and_ride = "104"
+}
+
+enum IndividualTransportSpeed: String, Hashable, Codable, CaseIterable {
+    case fast = "fast"
+    case normal = "normal"
+    case slow = "slow"
 }
 
 struct TripRequestJSON: Hashable, Codable {
