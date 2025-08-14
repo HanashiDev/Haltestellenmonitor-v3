@@ -12,7 +12,7 @@ struct Location: Hashable, Codable {
 
     var id: String?
     // var isGlobalId: Bool?
-    var name: String
+    var name: String?
     var disassembledName: String?
     var type: String
     var coord: [Coordinate]?

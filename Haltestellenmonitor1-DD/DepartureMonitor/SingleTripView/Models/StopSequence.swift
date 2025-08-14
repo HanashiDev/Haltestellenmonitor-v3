@@ -117,8 +117,8 @@ struct StopSequenceItem: Hashable, Codable {
     }
 
     func getName() -> String {
-        let location = parent.parent?.name ?? parent.name
-        return "\(self.parent.disassembledName ?? self.parent.name)\(location == "Dresden" || location.isEmpty ? "" : ", \(location)")"
+        let location = parent.parent?.name ?? parent.name ?? ""
+        return "\(self.parent.disassembledName ?? self.parent.name ?? "")\(location == "Dresden" || location.isEmpty ? "" : ", \(location)")"
     }
 
     func getPlatform() -> String {

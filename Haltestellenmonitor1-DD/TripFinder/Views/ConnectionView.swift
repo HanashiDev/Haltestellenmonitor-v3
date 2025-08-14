@@ -30,6 +30,24 @@ struct ConnectionView: View {
     @StateObject var favoriteConnections = FavoriteConnection()
     @State private var minDate = Date().addingTimeInterval(TimeInterval(-20.0 * 60.0)) // 20 minutes in past
 
+    @AppStorage("trip_individualTransportType")
+    private var individualTransportType: IndividualTransportType = .walking
+
+    @AppStorage("trip_showFare")
+    private var showFare: Bool = true
+
+    @AppStorage("trip_showOneBefore")
+    private var showOneBefore: Bool = true
+
+    @AppStorage("trip_individualTransportSpeed")
+    private var indiviudalTransportSpeed: IndividualTransportSpeed = .normal
+
+    @AppStorage("trip_useWheelchair")
+    private var useWheelchair: Bool = false
+
+    @AppStorage("trip_noStairs")
+    private var noStairs: Bool = false
+
     var body: some View {
         NavigationStack(path: $stopManager.presentedStops) {
             VStack(spacing: 5) {
@@ -52,23 +70,20 @@ struct ConnectionView: View {
                 ToolbarItem(placement: ToolbarItemPlacement.cancellationAction) {
                     if isLoading {
                         ProgressView()
-                    }
-                }
-                ToolbarItem(placement: ToolbarItemPlacement.confirmationAction) {
-                    Button {
-                        if isLoading {
-                            return
+                    } else {
+                        Button {
+                            filter.startStop = nil
+                            filter.endStop = nil
+                            trip = nil
+                            requestData = nil
+                            numbernext = 0
+                            dateTime = Date.now
+                        } label: {
+                            Text(Image(systemName: "arrow.counterclockwise"))
                         }
-                        filter.startStop = nil
-                        filter.endStop = nil
-                        trip = nil
-                        requestData = nil
-                        numbernext = 0
-                        dateTime = Date.now
-                    } label: {
-                        Text(Image(systemName: "arrow.counterclockwise"))
                     }
                 }
+
                 ToolbarItem(placement: ToolbarItemPlacement.confirmationAction) {
                     NavigationLink {
                         TripSettingsView()
@@ -346,7 +361,7 @@ struct ConnectionView: View {
         let startStr = await startStrPromise
         let endStr = await endStrPromise
 
-        requestData = TripRequestJSON(itdTime: getTimeStampURL(date: dateTime), itdDate: getDateStampURL(date: dateTime), origin: startStr, destination: endStr, individualTransport: .walking, excludeTransports: standardSettings, isarrivaltime: isArrivalTime)
+        requestData = TripRequestJSON(itdTime: getTimeStampURL(date: dateTime), itdDate: getDateStampURL(date: dateTime), origin: startStr, destination: endStr, individualTransportType: individualTransportType, indiviualTransportSpeed: indiviudalTransportSpeed, excludeTransports: standardSettings, isarrivaltime: isArrivalTime, useWheelchair: useWheelchair, noStairs: noStairs, showOneBefore: showOneBefore)
     }
 
     func getTripData(isNext: Bool = false) async {
@@ -359,7 +374,7 @@ struct ConnectionView: View {
             return
         }
 
-        var url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_TRIP_REQUEST2")!
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_TRIP_REQUEST2")!
 //        if isNext {
 //            url = URL(string: "https://webapi.vvo-online.de/tr/prevnext")!
 //        }

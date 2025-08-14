@@ -34,16 +34,31 @@ enum IndividualTransportSpeed: String, Hashable, Codable, CaseIterable {
     case slow = "slow"
 }
 
+func calculateCycleSpeed(from speed: IndividualTransportSpeed) -> String {
+    switch speed {
+    case .fast:
+        return "30"
+    case .normal:
+        return "23"
+    case .slow:
+        return "15"
+    }
+}
+
 struct TripRequestJSON: Hashable, Codable {
     var itdTime: String
     var itdDate: String
     var origin: String
     var via: String?
     var destination: String
-    var individualTransport: IndividualTransportType
+    var individualTransportType: IndividualTransportType
+    var indiviualTransportSpeed: IndividualTransportSpeed
     var excludeTransports: TripStandardSettings? // could be MOTType
     var isarrivaltime: Bool? = false
-    var numberOfTrips: Int = 5
+    var numberOfTrips: Int = 4
+    var useWheelchair: Bool
+    var noStairs: Bool
+    var showOneBefore: Bool
 
     func createTripRequestString() -> String {
         // &coordOutputFormat=WGS84[dd.dddddd]
@@ -51,7 +66,9 @@ struct TripRequestJSON: Hashable, Codable {
         if let via = via {
             requestString += "&type_via=any&name_via=\(via)"
         }
-        requestString += "&destination=\(destination)&individualTransport=\(individualTransport.rawValue)"
+        if !showOneBefore {
+            requestString += "&calcOneDirection=1"
+        }
         if let excludeTransports = excludeTransports {
             if !excludeTransports.mot.isEmpty {
                 requestString += "&excludedMeans=checkbox"
@@ -60,16 +77,43 @@ struct TripRequestJSON: Hashable, Codable {
                 requestString += "&exclMOT\(transportType)"
             }
         }
-        if individualTransport != .walking {
-            requestString += "&itOptionsActive=1&trITMOT=\(individualTransport.rawValue)"
+        if individualTransportType != .walking {
+            requestString += "&itOptionsActive=1&trITMOT=\(individualTransportType.rawValue)"
+
+            switch individualTransportType {
+                case .bike_takealong:
+                    requestString += "&calcBicycleMacro=on&std3_bikeSettings=takealong&cycleSpeed=\(calculateCycleSpeed(from: indiviualTransportSpeed))&maxTimeBicycle=10"
+                case .bike_and_ride:
+                    requestString += "&calcBicycleMacro=on&brRoutingMacro=true&cycleSpeed=\(calculateCycleSpeed(from: indiviualTransportSpeed))&maxTimeBicycle=10"
+                case .park_and_ride:
+                    requestString += "&prRoutingMacro=true"
+                default:
+                    break
+            }
+
+            if indiviualTransportSpeed != .normal {
+                requestString += "&ptOptionsActive=1&changeSpeed=\(indiviualTransportSpeed.rawValue)"
+            }
+        } else {
+            if indiviualTransportSpeed != .normal {
+                requestString += "&itOptionsActive=1&ptOptionsActive=1&changeSpeed=\(indiviualTransportSpeed.rawValue)"
+            }
         }
 
         if isarrivaltime ?? false {
             requestString += "&itdTripDateTimeDepArr=arr"
         }
 
-        // todo: change speed
-
+        if useWheelchair || noStairs {
+            requestString += "&imparedOptionsActive=1"
+            if useWheelchair {
+                requestString += "&wheelchair=1"
+            }
+            if noStairs {
+                requestString += "&noSolidStairs=1"
+            }
+        }
+        print(requestString)
         return requestString
     }
 }
