@@ -13,7 +13,7 @@ struct StopSequenceItem: Hashable, Codable {
     // var disassembledName: String?
     // var type: String
     // var pointType: String?
-    // var coord: [Int]?
+    // var coord: [Coordinate]?
     // var niveau: Int
     var parent: Location
     // var productClasses: [Int]
@@ -53,6 +53,20 @@ struct StopSequenceItem: Hashable, Codable {
         return ""
     }
 
+    func getArrivalTime() -> String {
+        if arrivalTimePlanned == nil && arrivalTimeEstimated == nil {
+            return ""
+        }
+        return getTimeStamp(date: getISO8601Date(dateString: self.arrivalTimePlanned))
+    }
+
+    func getRealArrivalTime() -> String {
+        if arrivalTimePlanned == nil && arrivalTimeEstimated == nil {
+            return ""
+        }
+        return getTimeStamp(date: getISO8601Date(dateString: self.arrivalTimeEstimated ?? self.arrivalTimePlanned))
+    }
+
     func getScheduledTime() -> String {
         let date = getISO8601Date(dateString: self.getTimetabledTime())
 
@@ -82,6 +96,29 @@ struct StopSequenceItem: Hashable, Codable {
         let scheduledTimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: scheduledTimeDate)
 
         return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
+    }
+
+    func getTimeDifferenceArrival() -> Int {
+        if self.getEstimatedTime() == "" {
+            return 0
+        }
+        if arrivalTimePlanned == nil && arrivalTimeEstimated == nil {
+            return 0
+        }
+        let realtimeDate = getISO8601Date(dateString: arrivalTimeEstimated)
+        let scheduledTimeDate = getISO8601Date(dateString: arrivalTimePlanned)
+
+        let calendar = Calendar.current
+
+        let realtimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: realtimeDate)
+        let scheduledTimeComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: scheduledTimeDate)
+
+        return calendar.dateComponents([.minute], from: scheduledTimeComponents, to: realtimeComponents).minute!
+    }
+
+    func getName() -> String {
+        let location = parent.parent?.name ?? parent.name ?? ""
+        return "\(self.parent.disassembledName ?? self.parent.name ?? "")\(location == "Dresden" || location.isEmpty ? "" : ", \(location)")"
     }
 
     func getPlatform() -> String {

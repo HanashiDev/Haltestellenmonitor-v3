@@ -163,15 +163,14 @@ struct SingleTripView: View {
             do {
                 let stopSequenceContainer = try JSONDecoder().decode(StopSequenceContainer.self, from: content)
                 let stopEvents = stopSequenceContainer.leg.stopSequence ?? []
-                
+
                 await MainActor.run {
                     if stopEvents.count > 0 {
                         self.stopSequence = stopEvents
                     }
                     self.isLoaded = true
                 }
-            }
-            catch {
+            } catch {
                 if let jsonString = String(data: content, encoding: .utf8) {
                     print("SingleTrip JSON DECODE error: \(error)\n\n\(jsonString)")
 

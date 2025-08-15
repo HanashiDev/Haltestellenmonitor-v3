@@ -13,21 +13,22 @@ struct TripSection: View {
     var body: some View {
         Section {
             HStack {
-                Text("\(vm.route.getStartTimeString()) Uhr")
-                    .accessibilityLabel("Abfahrt \(vm.route.getStartTimeString()) Uhr")
+                Text("\(vm.journey.getStartTimeString()) Uhr")
+                    .accessibilityLabel("Abfahrt \(vm.journey.getStartTimeString()) Uhr")
                 Image(systemName: "arrow.forward")
                     .accessibilityHidden(true)
-                Text("\(vm.route.getEndTimeString()) Uhr")
-                    .accessibilityLabel(Text("Ankunft \(vm.route.getEndTimeString()) Uhr"))
+                Text("\(vm.journey.getEndTimeString()) Uhr")
+                    .accessibilityLabel(Text("Ankunft \(vm.journey.getEndTimeString()) Uhr"))
 
                 Spacer()
 
                 Text("| \(vm.getTime())")
+                    .monospacedDigit()
                     .foregroundColor(.gray)
                     .accessibilityLabel("Dauer: \(vm.getTime())")
 
-                if vm.route.Interchanges > 0 {
-                    Text("| \(vm.route.Interchanges)")
+                if vm.journey.interchanges > 0 {
+                    Text("| \(vm.journey.interchanges)")
                         .foregroundColor(.gray)
                         .accessibilityLabel(vm.getAccessibilityInterchangesString())
                     Image(systemName: "shuffle")
@@ -40,37 +41,41 @@ struct TripSection: View {
             .accessibilityElement(children: .combine)
 
             DisclosureGroup {
-                ForEach(vm.routesWithWaitingTimeUnder2Min, id: \.self) { partialRoute in
-                    if partialRoute.Mot.type == "InsertedWaiting" && partialRoute.getDuration() > 0 {
-                        PartialRouteRowWaitingTime(time: partialRoute.getDuration(), text: partialRoute.getName())
+                ForEach(vm.routesWithWaitingTimeUnder2Min, id: \.self) { tripLeg in
+                    if tripLeg.isInsertedWaiting() && tripLeg.duration > 0 {
+                        InterTripLegWaitingRow(time: tripLeg.duration / 60, text: tripLeg.getName())
                     }
-                    if partialRoute.RegularStops == nil {
-                        if partialRoute.getDuration() == 0 {
-                            let tup = vm.getDuration(partialRoute)
+                    if tripLeg.stopSequence == nil {
+                        if tripLeg.duration == 0 {
+                            let tup = vm.getDuration(tripLeg)
                             if tup.0 > 0 {
-                                PartialRouteRowWaitingTime(time: tup.0, text: tup.1)
+                                InterTripLegWaitingRow(time: tup.0, text: tup.1)
                             }
                         } else {
-                            PartialRouteRow(partialRoute: partialRoute)
+                            TripLegRow(tripLeg: tripLeg)
                         }
                     } else {
-                        if partialRoute.Mot.type != "InsertedWaiting" {
+                        if !tripLeg.isInsertedWaiting() {
                             // actual tram/bus etc parts
                             DisclosureGroup {
-                                ForEach(partialRoute.RegularStops ?? [], id: \.self) { regularStop in
+                                ForEach(tripLeg.stopSequence!, id: \.self) { stopSequenceItem in
                                     ZStack {
-                                        NavigationLink(value: regularStop.getStop() ?? stops[0]) {
+                                        NavigationLink(value: stopSequenceItem.getStop() ?? stops[0]) {
                                             EmptyView()
                                         }
                                         .opacity(0.0)
                                         .buttonStyle(.plain)
 
-                                        RegularStopRow(regularStop: regularStop, isFirst: partialRoute.RegularStops?.first?.DataId == regularStop.DataId)
+                                        StopSequenceRow(stop: stopSequenceItem, isFirst: tripLeg.stopSequence?.first?.id == stopSequenceItem.id)
                                     }
                                 }
                             } label: {
-                                PartialRouteRow(partialRoute: partialRoute)
-                            }}
+                                TripLegRow(tripLeg: tripLeg)
+                            }
+                        }
+                        if tripLeg.getFootpathDuration() > 0 {
+                            AfterTripLegFootpathRow(duration: tripLeg.getFootpathDuration())
+                        }
                     }
                 }
             }
@@ -78,6 +83,7 @@ struct TripSection: View {
         }.accessibilityHint("Abschnitte der Route")
     }
 
+    /// Horizontal Bar displaying trip legs
     @ViewBuilder
     func tripView() -> some View {
         GeometryReader { geo in
@@ -110,13 +116,13 @@ struct TripSection: View {
     }
 }
 
-struct TripSection_Previews: PreviewProvider {
-    static var previews: some View {
-        Form {
-            TripSection(vm: TripSectionViewModel(route: tripTmp.Routes[0]))
-        }
-    }
-}
+ struct TripSection_Previews: PreviewProvider {
+     static var previews: some View {
+         VStack {
+             TripSection(vm: TripSectionViewModel(journey: tripTmp.journeys[0]))
+         }
+     }
+ }
 
 struct Line: Shape {
     var y2: CGFloat = 0.0

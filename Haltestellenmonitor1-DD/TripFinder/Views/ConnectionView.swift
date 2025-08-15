@@ -19,16 +19,34 @@ struct ConnectionView: View {
     @State var showingAlertEqual = false
     @State var showingSaveAlert = false
     @State var dateTime = Date.now
-    @State var isArrivalTime = 0 // false
+    @State var isArrivalTime = false // false
     @State var trip: Trip?
     @State var isLoading = false
-    @State private var requestData: TripRequest?
+    @State private var requestData: TripRequestJSON?
     @State private var numbernext = 0
     @State private var favoriteName = ""
     @StateObject var filter: ConnectionFilter = ConnectionFilter()
     @StateObject var departureFilter = DepartureFilter()
     @StateObject var favoriteConnections = FavoriteConnection()
     @State private var minDate = Date().addingTimeInterval(TimeInterval(-20.0 * 60.0)) // 20 minutes in past
+
+    @AppStorage("trip_individualTransportType")
+    private var individualTransportType: IndividualTransportType = .walking
+
+    @AppStorage("trip_showFare")
+    private var showFare: Bool = true
+
+    @AppStorage("trip_showOneBefore")
+    private var showOneBefore: Bool = true
+
+    @AppStorage("trip_individualTransportSpeed")
+    private var indiviudalTransportSpeed: IndividualTransportSpeed = .normal
+
+    @AppStorage("trip_useWheelchair")
+    private var useWheelchair: Bool = false
+
+    @AppStorage("trip_noStairs")
+    private var noStairs: Bool = false
 
     var body: some View {
         NavigationStack(path: $stopManager.presentedStops) {
@@ -41,9 +59,10 @@ struct ConnectionView: View {
                             ConnectionStopSelectionView()
                         })
                 } else {
-                    listView()    .sheet(isPresented: $showingSheet, content: {
-                        ConnectionStopSelectionView()
-                    })
+                    listView()
+                        .sheet(isPresented: $showingSheet, content: {
+                            ConnectionStopSelectionView()
+                        })
                 }
             }
             .navigationTitle("🏘️ Verbindungen")
@@ -51,19 +70,25 @@ struct ConnectionView: View {
                 ToolbarItem(placement: ToolbarItemPlacement.cancellationAction) {
                     if isLoading {
                         ProgressView()
+                    } else {
+                        Button {
+                            filter.startStop = nil
+                            filter.endStop = nil
+                            trip = nil
+                            requestData = nil
+                            numbernext = 0
+                            dateTime = Date.now
+                        } label: {
+                            Text(Image(systemName: "arrow.counterclockwise"))
+                        }
                     }
                 }
+
                 ToolbarItem(placement: ToolbarItemPlacement.confirmationAction) {
-                    Button("Zurücksetzen") {
-                        if isLoading {
-                            return
-                        }
-                        filter.startStop = nil
-                        filter.endStop = nil
-                        trip = nil
-                        requestData = nil
-                        numbernext = 0
-                        dateTime = Date.now
+                    NavigationLink {
+                        TripSettingsView()
+                    } label: {
+                        Text(Image(systemName: "gearshape"))
                     }
                 }
             }
@@ -214,9 +239,9 @@ struct ConnectionView: View {
                         }
                     }
                     Picker("", selection: $isArrivalTime) {
-                        Text("Abfahrt").tag(0)
+                        Text("Abfahrt").tag(false)
                             .accessibilityHint("Die gewählte Zeit ist der Abfahrtszeitpunkt")
-                        Text("Ankunft").tag(1)
+                        Text("Ankunft").tag(true)
                             .accessibilityHint("Die gewählte Zeit ist der Ankunftszeitpunkt")
                     }
                     .pickerStyle(.segmented)
@@ -272,7 +297,7 @@ struct ConnectionView: View {
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)) // remove padding
             }.listRowBackground(Color.clear)
 
-            if trip?.Routes != nil {
+            if trip?.journeys != nil {
                 /*Button {
                     if isLoading || requestData == nil || self.trip == nil {
                         return
@@ -292,8 +317,8 @@ struct ConnectionView: View {
                 }
                 .frame(maxWidth: .infinity)*/
 
-                ForEach(trip?.Routes ?? [], id: \.self) { route in
-                    TripSection(vm: TripSectionViewModel(route: route))
+                ForEach(trip?.journeys ?? [], id: \.self) { journey in
+                    TripSection(vm: TripSectionViewModel(journey: journey))
                 }
 
                 Button {
@@ -303,9 +328,8 @@ struct ConnectionView: View {
                     isLoading = true
                     numbernext = numbernext + 1
 
-                    requestData!.sessionId = self.trip!.SessionId
-                    requestData!.numberprev = 0
-                    requestData!.numbernext = numbernext
+//                    requestData!.numberprev = 0
+//                    requestData!.numbernext = numbernext
 
                     Task {
                         await getTripData(isNext: true)
@@ -337,7 +361,7 @@ struct ConnectionView: View {
         let startStr = await startStrPromise
         let endStr = await endStrPromise
 
-        requestData = TripRequest(time: dateTime.ISO8601Format(), isarrivaltime: isArrivalTime == 1, origin: startStr, destination: endStr, standardSettings: standardSettings)
+        requestData = TripRequestJSON(itdTime: getTimeStampURL(date: dateTime), itdDate: getDateStampURL(date: dateTime), origin: startStr, destination: endStr, individualTransportType: individualTransportType, indiviualTransportSpeed: indiviudalTransportSpeed, excludeTransports: standardSettings, isarrivaltime: isArrivalTime, useWheelchair: useWheelchair, noStairs: noStairs, showOneBefore: showOneBefore)
     }
 
     func getTripData(isNext: Bool = false) async {
@@ -350,22 +374,32 @@ struct ConnectionView: View {
             return
         }
 
-        var url = URL(string: "https://webapi.vvo-online.de/tr/trips")!
-        if isNext {
-            url = URL(string: "https://webapi.vvo-online.de/tr/prevnext")!
-        }
+        let url = URL(string: "https://efa.vvo-online.de/std3/trias/XML_TRIP_REQUEST2")!
+//        if isNext {
+//            url = URL(string: "https://webapi.vvo-online.de/tr/prevnext")!
+//        }
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(requestData)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = requestData?.createTripRequestString().data(using: .utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("Haltestellenmonitor Dresden v2", forHTTPHeaderField: "User-Agent")
 
         do {
             let (content, _) = try await URLSession.shared.data(for: request)
 
-            let decoder = JSONDecoder()
             numbernext = 0
-            self.trip = try decoder.decode(Trip.self, from: content)
+            do {
+                let t = try JSONDecoder().decode(Trip.self, from: content)
+                await MainActor.run {
+                    self.trip = t
+                    isLoading = false
+                }
+            } catch {
+                if let jsonString = String(data: content, encoding: .utf8) {
+                    print("Trip Finder JSON DECODE error: \(error)\n\n\(jsonString)")
+                }
+            }
 
             isLoading = false
         } catch {
@@ -381,28 +415,25 @@ struct ConnectionView: View {
     func getStandardSettings() -> TripStandardSettings {
         var mot: [String] = []
         if departureFilter.tram {
-            mot.append("Tram")
+            mot.append("4")
         }
         if departureFilter.bus {
-            mot.append("CityBus")
-            mot.append("IntercityBus")
-            mot.append("PlusBus")
+            mot.append("5")
+            mot.append("6")
         }
         if departureFilter.suburbanRailway {
-            mot.append("SuburbanRailway")
+            mot.append("3")
+            // TODO Maybe add more here?
         }
         if departureFilter.train {
-            mot.append("Train")
+            mot.append("0")
         }
         if departureFilter.cableway {
-            mot.append("Cableway")
+            mot.append("8")
         }
         if departureFilter.ferry {
-            mot.append("Ferry")
+            mot.append("9")
         }
-//        if (departureFilter.taxi) {
-//            mot.append("HailedSharedTaxi")
-//        }
 
         return TripStandardSettings(mot: mot)
     }
@@ -435,32 +466,26 @@ struct ConnectionView: View {
         departureFilter.train = false
         departureFilter.cableway = false
         departureFilter.ferry = false
-//        departureFilter.taxi = false
 
         let mots = favorite.standardSettings?.mot ?? []
         for mot in mots {
             switch mot {
-            case "Tram":
-                departureFilter.tram = true
-                case "CityBus":
-                departureFilter.bus = true
-                case "IntercityBus":
-                departureFilter.bus = true
-                case "PlusBus":
-                departureFilter.bus = true
-                case "SuburbanRailway":
-                departureFilter.suburbanRailway = true
-                case "Train":
-                departureFilter.train = true
-                case "Cableway":
-                departureFilter.cableway = true
-                case "Ferry":
-                departureFilter.ferry = true
-//            case "HailedSharedTaxi":
-//                departureFilter.taxi = true
-//                break
-            default:
-                break
+                case "4":
+                    departureFilter.tram = true
+                case "5":
+                    departureFilter.bus = true
+                case "6":
+                    departureFilter.bus = true
+                case "3":
+                    departureFilter.suburbanRailway = true
+                case "0":
+                    departureFilter.train = true
+                case "8":
+                    departureFilter.cableway = true
+                case "9":
+                    departureFilter.ferry = true
+                default:
+                    break
             }
         }
 
@@ -477,10 +502,10 @@ struct ConnectionView: View {
     }
 }
 
-struct ConnectionView_Previews: PreviewProvider {
+ struct ConnectionView_Previews: PreviewProvider {
     static var previews: some View {
         ConnectionView(trip: tripTmp)
             .environmentObject(LocationManager())
             .environmentObject(StopManager())
     }
-}
+ }

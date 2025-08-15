@@ -32,7 +32,7 @@ func getAccessibilityLabelStandard(motType: MOTType) -> String {
     case .Down:
         return "Treppe abwärts"
     case .Walking:
-        return "Zu Fuß"
+        return "Fußweg"
     }
 }
 
@@ -48,6 +48,8 @@ func getAccessibilityLabelEFA(iconId: Int) -> String {
         return getAccessibilityLabelStandard(motType: .CableCar)
     case 10:
         return getAccessibilityLabelStandard(motType: .Boat)
+    case 100:
+        return getAccessibilityLabelStandard(motType: .Walking)
     default:
         return getAccessibilityLabelStandard(motType: .Default)
     }
@@ -113,6 +115,8 @@ func getIconEFA(iconId: Int) -> String {
         return getIconStandard(motType: .CableCar)
     case 10:
         return getIconStandard(motType: .Boat)
+    case 100:
+        return getIconStandard(motType: .Walking)
     default:
         return getIconStandard(motType: .Default)
     }
@@ -175,6 +179,8 @@ func getColorEFA(iconId: Int) -> Color {
         return getColorStandard(motType: .CableCar)
     case 10:
         return getColorStandard(motType: .Boat)
+    case 100:
+        return getColorStandard(motType: .Walking)
     default:
         return getColorStandard(motType: .Default)
     }
