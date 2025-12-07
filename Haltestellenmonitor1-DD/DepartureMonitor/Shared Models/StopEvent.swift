@@ -223,6 +223,10 @@ struct StopEvent: Hashable, Codable {
 
     func getPlatform() -> String {
         if self.location.type == "platform" && self.location.disassembledName != nil {
+            
+            if [2,6].contains(self.transportation.product.iconId) {
+                return "Gleis " + self.location.disassembledName!
+            }
             return "Steig " + self.location.disassembledName!
         }
         return ""
