@@ -30,18 +30,17 @@ struct Route: Hashable, Codable {
     }
 
     func getStartTimeString() -> String {
-        let date = self.getStartTime()
-        if date == nil {
+        let regularStop = self.PartialRoutes.first?.RegularStops?.first
+        
+        if regularStop == nil {
             return "00:00"
         }
 
-        let dFormatter = DateFormatter()
-        dFormatter.dateFormat = "HH:mm"
-        return dFormatter.string(for: date) ?? "00:00"
+        return formatTimeWithDelay(regularStop?.DepartureTime, regularStop?.DepartureRealTime) ?? "00:00"
     }
 
     func getEndTime() -> Date? {
-        let regularStop = self.PartialRoutes.last?.RegularStops?.last
+        let regularStop = self.PartialRoutes.first?.RegularStops?.last
         if regularStop == nil {
             return nil
         }
@@ -58,14 +57,13 @@ struct Route: Hashable, Codable {
     }
 
     func getEndTimeString() -> String {
-        let date = self.getEndTime()
-        if date == nil {
+        let regularStop = self.PartialRoutes.first?.RegularStops?.last
+        
+        if regularStop == nil {
             return "00:00"
         }
 
-        let dFormatter = DateFormatter()
-        dFormatter.dateFormat = "HH:mm"
-        return dFormatter.string(for: date) ?? "00:00"
+        return formatTimeWithDelay(regularStop?.ArrivalTime, regularStop?.ArrivalRealTime) ?? "00:00"
     }
 
     func getTimeDifference() -> Int {

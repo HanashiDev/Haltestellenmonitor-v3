@@ -13,11 +13,11 @@ struct TripSection: View {
     var body: some View {
         Section {
             HStack {
-                Text("\(vm.route.getStartTimeString()) Uhr")
+                Text(styledDepartureTime(vm.route.getStartTimeString()) + " Uhr")
                     .accessibilityLabel("Abfahrt \(vm.route.getStartTimeString()) Uhr")
                 Image(systemName: "arrow.forward")
                     .accessibilityHidden(true)
-                Text("\(vm.route.getEndTimeString()) Uhr")
+                Text(styledDepartureTime(vm.route.getEndTimeString()) + " Uhr")
                     .accessibilityLabel(Text("Ankunft \(vm.route.getEndTimeString()) Uhr"))
 
                 Spacer()

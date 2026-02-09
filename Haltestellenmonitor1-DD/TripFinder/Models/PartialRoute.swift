@@ -98,18 +98,25 @@ struct PartialRoute: Hashable, Codable {
 
         return DateParser.extractTimestamp(time: time!)
     }
-
+    
     func getStartTimeString() -> String? {
-        let date = self.getStartTime()
-        if date == nil {
+        let regularStop = self.RegularStops?.first
+        if regularStop == nil {
             return nil
         }
-
-        let dFormatter = DateFormatter()
-        dFormatter.dateFormat = "HH:mm"
-        return dFormatter.string(for: date) ?? nil
+        
+        return formatTimeWithDelay(regularStop?.DepartureTime, regularStop?.DepartureRealTime)
     }
-
+    
+    func getEndTimeString() -> String? {
+        let regularStop = self.RegularStops?.first
+        if regularStop == nil {
+            return nil
+        }
+        
+        return formatTimeWithDelay(regularStop?.ArrivalTime, regularStop?.ArrivalRealTime)
+    }
+    
     func getEndTime() -> Date? {
         let regularStop = self.RegularStops?.last
         if regularStop == nil {
@@ -126,17 +133,6 @@ struct PartialRoute: Hashable, Codable {
         }
 
         return DateParser.extractTimestamp(time: time!)
-    }
-
-    func getEndTimeString() -> String? {
-        let date = self.getEndTime()
-        if date == nil {
-            return nil
-        }
-
-        let dFormatter = DateFormatter()
-        dFormatter.dateFormat = "HH:mm"
-        return dFormatter.string(for: date) ?? nil
     }
 
     func getLastStation() -> String? {
