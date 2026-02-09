@@ -17,7 +17,7 @@ struct PartialRoute: Hashable, Codable {
             return "Wartezeit"
         }
         if self.Mot.type == "Footpath" {
-            return hasNoTime() ? "Warten" : "Fußweg"
+            return hasNoTime() ? "Warten - \(self.getDuration()) min " : "Fußweg - \(self.getDuration()) min"
         }
         if self.Mot.type == "MobilityStairsUp" {
             return "aufwärts führende Treppe"
@@ -150,7 +150,9 @@ struct PartialRoute: Hashable, Codable {
     func getLastPlatform() -> String? {
         return RegularStops?.last?.getPlatform()
     }
-
+    
+    /// Calculates the Routes duration
+    /// - Returns: duration in minutes
     func getDuration() -> Int {
         let start: Double = getStartTime()?.timeIntervalSince1970 ?? 0
         let end: Double = getEndTime()?.timeIntervalSince1970 ?? 0
