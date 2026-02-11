@@ -29,6 +29,8 @@ struct ConnectionView: View {
     @StateObject var departureFilter = DepartureFilter()
     @StateObject var favoriteConnections = FavoriteConnection()
     @State private var minDate = Date().addingTimeInterval(TimeInterval(-20.0 * 60.0)) // 20 minutes in past
+    
+    @State var recentTrips = getRecentTrips()
 
     var body: some View {
         NavigationStack(path: $stopManager.presentedStops) {
@@ -44,6 +46,27 @@ struct ConnectionView: View {
                     listView()    .sheet(isPresented: $showingSheet, content: {
                         ConnectionStopSelectionView()
                     })
+                }
+                if !recentTrips.isEmpty {
+                    Form {
+                        Text("Recent Trips")
+                        Section {
+                            ForEach(recentTrips) { trip in
+                                HStack {
+                                    VStack {
+                                        Text(getStopName(trip.start) ?? "???")
+                                        Text(getStopName(trip.end) ?? "???")
+                                    }
+                                    Spacer()
+                                    Button {
+                                        removeRecentTrip(trip); recentTrips = getRecentTrips()
+                                    } label: {
+                                        Image(systemName: "trash")
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             .navigationTitle("🏘️ Verbindungen")
@@ -64,6 +87,8 @@ struct ConnectionView: View {
                         requestData = nil
                         numbernext = 0
                         dateTime = Date.now
+                        
+                        recentTrips = getRecentTrips()
                     }
                 }
             }
@@ -260,49 +285,54 @@ struct ConnectionView: View {
             }.listRowBackground(Color.clear)
 
             if trip?.Routes != nil {
-                /*Button {
-                    if isLoading || requestData == nil || self.trip == nil {
-                        return
-                    }
-                    isLoading = true
-                    numbernext = numbernext + 1
-
-                    requestData!.sessionId = self.trip!.SessionId
-                    requestData!.numberprev = 0
-                    requestData!.numbernext = numbernext
-
-                    Task {
-                        await getTripData(isNext: true)
-                    }
-                } label: {
-                    Text("Frühere Verbindungen")
-                }
-                .frame(maxWidth: .infinity)*/
-
-                ForEach(trip?.Routes ?? [], id: \.self) { route in
-                    TripSection(vm: TripSectionViewModel(route: route))
-                }
-
-                Button {
-                    if isLoading || requestData == nil || self.trip == nil {
-                        return
-                    }
-                    isLoading = true
-                    numbernext = numbernext + 1
-
-                    requestData!.sessionId = self.trip!.SessionId
-                    requestData!.numberprev = 0
-                    requestData!.numbernext = numbernext
-
-                    Task {
-                        await getTripData(isNext: true)
-                    }
-                } label: {
-                    Text("Spätere Verbindungen")
-                }
-                .frame(maxWidth: .infinity)
+                searchButton()
             }
         }
+    }
+    
+    @ViewBuilder
+    func searchButton() -> some View {
+        /*Button {
+            if isLoading || requestData == nil || self.trip == nil {
+                return
+            }
+            isLoading = true
+            numbernext = numbernext + 1
+
+            requestData!.sessionId = self.trip!.SessionId
+            requestData!.numberprev = 0
+            requestData!.numbernext = numbernext
+
+            Task {
+                await getTripData(isNext: true)
+            }
+        } label: {
+            Text("Frühere Verbindungen")
+        }
+        .frame(maxWidth: .infinity)*/
+
+        ForEach(trip?.Routes ?? [], id: \.self) { route in
+            TripSection(vm: TripSectionViewModel(route: route))
+        }
+
+        Button {
+            if isLoading || requestData == nil || self.trip == nil {
+                return
+            }
+            isLoading = true
+            numbernext = numbernext + 1
+
+            requestData!.sessionId = self.trip!.SessionId
+            requestData!.numberprev = 0
+            requestData!.numbernext = numbernext
+
+            Task {
+                await getTripData(isNext: true)
+            }
+        } label: {
+            Text("Spätere Verbindungen")
+        }
+        .frame(maxWidth: .infinity)
     }
 
     func createRequestData() async {
@@ -349,6 +379,9 @@ struct ConnectionView: View {
             self.trip = try decoder.decode(Trip.self, from: content)
 
             isLoading = false
+            
+            // save to recent trips
+            await addRecentTrip(filter.startStop!.getDestinationString(), filter.endStop!.getDestinationString())
         } catch {
             print("error: \(error)")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
