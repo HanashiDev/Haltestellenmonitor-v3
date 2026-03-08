@@ -30,7 +30,7 @@ struct ConnectionView: View {
     @StateObject var favoriteConnections = FavoriteConnection()
     @State private var minDate = Date().addingTimeInterval(TimeInterval(-20.0 * 60.0)) // 20 minutes in past
     
-    @State var recentTrips = getRecentTrips()
+    @State var recentTrips = getRecentTripsAsConnections()
 
     var body: some View {
         NavigationStack(path: $stopManager.presentedStops) {
@@ -46,27 +46,7 @@ struct ConnectionView: View {
                     listView()    .sheet(isPresented: $showingSheet, content: {
                         ConnectionStopSelectionView()
                     })
-                }
-                if !recentTrips.isEmpty {
-                    Form {
-                        Text("Recent Trips")
-                        Section {
-                            ForEach(recentTrips) { trip in
-                                HStack {
-                                    VStack {
-                                        Text(getStopName(trip.start) ?? "???")
-                                        Text(getStopName(trip.end) ?? "???")
-                                    }
-                                    Spacer()
-                                    Button {
-                                        removeRecentTrip(trip); recentTrips = getRecentTrips()
-                                    } label: {
-                                        Image(systemName: "trash")
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Spacer()
                 }
             }
             .navigationTitle("🏘️ Verbindungen")
@@ -88,7 +68,7 @@ struct ConnectionView: View {
                         numbernext = 0
                         dateTime = Date.now
                         
-                        recentTrips = getRecentTrips()
+                        recentTrips = getRecentTripsAsConnections()
                     }
                 }
             }
@@ -120,6 +100,29 @@ struct ConnectionView: View {
         }
         .environmentObject(filter)
         .environmentObject(departureFilter)
+    }
+    
+    @ViewBuilder
+    func recentTripsView() -> some View {
+        Section{
+            Section {
+                ForEach(recentTrips) { rTrip in
+                    Button {
+                        //  removeRecentTrip(trip); recentTrips = getRecentTrips()
+                        filter.startStop = rTrip.start
+                        filter.endStop = rTrip.end
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text(rTrip.start.displayName)
+                            Text(rTrip.end.displayName)
+                        } .foregroundColor(.secondary)
+                        //   Image(systemName: "trash")
+                    }
+                }
+            }
+        } header : {
+            Text("Letze Verbindungen")
+        }
     }
 
     func listView() -> some View {
@@ -287,6 +290,10 @@ struct ConnectionView: View {
             if trip?.Routes != nil {
                 searchButton()
             }
+            
+            if trip == nil && !recentTrips.isEmpty {
+                recentTripsView()
+            }
         }
     }
     
@@ -381,7 +388,7 @@ struct ConnectionView: View {
             isLoading = false
             
             // save to recent trips
-            await addRecentTrip(filter.startStop!.getDestinationString(), filter.endStop!.getDestinationString())
+            await addRecentTrip(filter.startStop!.getDestinationString(), filter.endStop!.getDestinationString(), filter.startStop?.stop?.stopID ?? -1, filter.endStop?.stop?.stopID ?? -1)
         } catch {
             print("error: \(error)")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
