@@ -17,7 +17,7 @@ struct PartialRoute: Hashable, Codable {
             return "Wartezeit"
         }
         if self.Mot.type == "Footpath" {
-            return hasNoTime() ? "Warten" : "Fußweg"
+            return hasNoTime() ? "Warten - \(self.getDuration()) min " : "Fußweg - \(self.getDuration()) min"
         }
         if self.Mot.type == "MobilityStairsUp" {
             return "aufwärts führende Treppe"
@@ -98,18 +98,25 @@ struct PartialRoute: Hashable, Codable {
 
         return DateParser.extractTimestamp(time: time!)
     }
-
+    
     func getStartTimeString() -> String? {
-        let date = self.getStartTime()
-        if date == nil {
+        let regularStop = self.RegularStops?.first
+        if regularStop == nil {
             return nil
         }
-
-        let dFormatter = DateFormatter()
-        dFormatter.dateFormat = "HH:mm"
-        return dFormatter.string(for: date) ?? nil
+        
+        return formatTimeWithDelay(regularStop?.DepartureTime, regularStop?.DepartureRealTime)
     }
-
+    
+    func getEndTimeString() -> String? {
+        let regularStop = self.RegularStops?.first
+        if regularStop == nil {
+            return nil
+        }
+        
+        return formatTimeWithDelay(regularStop?.ArrivalTime, regularStop?.ArrivalRealTime)
+    }
+    
     func getEndTime() -> Date? {
         let regularStop = self.RegularStops?.last
         if regularStop == nil {
@@ -128,17 +135,6 @@ struct PartialRoute: Hashable, Codable {
         return DateParser.extractTimestamp(time: time!)
     }
 
-    func getEndTimeString() -> String? {
-        let date = self.getEndTime()
-        if date == nil {
-            return nil
-        }
-
-        let dFormatter = DateFormatter()
-        dFormatter.dateFormat = "HH:mm"
-        return dFormatter.string(for: date) ?? nil
-    }
-
     func getLastStation() -> String? {
         return self.RegularStops?.last?.Name
     }
@@ -150,7 +146,9 @@ struct PartialRoute: Hashable, Codable {
     func getLastPlatform() -> String? {
         return RegularStops?.last?.getPlatform()
     }
-
+    
+    /// Calculates the Routes duration
+    /// - Returns: duration in minutes
     func getDuration() -> Int {
         let start: Double = getStartTime()?.timeIntervalSince1970 ?? 0
         let end: Double = getEndTime()?.timeIntervalSince1970 ?? 0

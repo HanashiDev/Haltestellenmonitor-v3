@@ -16,7 +16,7 @@ struct PartialRouteRow: View {
         VStack(spacing: 0) {
             HStack {
                 if partialRoute.getStartTimeString() != nil {
-                    Text("\(partialRoute.getStartTimeString()!)")
+                    Text(styledDepartureTime(partialRoute.getStartTimeString()!))
                         .frame(width: timeFrameWidth, alignment: .leading)
                         .foregroundColor(.gray)
                         .font(.subheadline.monospacedDigit())
@@ -44,7 +44,7 @@ struct PartialRouteRow: View {
 
             }
             HStack {
-                if partialRoute.getStartTimeString() != nil || partialRoute.getEndTimeString() != nil {
+                if partialRoute.getEndTimeString() != nil || partialRoute.getEndTimeString() != nil {
                     Text("|")
                         .frame(width: timeFrameWidth, alignment: .leading)
                         .foregroundColor(.gray)
@@ -58,7 +58,7 @@ struct PartialRouteRow: View {
             }
             HStack {
                 if partialRoute.getEndTimeString() != nil {
-                    Text("\(partialRoute.getEndTimeString()!)")
+                    Text(styledDepartureTime(partialRoute.getEndTimeString()!))
                         .frame(width: timeFrameWidth, alignment: .leading)
                         .foregroundColor(.gray)
                         .font(.subheadline.monospacedDigit())
